@@ -8,12 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        VStack(alignment: .leading) {
+//            if AuthManager.shared.clientInfo == nil {
+//                AuthSetupView()
+//            } else {
+//                HStack(alignment: .top) {
+//                    AuthView()
+//                    Spacer()
+//                    CharacterInfoView()
+//                    AuthSetupView()
+//                }
+//            }
+           HomeView()
+            
         }
         .padding()
     }

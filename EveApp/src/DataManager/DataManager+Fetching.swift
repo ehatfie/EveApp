@@ -62,28 +62,25 @@ extension DataManager {
     }
     
     func fetchCategories() {
+        try? self.dbManager?.loadCategoryData()
         print("fetchCategories()")
-        guard !UserDefaultsHelper.hasValueFor(key: .categoryDataResponse) else {
-            print("categories exist locally")
-            fetchCategoriesByID()
-            return
-        }
-        
-        makeApiCall(dataEndpoint: "universe/categories", completion: { data, response, error in
-            do {
-                let decoder = JSONDecoder()
-                let categoryDataResponse = try decoder.decode([Int32].self, from: data!)
-                
-                UserDefaultsHelper.saveToUserDefaults(
-                    data: categoryDataResponse,
-                    key: .categoryDataResponse
-                )
-                print("got categories \(categoryDataResponse)")
-                //completion(categoryDataResponse)
-            } catch let error {
-                print(error)
-            }
-        })
+
+        return
+//        makeApiCall(dataEndpoint: "universe/categories", completion: { data, response, error in
+//            do {
+//                let decoder = JSONDecoder()
+//                let categoryDataResponse = try decoder.decode([Int32].self, from: data!)
+//
+//                UserDefaultsHelper.saveToUserDefaults(
+//                    data: categoryDataResponse,
+//                    key: .categoryDataResponse
+//                )
+//                print("got categories \(categoryDataResponse)")
+//                //completion(categoryDataResponse)
+//            } catch let error {
+//                print(error)
+//            }
+//        })
     }
     
     func fetchCategoriesByID() {
@@ -128,30 +125,40 @@ extension DataManager {
             return
         }
         
-        let endpoint = "universe/categories/\(categoryID)"
-        makeApiCall(dataEndpoint: endpoint, completion: { data, response, error in
-            if let data = data {
-                do {
-                    let decoder = JSONDecoder()
-                    let categoryInfoResponse = try decoder.decode(CategoryInfoResponseData.self, from: data)
-                    
-                    var categoryInfoById = self.categoryInfoByID
-                    
-                    categoryInfoById[categoryInfoResponse.category_id] = categoryInfoResponse
-                    
-                    UserDefaultsHelper.saveToUserDefaults(
-                        data: categoryInfoById,
-                        key: .categoriesByIdResponse
-                    )
-                    
-                    self.categoryInfoByID = categoryInfoById
-                    print("categoryInfoResponse \(categoryInfoResponse)")
-                } catch let err {
-                    print(err)
-                }
-                
+        UniverseAPI.getUniverseCategoriesCategoryId(categoryId: Int(categoryID), completion: { response, error in
+            if let response = response {
+                print("got categoryID respone \(response)")
+            }
+            
+            if let error = error {
+                print("got categooryID error \(error)")
             }
         })
+        
+//        let endpoint = "universe/categories/\(categoryID)"
+//        makeApiCall(dataEndpoint: endpoint, completion: { data, response, error in
+//            if let data = data {
+//                do {
+//                    let decoder = JSONDecoder()
+//                    let categoryInfoResponse = try decoder.decode(CategoryInfoResponseData.self, from: data)
+//
+//                    var categoryInfoById = self.categoryInfoByID
+//
+//                    categoryInfoById[categoryInfoResponse.category_id] = categoryInfoResponse
+//
+//                    UserDefaultsHelper.saveToUserDefaults(
+//                        data: categoryInfoById,
+//                        key: .categoriesByIdResponse
+//                    )
+//
+//                    self.categoryInfoByID = categoryInfoById
+//                    print("categoryInfoResponse \(categoryInfoResponse)")
+//                } catch let err {
+//                    print(err)
+//                }
+//
+//            }
+//        })
     }
     
     func fetchGroupIDs() {
@@ -255,32 +262,59 @@ extension DataManager {
 // Group stuff
 extension DataManager {
     func fetchGroupInfoFor(groupId: Int32) {
-        let endpoint = "universe/groups/\(groupId)/"
+        print("fetchGroupInfoFor()")
         
-        makeApiCall(dataEndpoint: endpoint, completion: { data, response, error in
-            if let data = data {
-                do {
-                    let decoder = JSONDecoder()
-                    let groupInfoResponse = try decoder.decode(GroupInfoResponseData.self, from: data)
-                    
-                    var groupInfoById = self.groupInfoByID
-                    
-                    groupInfoById[groupInfoResponse.group_id] = groupInfoResponse
-                    
-                    UserDefaultsHelper.saveToUserDefaults(data: groupInfoById, key: .groupInfoByIdResponse)
-                    
-                    self.groupInfoByID = groupInfoById
-                    print("groupInfoResponse \(groupInfoResponse)")
-                } catch let err {
-                    print(err)
-                }
-            }
-            
+        let endpoint = "universe/groups/\(groupId)/"
+        //DispatchQueue.main.async {
+            self.makeApiCall(dataEndpoint: endpoint, completion: { data, response, error in
+                if let data = data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let groupInfoResponse = try decoder.decode(GroupInfoResponseData.self, from: data)
 
-        })
+                        var groupInfoById = self.groupInfoByID
+
+                        groupInfoById[groupInfoResponse.group_id] = groupInfoResponse
+
+                        UserDefaultsHelper.saveToUserDefaults(
+                            data: groupInfoById,
+                            key: .groupInfoByIdResponse
+                        )
+
+                        self.groupInfoByID = groupInfoById
+                        print("groupInfoResponse \(groupInfoResponse)")
+                    } catch let err {
+                        print(err)
+                    }
+                }
+            })
+        //}
+
     }
     
     func fetchGroupInfoFor(groupIds: [Int32]) {
         
     }
 }
+
+
+extension DataManager {
+    func fetchTypeInfoFor(typeId: Int32) {
+        print("fetchTypeInfoFor()")
+        let endpoint = "universe/types/\(typeId)/"
+        
+        makeApiCall(dataEndpoint: endpoint, completion: { data, response, error in
+            if let data = data {
+                do {
+                    let decoder = JSONDecoder()
+                    let typeInfoResponse = try decoder.decode(GetUniverseTypesTypeIdOk.self, from: data)
+                    print("got type info response \(typeInfoResponse)")
+                } catch let err {
+                    print("item type fetch error \(err)")
+                }
+            }
+        })
+    }
+}
+
+

@@ -7,20 +7,23 @@
 
 import SwiftUI
 
-struct ItemCategoryRow: View {
+struct ItemCategoryView: View {
     @State var category: ItemCategory
     
     @State var isExpanded: Bool = false
     
     var body: some View {
         VStack {
-            VStack(alignment: .leading) {
-                if let categoryInfo = category.categoryInfoResponseData {
-                    Text("\(categoryInfo.name)")
-                    Text("\(categoryInfo.groups.count) groups")
-                } else {
-                    Text("category: \(category.categoryId)")
-                }
+            HStack(alignment: .top) {
+                VStack(alignment: .leading) {
+                    if let categoryInfo = category.categoryInfoResponseData {
+                        Text("\(categoryInfo.name)")
+                        Text("\(categoryInfo.groups.count) groups")
+                    } else {
+                        Text("category: \(category.categoryId)")
+                    }
+                }.padding(.leading)
+                Spacer()
             }
             .frame(maxWidth: .infinity, minHeight: 50, maxHeight: 500)
             .border(.red)
@@ -46,9 +49,9 @@ struct ItemCategoryRow: View {
     }
 }
 
-struct ItemCategoryRow_Previews: PreviewProvider {
+struct ItemCategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        ItemCategoryRow(
+        ItemCategoryView(
             category: ItemCategory(
                 categoryId: 0,
                 categoryInfoResponseData:

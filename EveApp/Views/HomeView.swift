@@ -68,6 +68,12 @@ struct HomeView: View {
                 })
                 
                 NavigationLink(destination: {
+                    DogmaExplorerView(viewModel: DogmaExplorerViewModel())
+                }, label: {
+                    Text("Dogma Explorer")
+                })
+                
+                NavigationLink(destination: {
                     ItemExplorerView(viewModel: ItemExplorerViewModel())
                 }, label: {
                     Text("Item Explorer")
@@ -78,6 +84,7 @@ struct HomeView: View {
                 }, label: {
                     Text("Login View")
                 })
+                
                 
 
             }

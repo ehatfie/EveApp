@@ -14,4 +14,5 @@ enum UserDefaultKeys: String {
     case categoriesByIdResponse = "CategoriesByIdResponse"
     case groupDataResponse = "GroupDataResponse"
     case groupInfoByIdResponse = "GroupInfoByIdResponse"
+    case typeInfoByIdResponse = "TypeInfoByIdResponse"
 }

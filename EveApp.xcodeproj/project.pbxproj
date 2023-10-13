@@ -450,6 +450,12 @@
 		BAE069912AD8F6960054EFCF /* DogmaExplorerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE069902AD8F6960054EFCF /* DogmaExplorerView.swift */; };
 		BAE069952AD901050054EFCF /* DogmaEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE069942AD901050054EFCF /* DogmaEffectView.swift */; };
 		BAE069972AD903440054EFCF /* DogmaAttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE069962AD903440054EFCF /* DogmaAttributeView.swift */; };
+		BAE069992ADA03A80054EFCF /* groupIDs.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BAE069982ADA03A80054EFCF /* groupIDs.yaml */; };
+		BAE0699B2ADA03B30054EFCF /* categoryIDs.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BAE0699A2ADA03B30054EFCF /* categoryIDs.yaml */; };
+		BAE0699D2ADA03C10054EFCF /* typeIDs.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BAE0699C2ADA03C00054EFCF /* typeIDs.yaml */; };
+		BAE0699F2ADA03CB0054EFCF /* dogmaEffects.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BAE0699E2ADA03CA0054EFCF /* dogmaEffects.yaml */; };
+		BAE069A12ADA03D10054EFCF /* dogmaAttributes.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BAE069A02ADA03D10054EFCF /* dogmaAttributes.yaml */; };
+		BAE069A32ADA03D90054EFCF /* dogmaAttributeCategories.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BAE069A22ADA03D90054EFCF /* dogmaAttributeCategories.yaml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -926,6 +932,12 @@
 		BAE069902AD8F6960054EFCF /* DogmaExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DogmaExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAE069942AD901050054EFCF /* DogmaEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogmaEffectView.swift; sourceTree = "<group>"; };
 		BAE069962AD903440054EFCF /* DogmaAttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogmaAttributeView.swift; sourceTree = "<group>"; };
+		BAE069982ADA03A80054EFCF /* groupIDs.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = groupIDs.yaml; sourceTree = "<group>"; };
+		BAE0699A2ADA03B30054EFCF /* categoryIDs.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = categoryIDs.yaml; sourceTree = "<group>"; };
+		BAE0699C2ADA03C00054EFCF /* typeIDs.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = typeIDs.yaml; sourceTree = "<group>"; };
+		BAE0699E2ADA03CA0054EFCF /* dogmaEffects.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = dogmaEffects.yaml; sourceTree = "<group>"; };
+		BAE069A02ADA03D10054EFCF /* dogmaAttributes.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = dogmaAttributes.yaml; sourceTree = "<group>"; };
+		BAE069A22ADA03D90054EFCF /* dogmaAttributeCategories.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = dogmaAttributeCategories.yaml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -961,6 +973,12 @@
 		BA31498D2A1EF9660076E6DD = {
 			isa = PBXGroup;
 			children = (
+				BAE0699A2ADA03B30054EFCF /* categoryIDs.yaml */,
+				BAE069982ADA03A80054EFCF /* groupIDs.yaml */,
+				BAE0699C2ADA03C00054EFCF /* typeIDs.yaml */,
+				BAE0699E2ADA03CA0054EFCF /* dogmaEffects.yaml */,
+				BAE069A02ADA03D10054EFCF /* dogmaAttributes.yaml */,
+				BAE069A22ADA03D90054EFCF /* dogmaAttributeCategories.yaml */,
 				BAB271CF2A637916004F01B7 /* Packages */,
 				BA3149982A1EF9660076E6DD /* EveApp */,
 				BA3149AA2A1EF9680076E6DD /* EveAppTests */,
@@ -1750,8 +1768,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAE069A32ADA03D90054EFCF /* dogmaAttributeCategories.yaml in Resources */,
 				BA3149A22A1EF9680076E6DD /* Preview Assets.xcassets in Resources */,
 				BA31499E2A1EF9680076E6DD /* Assets.xcassets in Resources */,
+				BAE0699F2ADA03CB0054EFCF /* dogmaEffects.yaml in Resources */,
+				BAE0699D2ADA03C10054EFCF /* typeIDs.yaml in Resources */,
+				BAE069992ADA03A80054EFCF /* groupIDs.yaml in Resources */,
+				BAE069A12ADA03D10054EFCF /* dogmaAttributes.yaml in Resources */,
+				BAE0699B2ADA03B30054EFCF /* categoryIDs.yaml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

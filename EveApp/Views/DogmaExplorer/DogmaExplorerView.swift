@@ -11,6 +11,7 @@ import Fluent
 class DogmaExplorerViewModel: ObservableObject {
   var dogmaEffect: [DogmaEffectModel] = []
   var dogmaAttributes: [DogmaAttributeModel] = []
+  var dogmaAttributeCategories: [DogmaAttributeCategoryModel] = []
   
   init() {
     let dbManager = DataManager.shared.dbManager
@@ -24,9 +25,15 @@ class DogmaExplorerViewModel: ObservableObject {
         .all()
         .wait()
       
+      let dogmaAttributeCategoryModels = try DogmaAttributeCategoryModel.query(on: dbManager!.database)
+        .all()
+        .wait()
+      
       print("got \(dogmaEffect.count) dogma effect")
       self.dogmaEffect = dogmaEffect
       self.dogmaAttributes = dogmaAttribute
+      self.dogmaAttributeCategories = dogmaAttributeCategoryModels
+      
     } catch let error {
       print("dogma explorer init error \(error)")
     }
@@ -39,18 +46,32 @@ struct DogmaExplorerView: View {
   
   var body: some View {
     VStack {
-      HStack {
-        List {
-          ForEach($viewModel.dogmaEffect, id: \.id) { dogmaEffect in
-            DogmaEffectView(dogmaEffect: dogmaEffect)
-          }
-        }
-        List {
-          ForEach($viewModel.dogmaAttributes, id: \.id) { dogmaAttribute in
-            DogmaAttributeView(dogmaAttribute: dogmaAttribute)
-          }
-        }
-      }
+     // HStack {
+        //        List {
+        //          ForEach($viewModel.dogmaEffect, id: \.id) { dogmaEffect in
+        //            DogmaEffectView(dogmaEffect: dogmaEffect)
+        //          }
+        //        }
+        //        List {
+        //          ForEach($viewModel.dogmaAttributes, id: \.id) { dogmaAttribute in
+        //            if let viewModel = DogmaAttributeViewModel(
+        //              dogmaAttribute: dogmaAttribute.wrappedValue
+        //            ) {
+        //              DogmaAttributeView(viewModel: viewModel)
+        //            }
+        //          }
+        //        }
+        //      }
+        List($viewModel.dogmaAttributeCategories, id: \.id) { dogmaAttributeCategoryModel in
+            DogmaAttributeCategoryView(
+              viewModel:DogmaAttributeCategoryViewModel(
+                dogmaAttributeCategory: dogmaAttributeCategoryModel.wrappedValue
+              )
+            )
+            
+          
+        }.padding(5)
+      //}
     }
   }
 }

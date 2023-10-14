@@ -13,7 +13,7 @@ import Fluent
 
 class DBManager: ObservableObject {
     let databases: Databases
-    let dbName = "TestDB2"
+    let dbName = "TestDB3"
     
 //    var categories: [CategoryModel] {
 //      try! database.query(CategoryModel.self).all().wait()

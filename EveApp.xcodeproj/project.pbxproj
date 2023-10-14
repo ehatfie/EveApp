@@ -456,6 +456,8 @@
 		BAE0699F2ADA03CB0054EFCF /* dogmaEffects.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BAE0699E2ADA03CA0054EFCF /* dogmaEffects.yaml */; };
 		BAE069A12ADA03D10054EFCF /* dogmaAttributes.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BAE069A02ADA03D10054EFCF /* dogmaAttributes.yaml */; };
 		BAE069A32ADA03D90054EFCF /* dogmaAttributeCategories.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BAE069A22ADA03D90054EFCF /* dogmaAttributeCategories.yaml */; };
+		BAE069A52ADA04BE0054EFCF /* DogmaAttributeCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE069A42ADA04BE0054EFCF /* DogmaAttributeCategoryView.swift */; };
+		BAE069A72ADA1D110054EFCF /* DogmaAttributeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE069A62ADA1D110054EFCF /* DogmaAttributeDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -931,13 +933,15 @@
 		BAE0698B2AD4F5130054EFCF /* TypeDogmaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeDogmaModel.swift; sourceTree = "<group>"; };
 		BAE069902AD8F6960054EFCF /* DogmaExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DogmaExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAE069942AD901050054EFCF /* DogmaEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogmaEffectView.swift; sourceTree = "<group>"; };
-		BAE069962AD903440054EFCF /* DogmaAttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogmaAttributeView.swift; sourceTree = "<group>"; };
+		BAE069962AD903440054EFCF /* DogmaAttributeView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DogmaAttributeView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAE069982ADA03A80054EFCF /* groupIDs.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = groupIDs.yaml; sourceTree = "<group>"; };
 		BAE0699A2ADA03B30054EFCF /* categoryIDs.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = categoryIDs.yaml; sourceTree = "<group>"; };
 		BAE0699C2ADA03C00054EFCF /* typeIDs.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = typeIDs.yaml; sourceTree = "<group>"; };
 		BAE0699E2ADA03CA0054EFCF /* dogmaEffects.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = dogmaEffects.yaml; sourceTree = "<group>"; };
 		BAE069A02ADA03D10054EFCF /* dogmaAttributes.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = dogmaAttributes.yaml; sourceTree = "<group>"; };
 		BAE069A22ADA03D90054EFCF /* dogmaAttributeCategories.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = dogmaAttributeCategories.yaml; sourceTree = "<group>"; };
+		BAE069A42ADA04BE0054EFCF /* DogmaAttributeCategoryView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DogmaAttributeCategoryView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BAE069A62ADA1D110054EFCF /* DogmaAttributeDetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DogmaAttributeDetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1645,6 +1649,8 @@
 				BAE069902AD8F6960054EFCF /* DogmaExplorerView.swift */,
 				BAE069942AD901050054EFCF /* DogmaEffectView.swift */,
 				BAE069962AD903440054EFCF /* DogmaAttributeView.swift */,
+				BAE069A42ADA04BE0054EFCF /* DogmaAttributeCategoryView.swift */,
+				BAE069A62ADA1D110054EFCF /* DogmaAttributeDetailView.swift */,
 			);
 			path = DogmaExplorer;
 			sourceTree = "<group>";
@@ -1940,6 +1946,7 @@
 				BACB52942A686E770044CDA0 /* GetUniverseGraphicsGraphicIdNotFound.swift in Sources */,
 				BACB51CE2A686E770044CDA0 /* GetDogmaDynamicItemsTypeIdItemIdNotFound.swift in Sources */,
 				BACB519D2A686E770044CDA0 /* GetKillmailsKillmailIdKillmailHashUnprocessableEntity.swift in Sources */,
+				BAE069A52ADA04BE0054EFCF /* DogmaAttributeCategoryView.swift in Sources */,
 				BACB51692A686E760044CDA0 /* CharacterAPI.swift in Sources */,
 				BACB523C2A686E770044CDA0 /* GetCharactersCharacterIdBookmarksItem.swift in Sources */,
 				BACB52252A686E770044CDA0 /* GetUniverseConstellationsConstellationIdPosition.swift in Sources */,
@@ -1961,6 +1968,7 @@
 				BACB527F2A686E770044CDA0 /* GetLoyaltyStoresCorporationIdOffersNotFound.swift in Sources */,
 				BACB52632A686E770044CDA0 /* GetCorporationsCorporationIdFwStatsVictoryPoints.swift in Sources */,
 				BACB515D2A686E760044CDA0 /* Extensions.swift in Sources */,
+				BAE069A72ADA1D110054EFCF /* DogmaAttributeDetailView.swift in Sources */,
 				BACB520D2A686E770044CDA0 /* GetCharactersCharacterIdPlanetsPlanetIdFactoryDetails.swift in Sources */,
 				BAE0698C2AD4F5130054EFCF /* TypeDogmaModel.swift in Sources */,
 				BACB52752A686E770044CDA0 /* GetCharactersCharacterIdPlanets200Ok.swift in Sources */,

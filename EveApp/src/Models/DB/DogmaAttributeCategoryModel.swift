@@ -37,7 +37,7 @@ struct CreateDogmaAttributeCategoryModelMigration: Migration {
     func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(DogmaAttributeCategoryModel.schema)
             .id()
-            .field("categoryId", .string)
+            .field("categoryId", .int64)
             .field("categoryDescription", .string)
             .field("name", .string)
             .create()

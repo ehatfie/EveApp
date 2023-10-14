@@ -14,7 +14,7 @@ extension DBManager {
     do {
       try loadDogmaAttributeData()
       try loadDogmaEffectsData()
-      // try loadDogmaAttributeCategoryData()
+      try loadDogmaAttributeCategoryData()
     } catch let error {
       print("loadDogmaDataError \(error)")
     }

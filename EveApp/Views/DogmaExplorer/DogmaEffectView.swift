@@ -11,8 +11,12 @@ struct DogmaEffectView: View {
     @Binding var dogmaEffect: DogmaEffectModel
     
     var body: some View {
-        VStack {
-            Text(dogmaEffect.effectName)
+        VStack(alignment: .leading) {
+            HStack {
+                Text("\(dogmaEffect.effectID)")
+                Text(dogmaEffect.effectName)
+            }
+            
             Text(dogmaEffect.descriptionID ?? "")
             Text(dogmaEffect.displayNameID ?? "")
         }

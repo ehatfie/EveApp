@@ -50,6 +50,8 @@ final class GroupModel: Model {
     static let schema = Schemas.groups.rawValue
     @ID(key: .id) var id: UUID?
     
+    //@Parent(key: "categoryModel")var categoryModel: CategoryModel
+    
     @Field(key: "groupId") var groupId: Int64
     @Field(key: "anchorable") var anchorable: Bool
     @Field(key: "anchored") var anchored: Bool
@@ -92,6 +94,7 @@ struct CreateGroupModelMigration: Migration {
             .field("published", .bool)
             .field("useBasePrice", .bool)
             .create()
+            //.field("categoryModel", .uuid, .required, .references(Schemas.categories.rawValue, "id"))
     }
     
     func revert(on database: Database) -> EventLoopFuture<Void> {

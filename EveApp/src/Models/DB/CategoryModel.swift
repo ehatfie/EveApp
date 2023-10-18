@@ -17,6 +17,8 @@ enum Schemas: String {
     case typeDogmaInfo = "typeDogmaInfo"
     case typeDogmaAttributeInfo = "typeDogmaAttributeInfo"
     case typeDogmaEffectInfo = "typeDogmaEffectInfo"
+    case materialDataModel = "materialDataModel"
+    case typeMaterialsModel = "typeMaterialsModel"
 }
 
 final class CategoryModel: Model {
@@ -27,6 +29,8 @@ final class CategoryModel: Model {
     @Field(key: "categoryId") var categoryId: Int64
     @Field(key: "name") var name: String
     @Field(key: "published") var published: Bool
+    
+    //@Children(for: \.$categoryModel) var groups: [GroupModel]
     
     init() { }
     

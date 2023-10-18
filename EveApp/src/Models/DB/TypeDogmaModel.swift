@@ -31,15 +31,42 @@ final class TypeDogmaInfoModel: Model {
     @Field(key: "typeId") var typeId: Int64
     
     @Children(for: \.$typeDogmaInfoModel) var attributes: [TypeDogmaAttributeInfoModel]
-    
-    //@Children(for: \.$effectID) var effects: [TypeDogmaEffectInfoModel]
+    @Children(for: \.$typeDogmaInfoModel) var effects: [TypeDogmaEffectInfoModel]
     
     init() { }
     
-    init(typeId: Int64, attributes: [TypeDogmaAttributeInfoModel], effects: [TypeDogmaEffectInfoModel]) {
+    init(typeId: Int64) {
         self.id = UUID()
-        self.attributes = attributes
+        self.typeId = typeId
+        //self.attributes = attributes
         //self.effects = effects
+    }
+    
+//    struct CreateTypeDogmaInfoModel: Migration {
+//        func prepare(on database: Database) -> EventLoopFuture<Void> {
+//            database.schema(TypeDogmaInfoModel.schema)
+//                .id()
+//                .create()
+//        }
+//        
+//        func revert(on database: Database) -> EventLoopFuture<Void> {
+//            database.schema(TypeDogmaInfoModel.schema)
+//                .delete()
+//        }
+//    }
+}
+
+struct CreateTypeDogmaInfoModel: Migration {
+    func prepare(on database: Database) -> EventLoopFuture<Void> {
+        database.schema(TypeDogmaInfoModel.schema)
+            .id()
+            .field("typeId", .int64, .required)
+            .create()
+    }
+    
+    func revert(on database: Database) -> EventLoopFuture<Void> {
+        database.schema(TypeDogmaInfoModel.schema)
+            .delete()
     }
 }
 
@@ -50,15 +77,18 @@ final class TypeDogmaAttributeInfoModel: Model {
     
     @Parent(key: "typeDogmaInfoModel")
     var typeDogmaInfoModel: TypeDogmaInfoModel
-    
+    @Field(key: "typeId") var typeID: Int64
     @Field(key: "attributeId") var attributeID: Int
     @Field(key: "value") var value: Double
     
     init() { }
     
-    init(attributeID: Int, value: Double) {
+    init(typeID: Int64, attributeID: Int, value: Double) {
+        self.id = UUID()
+        self.typeID = typeID
         self.attributeID = attributeID
         self.value = value
+        //self.typeDogmaInfoModel = info
     }
 }
 
@@ -66,8 +96,8 @@ struct CreateTypeDogmaAttributeInfoModel: Migration {
     func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(TypeDogmaAttributeInfoModel.schema)
             .id()
-            .field("typeDogmaInfoModel", .uuid, .required, .references("typeDogmaInfoMode", "id"))
-            .field("itemId", .int64, .required)
+            .field("typeDogmaInfoModel", .uuid, .required, .references(Schemas.typeDogmaInfo.rawValue, "id"))
+            .field("typeId", .int64, .required)
             .field("attributeId", .int, .required)
             .field("value", .double, .required)
             .create()
@@ -84,21 +114,26 @@ final class TypeDogmaEffectInfoModel: Model {
     
     @ID(key: .id) var id: UUID?
     
+    @Parent(key: "typeDogmaInfoModel")
+    var typeDogmaInfoModel: TypeDogmaInfoModel
+    
     @Field(key: "effectID") var effectID: Int
     @Field(key: "isDefault") var isDefault: Bool
     
     init() { }
     
     init(effectID: Int, isDefault: Bool) {
+        self.id = UUID()
         self.effectID = effectID
         self.isDefault = isDefault
     }
 }
 
-struct CreateTypeDogmEffectInfoModel: Migration {
+struct CreateTypeDogmaEffectInfoModel: Migration {
     func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(TypeDogmaEffectInfoModel.schema)
             .id()
+            .field("typeDogmaInfoModel", .uuid, .required, .references(Schemas.typeDogmaInfo.rawValue, "id"))
             .field("effectID", .int, .required)
             .field("isDefault", .bool, .required)
             .create()

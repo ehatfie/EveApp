@@ -43,6 +43,10 @@
 		BA314A0D2A5CF66C0076E6DD /* GroupInfoResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA314A0C2A5CF66C0076E6DD /* GroupInfoResponseData.swift */; };
 		BA314A102A5CF8B10076E6DD /* ItemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA314A0F2A5CF8B10076E6DD /* ItemCategory.swift */; };
 		BA314A132A5D05590076E6DD /* ItemTypeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA314A122A5D05590076E6DD /* ItemTypeResponseData.swift */; };
+		BA7100882ADB31F5001CD301 /* TypeMaterialsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7100872ADB31F5001CD301 /* TypeMaterialsModel.swift */; };
+		BA71008A2ADB3360001CD301 /* typeMaterials.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA7100892ADB3360001CD301 /* typeMaterials.yaml */; };
+		BA71008E2ADB453B001CD301 /* ItemDogmaExplorerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA71008D2ADB453B001CD301 /* ItemDogmaExplorerView.swift */; };
+		BA7100902ADF64F6001CD301 /* DBManager+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA71008F2ADF64F6001CD301 /* DBManager+Mocks.swift */; };
 		BAB271D52A6867B5004F01B7 /* DataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB271D42A6867B4004F01B7 /* DataFetcher.swift */; };
 		BAB271F72A686918004F01B7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BAB271F62A686918004F01B7 /* Alamofire */; };
 		BACB51582A686E760044CDA0 /* JSONEncodableEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB4FD62A686E740044CDA0 /* JSONEncodableEncoding.swift */; };
@@ -458,6 +462,8 @@
 		BAE069A32ADA03D90054EFCF /* dogmaAttributeCategories.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BAE069A22ADA03D90054EFCF /* dogmaAttributeCategories.yaml */; };
 		BAE069A52ADA04BE0054EFCF /* DogmaAttributeCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE069A42ADA04BE0054EFCF /* DogmaAttributeCategoryView.swift */; };
 		BAE069A72ADA1D110054EFCF /* DogmaAttributeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE069A62ADA1D110054EFCF /* DogmaAttributeDetailView.swift */; };
+		BAE069A92ADA240A0054EFCF /* typeDogma.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BAE069A82ADA24090054EFCF /* typeDogma.yaml */; };
+		BAE069AB2ADB30140054EFCF /* DBManager+Industry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE069AA2ADB30140054EFCF /* DBManager+Industry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -531,6 +537,10 @@
 		BA314A0C2A5CF66C0076E6DD /* GroupInfoResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInfoResponseData.swift; sourceTree = "<group>"; };
 		BA314A0F2A5CF8B10076E6DD /* ItemCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategory.swift; sourceTree = "<group>"; };
 		BA314A122A5D05590076E6DD /* ItemTypeResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypeResponseData.swift; sourceTree = "<group>"; };
+		BA7100872ADB31F5001CD301 /* TypeMaterialsModel.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TypeMaterialsModel.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA7100892ADB3360001CD301 /* typeMaterials.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = typeMaterials.yaml; sourceTree = "<group>"; };
+		BA71008D2ADB453B001CD301 /* ItemDogmaExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemDogmaExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA71008F2ADF64F6001CD301 /* DBManager+Mocks.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+Mocks.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BAB271D42A6867B4004F01B7 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
 		BACB4FD62A686E740044CDA0 /* JSONEncodableEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONEncodableEncoding.swift; sourceTree = "<group>"; };
 		BACB4FD72A686E740044CDA0 /* APIs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIs.swift; sourceTree = "<group>"; };
@@ -920,7 +930,7 @@
 		BACB52DC2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemCategoryGroupsListView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BACB52DE2A68CCD70044CDA0 /* ItemTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypes.swift; sourceTree = "<group>"; };
 		BAE069672AC89DBA0054EFCF /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
-		BAE069692AC89E350054EFCF /* AppModel+loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppModel+loading.swift"; sourceTree = "<group>"; };
+		BAE069692AC89E350054EFCF /* AppModel+loading.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "AppModel+loading.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BAE0696C2AC89E630054EFCF /* GroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupModel.swift; sourceTree = "<group>"; };
 		BAE0696E2AC89E780054EFCF /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		BAE069702AC89E910054EFCF /* TypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeModel.swift; sourceTree = "<group>"; };
@@ -942,6 +952,8 @@
 		BAE069A22ADA03D90054EFCF /* dogmaAttributeCategories.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = dogmaAttributeCategories.yaml; sourceTree = "<group>"; };
 		BAE069A42ADA04BE0054EFCF /* DogmaAttributeCategoryView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DogmaAttributeCategoryView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAE069A62ADA1D110054EFCF /* DogmaAttributeDetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DogmaAttributeDetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BAE069A82ADA24090054EFCF /* typeDogma.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = typeDogma.yaml; sourceTree = "<group>"; };
+		BAE069AA2ADB30140054EFCF /* DBManager+Industry.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+Industry.swift"; sourceTree = "<group>"; tabWidth = 2; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -983,6 +995,8 @@
 				BAE0699E2ADA03CA0054EFCF /* dogmaEffects.yaml */,
 				BAE069A02ADA03D10054EFCF /* dogmaAttributes.yaml */,
 				BAE069A22ADA03D90054EFCF /* dogmaAttributeCategories.yaml */,
+				BAE069A82ADA24090054EFCF /* typeDogma.yaml */,
+				BA7100892ADB3360001CD301 /* typeMaterials.yaml */,
 				BAB271CF2A637916004F01B7 /* Packages */,
 				BA3149982A1EF9660076E6DD /* EveApp */,
 				BA3149AA2A1EF9680076E6DD /* EveAppTests */,
@@ -1058,6 +1072,7 @@
 		BA3149CC2A1EFA720076E6DD /* src */ = {
 			isa = PBXGroup;
 			children = (
+				BA7100912ADF6562001CD301 /* Mocks */,
 				BAE069722AC8A1370054EFCF /* DBManager */,
 				BAE069662AC89DA90054EFCF /* AppModel */,
 				BACB4A642A686D040044CDA0 /* APIClient */,
@@ -1160,6 +1175,7 @@
 				BACB52DA2A68B9700044CDA0 /* ItemGroupView.swift */,
 				BACB52DC2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift */,
 				BAE0697D2AC8CBE10054EFCF /* ItemTypeDetailView.swift */,
+				BA71008D2ADB453B001CD301 /* ItemDogmaExplorerView.swift */,
 			);
 			path = ItemExplorer;
 			sourceTree = "<group>";
@@ -1187,6 +1203,13 @@
 				BACB52DE2A68CCD70044CDA0 /* ItemTypes.swift */,
 			);
 			path = ItemTypes;
+			sourceTree = "<group>";
+		};
+		BA7100912ADF6562001CD301 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		BAB271CF2A637916004F01B7 /* Packages */ = {
@@ -1623,6 +1646,7 @@
 		BAE0696B2AC89E500054EFCF /* DB */ = {
 			isa = PBXGroup;
 			children = (
+				BAE069AC2ADB30F80054EFCF /* Industry */,
 				BAE0696C2AC89E630054EFCF /* GroupModel.swift */,
 				BAE0696E2AC89E780054EFCF /* CategoryModel.swift */,
 				BAE069702AC89E910054EFCF /* TypeModel.swift */,
@@ -1639,6 +1663,8 @@
 			children = (
 				BAE069732AC8A1420054EFCF /* DBManager.swift */,
 				BAE069752AC8A2900054EFCF /* DBManager+loading.swift */,
+				BAE069AA2ADB30140054EFCF /* DBManager+Industry.swift */,
+				BA71008F2ADF64F6001CD301 /* DBManager+Mocks.swift */,
 			);
 			path = DBManager;
 			sourceTree = "<group>";
@@ -1653,6 +1679,14 @@
 				BAE069A62ADA1D110054EFCF /* DogmaAttributeDetailView.swift */,
 			);
 			path = DogmaExplorer;
+			sourceTree = "<group>";
+		};
+		BAE069AC2ADB30F80054EFCF /* Industry */ = {
+			isa = PBXGroup;
+			children = (
+				BA7100872ADB31F5001CD301 /* TypeMaterialsModel.swift */,
+			);
+			path = Industry;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1775,10 +1809,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAE069A32ADA03D90054EFCF /* dogmaAttributeCategories.yaml in Resources */,
+				BA71008A2ADB3360001CD301 /* typeMaterials.yaml in Resources */,
 				BA3149A22A1EF9680076E6DD /* Preview Assets.xcassets in Resources */,
 				BA31499E2A1EF9680076E6DD /* Assets.xcassets in Resources */,
 				BAE0699F2ADA03CB0054EFCF /* dogmaEffects.yaml in Resources */,
 				BAE0699D2ADA03C10054EFCF /* typeIDs.yaml in Resources */,
+				BAE069A92ADA240A0054EFCF /* typeDogma.yaml in Resources */,
 				BAE069992ADA03A80054EFCF /* groupIDs.yaml in Resources */,
 				BAE069A12ADA03D10054EFCF /* dogmaAttributes.yaml in Resources */,
 				BAE0699B2ADA03B30054EFCF /* categoryIDs.yaml in Resources */,
@@ -1949,8 +1985,11 @@
 				BAE069A52ADA04BE0054EFCF /* DogmaAttributeCategoryView.swift in Sources */,
 				BACB51692A686E760044CDA0 /* CharacterAPI.swift in Sources */,
 				BACB523C2A686E770044CDA0 /* GetCharactersCharacterIdBookmarksItem.swift in Sources */,
+				BA71008E2ADB453B001CD301 /* ItemDogmaExplorerView.swift in Sources */,
 				BACB52252A686E770044CDA0 /* GetUniverseConstellationsConstellationIdPosition.swift in Sources */,
+				BA7100902ADF64F6001CD301 /* DBManager+Mocks.swift in Sources */,
 				BACB51FE2A686E770044CDA0 /* GetContractsPublicBidsContractIdNotFound.swift in Sources */,
+				BAE069AB2ADB30140054EFCF /* DBManager+Industry.swift in Sources */,
 				BACB516D2A686E760044CDA0 /* ContractsAPI.swift in Sources */,
 				BACB52BE2A686E770044CDA0 /* GetDogmaDynamicItemsTypeIdItemIdDogmaAttribute.swift in Sources */,
 				BA314A102A5CF8B10076E6DD /* ItemCategory.swift in Sources */,
@@ -2233,6 +2272,7 @@
 				BACB52D72A686E780044CDA0 /* Models.swift in Sources */,
 				BA3149FA2A5386570076E6DD /* DataManager+Authentication.swift in Sources */,
 				BACB52672A686E770044CDA0 /* GetUniverseSystemJumps200Ok.swift in Sources */,
+				BA7100882ADB31F5001CD301 /* TypeMaterialsModel.swift in Sources */,
 				BACB52102A686E770044CDA0 /* GetCorporationsCorporationIdDivisionsOk.swift in Sources */,
 				BACB51B72A686E770044CDA0 /* GetCharactersCharacterIdClonesHomeLocation.swift in Sources */,
 				BA31499A2A1EF9660076E6DD /* EveAppApp.swift in Sources */,

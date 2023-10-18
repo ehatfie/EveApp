@@ -61,10 +61,17 @@ struct HomeView: View {
                 }, label: {
                     Text("CharacterInfo")
                 })
+                
                 NavigationLink(destination: {
                     SkillQueueView(viewModel: SkillQueueViewModel())
                 }, label: {
                     Text("Skill Queue")
+                })
+                
+                NavigationLink(destination: {
+                    ItemDogmaExplorerView(viewModel: ItemDogmaExplorerViewModel())
+                }, label: {
+                    Text("Item dogma explorer view")
                 })
                 
                 NavigationLink(destination: {
@@ -84,9 +91,6 @@ struct HomeView: View {
                 }, label: {
                     Text("Login View")
                 })
-                
-                
-
             }
         }
         VStack {

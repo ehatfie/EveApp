@@ -28,7 +28,6 @@ class DogmaAttributeCategoryViewModel: ObservableObject {
 struct DogmaAttributeCategoryView: View {
   @ObservedObject var viewModel: DogmaAttributeCategoryViewModel
   
-  
   var body: some View {
     VStack(alignment: .leading) {
       HStack {

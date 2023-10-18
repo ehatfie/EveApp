@@ -10,7 +10,6 @@ import SwiftUI
 struct DogmaAttributeDetailView: View {
   @Binding var dogmaAttribute: DogmaAttributeModel
   
-  
   var body: some View {
     VStack(alignment: .leading) {
       HStack {

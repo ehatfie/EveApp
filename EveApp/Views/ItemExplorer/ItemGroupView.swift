@@ -10,69 +10,83 @@ import Combine
 import Fluent
 
 class ItemGroupViewModel: ObservableObject {
-    let itemGroup: GroupModel
+  let itemGroup: GroupModel
+  
+  @Published var itemTypes: [ItemType]
+  
+  var types: [TypeModel] = []
+  
+  var cancellable: AnyCancellable? = nil
+  
+  init(itemGroup: GroupModel) {
+    print("ItemGroupViewModel init \(itemGroup.groupId)")
+    self.itemGroup = itemGroup
+    self.itemTypes = []
     
-    @Published var itemTypes: [ItemType]
+    //loadTypes()
+    let dbManager = DataManager.shared.dbManager
     
-    var types: [TypeModel]
+    cancellable = dbManager?
+      .$dbLoaded
+      .sink(receiveValue: { value in
+        if value == true {
+          print("")
+          self.loadTypesData()
+        }
+      })
+  }
+  
+  func loadTypesData() {
+    print("loadTypesData()")
+    let dbManager = DataManager.shared.dbManager
     
-    var cancellable: AnyCancellable? = nil
+    let types = try! TypeModel.query(on: dbManager!.database)
+      .filter(\.$groupID == itemGroup.groupId)
+      .all()
+      .wait()
     
-    init(itemGroup: GroupModel) {
-        print("ItemGroupViewModel init \(itemGroup.groupId)")
-        self.itemGroup = itemGroup
-        self.itemTypes = []
-        
-        //loadTypes()
-        let dbManager = DataManager.shared.dbManager
-        
-        let types = try! TypeModel.query(on: dbManager!.database)
-            .filter(\.$groupID == itemGroup.groupId)
-            .all()
-            .wait()
-        
-        self.types = types
-    }
-    
-    func loadTypes() {
-        print("loadTypes()")
-        DataManager.shared.loadTypeData()
-//        guard let itemGroupInfo = itemGroup.groupInfoResponseData else {
-//            DataManager.shared.fetchGroupInfoFor(groupId: itemGroup.groupId)
-//            return
-//        }
-    }
+    self.types = types
+  }
+  
+  func loadTypes() {
+    print("loadTypes()")
+    //DataManager.shared.loadTypeData()
+    //        guard let itemGroupInfo = itemGroup.groupInfoResponseData else {
+    //            DataManager.shared.fetchGroupInfoFor(groupId: itemGroup.groupId)
+    //            return
+    //        }
+  }
 }
 
 struct ItemGroupView: View {
-    @ObservedObject var viewModel: ItemGroupViewModel
-    
-    var body: some View {
-      NavigationView {
-        VStack {
-          List {
-            ForEach(viewModel.types, id: \.id) { type in
-              NavigationLink(destination: {
-                ItemTypeDetailView(typeModel: type)
-              }, label: {
-                Text(type.name)
-              })
-            }
+  @ObservedObject var viewModel: ItemGroupViewModel
+  
+  var body: some View {
+    NavigationView {
+      VStack {
+        List {
+          ForEach(viewModel.types, id: \.id) { type in
+            NavigationLink(destination: {
+              ItemTypeDetailView(typeModel: type)
+            }, label: {
+              Text(type.name)
+            })
           }
-          
         }
-      }.onAppear {
-          self.viewModel.loadTypes()
+        
       }
+    }.onAppear {
+      self.viewModel.loadTypes()
     }
+  }
 }
 
 struct ItemTypesView_Previews: PreviewProvider {
-    static var previews: some View {
-        ItemGroupView(
-            viewModel: ItemGroupViewModel(
-                itemGroup: GroupModel()
-            )
-        )
-    }
+  static var previews: some View {
+    ItemGroupView(
+      viewModel: ItemGroupViewModel(
+        itemGroup: GroupModel()
+      )
+    )
+  }
 }

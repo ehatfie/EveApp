@@ -20,12 +20,24 @@ class ItemCategoryGroupsListViewModel: ObservableObject {
     self.categoryModel = category
     print("ItemCategoryGroupListVewiModel init")
     let dbManager = DataManager.shared.dbManager
-
+    
+    cancellable = dbManager?
+      .$dbLoaded
+      .sink(receiveValue: { value in
+        if value == true {
+          print("")
+          self.loadGroupsData()
+        }
+      })
+  }
+  
+  func loadGroupsData() {
+    let dbManager = DataManager.shared.dbManager
     let groups = try! GroupModel.query(on: dbManager!.database)
-      .filter(\.$categoryID == categoryModel.categoryId)
+      .filter(\.$categoryID == self.categoryModel.categoryId)
       .all()
       .wait()
-    print("got \(groups.count) for \(category.categoryId)")
+    print("got \(groups.count) for \(self.categoryModel.categoryId)")
     self.groups = groups
   }
     

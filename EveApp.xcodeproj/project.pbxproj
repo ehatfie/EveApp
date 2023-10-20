@@ -47,6 +47,7 @@
 		BA71008A2ADB3360001CD301 /* typeMaterials.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA7100892ADB3360001CD301 /* typeMaterials.yaml */; };
 		BA71008E2ADB453B001CD301 /* ItemDogmaExplorerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA71008D2ADB453B001CD301 /* ItemDogmaExplorerView.swift */; };
 		BA7100902ADF64F6001CD301 /* DBManager+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA71008F2ADF64F6001CD301 /* DBManager+Mocks.swift */; };
+		BA7100942ADF73AE001CD301 /* ModelGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7100932ADF73AE001CD301 /* ModelGenerator.swift */; };
 		BAB271D52A6867B5004F01B7 /* DataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB271D42A6867B4004F01B7 /* DataFetcher.swift */; };
 		BAB271F72A686918004F01B7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BAB271F62A686918004F01B7 /* Alamofire */; };
 		BACB51582A686E760044CDA0 /* JSONEncodableEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB4FD62A686E740044CDA0 /* JSONEncodableEncoding.swift */; };
@@ -541,6 +542,7 @@
 		BA7100892ADB3360001CD301 /* typeMaterials.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = typeMaterials.yaml; sourceTree = "<group>"; };
 		BA71008D2ADB453B001CD301 /* ItemDogmaExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemDogmaExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA71008F2ADF64F6001CD301 /* DBManager+Mocks.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+Mocks.swift"; sourceTree = "<group>"; tabWidth = 2; };
+		BA7100932ADF73AE001CD301 /* ModelGenerator.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ModelGenerator.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAB271D42A6867B4004F01B7 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
 		BACB4FD62A686E740044CDA0 /* JSONEncodableEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONEncodableEncoding.swift; sourceTree = "<group>"; };
 		BACB4FD72A686E740044CDA0 /* APIs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIs.swift; sourceTree = "<group>"; };
@@ -1072,6 +1074,7 @@
 		BA3149CC2A1EFA720076E6DD /* src */ = {
 			isa = PBXGroup;
 			children = (
+				BA7100922ADF739F001CD301 /* ModelGenerator */,
 				BA7100912ADF6562001CD301 /* Mocks */,
 				BAE069722AC8A1370054EFCF /* DBManager */,
 				BAE069662AC89DA90054EFCF /* AppModel */,
@@ -1210,6 +1213,14 @@
 			children = (
 			);
 			path = Mocks;
+			sourceTree = "<group>";
+		};
+		BA7100922ADF739F001CD301 /* ModelGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				BA7100932ADF73AE001CD301 /* ModelGenerator.swift */,
+			);
+			path = ModelGenerator;
 			sourceTree = "<group>";
 		};
 		BAB271CF2A637916004F01B7 /* Packages */ = {
@@ -2217,6 +2228,7 @@
 				BACB51752A686E760044CDA0 /* SkillsAPI.swift in Sources */,
 				BA314A0D2A5CF66C0076E6DD /* GroupInfoResponseData.swift in Sources */,
 				BACB51BE2A686E770044CDA0 /* GetIndustryFacilities200Ok.swift in Sources */,
+				BA7100942ADF73AE001CD301 /* ModelGenerator.swift in Sources */,
 				BACB528A2A686E770044CDA0 /* GetUniverseTypesTypeIdDogmaEffect.swift in Sources */,
 				BACB52232A686E770044CDA0 /* GetFwLeaderboardsCorporationsKills.swift in Sources */,
 				BA314A0A2A5CF4EC0076E6DD /* CategoryGroupsView.swift in Sources */,

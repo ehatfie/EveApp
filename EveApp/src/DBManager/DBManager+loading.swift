@@ -326,8 +326,8 @@ extension DBManager {
     
     try result.save(on: database)
       .wait()
-    try result.$effects.create(effects, on: database).await()
-    try result.$attributes.create(attributes, on: database).await()
+    //try result.$effects.create(effects, on: database).wait()
+    //try result.$attributes.create(attributes, on: database).await()
   }
 }
 

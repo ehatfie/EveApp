@@ -92,3 +92,5 @@ iOSInjectionProject/
 # Yaml
 
 *.yaml
+
+EveApp.xcodeproj/xcuserdata/*

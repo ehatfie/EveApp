@@ -31,22 +31,22 @@ class DBManager: ObservableObject {
   @Published var dbLoaded: Bool = false
   
   init() {
-    let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-    let threadPool = NIOThreadPool(numberOfThreads: 1)
+    let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 8)
+    let threadPool = NIOThreadPool(numberOfThreads: 8)
     
     threadPool.start()
     
     databases = Databases(threadPool: threadPool, on: eventLoopGroup)
     
-    //databases.use(.sqlite(.file(self.dbName)), as: .sqlite)
-    databases.use(.sqlite(.memory), as: .sqlite)
+    databases.use(.sqlite(.file(self.dbName)), as: .sqlite)
+    //databases.use(.sqlite(.memory), as: .sqlite)
     databases.default(to: .sqlite)
     
     setup()
-    
-    Task {
-      await loadMockedData()
-    }
+    loadStaticData()
+//    Task {
+//      await loadMockedData()
+//    }
     
     
     //loadDogmaInfoData()
@@ -98,14 +98,30 @@ class DBManager: ObservableObject {
     }
   }
   
-  func loadData() {
+  func loadStaticData() {
+    Task {
+      async let loadData: Void = loadData()
+      async let loadIndustryData: Void = loadIndustryData()
+      
+      _ = await [loadData, loadIndustryData]
+    }
+    
+  }
+  
+  func loadData() async {
     print("loadData()")
     do {
-      //try loadCategoryData()
-      //try loadGroupData()
-      //try loadTypeData()
-      loadDogmaData()
+      async let loadCategoryData: Void = loadCategoryData()
+      async let loadGroupData: Void = loadGroupData()
+      async let loadTypeData: Void = loadTypeData()
+      async let loadDogmaData: Void = loadDogmaData()
       
+      _ = try await [
+        loadCategoryData,
+        loadGroupData,
+        loadTypeData,
+        loadDogmaData
+      ]
     } catch let error {
       print("Load data error \(error)")
     }

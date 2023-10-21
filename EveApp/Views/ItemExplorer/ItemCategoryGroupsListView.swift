@@ -44,7 +44,7 @@ class ItemCategoryGroupsListViewModel: ObservableObject {
   func loadGroups() {
     print("loadGroups()")
       
-    DataManager.shared.loadGroupData()
+    //DataManager.shared.loadGroupData()
 
   }
 }

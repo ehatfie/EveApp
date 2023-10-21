@@ -66,7 +66,7 @@ class ItemExplorerViewModel: ObservableObject {
     }
     
     func fetchCategories() {
-        DataManager.shared.fetchCategories()
+        //DataManager.shared.fetchCategories()
     }
 }
 

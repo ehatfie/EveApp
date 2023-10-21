@@ -61,8 +61,8 @@ extension DataManager {
         }
     }
     
-    func fetchCategories() {
-        try? self.dbManager?.loadCategoryData()
+    func fetchCategories() async {
+        try? await self.dbManager?.loadCategoryData()
         print("fetchCategories()")
 
         return

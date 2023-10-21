@@ -69,6 +69,7 @@ final class TypeMaterialsModel: Model {
   @ID(key: .id) var id: UUID?
   
   @Field(key: "typeID") var typeID: Int64
+  
   @Children(for: \.$typeMaterialsModel) var materials: [MaterialDataModel]
   
   init() { }
@@ -82,6 +83,7 @@ final class TypeMaterialsModel: Model {
     func prepare(on database: FluentKit.Database) -> NIOCore.EventLoopFuture<Void> {
       database.schema(TypeMaterialsModel.schema)
         .id()
+        .field("typeID", .int64, .required)
         .create()
     }
     
@@ -90,4 +92,11 @@ final class TypeMaterialsModel: Model {
         .delete()
     }
   }
+}
+
+// can be for the names
+final class Pet: Fields {
+  @Field(key: "materialTypeID") var materialTypeID: Int64
+  @Field(key: "quantity") var quantity: Int64
+  
 }

@@ -87,6 +87,12 @@ struct HomeView: View {
                 })
                 
                 NavigationLink(destination: {
+                    ItemMaterialExplorerView(viewModel: ItemMaterialExplorerViewModel())
+                }, label: {
+                    Text("Item Material Explorer")
+                })
+                
+                NavigationLink(destination: {
                     LoginView()
                 }, label: {
                     Text("Login View")

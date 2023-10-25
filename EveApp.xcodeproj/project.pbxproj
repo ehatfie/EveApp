@@ -545,7 +545,7 @@
 		BA71008D2ADB453B001CD301 /* ItemDogmaExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemDogmaExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA71008F2ADF64F6001CD301 /* DBManager+Mocks.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+Mocks.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BA7100932ADF73AE001CD301 /* ModelGenerator.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ModelGenerator.swift; sourceTree = "<group>"; tabWidth = 2; };
-		BA7100982AE36799001CD301 /* ItemMaterialExplorerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemMaterialExplorerView.swift; sourceTree = "<group>"; };
+		BA7100982AE36799001CD301 /* ItemMaterialExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemMaterialExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA71009D2AE36B03001CD301 /* ItemMaterialDetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemMaterialDetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAB271D42A6867B4004F01B7 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
 		BACB4FD62A686E740044CDA0 /* JSONEncodableEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONEncodableEncoding.swift; sourceTree = "<group>"; };

@@ -73,7 +73,6 @@ struct CategoryGroupsView: View {
     var body: some View {
         NavigationView {
             VStack {
-                
                 List(viewModel.groups, id: \.groupId) { group in
                     NavigationLink(destination: {
 //                        ItemGroupView(

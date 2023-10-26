@@ -12,7 +12,8 @@ extension DBManager {
   
   func loadIndustryData() async {
     do {
-      try await loadTypeMaterialData()
+      //try await loadTypeMaterialData()
+      try await loadBlueprintData()
     } catch let error {
       print("loadIndustryData error \(error)")
     }
@@ -44,5 +45,22 @@ extension DBManager {
     print("got \(typeMaterials.count)")
     
     print("loadTypeMaterialData() - End; Took - \(start.timeIntervalSinceNow * -1)")
+  }
+  
+  func loadBlueprintData() async throws {
+    print("loadBlueprintData() - Start")
+    
+    let blueprintData = try await readYamlAsync(for: .blueprints, type: BlueprintData.self)
+    
+    
+    let blueprintModels = blueprintData.map { key, value in
+        return BlueprintModel(data: value)
+    }
+    
+    let saveStart = Date()
+    
+    try await splitAndSave(splits: 2, models: blueprintModels)
+    
+    print("saved \(blueprintData.count) blueprints; took \(saveStart.timeIntervalSinceNow * -1)")
   }
 }

@@ -19,6 +19,7 @@ enum Schemas: String {
     case typeDogmaEffectInfo = "typeDogmaEffectInfo"
     case materialDataModel = "materialDataModel"
     case typeMaterialsModel = "typeMaterialsModel"
+    case blueprintModel = "blueprintModel"
 }
 
 final class CategoryModel: Model {

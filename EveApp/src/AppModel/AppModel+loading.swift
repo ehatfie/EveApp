@@ -18,6 +18,7 @@ enum YamlFiles: String {
   case dogmaAttributeCategories = "dogmaAttributeCategories"
   case typeDogmaInfo = "typeDogmaInfo"
   case typeMaterials = "typeMaterials"
+  case blueprints = "blueprints"
 }
 
 

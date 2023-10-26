@@ -93,6 +93,12 @@ struct HomeView: View {
                 })
                 
                 NavigationLink(destination: {
+                    BlueprintExplorerView()
+                }, label: {
+                    Text("Blueprint Explorer")
+                })
+                
+                NavigationLink(destination: {
                     LoginView()
                 }, label: {
                     Text("Login View")

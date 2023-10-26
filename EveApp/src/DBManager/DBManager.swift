@@ -38,8 +38,8 @@ class DBManager: ObservableObject {
     
     databases = Databases(threadPool: threadPool, on: eventLoopGroup)
     
-    databases.use(.sqlite(.file(self.dbName)), as: .sqlite)
-    //databases.use(.sqlite(.memory), as: .sqlite)
+    //databases.use(.sqlite(.file(self.dbName)), as: .sqlite)
+    databases.use(.sqlite(.memory), as: .sqlite)
     databases.default(to: .sqlite)
     
     setup()
@@ -75,6 +75,7 @@ class DBManager: ObservableObject {
     try? setupTypeDogmaInfoModel()
     
     try? setupTypeMaterialModels()
+    try? setupBlueprintModel()
   }
   
   func loadMockedData() async  {
@@ -100,10 +101,12 @@ class DBManager: ObservableObject {
   
   func loadStaticData() {
     Task {
-      async let loadData: Void = loadData()
+      //async let loadData: Void = loadData()
       async let loadIndustryData: Void = loadIndustryData()
       
-      _ = await [loadData, loadIndustryData]
+      _ = await [
+ //       loadData,
+        loadIndustryData]
     }
     
   }
@@ -192,6 +195,12 @@ class DBManager: ObservableObject {
       .wait()
     
     try MaterialDataModel.CreateMaterialDataModelMigration()
+      .prepare(on: database)
+      .wait()
+  }
+  
+  func setupBlueprintModel() throws {
+    try BlueprintModel.ModelMigration()
       .prepare(on: database)
       .wait()
   }

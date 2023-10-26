@@ -25,7 +25,7 @@ struct BlueprintExplorerView: View {
   
   var body: some View {
     List(items, id: \.id) { blueprint in
-      Text("\(blueprint.blueprintTypeID)")
+      BlueprintDetailView(blueprint: blueprint)
     }
     .onAppear {
       loadData()

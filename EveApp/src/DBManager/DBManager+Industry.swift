@@ -50,6 +50,11 @@ extension DBManager {
   func loadBlueprintData() async throws {
     print("loadBlueprintData() - Start")
     
+    
+    guard try await self.database.query(BlueprintModel.self).count().get() == 0 else {
+      return
+    }
+    
     let blueprintData = try await readYamlAsync(for: .blueprints, type: BlueprintData.self)
     
     

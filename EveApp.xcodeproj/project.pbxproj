@@ -53,6 +53,7 @@
 		BA7100A02AE89483001CD301 /* BlueprintModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA71009F2AE89483001CD301 /* BlueprintModel.swift */; };
 		BA7100A22AE898CA001CD301 /* blueprints.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA7100A12AE898CA001CD301 /* blueprints.yaml */; };
 		BA7100A52AEA1969001CD301 /* BlueprintExplorerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7100A42AEA1969001CD301 /* BlueprintExplorerView.swift */; };
+		BA7100A72AEB2D05001CD301 /* BlueprintDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */; };
 		BAB271D52A6867B5004F01B7 /* DataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB271D42A6867B4004F01B7 /* DataFetcher.swift */; };
 		BAB271F72A686918004F01B7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BAB271F62A686918004F01B7 /* Alamofire */; };
 		BACB51582A686E760044CDA0 /* JSONEncodableEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB4FD62A686E740044CDA0 /* JSONEncodableEncoding.swift */; };
@@ -553,6 +554,7 @@
 		BA71009F2AE89483001CD301 /* BlueprintModel.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintModel.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA7100A12AE898CA001CD301 /* blueprints.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = blueprints.yaml; sourceTree = "<group>"; };
 		BA7100A42AEA1969001CD301 /* BlueprintExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintDetailView.swift; sourceTree = "<group>"; };
 		BAB271D42A6867B4004F01B7 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
 		BACB4FD62A686E740044CDA0 /* JSONEncodableEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONEncodableEncoding.swift; sourceTree = "<group>"; };
 		BACB4FD72A686E740044CDA0 /* APIs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIs.swift; sourceTree = "<group>"; };
@@ -1257,6 +1259,7 @@
 			isa = PBXGroup;
 			children = (
 				BA7100A42AEA1969001CD301 /* BlueprintExplorerView.swift */,
+				BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */,
 			);
 			path = BlueprintExplorer;
 			sourceTree = "<group>";
@@ -2218,6 +2221,7 @@
 				BACB52272A686E770044CDA0 /* GetCharactersCharacterIdContacts200Ok.swift in Sources */,
 				BACB51652A686E760044CDA0 /* AssetsAPI.swift in Sources */,
 				BACB52792A686E770044CDA0 /* GetCharactersCharacterIdMedals200Ok.swift in Sources */,
+				BA7100A72AEB2D05001CD301 /* BlueprintDetailView.swift in Sources */,
 				BACB52B62A686E770044CDA0 /* GetCorporationsCorporationIdStructuresService.swift in Sources */,
 				BACB51E22A686E770044CDA0 /* PostCorporationsCorporationIdAssetsLocationsNotFound.swift in Sources */,
 				BACB51F62A686E770044CDA0 /* GetUniverseAncestries200Ok.swift in Sources */,

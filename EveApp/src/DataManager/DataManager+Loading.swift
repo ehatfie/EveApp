@@ -42,18 +42,35 @@ extension DataManager {
     }
     
     func loadCategoryData() {
+        print("loadCategoryData()")
         let categoryInfoByID = UserDefaultsHelper.loadFromUserDefaults(
             type: [Int32: CategoryInfoResponseData].self,
             key: .categoriesByIdResponse
         )
+        print("done")
         self.categoryInfoByID = categoryInfoByID ?? [:]
     }
     
-    func loadGroupData() {
-        let groupInfoByID = UserDefaultsHelper.loadFromUserDefaults(
-            type: [Int32: GroupInfoResponseData].self,
-            key: .groupInfoByIdResponse
+    func loadGroupData() async {
+        print("loadGroupData()")
+        try? await self.dbManager?.loadGroupData()
+//        let groupInfoByID = UserDefaultsHelper.loadFromUserDefaults(
+//            type: [Int32: GroupInfoResponseData].self,
+//            key: .groupInfoByIdResponse
+//        )
+//        print("done")
+//        self.groupInfoByID = groupInfoByID ?? [:]
+    }
+    
+    func loadTypeData() async {
+        print("loadTypeData()")
+        try? await self.dbManager?.loadTypeData()
+        return
+        let typeInfoById = UserDefaultsHelper.loadFromUserDefaults(
+            type: [Int32: GetUniverseTypesTypeIdOk].self,
+            key: .typeInfoByIdResponse
         )
-        self.groupInfoByID = groupInfoByID ?? [:]
+        print("done")
+        self.typesInfoByID = typeInfoById ?? [:]
     }
 }

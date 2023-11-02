@@ -39,6 +39,7 @@ class AuthManager: ObservableObject {
     
     func setClientInfo(clientInfo: ClientInfo) {
         self.clientInfo = clientInfo
+        
     }
     
     func generateCodeVerifier() -> String {
@@ -47,6 +48,7 @@ class AuthManager: ObservableObject {
         for i in 0..<32 {
             bytes.append("\(i % 8)")
         }
+        
         return bytes
     }
     

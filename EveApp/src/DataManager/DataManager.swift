@@ -29,6 +29,8 @@ extension EnvironmentValues {
 class DataManager: ObservableObject {
     static let shared = DataManager()
     
+    var dbManager: DBManager?
+    
     @Published var accessKey: String?
     @Published var accessTokenResponse: AccessTokenResponse? = nil
     @Published var accessTokenData: AccessTokenData?
@@ -37,17 +39,24 @@ class DataManager: ObservableObject {
     
     @Published var categoryInfoByID: [Int32: CategoryInfoResponseData] = [:]
     @Published var groupInfoByID: [Int32: GroupInfoResponseData] = [:]
+    @Published var typesInfoByID: [Int32: GetUniverseTypesTypeIdOk] = [:]
+    
+    
     
     
     @Environment(\.accessKey) var accessKey1: String?
     
     private init() {
-        loadClientInfo()
-        loadAccessTokenResponse()
-        loadAccessTokenData()
-        loadCharacterData()
-        loadCategoryData()
-        loadGroupData()
+        DispatchQueue.main.async { [self] in
+            loadClientInfo()
+            loadAccessTokenResponse()
+            loadAccessTokenData()
+            loadCharacterData()
+//            loadCategoryData()
+//            loadGroupData()
+//            loadTypeData()
+        }
+        
     }
     
     func useAccessKey(_ value: String) {
@@ -81,7 +90,6 @@ class DataManager: ObservableObject {
     func setCharacterPublicData(data: CharacterPublicDataResponse) {
         
     }
-    
 
 }
 

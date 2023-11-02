@@ -10,6 +10,8 @@ import OAuthSwift
 
 @main
 struct EveAppApp: App {
+    @StateObject var model = AppModel()
+    
     init() {
        //NSAppleEventManager.shared().setEventHandler(self, andSelector:#selector(handleGetURL(event:withReplyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
         
@@ -26,7 +28,7 @@ struct EveAppApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(model: model)
                 .handlesExternalEvents(preferring: ["eveauth-app"], allowing: ["eveauth-app"])
                 .onOpenURL { (url) in
                     // Handle url here

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA04CA8B2AEDCAEB008D66B8 /* MaterialDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA04CA8A2AEDCAEB008D66B8 /* MaterialDetailView.swift */; };
+		BA04CA8D2AEDCB8B008D66B8 /* BlueprintMaterialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA04CA8C2AEDCB8B008D66B8 /* BlueprintMaterialView.swift */; };
 		BA31499A2A1EF9660076E6DD /* EveAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3149992A1EF9660076E6DD /* EveAppApp.swift */; };
 		BA31499C2A1EF9660076E6DD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA31499B2A1EF9660076E6DD /* ContentView.swift */; };
 		BA31499E2A1EF9680076E6DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA31499D2A1EF9680076E6DD /* Assets.xcassets */; };
@@ -504,6 +506,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BA04CA8A2AEDCAEB008D66B8 /* MaterialDetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = MaterialDetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA04CA8C2AEDCB8B008D66B8 /* BlueprintMaterialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintMaterialView.swift; sourceTree = "<group>"; };
 		BA3149962A1EF9660076E6DD /* EveApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EveApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA3149992A1EF9660076E6DD /* EveAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveAppApp.swift; sourceTree = "<group>"; };
 		BA31499B2A1EF9660076E6DD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -554,7 +558,7 @@
 		BA71009F2AE89483001CD301 /* BlueprintModel.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintModel.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA7100A12AE898CA001CD301 /* blueprints.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = blueprints.yaml; sourceTree = "<group>"; };
 		BA7100A42AEA1969001CD301 /* BlueprintExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
-		BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintDetailView.swift; sourceTree = "<group>"; };
+		BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintDetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAB271D42A6867B4004F01B7 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
 		BACB4FD62A686E740044CDA0 /* JSONEncodableEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONEncodableEncoding.swift; sourceTree = "<group>"; };
 		BACB4FD72A686E740044CDA0 /* APIs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIs.swift; sourceTree = "<group>"; };
@@ -1260,6 +1264,8 @@
 			children = (
 				BA7100A42AEA1969001CD301 /* BlueprintExplorerView.swift */,
 				BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */,
+				BA04CA8A2AEDCAEB008D66B8 /* MaterialDetailView.swift */,
+				BA04CA8C2AEDCB8B008D66B8 /* BlueprintMaterialView.swift */,
 			);
 			path = BlueprintExplorer;
 			sourceTree = "<group>";
@@ -1968,6 +1974,7 @@
 				BAE069862AC8D4FB0054EFCF /* DogmaEffect.swift in Sources */,
 				BACB52392A686E770044CDA0 /* PutFleetsFleetIdSquadsSquadIdNaming.swift in Sources */,
 				BACB52AE2A686E770044CDA0 /* GetKillmailsKillmailIdKillmailHashPosition.swift in Sources */,
+				BA04CA8B2AEDCAEB008D66B8 /* MaterialDetailView.swift in Sources */,
 				BACB51D22A686E770044CDA0 /* GetCharactersCharacterIdPlanetsPlanetIdHead.swift in Sources */,
 				BACB52C42A686E770044CDA0 /* GetAlliancesAllianceIdContacts200Ok.swift in Sources */,
 				BACB52612A686E770044CDA0 /* GetUniverseSchematicsSchematicIdNotFound.swift in Sources */,
@@ -2187,6 +2194,7 @@
 				BACB515E2A686E760044CDA0 /* AlamofireImplementations.swift in Sources */,
 				BACB52D32A686E780044CDA0 /* GetCharactersCharacterIdOrdersHistory200Ok.swift in Sources */,
 				BACB52692A686E770044CDA0 /* GetCharactersCharacterIdClonesOk.swift in Sources */,
+				BA04CA8D2AEDCB8B008D66B8 /* BlueprintMaterialView.swift in Sources */,
 				BACB51A42A686E770044CDA0 /* GetMarketsRegionIdHistory200Ok.swift in Sources */,
 				BACB51582A686E760044CDA0 /* JSONEncodableEncoding.swift in Sources */,
 				BACB51A52A686E770044CDA0 /* GetAlliancesAllianceIdContactsLabels200Ok.swift in Sources */,

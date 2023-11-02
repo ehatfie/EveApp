@@ -12,7 +12,7 @@ extension DBManager {
   
   func loadIndustryData() async {
     do {
-      //try await loadTypeMaterialData()
+      try await loadTypeMaterialData()
       try await loadBlueprintData()
     } catch let error {
       print("loadIndustryData error \(error)")
@@ -49,7 +49,6 @@ extension DBManager {
   
   func loadBlueprintData() async throws {
     print("loadBlueprintData() - Start")
-    
     
     guard try await self.database.query(BlueprintModel.self).count().get() == 0 else {
       return

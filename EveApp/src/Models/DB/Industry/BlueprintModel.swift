@@ -36,7 +36,6 @@ struct BlueprintActivityData: Codable {
   let research_time: TimedData?
 }
 
-
 final class BlueprintModel: Model {
   static let schema = Schemas.blueprintModel.rawValue
   

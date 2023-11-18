@@ -42,8 +42,6 @@ class DataManager: ObservableObject {
     @Published var typesInfoByID: [Int32: GetUniverseTypesTypeIdOk] = [:]
     
     
-    
-    
     @Environment(\.accessKey) var accessKey1: String?
     
     private init() {

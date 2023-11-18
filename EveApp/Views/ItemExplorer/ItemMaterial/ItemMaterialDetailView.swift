@@ -24,10 +24,10 @@ class ItemMaterialDetailViewModel: ObservableObject {
     
      typeMaterialsModel = try! TypeMaterialsModel.query(on: db)
       .filter(\.$typeID == typeModel.typeId)
-      .with(\.$materials)
       .first()
-      .wait()!
-    self.materials = typeMaterialsModel.materials
+      .wait()! //?? [TypeMaterialsModel]()
+    
+    self.materials = typeMaterialsModel.materialData
     self.materialTypes = self.materials.compactMap { value in
       try! TypeModel.query(on: db)
         .filter(\.$typeId == value.materialTypeID)
@@ -79,7 +79,7 @@ struct ItemMaterialDetailView: View {
         }
         
         VStack(alignment: .leading) {
-          ForEach(viewModel.materials, id: \.id) { material in
+          ForEach(viewModel.materials, id: \.materialTypeID) { material in
             Text("\(material.quantity)")
           }
         } 

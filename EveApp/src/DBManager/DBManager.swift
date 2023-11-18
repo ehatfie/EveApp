@@ -13,7 +13,7 @@ import Fluent
 
 class DBManager: ObservableObject {
   let databases: Databases
-  let dbName = "TestDB5"
+  let dbName = "TestDB10"
   
   var logger: Logger = {
     var logger = Logger(label: "database.logger")
@@ -115,16 +115,11 @@ class DBManager: ObservableObject {
   func loadData() async {
     print("loadData()")
     do {
-      async let loadCategoryData: Void = loadCategoryData()
-      async let loadGroupData: Void = loadGroupData()
-      async let loadTypeData: Void = loadTypeData()
-      async let loadDogmaData: Void = loadDogmaData()
-      
       _ = try await [
-        loadCategoryData,
-        loadGroupData,
-        loadTypeData,
-        loadDogmaData
+        loadCategoryData(),
+        loadGroupData(),
+        loadTypeData(),
+        loadDogmaData()
       ]
     } catch let error {
       print("Load data error \(error)")
@@ -185,7 +180,7 @@ class DBManager: ObservableObject {
   }
   
   func setupTypeDogmaInfoModel() throws {
-    try CreateTypeDogmaInfoModel()
+    try TypeDogmaInfoModel.CreateTypeDogmaInfoModel()
       .prepare(on: database)
       .wait()
   }
@@ -195,9 +190,9 @@ class DBManager: ObservableObject {
       .prepare(on: database)
       .wait()
     
-    try MaterialDataModel.CreateMaterialDataModelMigration()
-      .prepare(on: database)
-      .wait()
+//    try MaterialDataModel.CreateMaterialDataModelMigration()
+//      .prepare(on: database)
+//      .wait()
   }
   
   func setupBlueprintModel() throws {

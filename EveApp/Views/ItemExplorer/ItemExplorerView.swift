@@ -20,37 +20,22 @@ class ItemCategoryID: Identifiable {
 
 class ItemExplorerViewModel: ObservableObject {
   var categoryIDs: [Int32] = []
-  @Binding var categories: [CategoryModel]
-  //    var categories1: [CategoryModel] {
-  //
-  //    }
+  @Published var categories: [CategoryModel]
+  
+  @Published var selectedCategory: CategoryModel?
+  @Published var selectedGroup: GroupModel?
+  @Published var selectedType: TypeModel?
   
   var cancellable: AnyCancellable? = nil
   
   init() {
-    //        cancellable = DataManager.shared
-    //            .$categoryInfoByID
-    //            .receive(on: RunLoop.main)
-    //            .sink(receiveValue: { [weak self] categoryInfoByID in
-    //                guard let self = self else { return }
-    //                self.categories = self.categoryIDs
-    //                    .map {
-    //                        ItemCategory(
-    //                            categoryId: $0,
-    //                            categoryInfoResponseData: categoryInfoByID[$0]
-    //                        )
-    //                    }
-    //            })
-    
-    
-    _categories = Binding(get: {
-      try! DataManager.shared
-        .dbManager!
-        .database
-        .query(CategoryModel.self)
-        .all()
-        .wait()
-    }, set: { _ in })
+    categories = try! DataManager.shared
+      .dbManager!
+      .database
+      .query(CategoryModel.self)
+      .sort(\.$categoryId)
+      .all()
+      .wait()
   }
   
   func loadCategories() {
@@ -65,11 +50,51 @@ class ItemExplorerViewModel: ObservableObject {
 struct ItemExplorerView: View {
   @ObservedObject var viewModel: ItemExplorerViewModel
   
-  
   var body: some View {
     VStack {
+      Text("ItemExplorerView")
+      HStack {
+        List(viewModel.categories, id: \.categoryId) { category in
+          categoryRow(
+            category: category,
+            isSelected: viewModel.selectedCategory?.categoryId == category.categoryId
+          )
+          .padding(.horizontal, 10)
+          .padding(.vertical, 5)
+          .onTapGesture {
+            viewModel.selectedCategory = category
+            viewModel.selectedGroup = nil
+            viewModel.selectedType = nil
+          }
+        }.frame(maxWidth: 200)
+        CategoryInfoView(
+          selectedCategory: $viewModel.selectedCategory,
+          selectedGroup: $viewModel.selectedGroup
+        )
+        .frame(maxWidth: 200)
+        GroupInfoView(
+          selectedGroup: $viewModel.selectedGroup,
+          selectedType: $viewModel.selectedType
+        ).frame(maxWidth: 100)
+        
+        TypeInfoView(selectedType: $viewModel.selectedType)
+          .frame(maxWidth: 500)
+        
+        
+        Spacer()
+      }
       
     }
+    
+  }
+  
+  func categoryRow(category: CategoryModel, isSelected: Bool) -> some View {
+    return HStack {
+      Text(category.name)
+      Text("\(category.categoryId)")
+    }.border(
+      viewModel.selectedCategory?.categoryId == category.categoryId ? .red: .clear
+    )
   }
 }
 

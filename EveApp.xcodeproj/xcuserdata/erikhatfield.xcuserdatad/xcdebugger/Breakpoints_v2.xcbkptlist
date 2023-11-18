@@ -428,7 +428,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "73"
             endingLineNumber = "73"
-            landmarkName = "previews"
+            landmarkName = "body"
             landmarkType = "24">
             <Locations>
                <Location
@@ -537,10 +537,10 @@
             filePath = "EveApp/Views/ItemExplorer/ItemExplorerView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
-            landmarkName = "body"
-            landmarkType = "24">
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "ItemExplorerView_Previews"
+            landmarkType = "14">
             <Locations>
                <Location
                   uuid = "505D51F8-0133-429D-A377-D25DB2ADCC02 - e60866771685876c"
@@ -673,16 +673,16 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "CD1FF7AB-E3AE-411F-9EB9-C6DC7D13495F"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "EveApp/Views/ItemExplorer/ItemExplorerView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "fetchCategories()"
-            landmarkType = "7">
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "body"
+            landmarkType = "24">
             <Locations>
                <Location
                   uuid = "CD1FF7AB-E3AE-411F-9EB9-C6DC7D13495F - 86bf0f8edd46988b"
@@ -713,6 +713,21 @@
                   startingLineNumber = "69"
                   endingLineNumber = "69"
                   offsetFromSymbolStart = "39">
+               </Location>
+               <Location
+                  uuid = "CD1FF7AB-E3AE-411F-9EB9-C6DC7D13495F - dd09ac296db90a73"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "EveApp.ItemExplorerView.body.getter : some"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/Views/ItemExplorer/ItemExplorerView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "41">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -759,9 +774,9 @@
             filePath = "EveApp/src/DBManager/DBManager+loading.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "loadDogmaAttributeData()"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "loadCategoryData()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -775,9 +790,9 @@
             filePath = "EveApp/src/DBManager/DBManager+loading.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "loadDogmaAttributeData()"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "loadCategoryData()"
             landmarkType = "7">
             <Locations>
                <Location
@@ -842,52 +857,36 @@
             endingLineNumber = "13"
             landmarkName = "loadDogmaData()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "306511E8-BF7C-41FC-8AE0-771CC188B6AC"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EveApp/src/DBManager/DBManager+loading.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
-            landmarkName = "loadDogmaData()"
-            landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "306511E8-BF7C-41FC-8AE0-771CC188B6AC - 75537b77bc93dbac"
+                  uuid = "3E90F313-73E9-4576-82D0-504F6AB8A4DD - bc902be5a79d9c62"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "EveApp.DBManager.loadDogmaData() -&gt; ()"
+                  symbolName = "EveApp.DBManager.loadDogmaData() async -&gt; ()"
                   moduleName = "EveApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "19"
-                  endingLineNumber = "19"
-                  offsetFromSymbolStart = "376">
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "49">
                </Location>
                <Location
-                  uuid = "306511E8-BF7C-41FC-8AE0-771CC188B6AC - 75537b77bc93dbac"
+                  uuid = "3E90F313-73E9-4576-82D0-504F6AB8A4DD - 25f2d928443ef0db"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "EveApp.DBManager.loadDogmaData() -&gt; ()"
+                  symbolName = "(1) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
                   moduleName = "EveApp"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "19"
-                  endingLineNumber = "19"
-                  offsetFromSymbolStart = "438">
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "31">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -902,9 +901,9 @@
             filePath = "EveApp/src/DBManager/DBManager+loading.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "loadDogmaAttributeData()"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "loadGroupData()"
             landmarkType = "7">
             <Locations>
                <Location
@@ -950,9 +949,9 @@
             filePath = "EveApp/src/DBManager/DBManager+loading.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "loadDogmaAttributeData()"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "loadGroupData()"
             landmarkType = "7">
             <Locations>
                <Location
@@ -998,9 +997,9 @@
             filePath = "EveApp/src/DBManager/DBManager+loading.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "loadDogmaAttributeData()"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "loadCategoryData()"
             landmarkType = "7">
             <Locations>
                <Location
@@ -1046,9 +1045,9 @@
             filePath = "EveApp/src/DBManager/DBManager+loading.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
-            landmarkName = "loadDogmaAttributeData()"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "loadCategoryData()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1062,8 +1061,8 @@
             filePath = "EveApp/src/Models/DB/DogmaEffect.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "prepare(on:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1078,9 +1077,9 @@
             filePath = "EveApp/src/DBManager/DBManager+loading.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "loadDogmaEffectsData()"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "loadGroupData()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1094,9 +1093,9 @@
             filePath = "EveApp/src/DBManager/DBManager+loading.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "loadDogmaEffectsData()"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "loadGroupData()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1110,9 +1109,9 @@
             filePath = "EveApp/src/DBManager/DBManager+loading.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
-            landmarkName = "loadDogmaEffectsData()"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "loadGroupData()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1126,10 +1125,10 @@
             filePath = "EveApp/src/DBManager/DBManager+loading.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
-            landmarkName = "loadDogmaEffectsData()"
-            landmarkType = "7">
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "DBManager"
+            landmarkType = "21">
             <Locations>
                <Location
                   uuid = "73516340-99C0-4A74-8080-F695DFA34EFB - 589cac983e0f8f51"
@@ -1174,10 +1173,1152 @@
             filePath = "EveApp/src/DBManager/DBManager+loading.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
-            landmarkName = "loadDogmaEffectsData()"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "loadTypeData()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F5A5AD19-A247-4F95-9E58-497A9554B1E7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/Views/ItemExplorer/New Group/CategoryInfoView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "groupList(categoryModel:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F5A5AD19-A247-4F95-9E58-497A9554B1E7 - 5fbd5219741ec30d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "EveApp.CategoryInfoView.groupList(categoryModel: EveApp.CategoryModel) -&gt; some"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/Views/ItemExplorer/New%20Group/CategoryInfoView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "854">
+               </Location>
+               <Location
+                  uuid = "F5A5AD19-A247-4F95-9E58-497A9554B1E7 - c7f3467120b293f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (EveApp.GroupModel) -&gt; SwiftUI.Text in EveApp.CategoryInfoView.groupList(categoryModel: EveApp.CategoryModel) -&gt; some"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/Views/ItemExplorer/New%20Group/CategoryInfoView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "46">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FC6E82FE-80E8-4C0A-89E9-55E7E48D6D1E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/Views/ItemExplorer/New Group/TypeInfoView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "typeInfo(for:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "FC6E82FE-80E8-4C0A-89E9-55E7E48D6D1E - 84e7ae8898059f71"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "EveApp.TypeInfoView.typeInfo(for: EveApp.TypeModel) -&gt; some"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/Views/ItemExplorer/New%20Group/TypeInfoView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "1326">
+               </Location>
+               <Location
+                  uuid = "FC6E82FE-80E8-4C0A-89E9-55E7E48D6D1E - 84e7ae8898059f71"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "EveApp.TypeInfoView.typeInfo(for: EveApp.TypeModel) -&gt; some"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/Views/ItemExplorer/New%20Group/TypeInfoView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "1154">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "27AD7CDC-584E-4BCB-B0ED-6C98387C718F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/src/DBManager/DBManager+loading.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
+            landmarkName = "loadTypeDogmaInfoDataAsync()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "27AD7CDC-584E-4BCB-B0ED-6C98387C718F - 1acf79ac02bd46d0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for EveApp.DBManager.loadTypeDogmaInfoDataAsync() async throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "258"
+                  endingLineNumber = "258"
+                  offsetFromSymbolStart = "140">
+               </Location>
+               <Location
+                  uuid = "27AD7CDC-584E-4BCB-B0ED-6C98387C718F - 43100b1d8e77694c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Int64, EveApp.TypeDogmaData) throws -&gt; () in EveApp.DBManager.loadTypeDogmaInfoDataAsync() async throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "258"
+                  endingLineNumber = "258"
+                  offsetFromSymbolStart = "111">
+               </Location>
+               <Location
+                  uuid = "27AD7CDC-584E-4BCB-B0ED-6C98387C718F - 1acf79ac02bd46d0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for EveApp.DBManager.loadTypeDogmaInfoDataAsync() async throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "258"
+                  endingLineNumber = "258"
+                  offsetFromSymbolStart = "341">
+               </Location>
+               <Location
+                  uuid = "27AD7CDC-584E-4BCB-B0ED-6C98387C718F - 1acf79ac02bd46d0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for EveApp.DBManager.loadTypeDogmaInfoDataAsync() async throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "258"
+                  endingLineNumber = "258"
+                  offsetFromSymbolStart = "300">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BDDF9857-A1A7-43F8-9982-2077691A78D7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/src/DBManager/DBManager+loading.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "254"
+            endingLineNumber = "254"
+            landmarkName = "loadTypeDogmaInfoDataAsync()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BDDF9857-A1A7-43F8-9982-2077691A78D7 - fc70b8b10372381d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for EveApp.DBManager.loadTypeDogmaInfoDataAsync() async throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "241"
+                  endingLineNumber = "241"
+                  offsetFromSymbolStart = "139">
+               </Location>
+               <Location
+                  uuid = "BDDF9857-A1A7-43F8-9982-2077691A78D7 - 38cabbc96bde24ef"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) await resume partial function for EveApp.DBManager.loadTypeDogmaInfoDataAsync() async throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "241"
+                  endingLineNumber = "241"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  uuid = "BDDF9857-A1A7-43F8-9982-2077691A78D7 - 8bb5982e8390fa1f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for EveApp.DBManager.loadTypeDogmaInfoDataAsync() async throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "241"
+                  endingLineNumber = "241"
+                  offsetFromSymbolStart = "116">
+               </Location>
+               <Location
+                  uuid = "BDDF9857-A1A7-43F8-9982-2077691A78D7 - a800592981da0603"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(9) suspend resume partial function for EveApp.DBManager.loadTypeDogmaInfoDataAsync() async throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "241"
+                  endingLineNumber = "241"
+                  offsetFromSymbolStart = "69">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2D92E7F4-96AA-4A5B-A6D9-2D011355DFEB"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/src/DBManager/DBManager+loading.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
+            landmarkName = "loadTypeDogmaInfoDataAsync()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "2D92E7F4-96AA-4A5B-A6D9-2D011355DFEB - 8bb5982e8390fab2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for EveApp.DBManager.loadTypeDogmaInfoDataAsync() async throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "246"
+                  endingLineNumber = "246"
+                  offsetFromSymbolStart = "633">
+               </Location>
+               <Location
+                  uuid = "2D92E7F4-96AA-4A5B-A6D9-2D011355DFEB - fd4286c28f09e7bc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(6) await resume partial function for EveApp.DBManager.loadTypeDogmaInfoDataAsync() async throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "246"
+                  endingLineNumber = "246"
+                  offsetFromSymbolStart = "34">
+               </Location>
+               <Location
+                  uuid = "2D92E7F4-96AA-4A5B-A6D9-2D011355DFEB - 1acf79ac02bd44ac"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for EveApp.DBManager.loadTypeDogmaInfoDataAsync() async throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "246"
+                  endingLineNumber = "246"
+                  offsetFromSymbolStart = "91">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F6031532-BF11-4EFF-BF4E-C74FCB95F031"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/src/DBManager/DBManager+loading.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "loadDogmaData()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "20930200-EEC9-4D81-BBE6-53240D0DDF12"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/src/DBManager/DBManager+loading.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "loadDogmaData()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "20930200-EEC9-4D81-BBE6-53240D0DDF12 - 2f7bc1cc4aaf3f30"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "20930200-EEC9-4D81-BBE6-53240D0DDF12 - 26aa002735436f33"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) await resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "60">
+               </Location>
+               <Location
+                  uuid = "20930200-EEC9-4D81-BBE6-53240D0DDF12 - 59c52262b6f6cb45"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "53">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F83F3D30-3275-48F6-913D-8DE8B717C9CE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/src/DBManager/DBManager+loading.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "loadDogmaData()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F83F3D30-3275-48F6-913D-8DE8B717C9CE - 26aa002735436fd2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) await resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "F83F3D30-3275-48F6-913D-8DE8B717C9CE - 3d854082f1e7dfd3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) await resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "60">
+               </Location>
+               <Location
+                  uuid = "F83F3D30-3275-48F6-913D-8DE8B717C9CE - 5fd9614191fc39a5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(8) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "53">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/src/DBManager/DBManager+loading.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "loadDogmaData()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - 3d854082f1e7dffc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) await resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - 34f78f1dbd9a0ffb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) await resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "56">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - 55dca0217ce36789"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(9) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "53">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - 25f2d928443ef7f0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "551">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - 55dca0217ce367e8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(9) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "43">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - 56be2482189097b8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(17) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "69">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - 2265f48675d680be"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(20) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "43">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - 9d467ee86c1b30b6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(28) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "575">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - 690d0eebd9515dbc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(31) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "43">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - c469884df187cdb4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(39) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "575">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - 91d558512eddf6ba"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(42) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "43">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - c605da4a9489bd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(50) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "575">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - d8fd73b6b25893b8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(53) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "43">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - 37ee5f3fde1f22bb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(61) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "575">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - f848d1c07c32cb6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(64) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "43">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - 7eb66965239bffb9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(72) suspend resume partial function for EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "575">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - 4c81f2961a443b58"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "implicit closure #5 @Sendable () async throws -&gt; () in EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "41">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - 5129d372d4eba5e1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for implicit closure #5 @Sendable () async throws -&gt; () in EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "31">
+               </Location>
+               <Location
+                  uuid = "35AE3176-7F02-420F-9E5E-4EFFB0CDB0FD - eb7ec5e798c3620b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for implicit closure #5 @Sendable () async throws -&gt; () in EveApp.DBManager.loadDogmaData() async -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "53">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D08E1CE2-DB85-4107-9134-8ADA435ABC22"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/Views/ItemExplorer/New Group/TypeDogmaInfoView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "attributeInfo()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D08E1CE2-DB85-4107-9134-8ADA435ABC22 - 41391f09a109b7de"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "EveApp.TypeDogmaInfoView.attributeInfo() -&gt; some"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/Views/ItemExplorer/New%20Group/TypeDogmaInfoView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "1052">
+               </Location>
+               <Location
+                  uuid = "D08E1CE2-DB85-4107-9134-8ADA435ABC22 - 83c4e2a088284bca"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; SwiftUI.ForEach&lt;Swift.Array&lt;EveApp.DogmaAttributeModel&gt;, Swift.String, SwiftUI.Text&gt; in EveApp.TypeDogmaInfoView.attributeInfo() -&gt; some"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/Views/ItemExplorer/New%20Group/TypeDogmaInfoView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "126">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4194B5CA-D9C8-4832-B782-A9D7BFE4248E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/Views/ItemExplorer/New Group/TypeDogmaInfoView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "effectInfo()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4194B5CA-D9C8-4832-B782-A9D7BFE4248E - ddd9c0057cbd3344"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "EveApp.TypeDogmaInfoView.effectInfo() -&gt; some"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/Views/ItemExplorer/New%20Group/TypeDogmaInfoView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "59"
+                  endingLineNumber = "59"
+                  offsetFromSymbolStart = "1052">
+               </Location>
+               <Location
+                  uuid = "4194B5CA-D9C8-4832-B782-A9D7BFE4248E - d520a8661e716e44"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; SwiftUI.ForEach&lt;Swift.Array&lt;EveApp.DogmaEffectModel&gt;, Swift.String, SwiftUI.Text&gt; in EveApp.TypeDogmaInfoView.effectInfo() -&gt; some"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/Views/ItemExplorer/New%20Group/TypeDogmaInfoView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "59"
+                  endingLineNumber = "59"
+                  offsetFromSymbolStart = "126">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E8682A4D-C7C8-4197-932D-6C01A4963ECC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/src/Models/DB/TypeDogmaModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "init(typeId:data:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4D6D9C55-BF9E-4D38-9EDC-AA93C1934FB2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/src/DBManager/DBManager+loading.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
+            landmarkName = "loadTypeDogmaInfoData()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4D6D9C55-BF9E-4D38-9EDC-AA93C1934FB2 - 24c861cff198a084"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "EveApp.DBManager.loadTypeDogmaInfoData() throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "175"
+                  endingLineNumber = "175"
+                  offsetFromSymbolStart = "177">
+               </Location>
+               <Location
+                  uuid = "4D6D9C55-BF9E-4D38-9EDC-AA93C1934FB2 - 24c861cff198a084"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "EveApp.DBManager.loadTypeDogmaInfoData() throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+loading.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "175"
+                  endingLineNumber = "175"
+                  offsetFromSymbolStart = "236">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DE96E6B5-0915-4F04-9081-DF1D9FEA43E2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/Views/ItemExplorer/New Group/TypeDogmaInfoView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "effectInfo()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D16ABFE0-F542-468B-8EBC-6B42D1C93540"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/src/DBManager/DBManager+Industry.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "loadTypeMaterialData()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D7ADD443-EB31-4349-94DF-ABC9D0F94273"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/src/DBManager/DBManager+Industry.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "loadTypeMaterialData()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9CE2EC58-90A3-4449-BA21-21AD87EB6304"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/src/DBManager/DBManager+Industry.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "loadTypeMaterialData()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9CE2EC58-90A3-4449-BA21-21AD87EB6304 - eedd124f1011bb35"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for EveApp.DBManager.loadTypeMaterialData() async throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+Industry.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "123">
+               </Location>
+               <Location
+                  uuid = "9CE2EC58-90A3-4449-BA21-21AD87EB6304 - 8c1a4f62d88eba2f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) await resume partial function for EveApp.DBManager.loadTypeMaterialData() async throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+Industry.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  uuid = "9CE2EC58-90A3-4449-BA21-21AD87EB6304 - a130671e5fd0070f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for EveApp.DBManager.loadTypeMaterialData() async throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+Industry.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "122">
+               </Location>
+               <Location
+                  uuid = "9CE2EC58-90A3-4449-BA21-21AD87EB6304 - 7b877bee9a925301"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for EveApp.DBManager.loadTypeMaterialData() async throws -&gt; ()"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/src/DBManager/DBManager+Industry.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "72">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5E64ADC6-149E-480C-9481-1DF8620E68A5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/Views/ReprocessingHelper/BlueprintIndustryView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "06E72A6B-23F5-4242-9253-718BF5710958"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/Views/ReprocessingHelper/BlueprintIndustryView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "randomBlueprintPicker()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "36012949-3671-4D10-99A9-A397904F99C1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/Views/ReprocessingHelper/BlueprintIndustryView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "randomBlueprintPicker()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "36012949-3671-4D10-99A9-A397904F99C1 - 3c7f38cf7dfa95a3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "EveApp.BlueprintIndustryView.randomBlueprintPicker() -&gt; some"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/Views/ReprocessingHelper/BlueprintIndustryView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "390">
+               </Location>
+               <Location
+                  uuid = "36012949-3671-4D10-99A9-A397904F99C1 - 433c63fe842b3e71"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Picker&lt;SwiftUI.Text, Swift.Array&lt;Swift.String&gt;, SwiftUI.ScrollView&lt;SwiftUI.VStack&lt;SwiftUI.ForEach&lt;Swift.Array&lt;EveApp.GroupModel&gt;, Swift.Int64, SwiftUI.Text&gt;&gt;&gt;&gt;)&gt; in EveApp.BlueprintIndustryView.randomBlueprintPicker() -&gt; some"
+                  moduleName = "EveApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/erikhatfield/develop/swift/EveApp/EveApp/Views/ReprocessingHelper/BlueprintIndustryView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "185">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0225769F-7EC1-423F-98F7-083868079CAD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EveApp/Views/ReprocessingHelper/BlueprintIndustryView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
+            landmarkName = "body"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -76,9 +76,13 @@ struct BlueprintExplorerView: View {
         .frame(width: 10)
       if let selectedBlueprint = viewModel.selectedBlueprint {
         blueprintInfo(for: selectedBlueprint)
+          .border(.red)
+        BlueprintComponentView(blueprintModel: selectedBlueprint)
+          .border(.blue)
       } else {
         
       }
+      
       Spacer()
     }
     

@@ -55,11 +55,17 @@ struct HomeView: View {
     
     var body: some View {
         NavigationView {
-            List{
+            List {
                 NavigationLink(destination: {
                     CharacterInfoView()
                 }, label: {
                     Text("CharacterInfo")
+                })
+                
+                NavigationLink(destination: {
+                    ReprocessingHelperView()
+                }, label: {
+                    Text("Reprocessing Helper")
                 })
                 
                 NavigationLink(destination: {

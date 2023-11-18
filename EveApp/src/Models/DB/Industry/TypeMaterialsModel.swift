@@ -27,7 +27,7 @@ struct MaterialData: Codable {
 }
 
 
-final class MaterialDataModel: Model {
+final class MaterialDataModel1: Model {
   static let schema = Schemas.materialDataModel.rawValue
   
   @ID(key: .id) var id: UUID?
@@ -48,7 +48,7 @@ final class MaterialDataModel: Model {
   
   struct CreateMaterialDataModelMigration: Migration {
     func prepare(on database: FluentKit.Database) -> NIOCore.EventLoopFuture<Void> {
-      database.schema(MaterialDataModel.schema)
+      database.schema(MaterialDataModel1.schema)
         .id()
         .field("typeMaterialsModel", .uuid, .required, .references("typeMaterialsModel", "id"))
         .field("materialTypeID", .int64, .required)
@@ -57,9 +57,21 @@ final class MaterialDataModel: Model {
     }
     
     func revert(on database: FluentKit.Database) -> NIOCore.EventLoopFuture<Void> {
-      database.schema(MaterialDataModel.schema)
+      database.schema(MaterialDataModel1.schema)
         .delete()
     }
+  }
+}
+
+final class MaterialDataModel: Fields {
+  @Field(key: "materialTypeID") var materialTypeID: Int64
+  @Field(key: "quantity") var quantity: Int64
+  
+  init() { }
+  
+  init(data: MaterialData) {
+    self.materialTypeID = data.materialTypeID
+    self.quantity = data.quantity
   }
 }
 
@@ -70,13 +82,14 @@ final class TypeMaterialsModel: Model {
   
   @Field(key: "typeID") var typeID: Int64
   
-  @Children(for: \.$typeMaterialsModel) var materials: [MaterialDataModel]
+  @Field(key: "materialData") var materialData: [MaterialDataModel]
   
   init() { }
   
-  init(typeID: Int64) {
+  init(typeID: Int64, materialData: [MaterialData]) {
     self.id = UUID()
     self.typeID = typeID
+    self.materialData = materialData.map{ MaterialDataModel(data: $0) }
   }
   
   struct ModelMigration: Migration {
@@ -84,6 +97,7 @@ final class TypeMaterialsModel: Model {
       database.schema(TypeMaterialsModel.schema)
         .id()
         .field("typeID", .int64, .required)
+        .field("materialData", .array(of: .custom(MaterialDataModel.self)))
         .create()
     }
     
@@ -98,5 +112,4 @@ final class TypeMaterialsModel: Model {
 final class Pet: Fields {
   @Field(key: "materialTypeID") var materialTypeID: Int64
   @Field(key: "quantity") var quantity: Int64
-  
 }

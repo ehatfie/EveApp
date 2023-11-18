@@ -13,25 +13,27 @@ extension DBManager {
   func loadDogmaData() async  {
     print("loadDogmaData()")
     do {
-      try await loadDogmaAttributeData()
-      try await loadDogmaEffectsData()
-      try await loadDogmaAttributeCategoryData()
+      // there is no protection against inserting the same values
+      async let loadDogmaAttributes:Void =  loadDogmaAttributeData()
+      async let loadDogmaEffects: Void =  loadDogmaEffectsData()
+      async let loadDogmaAttributeCategories: Void = loadDogmaAttributeCategoryData()
+      async let loadTypeDogmaInfo: Void =  loadTypeDogmaInfoDataAsync()
       
+      _ = try await [
+        loadDogmaAttributes,
+        loadDogmaEffects,
+        loadDogmaAttributeCategories,
+        loadTypeDogmaInfo
+      ]
     } catch let error {
       print("loadDogmaDataError \(error)")
     }
   }
   
-  func loadDogmaInfoData() {
+  func loadDogmaInfoData() async {
     print("loadDogmaInfoData()")
+    
     do {
-      Task {
-        try await loadTypeDogmaInfoDataAsync()
-      }
-      
-      //      try loadDogmaAttributeData()
-      //      try loadDogmaEffectsData()
-      //      try loadDogmaAttributeCategoryData()
     } catch let error {
       print("loadDogmaInfoError \(error)")
     }
@@ -183,7 +185,7 @@ extension DBManager {
     
     try info.forEach { key, value in
       //Task {
-      let result = TypeDogmaInfoModel(typeId: key)
+      let result = TypeDogmaInfoModel(typeId: key, data: value)
       let attributes = value.dogmaAttributes.map {
         TypeDogmaAttributeInfoModel(
           typeID: key,
@@ -237,35 +239,48 @@ extension DBManager {
       .get()
     guard typeDogmaInfoCount == 0 else { return }
     let start = Date()
+    
+//    
+//    // [String: Any]
+//    let dictionary: [String: Any] = ["key": "value"]
+//    let mapYAML: String = try Yams.dump(object: dictionary)
+//    mapYAML == """
+//    key: value
+//
+//    """
+//    let loadedDictionary = try Yams.load(yaml: mapYAML) as? [String: Any]
+//    
+    
     let info = try await readYamlAsync(for: .typeDogma, type: TypeDogmaData.self)
     print("Read info - \(start.timeIntervalSinceNow * -1)")
     
     //var attributeDict: [Int64: [TypeDogmaAttributeInfoModel]] = [:]
     //var effectDict: [Int64: [TypeDogmaEffectInfoModel]] = [:]
+    
     await saveDogmaInfoModel(data: info)
 
     return
     try info.forEach { key, value in
       //Task {
-      let result = TypeDogmaInfoModel(typeId: key)
-      let attributes = value.dogmaAttributes.map {
-        TypeDogmaAttributeInfoModel(
-          typeID: key,
-          attributeID: $0.attributeID,
-          value: $0.value
-        )
-      }
-      let effects = value.dogmaEffects.map {
-        TypeDogmaEffectInfoModel(effectID: $0.effectID, isDefault: $0.isDefault)
-      }
-      
-      try result.save(on: database)
-        .wait()
-      
-      try result.$effects.create(effects, on: database)
-        .wait()
-      try result.$attributes.create(attributes, on: database)
-        .wait()
+//      let result = TypeDogmaInfoModel(typeId: key)
+//      let attributes = value.dogmaAttributes.map {
+//        TypeDogmaAttributeInfoModel(
+//          typeID: key,
+//          attributeID: $0.attributeID,
+//          value: $0.value
+//        )
+//      }
+//      let effects = value.dogmaEffects.map {
+//        TypeDogmaEffectInfoModel(effectID: $0.effectID, isDefault: $0.isDefault)
+//      }
+//      
+//      try result.save(on: database)
+//        .wait()
+//      
+//      try result.$effects.create(effects, on: database)
+//        .wait()
+//      try result.$attributes.create(attributes, on: database)
+//        .wait()
       ///}
     }
     
@@ -298,35 +313,61 @@ extension DBManager {
   }
   
   func saveDogmaInfoModel(data: [Int64: TypeDogmaData]) async {
-//      let something = data.map { key, value in
+    var index = 0
+    print("saving \(data.count) dogma values")
+    let foo = data.map { key, value in
+      return TypeDogmaInfoModel(typeId: key, data: value)
+    }
     
-
+    try! await splitAndSave(splits: 4, models: foo)
+    //try! await foo.create(on: database)
     
-    data.forEach { key, value  in
-      
-//        let result = TypeDogmaInfoModel(typeId: key)
-//        let attributes = value.dogmaAttributes.map {
+    
+//    async let one = Task {
+//      foo.forEach { value in
+//        
+//        guard let dogmaData = data[value.typeId] else { return }
+//        let attributes = dogmaData.dogmaAttributes.map {
 //          TypeDogmaAttributeInfoModel(
-//            typeID: key,
+//            typeID: value.typeId,
 //            attributeID: $0.attributeID,
 //            value: $0.value
 //          )
 //        }
 //        
-//        let effects = value.dogmaEffects.map {
+//        try! value.$attributes.create(attributes, on: database).wait()
+//      }
+//    }
+//    
+//    async let two = Task {
+//      foo.forEach { value in
+//        guard let dogmaData = data[value.typeId] else { return }
+//        
+//        let effects = dogmaData.dogmaEffects.map {
 //          TypeDogmaEffectInfoModel(effectID: $0.effectID, isDefault: $0.isDefault)
 //        }
-        
-      try? saveTypeDogmaData(key: key, value: value)
-        //await test
-      
-    }
+//        
+//        try! value.$effects.create(effects, on: database).wait()
+//      }
+//    }
+//    
+//    let _ = await [one, two]
+//    
+//    data.forEach { key, value  in
+//      
+//      Task(priority: .userInitiated) {
+//        try await saveTypeDogmaData(key: key, value: value)
+//        print("finished \(key)")
+//      }
+//      
+//
+//    }
       
     
   }
   
-  func saveTypeDogmaData(key: Int64, value: TypeDogmaData) throws {
-    let result = TypeDogmaInfoModel(typeId: key)
+  func saveTypeDogmaData(key: Int64, value: TypeDogmaData) async throws {
+    let result = TypeDogmaInfoModel(typeId: key, data: value)
     let attributes = value.dogmaAttributes.map {
       TypeDogmaAttributeInfoModel(
         typeID: key,
@@ -334,15 +375,22 @@ extension DBManager {
         value: $0.value
       )
     }
-    
+    //print("got \(attributes.count) attributes")
     let effects = value.dogmaEffects.map {
       TypeDogmaEffectInfoModel(effectID: $0.effectID, isDefault: $0.isDefault)
     }
     
-    try result.save(on: database)
-      .wait()
-    //try result.$effects.create(effects, on: database).wait()
-    //try result.$attributes.create(attributes, on: database).await()
+    try await result.save(on: database)
+      .get()
+    //print("result saved")
+//    async let createEffects: Void = result.$effects.create(effects, on: database).get()
+//    //print("effect created")
+//    async let createAttributes: Void = result.$attributes.create(attributes, on: database)
+//      .get()
+//      
+//    
+//    _ = try await [createEffects, createAttributes]
+    //print("attributes created")
   }
   
 //  func saveModel(models: [any Model]) async {

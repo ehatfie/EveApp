@@ -30,18 +30,14 @@ extension DBManager {
     }
     
     let typeMaterials = try await readYamlAsync(for: .typeMaterials, type: TypeMaterialsData.self)
-    
-    try typeMaterials.forEach { key, value in
-      let typeMaterialModel = TypeMaterialsModel(typeID: key)
-      
-      try typeMaterialModel.save(on: database).wait()
-      
-      let materialModels = value.materials.map { value in
-          MaterialDataModel(data: value)
-      }
-      
-      try typeMaterialModel.$materials.create(materialModels, on: database).wait()
+    let typeMaterialModels = typeMaterials.map { key, value in
+      TypeMaterialsModel(typeID: key, materialData: value.materials)
     }
+    
+    try await splitAndSave(splits: 2, models: typeMaterialModels)
+//    try typeMaterials.forEach { key, value in
+//      try typeMaterialModel.save(on: database).wait()
+//    }
     print("got \(typeMaterials.count)")
     
     print("loadTypeMaterialData() - End; Took - \(start.timeIntervalSinceNow * -1)")

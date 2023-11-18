@@ -30,11 +30,15 @@ struct BlueprintDetailView: View {
         if let typeModel = self.typeModel {
           Text("\(typeModel.name)")
             .font(.title)
+          Text("\(typeModel.groupID)")
         }
-        Spacer()
       }
       
-      activitiesView(for: blueprint.activities)
+      HStack {
+        activitiesView(for: blueprint.activities)
+        componentsView(for: blueprint.activities.manufacturing)
+      }
+      
     }
   }
   
@@ -80,6 +84,39 @@ struct BlueprintDetailView: View {
         materials: model.products
       )
     }//.border(.red)
+  }
+  
+  func componentsView(for model: BlueprintManufacturingModel) -> some View {
+    let typeIds = model.materials.map { $0.typeId }
+    let types = DataManager.shared.dbManager!.getTypes(for: typeIds)
+    
+    
+    return VStack(){
+      Text("Components View")
+      List(types, id: \.id) { material in
+        Text(material.name)
+        typeMaterialView(for: material)
+      }
+      Spacer()
+      
+    }
+  }
+  
+  func typeMaterialView(for type: TypeModel) -> some View {
+    if let materialTypes = DataManager.shared.dbManager!
+      .getTypeMaterialModel(for: type.typeId) {
+      
+      return VStack {
+        Text("gottem")
+//        ForEach(materialTypes, id: \.id) { material in
+//          Text(material.name)
+//        }
+      }
+    }
+    
+    return VStack {
+      Text("NO materials")
+    }
   }
 }
 

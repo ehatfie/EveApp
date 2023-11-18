@@ -14,11 +14,11 @@ class ItemDogmaExplorerViewModel: ObservableObject {
   init() {
     let dbManager = DataManager.shared.dbManager
     
-    let results = try! TypeDogmaInfoModel.query(on: dbManager!.database)
-      .all()
-      .wait()
-    print("ItemDogmaExplorerViewModel data count \(results.count)")
-    self.data = results
+//    let results = try! TypeDogmaInfoModel.query(on: dbManager!.database)
+//      .all()
+//      .wait()
+//    print("ItemDogmaExplorerViewModel data count \(results.count)")
+//    self.data = results
   }
   
   func getData() {

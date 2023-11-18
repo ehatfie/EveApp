@@ -56,6 +56,8 @@
 		BA7100A22AE898CA001CD301 /* blueprints.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA7100A12AE898CA001CD301 /* blueprints.yaml */; };
 		BA7100A52AEA1969001CD301 /* BlueprintExplorerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7100A42AEA1969001CD301 /* BlueprintExplorerView.swift */; };
 		BA7100A72AEB2D05001CD301 /* BlueprintDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */; };
+		BA9D96032B05C126006AC37E /* TypeDogmaAttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96022B05C126006AC37E /* TypeDogmaAttributeView.swift */; };
+		BA9D96052B05CC0E006AC37E /* BlueprintIndustryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96042B05CC0E006AC37E /* BlueprintIndustryView.swift */; };
 		BAB271D52A6867B5004F01B7 /* DataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB271D42A6867B4004F01B7 /* DataFetcher.swift */; };
 		BAB271F72A686918004F01B7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BAB271F62A686918004F01B7 /* Alamofire */; };
 		BACB51582A686E760044CDA0 /* JSONEncodableEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB4FD62A686E740044CDA0 /* JSONEncodableEncoding.swift */; };
@@ -445,6 +447,14 @@
 		BACB52DB2A68B9700044CDA0 /* ItemGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB52DA2A68B9700044CDA0 /* ItemGroupView.swift */; };
 		BACB52DD2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB52DC2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift */; };
 		BACB52DF2A68CCD70044CDA0 /* ItemTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB52DE2A68CCD70044CDA0 /* ItemTypes.swift */; };
+		BAE02EE42AF3482C00AB695F /* GetCharacterSkillsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EE32AF3482C00AB695F /* GetCharacterSkillsResponse.swift */; };
+		BAE02EE72AF34F4000AB695F /* BlueprintComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EE62AF34F4000AB695F /* BlueprintComponentView.swift */; };
+		BAE02EEA2AF9CEE600AB695F /* ReprocessingHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EE92AF9CEE600AB695F /* ReprocessingHelperView.swift */; };
+		BAE02EEC2AF9EA7100AB695F /* CategoryInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EEB2AF9EA7100AB695F /* CategoryInfoView.swift */; };
+		BAE02EEE2AF9F5CC00AB695F /* GroupInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EED2AF9F5CC00AB695F /* GroupInfoView.swift */; };
+		BAE02EF02AFB0E0100AB695F /* TypeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EEF2AFB0E0100AB695F /* TypeInfoView.swift */; };
+		BAE02EF22AFB11D200AB695F /* TypeDogmaInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EF12AFB11D200AB695F /* TypeDogmaInfoView.swift */; };
+		BAE02EF42AFB183300AB695F /* DBManager+query.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EF32AFB183300AB695F /* DBManager+query.swift */; };
 		BAE0695E2AC89C6B0054EFCF /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = BAE0695D2AC89C6B0054EFCF /* Yams */; };
 		BAE069612AC89C860054EFCF /* FluentSQLiteDriver in Frameworks */ = {isa = PBXBuildFile; productRef = BAE069602AC89C860054EFCF /* FluentSQLiteDriver */; };
 		BAE069642AC89CA80054EFCF /* Fluent in Frameworks */ = {isa = PBXBuildFile; productRef = BAE069632AC89CA80054EFCF /* Fluent */; };
@@ -559,6 +569,8 @@
 		BA7100A12AE898CA001CD301 /* blueprints.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = blueprints.yaml; sourceTree = "<group>"; };
 		BA7100A42AEA1969001CD301 /* BlueprintExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintDetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA9D96022B05C126006AC37E /* TypeDogmaAttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeDogmaAttributeView.swift; sourceTree = "<group>"; };
+		BA9D96042B05CC0E006AC37E /* BlueprintIndustryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintIndustryView.swift; sourceTree = "<group>"; };
 		BAB271D42A6867B4004F01B7 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
 		BACB4FD62A686E740044CDA0 /* JSONEncodableEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONEncodableEncoding.swift; sourceTree = "<group>"; };
 		BACB4FD72A686E740044CDA0 /* APIs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIs.swift; sourceTree = "<group>"; };
@@ -947,6 +959,14 @@
 		BACB52DA2A68B9700044CDA0 /* ItemGroupView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemGroupView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BACB52DC2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemCategoryGroupsListView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BACB52DE2A68CCD70044CDA0 /* ItemTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypes.swift; sourceTree = "<group>"; };
+		BAE02EE32AF3482C00AB695F /* GetCharacterSkillsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCharacterSkillsResponse.swift; sourceTree = "<group>"; };
+		BAE02EE62AF34F4000AB695F /* BlueprintComponentView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintComponentView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BAE02EE92AF9CEE600AB695F /* ReprocessingHelperView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ReprocessingHelperView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BAE02EEB2AF9EA7100AB695F /* CategoryInfoView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CategoryInfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BAE02EED2AF9F5CC00AB695F /* GroupInfoView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = GroupInfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BAE02EEF2AFB0E0100AB695F /* TypeInfoView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TypeInfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BAE02EF12AFB11D200AB695F /* TypeDogmaInfoView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TypeDogmaInfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BAE02EF32AFB183300AB695F /* DBManager+query.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+query.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BAE069672AC89DBA0054EFCF /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		BAE069692AC89E350054EFCF /* AppModel+loading.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "AppModel+loading.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BAE0696C2AC89E630054EFCF /* GroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupModel.swift; sourceTree = "<group>"; };
@@ -958,7 +978,7 @@
 		BAE0697F2AC8CF2F0054EFCF /* DogmaAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogmaAttribute.swift; sourceTree = "<group>"; };
 		BAE069852AC8D4FB0054EFCF /* DogmaEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogmaEffect.swift; sourceTree = "<group>"; };
 		BAE069872AC8DA850054EFCF /* DogmaAttributeCategoryModel.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DogmaAttributeCategoryModel.swift; sourceTree = "<group>"; tabWidth = 2; };
-		BAE0698B2AD4F5130054EFCF /* TypeDogmaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeDogmaModel.swift; sourceTree = "<group>"; };
+		BAE0698B2AD4F5130054EFCF /* TypeDogmaModel.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TypeDogmaModel.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAE069902AD8F6960054EFCF /* DogmaExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DogmaExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAE069942AD901050054EFCF /* DogmaEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogmaEffectView.swift; sourceTree = "<group>"; };
 		BAE069962AD903440054EFCF /* DogmaAttributeView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DogmaAttributeView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -1077,6 +1097,7 @@
 		BA3149C42A1EF98C0076E6DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BAE02EE82AF9CEC200AB695F /* ReprocessingHelper */,
 				BA7100A32AEA1944001CD301 /* BlueprintExplorer */,
 				BAE0698F2AD8F67B0054EFCF /* DogmaExplorer */,
 				BA314A022A563C930076E6DD /* ItemExplorer */,
@@ -1130,6 +1151,7 @@
 		BA3149DE2A47905B0076E6DD /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				BAE02EE22AF3480900AB695F /* ESI */,
 				BAE0696B2AC89E500054EFCF /* DB */,
 				BA314A0E2A5CF8A50076E6DD /* ItemExplorer */,
 				BA3149EA2A4BCD7D0076E6DD /* ResponseObjects */,
@@ -1247,6 +1269,11 @@
 		BA7100952AE3675C001CD301 /* New Group */ = {
 			isa = PBXGroup;
 			children = (
+				BAE02EEB2AF9EA7100AB695F /* CategoryInfoView.swift */,
+				BAE02EED2AF9F5CC00AB695F /* GroupInfoView.swift */,
+				BAE02EEF2AFB0E0100AB695F /* TypeInfoView.swift */,
+				BAE02EF12AFB11D200AB695F /* TypeDogmaInfoView.swift */,
+				BA9D96022B05C126006AC37E /* TypeDogmaAttributeView.swift */,
 			);
 			path = "New Group";
 			sourceTree = "<group>";
@@ -1266,6 +1293,7 @@
 				BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */,
 				BA04CA8A2AEDCAEB008D66B8 /* MaterialDetailView.swift */,
 				BA04CA8C2AEDCB8B008D66B8 /* BlueprintMaterialView.swift */,
+				BAE02EE62AF34F4000AB695F /* BlueprintComponentView.swift */,
 			);
 			path = BlueprintExplorer;
 			sourceTree = "<group>";
@@ -1692,6 +1720,23 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		BAE02EE22AF3480900AB695F /* ESI */ = {
+			isa = PBXGroup;
+			children = (
+				BAE02EE32AF3482C00AB695F /* GetCharacterSkillsResponse.swift */,
+			);
+			path = ESI;
+			sourceTree = "<group>";
+		};
+		BAE02EE82AF9CEC200AB695F /* ReprocessingHelper */ = {
+			isa = PBXGroup;
+			children = (
+				BAE02EE92AF9CEE600AB695F /* ReprocessingHelperView.swift */,
+				BA9D96042B05CC0E006AC37E /* BlueprintIndustryView.swift */,
+			);
+			path = ReprocessingHelper;
+			sourceTree = "<group>";
+		};
 		BAE069662AC89DA90054EFCF /* AppModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1723,6 +1768,7 @@
 				BAE069752AC8A2900054EFCF /* DBManager+loading.swift */,
 				BAE069AA2ADB30140054EFCF /* DBManager+Industry.swift */,
 				BA71008F2ADF64F6001CD301 /* DBManager+Mocks.swift */,
+				BAE02EF32AFB183300AB695F /* DBManager+query.swift */,
 			);
 			path = DBManager;
 			sourceTree = "<group>";
@@ -1920,6 +1966,7 @@
 				BACB51C72A686E770044CDA0 /* GetUniverseRegionsRegionIdOk.swift in Sources */,
 				BACB51F42A686E770044CDA0 /* GetFwLeaderboardsActiveTotalActiveTotal.swift in Sources */,
 				BACB52A12A686E770044CDA0 /* GatewayTimeout.swift in Sources */,
+				BAE02EE42AF3482C00AB695F /* GetCharacterSkillsResponse.swift in Sources */,
 				BACB52402A686E770044CDA0 /* GetCorporationsCorporationIdMedalsIssued200Ok.swift in Sources */,
 				BACB51862A686E760044CDA0 /* GetUniverseMoonsMoonIdNotFound.swift in Sources */,
 				BACB51B32A686E770044CDA0 /* PutCharactersCharacterIdMailMailIdContents.swift in Sources */,
@@ -1966,6 +2013,7 @@
 				BACB52C82A686E770044CDA0 /* GetFleetsFleetIdWingsNotFound.swift in Sources */,
 				BACB523E2A686E770044CDA0 /* GetKillmailsKillmailIdKillmailHashAttacker.swift in Sources */,
 				BACB52602A686E770044CDA0 /* GetFwLeaderboardsKills.swift in Sources */,
+				BAE02EF22AFB11D200AB695F /* TypeDogmaInfoView.swift in Sources */,
 				BACB51D52A686E770044CDA0 /* GetCorporationCorporationIdMiningExtractions200Ok.swift in Sources */,
 				BACB529C2A686E770044CDA0 /* GetFwLeaderboardsCorporationsActiveTotalActiveTotal.swift in Sources */,
 				BACB51D62A686E770044CDA0 /* GetAlliancesAllianceIdOk.swift in Sources */,
@@ -1983,6 +2031,7 @@
 				BACB52092A686E770044CDA0 /* DeleteFleetsFleetIdMembersMemberIdNotFound.swift in Sources */,
 				BACB51812A686E760044CDA0 /* GetDogmaAttributesAttributeIdOk.swift in Sources */,
 				BACB52452A686E770044CDA0 /* GetCorporationsCorporationIdStarbases200Ok.swift in Sources */,
+				BAE02EE72AF34F4000AB695F /* BlueprintComponentView.swift in Sources */,
 				BAB271D52A6867B5004F01B7 /* DataFetcher.swift in Sources */,
 				BACB518B2A686E760044CDA0 /* PostUniverseIdsInventoryType.swift in Sources */,
 				BACB51EA2A686E770044CDA0 /* PostCorporationsCorporationIdAssetsNamesNotFound.swift in Sources */,
@@ -2035,6 +2084,7 @@
 				BACB51F22A686E770044CDA0 /* PutFleetsFleetIdMembersMemberIdMovement.swift in Sources */,
 				BACB52512A686E770044CDA0 /* GetFwLeaderboardsVictoryPoints.swift in Sources */,
 				BACB52A62A686E770044CDA0 /* GetUniversePlanetsPlanetIdNotFound.swift in Sources */,
+				BAE02EEA2AF9CEE600AB695F /* ReprocessingHelperView.swift in Sources */,
 				BACB52762A686E770044CDA0 /* PostCorporationsCorporationIdAssetsNames200Ok.swift in Sources */,
 				BACB520F2A686E770044CDA0 /* GetUniverseStargatesStargateIdDestination.swift in Sources */,
 				BACB51A22A686E770044CDA0 /* GetFwLeaderboardsCorporationsYesterdayYesterday1.swift in Sources */,
@@ -2063,6 +2113,7 @@
 				BACB52BF2A686E770044CDA0 /* BadRequest.swift in Sources */,
 				BACB52082A686E770044CDA0 /* PostFleetsFleetIdWingsNotFound.swift in Sources */,
 				BACB51F72A686E770044CDA0 /* GetSovereigntyCampaigns200Ok.swift in Sources */,
+				BAE02EEC2AF9EA7100AB695F /* CategoryInfoView.swift in Sources */,
 				BA3149EC2A4BCDA20076E6DD /* AccessTokenData.swift in Sources */,
 				BACB519F2A686E770044CDA0 /* GetUniverseStargatesStargateIdOk.swift in Sources */,
 				BACB52C12A686E770044CDA0 /* GetCorporationsCorporationIdBookmarks200Ok.swift in Sources */,
@@ -2073,6 +2124,7 @@
 				BACB520D2A686E770044CDA0 /* GetCharactersCharacterIdPlanetsPlanetIdFactoryDetails.swift in Sources */,
 				BAE0698C2AD4F5130054EFCF /* TypeDogmaModel.swift in Sources */,
 				BACB52752A686E770044CDA0 /* GetCharactersCharacterIdPlanets200Ok.swift in Sources */,
+				BA9D96032B05C126006AC37E /* TypeDogmaAttributeView.swift in Sources */,
 				BACB519C2A686E770044CDA0 /* GetStatusOk.swift in Sources */,
 				BACB527C2A686E770044CDA0 /* GetCorporationsCorporationIdContacts200Ok.swift in Sources */,
 				BA3149E92A4BCAF80076E6DD /* DataManager+Fetching.swift in Sources */,
@@ -2104,6 +2156,7 @@
 				BACB52142A686E770044CDA0 /* GetFleetsFleetIdWings200Ok.swift in Sources */,
 				BACB52C62A686E770044CDA0 /* GetWarsWarIdUnprocessableEntity.swift in Sources */,
 				BACB52AA2A686E770044CDA0 /* GetCorporationsCorporationIdCustomsOffices200Ok.swift in Sources */,
+				BAE02EF02AFB0E0100AB695F /* TypeInfoView.swift in Sources */,
 				BACB52742A686E770044CDA0 /* GetUniverseGroupsGroupIdNotFound.swift in Sources */,
 				BACB52892A686E770044CDA0 /* GetIndustrySystemsCostIndice.swift in Sources */,
 				BACB51662A686E760044CDA0 /* WalletAPI.swift in Sources */,
@@ -2143,6 +2196,7 @@
 				BACB527D2A686E770044CDA0 /* GetCharactersCharacterIdShipOk.swift in Sources */,
 				BACB52B02A686E770044CDA0 /* GetUniverseFactions200Ok.swift in Sources */,
 				BACB51E52A686E770044CDA0 /* GetCharactersCharacterIdContracts200Ok.swift in Sources */,
+				BA9D96052B05CC0E006AC37E /* BlueprintIndustryView.swift in Sources */,
 				BACB52A22A686E770044CDA0 /* PutFleetsFleetIdNotFound.swift in Sources */,
 				BACB526F2A686E770044CDA0 /* GetMarketsRegionIdHistoryError520.swift in Sources */,
 				BACB51DF2A686E770044CDA0 /* GetCorporationsCorporationIdIndustryJobs200Ok.swift in Sources */,
@@ -2215,6 +2269,7 @@
 				BACB51AC2A686E770044CDA0 /* GetCorporationsCorporationIdMembertracking200Ok.swift in Sources */,
 				BACB52722A686E770044CDA0 /* GetCharactersCharacterIdMailLabelsLabel.swift in Sources */,
 				BACB51FB2A686E770044CDA0 /* PostFleetsFleetIdWingsWingIdSquadsNotFound.swift in Sources */,
+				BAE02EF42AFB183300AB695F /* DBManager+query.swift in Sources */,
 				BACB52992A686E770044CDA0 /* GetContractsPublicItemsContractIdNotFound.swift in Sources */,
 				BACB52C92A686E770044CDA0 /* PostCharactersCharacterIdMailError520.swift in Sources */,
 				BACB51A12A686E770044CDA0 /* PostCharactersAffiliation200Ok.swift in Sources */,
@@ -2332,6 +2387,7 @@
 				BACB52DD2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift in Sources */,
 				BACB52882A686E770044CDA0 /* GetUniverseStargatesStargateIdPosition.swift in Sources */,
 				BACB52B12A686E770044CDA0 /* PostCharactersCharacterIdAssetsNames200Ok.swift in Sources */,
+				BAE02EEE2AF9F5CC00AB695F /* GroupInfoView.swift in Sources */,
 				BAE069952AD901050054EFCF /* DogmaEffectView.swift in Sources */,
 				BA3149F82A5384B00076E6DD /* AuthSetupView.swift in Sources */,
 				BA3149E72A4BCA790076E6DD /* CharacterInfoView.swift in Sources */,

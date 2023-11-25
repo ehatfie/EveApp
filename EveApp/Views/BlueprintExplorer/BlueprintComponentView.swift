@@ -13,6 +13,7 @@ struct BlueprintComponentView: View {
   
   let typeModels: [TypeModel]
   let typeMaterials: [TypeMaterialsModel]
+  let materialTypes: [TypeMaterialsModel]
   
   init(blueprintModel: BlueprintModel) {
     self.blueprintModel = blueprintModel
@@ -38,19 +39,24 @@ struct BlueprintComponentView: View {
     
     self.typeModels = typeModels
     self.typeMaterials = typeMaterials
-    //blueprintModel.activities.manufacturing.
+    
+    let materialTypes = DataManager.shared.dbManager?
+      .getTypeMaterialModels(for: materialIds) ?? []
+    self.materialTypes = materialTypes
+    
+    DataManager.shared.dbManager?.getTests(for: materialIds)
   }
   
   var body: some View {
     HStack {
       List(typeModels, id: \.typeId) { type in
-        Text(type.name + "\(type.typeId)")
+        Text(type.name + " \(type.typeId)")
       }
-      List(typeMaterials, id: \.typeID) { type in
+      List(materialTypes, id: \.typeID) { type in
         Text("\(type.typeID)")
       }
     }
-    Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    
   }
 }
 

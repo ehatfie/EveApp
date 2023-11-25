@@ -68,9 +68,7 @@ struct ItemMaterialDetailView: View {
     VStack {
       Text("\(viewModel.typeModel.name)")
       HStack {
-        
         VStack(alignment: .trailing) {
-
           ForEach($viewModel.materialTypes, id: \.string) { material in
             Text(material.wrappedValue)
             

@@ -55,6 +55,7 @@ extension DBManager {
     let blueprints = try! BlueprintModel.query(on: self.database)
       .join(TypeModel.self, on: \TypeModel.$typeId == \BlueprintModel.$blueprintTypeID)
       .filter(TypeModel.self, \.$published == true)
+      .filter(TypeModel.self, \.$groupID == 105)
       .all()
       .wait()
     
@@ -83,6 +84,28 @@ extension DBManager {
       .filter(\.$typeID == type)
       .first()
       .wait()
+  }
+  
+  func getTypeMaterialModels(for types: [Int64]) -> [TypeMaterialsModel] {
+    try! TypeMaterialsModel.query(on: self.database)
+      .filter(\.$typeID ~~ types)
+      .all()
+      .wait()
+      
+
+  }
+  
+  func getTests(for types: [Int64]) {
+    let foo = try! TypeModel.query(on: self.database)
+      .join(TypeMaterialsModel.self, on: \TypeModel.$typeId == \TypeMaterialsModel.$typeID)
+      .filter(TypeModel.self, \.$typeId ~~ types)
+      .all()
+      .wait()
+
+    foo.forEach { value in
+      let materialsModel = try! value.joined(TypeMaterialsModel.self)
+      print("got \(materialsModel.materialData.count) for \(value.name)")
+    }
   }
   
   func getMaterialTypes(for type: Int64) -> [TypeModel] {

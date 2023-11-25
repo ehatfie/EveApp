@@ -8,15 +8,38 @@
 import SwiftUI
 import Fluent
 
+struct QuantityType {
+  var quantity: Int64
+  var typeId: Int64
+  
+  init(_ model: QuantityTypeModel) {
+    self.quantity = model.quantity
+    self.typeId = model.typeId
+  }
+  
+  init(_ model: MaterialDataModel) {
+    self.quantity = model.quantity
+    self.typeId = model.materialTypeID
+  }
+}
+
 struct MaterialDetailView: View {
   var types: [TypeModel]
-  var materials: [QuantityTypeModel]
+  var materials: [QuantityType]
   
-  var listData: [(TypeModel, QuantityTypeModel)]
+  var listData: [(TypeModel, QuantityType)]
   
   let title: String
   
   init(title: String, materials: [QuantityTypeModel]) {
+    self.init(title: title, materials: materials.map { QuantityType($0)})
+  }
+  
+  init(title: String, materials: [MaterialDataModel]) {
+    self.init(title: title, materials: materials.map { QuantityType($0)})
+  }
+  
+  init(title: String, materials: [QuantityType]) {
     self.title = title
     //materials.map({$0.typeId})
     let typeIds = materials.map({$0.typeId})
@@ -25,8 +48,10 @@ struct MaterialDetailView: View {
 //      .filter(\.$typeId == typeIds[0])
 //      .all()
 //      .wait()
+    //let materials = materials.map { QuantityType($0)}
     
-    let types = materials.compactMap { value in
+    let types = materials
+      .compactMap { value in
       try? TypeModel.query(on: DataManager.shared.dbManager!.database)
         .filter(\.$typeId == value.typeId)
         .first()
@@ -49,31 +74,30 @@ struct MaterialDetailView: View {
  
   var body: some View {
     VStack(alignment: .leading, spacing: 15) {
-      Text(title)
-        .font(.title2)
-     
-      Divider()
+        Text(title)
+          .font(.title2)
         
-      
-      VStack(alignment: .center) {
-        HStack {
-          VStack(alignment: .leading) {
-            ForEach(types, id: \.typeId) { type in
-              Text(type.name)
-                .padding(.vertical, 2)
+        Divider()
+        
+        
+        VStack(alignment: .center) {
+          HStack {
+            VStack(alignment: .leading) {
+              ForEach(types, id: \.typeId) { type in
+                Text(type.name)
+                  .padding(.vertical, 2)
+              }
             }
-          }
-          Spacer()
-          VStack(alignment: .trailing) {
-            ForEach(materials, id: \.typeId) { material in
-              Text("\(material.quantity)")
-                .padding(.vertical, 2)
+            Spacer()
+            VStack(alignment: .trailing) {
+              ForEach(materials, id: \.typeId) { material in
+                Text("\(material.quantity)")
+                  .padding(.vertical, 2)
+              }
             }
+            
           }
-          
         }
-      }
-
     }
     .fixedSize(horizontal: true, vertical: false)
     .padding(5)
@@ -92,5 +116,5 @@ struct MaterialDetailView: View {
 }
 
 #Preview {
-  MaterialDetailView(title: "Test Title", materials: [])
+  MaterialDetailView(title: "Test Title", materials: [QuantityType]())
 }

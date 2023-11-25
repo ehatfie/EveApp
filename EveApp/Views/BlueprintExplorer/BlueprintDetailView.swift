@@ -24,6 +24,7 @@ struct BlueprintDetailView: View {
     self.typeModel = foo
     
   }
+  // 45648
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
       HStack {
@@ -31,12 +32,14 @@ struct BlueprintDetailView: View {
           Text("\(typeModel.name)")
             .font(.title)
           Text("\(typeModel.groupID)")
+          Text("\(typeModel.typeId)")
         }
       }
       
       HStack {
         activitiesView(for: blueprint.activities)
-        componentsView(for: blueprint.activities.manufacturing)
+        BlueprintComponentView(blueprintModel: blueprint)
+        //componentsView(for: blueprint.activities.manufacturing)
       }
       
     }
@@ -69,7 +72,7 @@ struct BlueprintDetailView: View {
         Text("Manufacturing Time:")
         Text(manufacturingTime.formatted())
       }
-      
+      Spacer()
     }
   }
   
@@ -90,11 +93,13 @@ struct BlueprintDetailView: View {
     let typeIds = model.materials.map { $0.typeId }
     let types = DataManager.shared.dbManager!.getTypes(for: typeIds)
     
+    let foo = zip(model.materials, types)
+    
     
     return VStack(){
+      
       Text("Components View")
       List(types, id: \.id) { material in
-        Text(material.name)
         typeMaterialView(for: material)
       }
       Spacer()
@@ -103,19 +108,25 @@ struct BlueprintDetailView: View {
   }
   
   func typeMaterialView(for type: TypeModel) -> some View {
-    if let materialTypes = DataManager.shared.dbManager!
-      .getTypeMaterialModel(for: type.typeId) {
-      
-      return VStack {
-        Text("gottem")
-//        ForEach(materialTypes, id: \.id) { material in
-//          Text(material.name)
-//        }
-      }
-    }
+    let materialTypes = DataManager.shared.dbManager?
+      .getTypeMaterialModel(for: type.typeId)//?.materialData ?? []
     
+//    let foo = MaterialDetailView(
+//      title: "Materials",
+//      materials: materialTypes?.materialData.map { value in
+//        QuantityTypeModel(
+//      }
+//    )
     return VStack {
-      Text("NO materials")
+      Text(type.name)
+      
+      if materialTypes?.materialData.count ?? 0 > 0 {
+        MaterialDetailView(
+          title: "Materials",
+          materials: materialTypes?.materialData ?? []
+        )
+      }
+
     }
   }
 }

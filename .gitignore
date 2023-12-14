@@ -94,3 +94,4 @@ iOSInjectionProject/
 *.yaml
 
 EveApp.xcodeproj/xcuserdata/*
+EveApp.xcodeproj/xcshareddata/

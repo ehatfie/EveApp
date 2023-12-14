@@ -119,36 +119,18 @@ class DBManager: ObservableObject {
     
     let start = Date()
     do {
-      //try await loadCategoryData()
-      //try await loadGroupData()
-      
       _ = try await [
         loadCategoryData(),
         loadGroupData()
       ]
       
-
-      
       try await loadTypeData()
       await loadDogmaData()
-      //await loadDogmaData()
       print("Load data took \(start.timeIntervalSinceNow * -1)")
-//      _ = try await [
-//        loadCategoryData(),
-//        loadGroupData(),
-//        loadTypeData(),
-//        loadDogmaData()
-//      ]
-      
-      //DispatchQueue.main.async {
-        //self.dbLoading = false
-      //}
-      
     } catch let error {
       self.dbLoading = false
       print("Load data error \(error)")
     }
-    
   }
   
   func save(_ model: any Model) async throws {

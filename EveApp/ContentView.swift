@@ -6,9 +6,27 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ContentView: View {
     @ObservedObject var model: AppModel
+    @State private var isShowingSheet: Bool
+    
+    var anyCanellable: AnyCancellable?
+    
+    init(model: AppModel) {
+        self.model = model
+        isShowingSheet = true
+//        anyCanellable = model.dbManager.$dbLoading
+//            .sink(receiveValue: { [self] value in
+//                print("dbloading value \(value)")
+//                self.isShowingSheet = value
+//            })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {[self] in
+            self.isShowingSheet = false
+        })
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -22,7 +40,11 @@ struct ContentView: View {
 //                    AuthSetupView()
 //                }
 //            }
-           HomeView()
+            HomeView()
+//                .sheet(isPresented: $isShowingSheet, content: {
+//                    Text("DATA LOADING")
+//                        .frame(width: 250, height: 150)
+//                })
             
         }
         .padding()

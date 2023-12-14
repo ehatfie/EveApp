@@ -17,7 +17,7 @@ struct BlueprintIndustryView: View {
     
     init() {
         let dbManager = DataManager.shared.dbManager!
-        let blueprint = dbManager.getRandomBlueprint()
+        let blueprint = dbManager.getRandomBlueprint()!
         self.blueprint = blueprint
         self.typeModel = dbManager.getType(for: blueprint.blueprintTypeID)
         //print("got blueprint \(blueprint)")
@@ -94,7 +94,7 @@ struct RandomBlueprintPicker: View {
     var body: some View {
         HStack {
             Button(action: {
-                self.blueprint = DataManager.shared.dbManager!.getRandomBlueprint()
+                self.blueprint = DataManager.shared.dbManager!.getRandomBlueprint()!
             }, label: {
               Text("Random Blueprint")
             })

@@ -11,8 +11,10 @@ import Combine
 class HomeViewModel: ObservableObject {
     @Published var needsAuthSetup: Bool = false
     @Published var needsAuthentication: Bool = false
+    @Published var dataLoading: Bool = false
     
     var cancellable: AnyCancellable?
+    var cancellable2: AnyCancellable?
     
     init() {
         checkForNeedsAuthSetupData()
@@ -26,6 +28,8 @@ class HomeViewModel: ObservableObject {
                 }
                 
             })
+        
+        DataManager.shared.$dataLoading.assign(to: &$dataLoading)
     }
     
     func checkForNeedsAuthSetupData() {
@@ -110,20 +114,20 @@ struct HomeView: View {
                     Text("Login View")
                 })
             }
-        }
-        VStack {
-            HStack(alignment: .top) {
-//                AuthView()
-//                Spacer()
-                
-            }
-        }.sheet(isPresented: $homeViewModel.needsAuthSetup, content: {
-            AuthSetupView(onSubmit: homeViewModel.onAuthSubmit(clientInfo:))
-                .frame(minWidth: 250, minHeight: 175)
+        }.sheet(isPresented: $homeViewModel.dataLoading, content: {
+            Text("Data Loading ...")
+                .padding()
         })
-        .sheet(isPresented: $homeViewModel.needsAuthentication, content: {
-            AuthView().frame(minWidth: 250, minHeight: 175)
-        })
+//        .sheet(isPresented: $homeViewModel.needsAuthSetup, content: {
+//            AuthSetupView(onSubmit: homeViewModel.onAuthSubmit(clientInfo:))
+//                .frame(minWidth: 250, minHeight: 175)
+//        })
+//        .sheet(isPresented: $homeViewModel.needsAuthentication, content: {
+//            AuthView().frame(minWidth: 250, minHeight: 175)
+//        })
+//        .sheet(isPresented: $homeViewModel.dataLoading, content: {
+//            Text("test data").frame(minWidth: 250, minHeight: 200)
+//        })
         
         
         

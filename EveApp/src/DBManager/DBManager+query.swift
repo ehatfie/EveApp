@@ -27,6 +27,13 @@ extension DBManager {
       .wait()
   }
   
+  func getGroup(for groupId: Int64) -> GroupModel? {
+    return try! GroupModel.query(on: self.database)
+      .filter(\.$groupId == groupId)
+      .first()
+      .wait()
+  }
+  
   func getCategories() -> [CategoryModel] {
     return try! CategoryModel.query(on: self.database)
       .all()
@@ -51,7 +58,7 @@ extension DBManager {
       .wait()
   }
   
-  func getRandomBlueprint() -> BlueprintModel {
+  func getRandomBlueprint() -> BlueprintModel? {
     let blueprints = try! BlueprintModel.query(on: self.database)
       .join(TypeModel.self, on: \TypeModel.$typeId == \BlueprintModel.$blueprintTypeID)
       .filter(TypeModel.self, \.$published == true)
@@ -59,8 +66,13 @@ extension DBManager {
       .all()
       .wait()
     
+    guard !blueprints.isEmpty else {
+      return nil
+    }
+    
     let count = blueprints.count
-    let rand = Int.random(in: 0...count)
+    
+    let rand = Int.random(in: 0..<count)
     
     return blueprints[rand]
   }

@@ -7,12 +7,36 @@
 
 import SwiftUI
 
+class IndustryInfoViewModel: ObservableObject {
+    // character
+    // get info for character
+}
+
 struct IndustryInfoView: View {
+    @StateObject private var viewModel: IndustryInfoViewModel = IndustryInfoViewModel()
+    //@Observable var viewModel: IndustryInfoViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            industryView()
+        }
+        
+    }
+    
+    func industryView() -> some View {
+        return VStack {
+            
+        }
     }
 }
 
 #Preview {
     IndustryInfoView()
 }
+
+
+/**
+List of jobs
+etc
+ 
+ */

@@ -18,7 +18,7 @@ struct BlueprintData: Codable {
   let maxProductionLimit: Int64
 }
 
-struct BlueprintManufacturingData:Codable {
+struct BlueprintManufacturingData: Codable {
   let materials: [QuantityTypeData]?
   let products: [QuantityTypeData]?
   let time: Int64
@@ -32,8 +32,22 @@ struct QuantityTypeData: Codable {
 struct BlueprintActivityData: Codable {
   let copying: TimedData?
   let manufacturing: BlueprintManufacturingData?
+  let reaction: BlueprintManufacturingData?
   let research_material: TimedData?
   let research_time: TimedData?
+}
+
+struct Blueprint {
+  let activities: Activities
+}
+
+struct Activities {
+  let products: [Product]
+}
+
+struct Product {
+  let id: Int
+  let count: Int
 }
 
 final class BlueprintModel: Model {
@@ -60,12 +74,11 @@ final class BlueprintModel: Model {
         .id()
         .field("activities_copying_time", .int64)
         .field("activities_manufacturing_materials", .array(of: .custom(QuantityTypeModel.self)))
-//        .field("activities_manufacturing_materials_quantity", .array(of: .json))
-        //.field("activities_manufacturing_materials_typeID", .int64)
-        //.field("activities_manufacturing_products_quantity", .int64)
-        //.field("activities_manufacturing_products_typeID", .int64)
         .field("activities_manufacturing_products", .array(of: .custom(QuantityTypeModel.self)))
         .field("activities_manufacturing_time", .int64)
+        .field("activities_reaction_materials", .array(of: .custom(QuantityTypeModel.self)))
+        .field("activities_reaction_products", .array(of: .custom(QuantityTypeModel.self)))
+        .field("activities_reaction_time", .int64)
         .field("activities_researching_time", .int64)
         .field("activities_researchMaterial_time", .int64)
         .field("activities_researchTime_time", .int64)
@@ -120,6 +133,9 @@ final class BlueprintActivityModel: Fields {
   @Group(key: "manufacturing")
   var manufacturing: BlueprintManufacturingModel
   
+  @Group(key: "reaction")
+  var reaction: BlueprintManufacturingModel
+  
   @Group(key: "researchMaterial")
   var researchMaterial: TimeAmount
   
@@ -138,8 +154,16 @@ extension BlueprintActivityModel {
       self.manufacturing = BlueprintManufacturingModel()
     }
     
+    if let reactionData = data.reaction {
+      self.reaction = BlueprintManufacturingModel(data: reactionData)
+    } else {
+      self.reaction = BlueprintManufacturingModel()
+    }
+    
     self.researchMaterial.time = data.research_material?.time ?? 0
     self.researchTime.time = data.research_time?.time ?? 0
+    
+    
   }
 }
 

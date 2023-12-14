@@ -27,7 +27,7 @@ extension EnvironmentValues {
 }
 
 class DataManager: ObservableObject {
-    static let shared = DataManager()
+    @ObservedObject static var shared = DataManager()
     
     var dbManager: DBManager?
     
@@ -40,6 +40,8 @@ class DataManager: ObservableObject {
     @Published var categoryInfoByID: [Int32: CategoryInfoResponseData] = [:]
     @Published var groupInfoByID: [Int32: GroupInfoResponseData] = [:]
     @Published var typesInfoByID: [Int32: GetUniverseTypesTypeIdOk] = [:]
+    
+    @Published var dataLoading: Bool = false
     
     
     @Environment(\.accessKey) var accessKey1: String?

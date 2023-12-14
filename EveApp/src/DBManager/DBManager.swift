@@ -13,7 +13,9 @@ import Fluent
 
 class DBManager: ObservableObject {
   let databases: Databases
-  let dbName = "TestDB10"
+  let dbName = "TestDB15"
+  
+  let numThreads = 16
   
   var logger: Logger = {
     var logger = Logger(label: "database.logger")
@@ -28,11 +30,13 @@ class DBManager: ObservableObject {
     )!
   }
   
+  @Published var dbLoading: Bool = false
   @Published var dbLoaded: Bool = false
   
+  
   init() {
-    let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 8)
-    let threadPool = NIOThreadPool(numberOfThreads: 8)
+    let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: numThreads)
+    let threadPool = NIOThreadPool(numberOfThreads: numThreads)
     
     threadPool.start()
     
@@ -44,16 +48,6 @@ class DBManager: ObservableObject {
     
     setup()
     loadStaticData()
-//    Task {
-//      await loadMockedData()
-//    }
-    
-    
-    //loadDogmaInfoData()
-    
-    
-    //try? testCategoryData()
-    //try? loadIndustryData()
   }
   
   func setup() {
@@ -101,27 +95,57 @@ class DBManager: ObservableObject {
   
   func loadStaticData() {
     Task {
-      async let loadData: Void = loadData()
-      async let loadIndustryData: Void = loadIndustryData()
       
-      _ = await [
-        loadData,
-        loadIndustryData
-      ]
+      //async let loadIndustryData: Void = loadIndustryData()
+      
+      //await loadData
+      //await loadIndustryData
+      
+      //DispatchQueue.main.async {
+      self.dbLoading = true
+      //}
+      await loadData()
+      await loadIndustryData()
+      
+      DispatchQueue.main.async {
+        self.dbLoading = false
+      }
     }
-    
   }
   
   func loadData() async {
     print("loadData()")
+    
+    
+    let start = Date()
     do {
+      //try await loadCategoryData()
+      //try await loadGroupData()
+      
       _ = try await [
         loadCategoryData(),
-        loadGroupData(),
-        loadTypeData(),
-        loadDogmaData()
+        loadGroupData()
       ]
+      
+
+      
+      try await loadTypeData()
+      await loadDogmaData()
+      //await loadDogmaData()
+      print("Load data took \(start.timeIntervalSinceNow * -1)")
+//      _ = try await [
+//        loadCategoryData(),
+//        loadGroupData(),
+//        loadTypeData(),
+//        loadDogmaData()
+//      ]
+      
+      //DispatchQueue.main.async {
+        //self.dbLoading = false
+      //}
+      
     } catch let error {
+      self.dbLoading = false
       print("Load data error \(error)")
     }
     

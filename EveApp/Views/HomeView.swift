@@ -8,6 +8,16 @@
 import SwiftUI
 import Combine
 
+enum SideBarItem: String, Identifiable, CaseIterable {
+    var id: String { rawValue }
+    
+    case characterInfo
+    case reprocessingHelper
+    case skillQueue
+    case itemDogmaExplorer
+    case industryHelper
+}
+
 class HomeViewModel: ObservableObject {
     @Published var needsAuthSetup: Bool = false
     @Published var needsAuthentication: Bool = false
@@ -57,8 +67,41 @@ class HomeViewModel: ObservableObject {
 struct HomeView: View {
     @ObservedObject var homeViewModel: HomeViewModel = HomeViewModel()
     
+    @State var selectedSideBarItem: SideBarItem?
+    
     var body: some View {
-        NavigationView {
+        body2()
+    }
+    
+    func body2() -> some View {
+        return NavigationSplitView {
+            List(SideBarItem.allCases, selection: $selectedSideBarItem) { item in
+                NavigationLink(
+                        item.rawValue.localizedCapitalized,
+                        value: item
+                    )
+                }
+        } detail: {
+            switch selectedSideBarItem {
+            case .characterInfo:
+                CharacterInfoView()
+            case .reprocessingHelper:
+                ReprocessingHelperView()
+            case .skillQueue:
+                SkillQueueView(viewModel: SkillQueueViewModel())
+            case .itemDogmaExplorer:
+                ItemDogmaExplorerView(viewModel: ItemDogmaExplorerViewModel())
+            case .industryHelper:
+                IndustryHelperView()
+                    .environmentObject(DataManager.shared.dbManager!)
+            case nil:
+                EmptyView()
+            }
+        }
+    }
+    
+    func body1() -> some View {
+        return NavigationView {
             List {
                 NavigationLink(destination: {
                     CharacterInfoView()
@@ -113,24 +156,17 @@ struct HomeView: View {
                 }, label: {
                     Text("Login View")
                 })
+                NavigationLink(destination: {
+                    DevelopHelperView()
+                        .environmentObject(homeViewModel)
+                }, label: {
+                    Text("Developer Helper View")
+                })
             }
         }.sheet(isPresented: $homeViewModel.dataLoading, content: {
             Text("Data Loading ...")
                 .padding()
         })
-//        .sheet(isPresented: $homeViewModel.needsAuthSetup, content: {
-//            AuthSetupView(onSubmit: homeViewModel.onAuthSubmit(clientInfo:))
-//                .frame(minWidth: 250, minHeight: 175)
-//        })
-//        .sheet(isPresented: $homeViewModel.needsAuthentication, content: {
-//            AuthView().frame(minWidth: 250, minHeight: 175)
-//        })
-//        .sheet(isPresented: $homeViewModel.dataLoading, content: {
-//            Text("test data").frame(minWidth: 250, minHeight: 200)
-//        })
-        
-        
-        
     }
 }
 

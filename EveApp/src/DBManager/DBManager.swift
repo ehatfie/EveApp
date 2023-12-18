@@ -207,3 +207,66 @@ class DBManager: ObservableObject {
       .wait()
   }
 }
+
+
+extension DBManager {
+
+  func deleteAll() async {
+    print("deleteAll() - start")
+    do {
+      let _ = [
+        try await deleteType(GroupModel.self),
+        try await deleteType(CategoryModel.self),
+        try await deleteType(TypeModel.self),
+        try await deleteType(DogmaEffectModel.self),
+        try await deleteType(DogmaAttributeModel.self),
+        try await deleteType(DogmaAttributeCategoryModel.self),
+        try await deleteType(TypeDogmaInfoModel.self),
+        try await deleteType(TypeMaterialsModel.self)
+      ]
+    } catch let error {
+      print("delete error \(error)")
+    }
+    
+    print("deleteAll() - done")
+  }
+  
+  func deleteTypes(_ types: [any Model.Type]) async throws {
+    
+    await withTaskGroup(of: Void.self) { taskGroup in
+      for type in types {
+        taskGroup.addTask { try! await self.deleteType(type) }
+      }
+      
+      await taskGroup.waitForAll()
+    }
+  }
+  
+  func deleteTypes(_ types: [any Model.Type]){
+    print("deleting \(types.count) types")
+    
+    Task {
+      do {
+        try await deleteTypes(types)
+      } catch let error {
+        print("delte types error \(error)")
+      }
+    }
+  }
+  
+  func deleteType<T: Model>(_ type: T.Type) async throws {
+    try await T.query(on: self.database)
+      .all()
+      .get()
+      .delete(on: self.database)
+  }
+  
+  func deleteType<T: Model>(_ type: T.Type) async throws -> T.Type {
+    try await T.query(on: self.database)
+      .all()
+      .get()
+      .delete(on: self.database)
+    return T.self
+  }
+  
+}

@@ -62,6 +62,8 @@
 		BA9D960A2B117ACC006AC37E /* IndustryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96092B117ACC006AC37E /* IndustryListView.swift */; };
 		BA9D960C2B118159006AC37E /* GetCharactersIndustryJobsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D960B2B118159006AC37E /* GetCharactersIndustryJobsResponse.swift */; };
 		BA9D960E2B197CB7006AC37E /* BlueprintModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D960D2B197CB7006AC37E /* BlueprintModel2.swift */; };
+		BA9D96112B2A8B19006AC37E /* DevelopHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96102B2A8B19006AC37E /* DevelopHelperView.swift */; };
+		BA9D96152B2FD4DC006AC37E /* IndustryHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96142B2FD4DC006AC37E /* IndustryHelperView.swift */; };
 		BAB271D52A6867B5004F01B7 /* DataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB271D42A6867B4004F01B7 /* DataFetcher.swift */; };
 		BAB271F72A686918004F01B7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BAB271F62A686918004F01B7 /* Alamofire */; };
 		BACB51582A686E760044CDA0 /* JSONEncodableEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB4FD62A686E740044CDA0 /* JSONEncodableEncoding.swift */; };
@@ -579,6 +581,8 @@
 		BA9D96092B117ACC006AC37E /* IndustryListView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = IndustryListView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA9D960B2B118159006AC37E /* GetCharactersIndustryJobsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCharactersIndustryJobsResponse.swift; sourceTree = "<group>"; };
 		BA9D960D2B197CB7006AC37E /* BlueprintModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintModel2.swift; sourceTree = "<group>"; };
+		BA9D96102B2A8B19006AC37E /* DevelopHelperView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DevelopHelperView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA9D96142B2FD4DC006AC37E /* IndustryHelperView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = IndustryHelperView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAB271D42A6867B4004F01B7 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
 		BACB4FD62A686E740044CDA0 /* JSONEncodableEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONEncodableEncoding.swift; sourceTree = "<group>"; };
 		BACB4FD72A686E740044CDA0 /* APIs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIs.swift; sourceTree = "<group>"; };
@@ -1105,6 +1109,8 @@
 		BA3149C42A1EF98C0076E6DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BA9D96132B2FD4B7006AC37E /* IndustryHelper */,
+				BA9D96122B2D779A006AC37E /* DeveloperSettings */,
 				BAE02EE82AF9CEC200AB695F /* ReprocessingHelper */,
 				BA7100A32AEA1944001CD301 /* BlueprintExplorer */,
 				BAE0698F2AD8F67B0054EFCF /* DogmaExplorer */,
@@ -1121,6 +1127,7 @@
 		BA3149CC2A1EFA720076E6DD /* src */ = {
 			isa = PBXGroup;
 			children = (
+				BA9D960F2B2A8B05006AC37E /* DevelopHelper */,
 				BA7100922ADF739F001CD301 /* ModelGenerator */,
 				BA7100912ADF6562001CD301 /* Mocks */,
 				BAE069722AC8A1370054EFCF /* DBManager */,
@@ -1314,6 +1321,29 @@
 				BA9D96092B117ACC006AC37E /* IndustryListView.swift */,
 			);
 			path = Industry;
+			sourceTree = "<group>";
+		};
+		BA9D960F2B2A8B05006AC37E /* DevelopHelper */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DevelopHelper;
+			sourceTree = "<group>";
+		};
+		BA9D96122B2D779A006AC37E /* DeveloperSettings */ = {
+			isa = PBXGroup;
+			children = (
+				BA9D96102B2A8B19006AC37E /* DevelopHelperView.swift */,
+			);
+			path = DeveloperSettings;
+			sourceTree = "<group>";
+		};
+		BA9D96132B2FD4B7006AC37E /* IndustryHelper */ = {
+			isa = PBXGroup;
+			children = (
+				BA9D96142B2FD4DC006AC37E /* IndustryHelperView.swift */,
+			);
+			path = IndustryHelper;
 			sourceTree = "<group>";
 		};
 		BAB271CF2A637916004F01B7 /* Packages */ = {
@@ -2061,6 +2091,7 @@
 				BA3149E02A47907F0076E6DD /* SomeData.swift in Sources */,
 				BACB51EE2A686E770044CDA0 /* GetFwLeaderboardsCorporationsOk.swift in Sources */,
 				BA3149D62A477D900076E6DD /* UserDefaultsHelper.swift in Sources */,
+				BA9D96152B2FD4DC006AC37E /* IndustryHelperView.swift in Sources */,
 				BACB52182A686E770044CDA0 /* GetCharactersCharacterIdBookmarksFolders200Ok.swift in Sources */,
 				BACB527E2A686E770044CDA0 /* PostUiOpenwindowNewmailNewMail.swift in Sources */,
 				BACB52D62A686E780044CDA0 /* JSONEncodingHelper.swift in Sources */,
@@ -2172,6 +2203,7 @@
 				BACB52782A686E770044CDA0 /* GetCharactersCharacterIdCorporationhistory200Ok.swift in Sources */,
 				BA3149D42A315A650076E6DD /* DataManager.swift in Sources */,
 				BACB527B2A686E770044CDA0 /* GetCharactersCharacterIdPlanetsPlanetIdOk.swift in Sources */,
+				BA9D96112B2A8B19006AC37E /* DevelopHelperView.swift in Sources */,
 				BACB52872A686E770044CDA0 /* GetCorporationsCorporationIdContractsContractIdBidsNotFound.swift in Sources */,
 				BACB51DD2A686E770044CDA0 /* PostUniverseIdsStation.swift in Sources */,
 				BACB52B72A686E770044CDA0 /* GetCharactersCharacterIdPortraitOk.swift in Sources */,
@@ -2603,7 +2635,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.2;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Atlas.EveApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2642,7 +2674,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.2;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Atlas.EveApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";

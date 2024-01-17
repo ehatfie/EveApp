@@ -12,21 +12,28 @@ struct BlueprintDetailView: View {
   var blueprint: BlueprintModel
   var typeModel: TypeModel?
   
-  init(blueprint: BlueprintModel) {
+  let industryPlanner: IndustryPlannerManager
+  
+  
+  init(blueprint: BlueprintModel, industryPlanner: IndustryPlannerManager) {
     let db = DataManager.shared.dbManager!.database
     
     self.blueprint = blueprint
+    self.industryPlanner = industryPlanner
+
     
     let foo = try! TypeModel.query(on: db)
       .filter(\.$typeId == blueprint.blueprintTypeID)
       .first()
       .wait()
-    self.typeModel = foo
     
+    self.typeModel = foo
+    industryPlanner.makePlan(for: blueprint)
   }
   // 45648
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
+      Text("Blueprint Detail View")
       HStack {
         if let typeModel = self.typeModel {
           Text("\(typeModel.name)")
@@ -38,7 +45,14 @@ struct BlueprintDetailView: View {
       
       HStack {
         activitiesView(for: blueprint.activities)
+          .border(.yellow)
         BlueprintComponentView(blueprintModel: blueprint)
+          .border(.purple)
+        
+        if let industryPlan = self.industryPlanner.makePlan3(for: blueprint) {
+          industryPlanView(for: industryPlan)
+        }
+        
         //componentsView(for: blueprint.activities.manufacturing)
       }
       
@@ -62,6 +76,7 @@ struct BlueprintDetailView: View {
     )
     
     return VStack(alignment: .leading) {
+      Text("Activities View")
       manufacturingView(for: model.manufacturing)
       HStack {
         Text("copying time: ")
@@ -111,12 +126,12 @@ struct BlueprintDetailView: View {
     let materialTypes = DataManager.shared.dbManager?
       .getTypeMaterialModel(for: type.typeId)//?.materialData ?? []
     
-//    let foo = MaterialDetailView(
-//      title: "Materials",
-//      materials: materialTypes?.materialData.map { value in
-//        QuantityTypeModel(
-//      }
-//    )
+    //    let foo = MaterialDetailView(
+    //      title: "Materials",
+    //      materials: materialTypes?.materialData.map { value in
+    //        QuantityTypeModel(
+    //      }
+    //    )
     return VStack {
       Text(type.name)
       
@@ -124,13 +139,28 @@ struct BlueprintDetailView: View {
         MaterialDetailView(
           title: "Materials",
           materials: materialTypes?.materialData ?? []
-        )
+        ).border(.black)
       }
-
+      
     }
   }
+  
+  func industryPlanView(for model: IndustryPlanJob) -> some View {
+    return VStack {
+      Text(model.blueprintTypeModel.name)
+      
+      List(model.inputMaterials, id: \.typeModel.typeId) { input in
+        IndustryPlanInfoView(inputMaterialInfo: input)
+      }
+    }
+  }
+  
+  
 }
 
 //#Preview {
 //    BlueprintDetailView()
 //}
+
+
+

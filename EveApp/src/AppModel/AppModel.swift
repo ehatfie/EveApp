@@ -16,10 +16,13 @@ final class AppModel: ObservableObject {
     @ObservedObject var dbManager = DBManager()
     @ObservedObject var dataManager: DataManager
     
+    
+    
     init() {
         self.dataManager = DataManager.shared
         
         self.dataManager.dbManager = dbManager
+        
         
         dbManager.$dbLoading
             .assign(to: &dataManager.$dataLoading)

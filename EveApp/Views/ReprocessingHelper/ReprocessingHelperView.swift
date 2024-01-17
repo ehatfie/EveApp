@@ -11,6 +11,7 @@ import Fluent
 struct ReprocessingHelperView: View {
   @State var materials: [TypeModel]
   
+  
   init() {
     let db = DataManager.shared.dbManager!.database
     let materialTypes = try! TypeModel
@@ -29,7 +30,7 @@ struct ReprocessingHelperView: View {
     VStack(alignment: .leading) {
       HStack {
         Spacer()
-        Text("Industry Helper")
+        Text("Reprocessing Helper View ")
         Spacer()
       }.border(.red)
       
@@ -45,7 +46,7 @@ struct ReprocessingHelperView: View {
             .border(.blue)
           Spacer()
         }
-        
+        ReactionsHelperView()
         Spacer()
       }
       

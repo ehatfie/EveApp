@@ -125,7 +125,10 @@ struct BlueprintExplorerView: View {
   }
   
   func blueprintInfo(for blueprint: BlueprintModel) -> some View {
-    return BlueprintDetailView(blueprint: blueprint)
+    return BlueprintDetailView(
+      blueprint: blueprint,
+      industryPlanner: IndustryPlannerManager(dbManager: DataManager.shared.dbManager!)
+    )
 //    VStack {
 //      HStack {
 //        Text("Plueprint Info")

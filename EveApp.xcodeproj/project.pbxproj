@@ -56,6 +56,11 @@
 		BA7100A22AE898CA001CD301 /* blueprints.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA7100A12AE898CA001CD301 /* blueprints.yaml */; };
 		BA7100A52AEA1969001CD301 /* BlueprintExplorerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7100A42AEA1969001CD301 /* BlueprintExplorerView.swift */; };
 		BA7100A72AEB2D05001CD301 /* BlueprintDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */; };
+		BA9C8FE82B44C5F900F4DBAF /* IndustryPlannerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FE72B44C5F900F4DBAF /* IndustryPlannerManager.swift */; };
+		BA9C8FEA2B44D18C00F4DBAF /* ReactionsHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FE92B44D18C00F4DBAF /* ReactionsHelperView.swift */; };
+		BA9C8FEC2B44DF8D00F4DBAF /* BlueprintComponentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FEB2B44DF8C00F4DBAF /* BlueprintComponentListView.swift */; };
+		BA9C8FEE2B4B3FFB00F4DBAF /* IndustryPlanInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FED2B4B3FFB00F4DBAF /* IndustryPlanInfoView.swift */; };
+		BA9C8FF02B4CF6A500F4DBAF /* IndustryPlannerManager+jobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FEF2B4CF6A500F4DBAF /* IndustryPlannerManager+jobs.swift */; };
 		BA9D96032B05C126006AC37E /* TypeDogmaAttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96022B05C126006AC37E /* TypeDogmaAttributeView.swift */; };
 		BA9D96052B05CC0E006AC37E /* BlueprintIndustryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96042B05CC0E006AC37E /* BlueprintIndustryView.swift */; };
 		BA9D96072B1177D8006AC37E /* IndustryInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96062B1177D8006AC37E /* IndustryInfoView.swift */; };
@@ -64,6 +69,8 @@
 		BA9D960E2B197CB7006AC37E /* BlueprintModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D960D2B197CB7006AC37E /* BlueprintModel2.swift */; };
 		BA9D96112B2A8B19006AC37E /* DevelopHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96102B2A8B19006AC37E /* DevelopHelperView.swift */; };
 		BA9D96152B2FD4DC006AC37E /* IndustryHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96142B2FD4DC006AC37E /* IndustryHelperView.swift */; };
+		BA9D96182B2FF4E5006AC37E /* RaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96172B2FF4E5006AC37E /* RaceModel.swift */; };
+		BA9D961A2B30088B006AC37E /* races.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA9D96192B30088A006AC37E /* races.yaml */; };
 		BAB271D52A6867B5004F01B7 /* DataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB271D42A6867B4004F01B7 /* DataFetcher.swift */; };
 		BAB271F72A686918004F01B7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BAB271F62A686918004F01B7 /* Alamofire */; };
 		BACB51582A686E760044CDA0 /* JSONEncodableEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB4FD62A686E740044CDA0 /* JSONEncodableEncoding.swift */; };
@@ -526,7 +533,7 @@
 		BA04CA8C2AEDCB8B008D66B8 /* BlueprintMaterialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintMaterialView.swift; sourceTree = "<group>"; };
 		BA3149962A1EF9660076E6DD /* EveApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EveApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA3149992A1EF9660076E6DD /* EveAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveAppApp.swift; sourceTree = "<group>"; };
-		BA31499B2A1EF9660076E6DD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BA31499B2A1EF9660076E6DD /* ContentView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA31499D2A1EF9680076E6DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA31499F2A1EF9680076E6DD /* EveApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EveApp.entitlements; sourceTree = "<group>"; };
 		BA3149A12A1EF9680076E6DD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -542,7 +549,7 @@
 		BA3149D32A315A650076E6DD /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		BA3149D52A477D900076E6DD /* UserDefaultsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsHelper.swift; sourceTree = "<group>"; };
 		BA3149D82A4783800076E6DD /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
-		BA3149DC2A47852A0076E6DD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		BA3149DC2A47852A0076E6DD /* HomeView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA3149DF2A47907F0076E6DD /* SomeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomeData.swift; sourceTree = "<group>"; };
 		BA3149E32A4BC3210076E6DD /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		BA3149E62A4BCA790076E6DD /* CharacterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterInfoView.swift; sourceTree = "<group>"; };
@@ -575,14 +582,21 @@
 		BA7100A12AE898CA001CD301 /* blueprints.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = blueprints.yaml; sourceTree = "<group>"; };
 		BA7100A42AEA1969001CD301 /* BlueprintExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintDetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA9C8FE72B44C5F900F4DBAF /* IndustryPlannerManager.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = IndustryPlannerManager.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA9C8FE92B44D18C00F4DBAF /* ReactionsHelperView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ReactionsHelperView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA9C8FEB2B44DF8C00F4DBAF /* BlueprintComponentListView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintComponentListView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA9C8FED2B4B3FFB00F4DBAF /* IndustryPlanInfoView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = IndustryPlanInfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA9C8FEF2B4CF6A500F4DBAF /* IndustryPlannerManager+jobs.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "IndustryPlannerManager+jobs.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BA9D96022B05C126006AC37E /* TypeDogmaAttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeDogmaAttributeView.swift; sourceTree = "<group>"; };
-		BA9D96042B05CC0E006AC37E /* BlueprintIndustryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintIndustryView.swift; sourceTree = "<group>"; };
+		BA9D96042B05CC0E006AC37E /* BlueprintIndustryView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintIndustryView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA9D96062B1177D8006AC37E /* IndustryInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndustryInfoView.swift; sourceTree = "<group>"; };
 		BA9D96092B117ACC006AC37E /* IndustryListView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = IndustryListView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA9D960B2B118159006AC37E /* GetCharactersIndustryJobsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCharactersIndustryJobsResponse.swift; sourceTree = "<group>"; };
 		BA9D960D2B197CB7006AC37E /* BlueprintModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintModel2.swift; sourceTree = "<group>"; };
 		BA9D96102B2A8B19006AC37E /* DevelopHelperView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DevelopHelperView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA9D96142B2FD4DC006AC37E /* IndustryHelperView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = IndustryHelperView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA9D96172B2FF4E5006AC37E /* RaceModel.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = RaceModel.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA9D96192B30088A006AC37E /* races.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = races.yaml; sourceTree = "<group>"; };
 		BAB271D42A6867B4004F01B7 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
 		BACB4FD62A686E740044CDA0 /* JSONEncodableEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONEncodableEncoding.swift; sourceTree = "<group>"; };
 		BACB4FD72A686E740044CDA0 /* APIs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIs.swift; sourceTree = "<group>"; };
@@ -1048,6 +1062,7 @@
 				BAE069A82ADA24090054EFCF /* typeDogma.yaml */,
 				BA7100892ADB3360001CD301 /* typeMaterials.yaml */,
 				BA7100A12AE898CA001CD301 /* blueprints.yaml */,
+				BA9D96192B30088A006AC37E /* races.yaml */,
 				BAB271CF2A637916004F01B7 /* Packages */,
 				BA3149982A1EF9660076E6DD /* EveApp */,
 				BA3149AA2A1EF9680076E6DD /* EveAppTests */,
@@ -1127,6 +1142,7 @@
 		BA3149CC2A1EFA720076E6DD /* src */ = {
 			isa = PBXGroup;
 			children = (
+				BA9C8FE62B44C52D00F4DBAF /* IndustryPlannerManager */,
 				BA9D960F2B2A8B05006AC37E /* DevelopHelper */,
 				BA7100922ADF739F001CD301 /* ModelGenerator */,
 				BA7100912ADF6562001CD301 /* Mocks */,
@@ -1311,8 +1327,18 @@
 				BA04CA8A2AEDCAEB008D66B8 /* MaterialDetailView.swift */,
 				BA04CA8C2AEDCB8B008D66B8 /* BlueprintMaterialView.swift */,
 				BAE02EE62AF34F4000AB695F /* BlueprintComponentView.swift */,
+				BA9C8FEB2B44DF8C00F4DBAF /* BlueprintComponentListView.swift */,
 			);
 			path = BlueprintExplorer;
+			sourceTree = "<group>";
+		};
+		BA9C8FE62B44C52D00F4DBAF /* IndustryPlannerManager */ = {
+			isa = PBXGroup;
+			children = (
+				BA9C8FE72B44C5F900F4DBAF /* IndustryPlannerManager.swift */,
+				BA9C8FEF2B4CF6A500F4DBAF /* IndustryPlannerManager+jobs.swift */,
+			);
+			path = IndustryPlannerManager;
 			sourceTree = "<group>";
 		};
 		BA9D96082B117AB9006AC37E /* Industry */ = {
@@ -1342,8 +1368,18 @@
 			isa = PBXGroup;
 			children = (
 				BA9D96142B2FD4DC006AC37E /* IndustryHelperView.swift */,
+				BA9C8FE92B44D18C00F4DBAF /* ReactionsHelperView.swift */,
+				BA9C8FED2B4B3FFB00F4DBAF /* IndustryPlanInfoView.swift */,
 			);
 			path = IndustryHelper;
+			sourceTree = "<group>";
+		};
+		BA9D96162B2FF49A006AC37E /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				BA9D96172B2FF4E5006AC37E /* RaceModel.swift */,
+			);
+			path = Misc;
 			sourceTree = "<group>";
 		};
 		BAB271CF2A637916004F01B7 /* Packages */ = {
@@ -1798,6 +1834,7 @@
 		BAE0696B2AC89E500054EFCF /* DB */ = {
 			isa = PBXGroup;
 			children = (
+				BA9D96162B2FF49A006AC37E /* Misc */,
 				BAE069AC2ADB30F80054EFCF /* Industry */,
 				BAE0696C2AC89E630054EFCF /* GroupModel.swift */,
 				BAE0696E2AC89E780054EFCF /* CategoryModel.swift */,
@@ -1964,6 +2001,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BAE069A32ADA03D90054EFCF /* dogmaAttributeCategories.yaml in Resources */,
+				BA9D961A2B30088B006AC37E /* races.yaml in Resources */,
 				BA71008A2ADB3360001CD301 /* typeMaterials.yaml in Resources */,
 				BA3149A22A1EF9680076E6DD /* Preview Assets.xcassets in Resources */,
 				BA31499E2A1EF9680076E6DD /* Assets.xcassets in Resources */,
@@ -2035,6 +2073,7 @@
 				BACB524E2A686E770044CDA0 /* GetCharactersCharacterIdBlueprints200Ok.swift in Sources */,
 				BACB52732A686E770044CDA0 /* GetCharactersCharacterIdTitles200Ok.swift in Sources */,
 				BACB523B2A686E770044CDA0 /* GetContractsPublicRegionId200Ok.swift in Sources */,
+				BA9C8FEE2B4B3FFB00F4DBAF /* IndustryPlanInfoView.swift in Sources */,
 				BACB51EC2A686E770044CDA0 /* GetUniverseTypesTypeIdDogmaAttribute.swift in Sources */,
 				BAE069802AC8CF2F0054EFCF /* DogmaAttribute.swift in Sources */,
 				BACB52192A686E770044CDA0 /* DeleteCharactersCharacterIdMailLabelsLabelIdUnprocessableEntity.swift in Sources */,
@@ -2119,6 +2158,7 @@
 				BACB52212A686E770044CDA0 /* GetCharactersCharacterIdRolesOk.swift in Sources */,
 				BACB528C2A686E770044CDA0 /* GetFwLeaderboardsCorporationsLastWeekLastWeek1.swift in Sources */,
 				BA3149C82A1EF9A80076E6DD /* LoginView.swift in Sources */,
+				BA9C8FEA2B44D18C00F4DBAF /* ReactionsHelperView.swift in Sources */,
 				BACB51F82A686E770044CDA0 /* GetContractsPublicItemsContractId200Ok.swift in Sources */,
 				BACB52282A686E770044CDA0 /* PostUniverseIdsConstellation.swift in Sources */,
 				BACB51792A686E760044CDA0 /* SovereigntyAPI.swift in Sources */,
@@ -2340,6 +2380,8 @@
 				BACB51652A686E760044CDA0 /* AssetsAPI.swift in Sources */,
 				BACB52792A686E770044CDA0 /* GetCharactersCharacterIdMedals200Ok.swift in Sources */,
 				BA7100A72AEB2D05001CD301 /* BlueprintDetailView.swift in Sources */,
+				BA9D96182B2FF4E5006AC37E /* RaceModel.swift in Sources */,
+				BA9C8FF02B4CF6A500F4DBAF /* IndustryPlannerManager+jobs.swift in Sources */,
 				BACB52B62A686E770044CDA0 /* GetCorporationsCorporationIdStructuresService.swift in Sources */,
 				BACB51E22A686E770044CDA0 /* PostCorporationsCorporationIdAssetsLocationsNotFound.swift in Sources */,
 				BACB51F62A686E770044CDA0 /* GetUniverseAncestries200Ok.swift in Sources */,
@@ -2364,12 +2406,14 @@
 				BACB52152A686E770044CDA0 /* GetUniverseStationsStationIdPosition.swift in Sources */,
 				BACB527A2A686E770044CDA0 /* PostUniverseIdsOk.swift in Sources */,
 				BACB518A2A686E760044CDA0 /* ErrorLimited.swift in Sources */,
+				BA9C8FE82B44C5F900F4DBAF /* IndustryPlannerManager.swift in Sources */,
 				BACB52C52A686E770044CDA0 /* PostUniverseIdsRegion.swift in Sources */,
 				BACB51902A686E760044CDA0 /* GetMarketsStructuresStructureId200Ok.swift in Sources */,
 				BACB522B2A686E770044CDA0 /* InternalServerError.swift in Sources */,
 				BACB52B22A686E770044CDA0 /* GetFwWars200Ok.swift in Sources */,
 				BACB51F92A686E770044CDA0 /* GetCharactersCharacterIdSkillqueue200Ok.swift in Sources */,
 				BACB51F32A686E770044CDA0 /* GetCharactersCharacterIdFittingsItem.swift in Sources */,
+				BA9C8FEC2B44DF8D00F4DBAF /* BlueprintComponentListView.swift in Sources */,
 				BA3149F12A5367930076E6DD /* CharacterPublicData.swift in Sources */,
 				BACB52B92A686E770044CDA0 /* GetUniverseTypesTypeIdNotFound.swift in Sources */,
 				BACB51872A686E760044CDA0 /* GetFwLeaderboardsCharactersOk.swift in Sources */,

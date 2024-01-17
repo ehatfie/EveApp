@@ -68,9 +68,9 @@ final class BlueprintModel: Model {
     self.maxProductionLimit = data.maxProductionLimit
   }
   
-  struct ModelMigration: Migration {
-    func prepare(on database: FluentKit.Database) -> NIOCore.EventLoopFuture<Void> {
-      database.schema(BlueprintModel.schema)
+  struct ModelMigration: AsyncMigration {
+    func prepare(on database: FluentKit.Database) async throws {
+      try await database.schema(BlueprintModel.schema)
         .id()
         .field("activities_copying_time", .int64)
         .field("activities_manufacturing_materials", .array(of: .custom(QuantityTypeModel.self)))
@@ -87,8 +87,8 @@ final class BlueprintModel: Model {
         .create()
     }
     
-    func revert(on database: FluentKit.Database) -> NIOCore.EventLoopFuture<Void> {
-      database.schema(TypeMaterialsModel.schema)
+    func revert(on database: FluentKit.Database) async throws {
+      try await database.schema(BlueprintModel.schema)
         .delete()
     }
   }
@@ -105,6 +105,11 @@ final class QuantityTypeModel: Fields {
 
     
     init() { }
+  
+  init(quantity: Int64, typeId: Int64) {
+    self.quantity = quantity
+    self.typeId = typeId
+  }
 }
 
 final class BlueprintManufacturingModel: Fields {

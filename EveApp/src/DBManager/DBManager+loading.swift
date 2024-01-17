@@ -111,7 +111,7 @@ extension DBManager {
     
     print("loadTypeData() - created \(typeModels.count) type models")
     
-    try await splitAndSave(splits: 4, models: typeModels)
+    try await splitAndSave(splits: 5, models: typeModels)
 
     print("loadTypeData() - Done, took: \(start.timeIntervalSinceNow)")
   }
@@ -272,6 +272,25 @@ extension DBManager {
 //  func saveModel(models: [any Model]) async {
 //    await models.create(on: database).get()
 //  }
+}
+
+// MARK: - Misc Models
+extension DBManager {
+
+  
+  func loadMiscDataAsync() async throws {
+    print("loadMiscDataAsync() - start")
+    do {
+      let races = try readYaml(for: .races, type: RaceData.self)
+      let models = races.map { RaceModel(raceID: $0.key, raceData: $0.value)}
+      try await models.create(on: database).get()
+    } catch let error {
+      print("loadMiscDataAsync - error: \(error)")
+    }
+
+    
+  }
+  
 }
 
 // MARK: - Yaml stuff

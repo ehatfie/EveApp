@@ -13,7 +13,7 @@ import Fluent
 
 class DBManager: ObservableObject {
   let databases: Databases
-  let dbName = "TestDB15"
+  let dbName = "TestDB16"
   
   let numThreads = 16
   
@@ -47,6 +47,9 @@ class DBManager: ObservableObject {
     databases.default(to: .sqlite)
     
     setup()
+    Task {
+      try? await setupModelsAsync()
+    }
     loadStaticData()
   }
   
@@ -69,7 +72,8 @@ class DBManager: ObservableObject {
     try? setupTypeDogmaInfoModel()
     
     try? setupTypeMaterialModels()
-    try? setupBlueprintModel()
+    //try? setupBlueprintModel()
+
   }
   
   func loadMockedData() async  {
@@ -126,6 +130,7 @@ class DBManager: ObservableObject {
       
       try await loadTypeData()
       await loadDogmaData()
+      try await loadMiscDataAsync()
       print("Load data took \(start.timeIntervalSinceNow * -1)")
     } catch let error {
       self.dbLoading = false
@@ -205,6 +210,31 @@ class DBManager: ObservableObject {
     try BlueprintModel.ModelMigration()
       .prepare(on: database)
       .wait()
+  }
+  
+
+}
+
+
+// MARK: - Async model migrations
+extension DBManager {
+  func setupModelsAsync() async throws {
+    let _ = try await [
+      setupBlueprintModelAsync(),
+      setupMiscModelsAsync()
+    ]
+  }
+  
+  func setupBlueprintModelAsync() async throws {
+    try await BlueprintModel.ModelMigration()
+      .prepare(on: database)
+      .get()
+  }
+  
+  func setupMiscModelsAsync() async throws {
+    try await RaceModel.ModelMigration()
+      .prepare(on: database)
+      .get()
   }
 }
 

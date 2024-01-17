@@ -20,6 +20,7 @@ enum Schemas: String {
     case materialDataModel = "materialDataModel"
     case typeMaterialsModel = "typeMaterialsModel"
     case blueprintModel = "blueprintModel"
+    case raceModel = "raceModel"
 }
 
 final class CategoryModel: Model {

@@ -65,22 +65,24 @@ struct ItemMaterialDetailView: View {
   //    }
   
   var body: some View {
-    VStack {
+    VStack(alignment: .leading) {
       Text("\(viewModel.typeModel.name)")
-      HStack {
-        VStack(alignment: .trailing) {
+      VStack {
+        HStack(alignment: .center) {
           ForEach($viewModel.materialTypes, id: \.string) { material in
             Text(material.wrappedValue)
             
             //Text("\(material.quantity)")
           }
+          Spacer()
         }
         
-        VStack(alignment: .leading) {
+        HStack(alignment: .center) {
           ForEach(viewModel.materials, id: \.materialTypeID) { material in
             Text("\(material.quantity)")
           }
-        } 
+          Spacer()
+        }
       }
     }
   }

@@ -74,11 +74,11 @@ struct MaterialDetailView: View {
  
   var body: some View {
     VStack(alignment: .leading, spacing: 15) {
+        Text("Material Detail View")
         Text(title)
           .font(.title2)
         
         Divider()
-        
         
         VStack(alignment: .center) {
           HStack {

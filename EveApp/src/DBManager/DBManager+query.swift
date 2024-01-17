@@ -7,6 +7,7 @@
 
 import Foundation
 import Fluent
+import FluentSQL
 
 struct TypeNamesResult {
   let typeId: Int64
@@ -38,6 +39,26 @@ extension DBManager {
     return try! CategoryModel.query(on: self.database)
       .all()
       .wait()
+  }
+  
+  func getCategory(typeId: Int64) -> CategoryModel {
+    let category = try! TypeModel.query(on: self.database)
+      .filter(\.$typeId == typeId)
+      .join(GroupModel.self, on: \GroupModel.$groupId == \TypeModel.$groupID)
+      .join(CategoryModel.self, on: \CategoryModel.$categoryId == \GroupModel.$categoryID)
+      .first()
+      .wait()!.joined(CategoryModel.self)
+    
+    return category
+  }
+  
+  func getCategory(groupId: Int64) -> CategoryModel {
+    let categoryModel = try! GroupModel.query(on: self.database)
+      .filter(\.$groupId == groupId)
+      .join(CategoryModel.self, on: \CategoryModel.$categoryId == \GroupModel.$categoryID)
+      .first().wait()!
+      .joined(CategoryModel.self)
+    return categoryModel
   }
 }
 
@@ -84,6 +105,15 @@ extension DBManager {
       .wait()[0]
   }
   
+  func getType1(for typeId: Int64) -> TypeModel {
+    try! TypeModel.query(on: self.database)
+      .field(\.$id).field(\.$typeId).field(\.$name)
+      .filter(\.$typeId == typeId)
+      .all()
+      .wait()[0]
+
+  }
+  
   func getTypes(for typeIds: [Int64]) -> [TypeModel] {
     try! TypeModel.query(on: self.database)
       .filter(\.$typeId ~~ typeIds)
@@ -98,13 +128,19 @@ extension DBManager {
       .wait()
   }
   
+  func getTypeAndMaterialModels(for typeId: Int64) -> TypeModel? {
+    return try! TypeModel.query(on: self.database)
+      .filter(\.$typeId == typeId)
+      .join(TypeMaterialsModel.self, on: \TypeMaterialsModel.$typeID == \TypeModel.$typeId)
+      .first()
+      .wait()
+  }
+  
   func getTypeMaterialModels(for types: [Int64]) -> [TypeMaterialsModel] {
     try! TypeMaterialsModel.query(on: self.database)
       .filter(\.$typeID ~~ types)
       .all()
       .wait()
-      
-
   }
   
   func getTests(for types: [Int64]) {
@@ -113,7 +149,7 @@ extension DBManager {
       .filter(TypeModel.self, \.$typeId ~~ types)
       .all()
       .wait()
-
+    
     foo.forEach { value in
       let materialsModel = try! value.joined(TypeMaterialsModel.self)
       print("got \(materialsModel.materialData.count) for \(value.name)")
@@ -121,19 +157,6 @@ extension DBManager {
   }
   
   func getMaterialTypes(for type: Int64) -> [TypeModel] {
-    /*
-     .join(TypeMaterialsModel.self, on: \TypeModel.$typeId == \TypeMaterialsModel.$typeID)
-     .first().wait()
-     */
-//    let typeMaterials = try! TypeMaterialsModel.query(on: self.database)
-//      .filter(\.$typeID == type)
-//      .first()
-//      .wait()
-//    
-//    if let blueprint = typeMaterials {
-//      
-//    }
-    
     let results = try! TypeModel.query(on: self.database)
       .filter(\.$typeId == type)
       .join(TypeMaterialsModel.self, on: \TypeModel.$typeId == \TypeMaterialsModel.$typeID)
@@ -146,5 +169,65 @@ extension DBManager {
     }
     
     return results
+  }
+  
+  func getMaterialTypes(for types: [Int64]) -> [TypeModel] {
+    let results = try! TypeModel.query(on: self.database)
+      .filter(\.$typeId ~~ types)
+      .join(TypeMaterialsModel.self, on: \TypeModel.$typeId == \TypeMaterialsModel.$typeID)
+      .all()
+      .wait()
+    return results
+  }
+  
+  
+}
+
+// Mark: - Reactions
+
+extension DBManager {
+  func getReactionBlueprints() -> [TypeModel] {
+    // all blueprints with a type id that matches a TypeModel that has a groupID that matches IndustryGroup.compositeReactionsFormula
+    let foo = try! TypeModel.query(on: database)
+      .filter(\.$groupID == IndustryGroup.compositeReactionsFormula.rawValue)
+      .join(BlueprintModel.self, on: \BlueprintModel.$blueprintTypeID == \TypeModel.$typeId)
+      .all()
+      .wait()
+    print("getReactionBlueprints got \(foo.count) things")
+    return foo
+  }
+  
+  func getBlueprint(for typeId: Int64) -> BlueprintModel? {
+    let db = self.database
+    guard let sql = db as? SQLDatabase else {
+      return nil
+    }
+    let queryString =
+      """
+        select b.*, value from blueprintModel b,
+        json_each(b.activities_manufacturing_products)
+        where json_extract(value, '$.typeId') = \("\(typeId)")
+      """
+    
+    return try? sql.raw(SQLQueryString(queryString))
+      .first(decoding: BlueprintModel.self)
+      .wait()
+  }
+  
+  func getBlueprint1(for typeId: Int64) -> BlueprintModel? {
+    let db = self.database
+    guard let sql = db as? SQLDatabase else {
+      return nil
+    }
+    let queryString =
+      """
+        select b.*, value from blueprintModel b,
+        json_each(b.activities_reaction_products)
+        where json_extract(value, '$.typeId') = \("\(typeId)")
+      """
+    
+    return try? sql.raw(SQLQueryString(queryString))
+      .first(decoding: BlueprintModel.self)
+      .wait()
   }
 }

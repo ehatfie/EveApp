@@ -28,19 +28,16 @@ struct BlueprintComponentView: View {
     let materials = blueprintModel.activities.manufacturing.materials
     let materialIds = materials.map { $0.typeId }
     
+    // Attach a TypeModel to each blueprint material entry
     let typeModels = materials.compactMap { value -> BlueprintComponentDataDisplayable? in
-      guard let typeModel = try? TypeModel.query(on: DataManager.shared.dbManager!.database)
-        .filter(\.$typeId == value.typeId)
-        .first()
-        .wait()
+      guard let typeModel = DataManager.shared.dbManager?.getType(for: value.typeId)
       else {
         return nil
       }
       
-      // return ItemComponentDataDisplayable
       return BlueprintComponentDataDisplayable(typeModel: typeModel, quantityTypeModel: value)
     }.sorted(by: {$0.typeModel.groupID < $1.typeModel.groupID})
-    
+
     let typeMaterials = materials.compactMap { value in
       try? TypeMaterialsModel.query(on: DataManager.shared.dbManager!.database)
         .filter(\.$typeID == value.typeId)
@@ -70,7 +67,7 @@ struct BlueprintComponentView: View {
       .getTypeMaterialModels(for: materialIds) ?? []
     self.materialTypes = materialTypes
     
-    DataManager.shared.dbManager?.getTests(for: materialIds)
+    //DataManager.shared.dbManager?.getTests(for: materialIds)
     self.getJobs(for: blueprintModel)
   }
   
@@ -79,16 +76,6 @@ struct BlueprintComponentView: View {
       HStack(spacing: 30) {
         materialList()
         componentList()
-        //      List(typeModels, id: \.id) { type in
-        //        VStack {
-        //          groupInfo(for: type.typeModel.groupID)
-        //          Text(type.typeModel.name + " \(type.quantityTypeModel.quantity)")
-        //        }
-        //
-        //      }
-        //      List(materialTypes, id: \.typeID) { type in
-        //        Text("\(type.typeID)")
-        //      }
       }
     }
   }
@@ -98,25 +85,27 @@ struct BlueprintComponentView: View {
       Text("Materials List")
         .font(.title2)
       ForEach(listData, id: \.id) { data in
-        VStack(alignment: .leading, spacing: 10){
-          Text(data.groupName)
-            .font(.title2)
-          VStack(alignment: .leading, spacing: 10) {
-            ForEach(data.items, id: \.id) { item in
-              HStack {
-                Text(item.typeModel.name)
-                Spacer()
-                Text("\(item.quantityType.quantity)")
-              }.frame(maxWidth: 250)
-            }
-          }//.border(.blue)
-        }//.border(.red)
+        BlueprintComponentListView(listData: data)
       }
       Spacer()
     }
   }
   
- 
+  func listDataRow(_ listData: BlueprintComponentListData) -> some View {
+    VStack(alignment: .leading, spacing: 10){
+      Text(listData.groupName)
+        .font(.title2)
+      VStack(alignment: .leading, spacing: 10) {
+        ForEach(listData.items, id: \.id) { item in
+          HStack {
+            Text(item.typeModel.name)
+            Spacer()
+            Text("\(item.quantityType.quantity)")
+          }.frame(maxWidth: 250)
+        }
+      }
+    }
+  }
   
   func getInputBlueprints(for item: QuantityTypeModel) {
     // as long as this type has a blueprint, i.e. its not trit
@@ -143,25 +132,7 @@ struct BlueprintComponentView: View {
     
   }
   
-
-  
   func componentList() -> some View {
-    let results = listData.map { value in
-      let typeIds = value.items.map { value in
-        value.typeModel.typeId
-      }
-      
-//      print("checking against \(typeIds)")
-      let typeMaterials = DataManager.shared.dbManager!.getTypeMaterialModels(for: typeIds)
-      let blueprints = try! BlueprintModel.query(on: DataManager.shared.dbManager!.database)
-        .filter(\.$blueprintTypeID ~~ typeIds) //.join(TypeModel.self, on: \BlueprintModel.$blueprintTypeID == \TypeModel.$typeId)
-        .all()
-        .wait()
-//      print("got \(typeMaterials.count) inputs")
-      return typeMaterials
-    }.flatMap {$0}
-    
-    
     let res2 = listData.map { value in
       return value.items
     }.flatMap {$0}
@@ -187,28 +158,7 @@ struct BlueprintComponentView: View {
       return foo
     }.flatMap { $0 }
     
-    
-    //    let typeModels = results.compactMap { value -> ItemComponentDataDisplayable? in
-    //      guard let typeModel = try? TypeModel.query(on: DataManager.shared.dbManager!.database)
-    //        .filter(\.$typeId == value.typeID)
-    //        .first()
-    //        .wait() else {
-    //        return nil
-    //      }
-    //      let foo = value.materialData.compactMap { value -> BlueprintComponentDataDisplayable? in
-    //        guard let typeModel = try? TypeModel.query(on: DataManager.shared.dbManager!.database)
-    //          .filter(\.$typeId == value.materialTypeID)
-    //          .first()
-    //          .wait()
-    //        else {
-    //          return nil
-    //        }
-    //        return BlueprintComponentDataDisplayable(typeModel: typeModel, quantityTypeModel: value)
-    //      }
-    //
-    //      return ItemComponentDataDisplayable(typeModel: typeModel, materials: foo)
-    //    }.sorted(by: {$0.typeModel.groupID < $1.typeModel.groupID})
-    
+  
     
     return VStack(alignment: .leading, spacing: 10) {
       Text("Components List")
@@ -295,28 +245,7 @@ extension BlueprintComponentView {
     guard let sql = db as? SQLDatabase else {
       return
     }
-    // while an items blueprint has manufacturing inputs
-    // while a specific input is in a certain group?
-    
-//    let models2 = materials.compactMap { firstValue -> [ItemComponentDataDisplayable]? in
-//      let typeMaterials: [TypeMaterialsModel] = DataManager.shared.dbManager!.getTypeMaterialModels(for: [firstValue.quantityType.typeId])
-//
-//      let foo = typeMaterials.compactMap { value -> ItemComponentDataDisplayable? in
-//        let bar = value.materialData.compactMap { value -> BlueprintComponentDataDisplayable? in
-//          guard let typeModel = try? TypeModel.query(on: DataManager.shared.dbManager!.database)
-//            .filter(\.$typeId == value.materialTypeID)
-//            .first()
-//            .wait()
-//          else {
-//            return nil
-//          }
-//          return BlueprintComponentDataDisplayable(typeModel: typeModel, quantityTypeModel: value)
-//        }
-//
-//        return ItemComponentDataDisplayable(data: firstValue, materials: bar)
-//      }
-//      return foo
-//    }.flatMap { $0 }
+
   }
   
   func getJobs(for blueprint: BlueprintModel) {

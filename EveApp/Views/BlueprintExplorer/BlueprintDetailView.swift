@@ -13,7 +13,7 @@ struct BlueprintDetailView: View {
   var typeModel: TypeModel?
   
   let industryPlanner: IndustryPlannerManager
-  
+  let shipPlan: ShipPlan
   
   init(blueprint: BlueprintModel, industryPlanner: IndustryPlannerManager) {
     let db = DataManager.shared.dbManager!.database
@@ -28,7 +28,9 @@ struct BlueprintDetailView: View {
       .wait()
     
     self.typeModel = foo
-    industryPlanner.makePlan(for: blueprint)
+    
+    let plan = industryPlanner.makePlan(for: blueprint)
+    shipPlan = plan
   }
   // 45648
   var body: some View {
@@ -44,15 +46,21 @@ struct BlueprintDetailView: View {
       }
       
       HStack {
-        activitiesView(for: blueprint.activities)
-          .border(.yellow)
-        BlueprintComponentView(blueprintModel: blueprint)
-          .border(.purple)
+//        activitiesView(for: blueprint.activities)
+//          .border(.yellow)
+//        BlueprintComponentView(blueprintModel: blueprint)
+//          .border(.purple)
         
-        if let industryPlan = self.industryPlanner.makePlan3(for: blueprint) {
-          industryPlanView(for: industryPlan)
+        VStack(alignment: .leading) {
+          inputsView(for: shipPlan.inputs)
+          shipPlanView(for: shipPlan)
+          Spacer()
         }
         
+//        if let industryPlan = self.industryPlanner.makePlan3(for: blueprint) {
+//          industryPlanView(for: industryPlan)
+//        }
+//        
         //componentsView(for: blueprint.activities.manufacturing)
       }
       
@@ -155,7 +163,133 @@ struct BlueprintDetailView: View {
     }
   }
   
+  func shipPlanView(for plan: ShipPlan) -> some View {
+    let jobs = plan.jobs.zeroLevelJobs
+    //let keys = plan.jobs.zeroLevelJobs.map { $0.blueprintId }
+    let model = plan.jobs
+    
+    var keys = model.zeroLevelJobs.map { $0.blueprintId }
+    
+    keys += model.firstLevelJobs.map { $0.blueprintId }
+    keys += model.secondLevelJobs.map { $0.blueprintId }
+    keys += model.thirdLevelJobs.map { $0.blueprintId }
+    
+    var names: [Int64: String] = [:]
+    
+    industryPlanner.dbManager.getTypeNames(for: keys)
+      .forEach { value in
+        names[value.typeId] = value.name
+      }
+    
+    let zeroLevelValues = model.zeroLevelJobs.map { value in
+      return (value.blueprintId, names[value.blueprintId] ?? "", value.requiredRuns)
+    }.sorted(by: { $0.0 < $1.0})
+    
+    let firstLevelValues = model.firstLevelJobs.map { value in
+        return (value.blueprintId, names[value.blueprintId] ?? "", value.requiredRuns)
+    }.sorted(by: { $0.0 < $1.0})
+    
+    let secondLevelValues = model.secondLevelJobs.map { value in
+        return (value.blueprintId, names[value.blueprintId] ?? "", value.requiredRuns)
+    }.sorted(by: { $0.0 < $1.0})
+    
+    let thirdLevelValues = model.thirdLevelJobs.map { value in
+      return (value.blueprintId, names[value.blueprintId] ?? "", value.requiredRuns)
+    }.sorted(by: { $0.0 < $1.0})
+    
+//    let foo = jobs.map { job in
+//      return (job.blueprintId, names[job.blueprintId]!, job.requiredRuns, job.productsPerRun, job.quantity)
+//    }
+    
+    return ScrollView {
+      HStack(alignment: .top) {
+        inputListView("Zero Level", values: zeroLevelValues)
+        inputListView("First Level", values: firstLevelValues)
+        inputListView("Second Level", values: secondLevelValues)
+        inputListView("Third Level", values: thirdLevelValues)
+      }
+    }
+  }
   
+  func inputsView(for model: ShipPlanInputs) -> some View {
+    var names: [Int64: String] = [:]
+    //let firstKeys = model.firstLevelInputs.keys.map { Int($0) }
+    
+    let keys = 
+    model.zeroLevelInputs.keys.map { $0 }
+    + model.firstLevelInputs.keys.map { $0 }
+    + model.secondLevelInputs.keys.map { $0 }
+    + model.thirdLevelInputs.keys.map { $0 }
+    
+    // get name for inputs
+    industryPlanner.dbManager.getTypeNames(for: keys)
+      .forEach { value in
+        names[value.typeId] = value.name
+      }
+    
+    let zeroLevelValues = model.zeroLevelInputs.map { key, value in
+      return (key, names[key] ?? "", value)
+    }.sorted(by: { $0.0 < $1.0})
+    
+    let firstLevelValues = model.firstLevelInputs.map { key, value in
+        return (key, names[key] ?? "", value)
+    }.sorted(by: { $0.0 < $1.0})
+    
+    let secondLevelValues = model.secondLevelInputs.map { key, value in
+        return (key, names[key] ?? "", value)
+    }.sorted(by: { $0.0 < $1.0})
+    
+    let thirdLevelValues = model.thirdLevelInputs.map { key, value in
+        return (key, names[key] ?? "", value)
+    }.sorted(by: { $0.0 < $1.0})
+    
+    
+    return VStack(alignment: .leading, spacing: 10) {
+      HStack(alignment: .top) {
+        inputListView("Zero Level", values: zeroLevelValues)
+        inputListView("First Level", values: firstLevelValues)
+        inputListView("Second Level", values: secondLevelValues)
+        inputListView("Third Level", values: thirdLevelValues)
+      }
+      Spacer()
+    }.frame(maxHeight: 500)
+    .border(.blue)
+  }
+  
+  func inputListView(_ text: String, values: [(Int64, String, Int)]) -> some View {
+    ScrollView {
+      VStack(alignment: .leading, spacing: 5) {
+        Text(text).font(.title2)
+        Divider()
+        ForEach(values, id: \.0) { entry in
+          HStack(alignment: .center) {
+            Text("\(entry.1) (\(entry.0))")
+            
+            Spacer()
+            Text("\(entry.2)")
+          }
+        }
+        Spacer()
+      }.frame(maxWidth: 250)
+    }
+  }
+  
+  func jobListView(_ text: String, values: [(Int64, String, Int)]) -> some View {
+    ScrollView {
+      VStack(alignment: .leading, spacing: 5) {
+        Text(text).font(.title2)
+        Divider()
+        ForEach(values, id: \.0) { entry in
+          HStack(alignment: .center) {
+            Text("\(entry.1)")
+            Spacer()
+            Text("\(entry.2)")
+          }
+        }
+        Spacer()
+      }.frame(maxWidth: 250)
+    }
+  }
 }
 
 //#Preview {

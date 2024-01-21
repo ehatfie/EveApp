@@ -30,33 +30,29 @@ struct ReprocessingHelperView: View {
     VStack(alignment: .leading) {
       HStack {
         Spacer()
-        Text("Reprocessing Helper View ")
+        Text("Industry Helper View ")
         Spacer()
       }.border(.red)
       
       HStack {
-        VStack {
-          materialInput(materials: materials)
-            .border(.green)
-          Spacer()
-
-        }
+//        VStack {
+//          materialInput(materials: materials)
+//            .border(.green)
+//          Spacer()
+//        }
         VStack {
           BlueprintIndustryView()
             .border(.blue)
           Spacer()
         }
-        ReactionsHelperView()
-        Spacer()
+        //ReactionsHelperView()
+        //Spacer()
       }
       
     }
   }
   
   func materialInput(materials: [TypeModel]) -> some View {
-    let numColumns = 3
-    let numRows = 3
-    
     return VStack(alignment: .leading) {
       ForEach(materials, id: \.typeId) { material in
         HStack {

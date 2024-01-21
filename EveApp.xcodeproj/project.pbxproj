@@ -61,6 +61,7 @@
 		BA9C8FEC2B44DF8D00F4DBAF /* BlueprintComponentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FEB2B44DF8C00F4DBAF /* BlueprintComponentListView.swift */; };
 		BA9C8FEE2B4B3FFB00F4DBAF /* IndustryPlanInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FED2B4B3FFB00F4DBAF /* IndustryPlanInfoView.swift */; };
 		BA9C8FF02B4CF6A500F4DBAF /* IndustryPlannerManager+jobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FEF2B4CF6A500F4DBAF /* IndustryPlannerManager+jobs.swift */; };
+		BA9C8FF32B5DA8D100F4DBAF /* Industry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FF22B5DA8D100F4DBAF /* Industry.swift */; };
 		BA9D96032B05C126006AC37E /* TypeDogmaAttributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96022B05C126006AC37E /* TypeDogmaAttributeView.swift */; };
 		BA9D96052B05CC0E006AC37E /* BlueprintIndustryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96042B05CC0E006AC37E /* BlueprintIndustryView.swift */; };
 		BA9D96072B1177D8006AC37E /* IndustryInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96062B1177D8006AC37E /* IndustryInfoView.swift */; };
@@ -587,6 +588,7 @@
 		BA9C8FEB2B44DF8C00F4DBAF /* BlueprintComponentListView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintComponentListView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA9C8FED2B4B3FFB00F4DBAF /* IndustryPlanInfoView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = IndustryPlanInfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA9C8FEF2B4CF6A500F4DBAF /* IndustryPlannerManager+jobs.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "IndustryPlannerManager+jobs.swift"; sourceTree = "<group>"; tabWidth = 2; };
+		BA9C8FF22B5DA8D100F4DBAF /* Industry.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Industry.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA9D96022B05C126006AC37E /* TypeDogmaAttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeDogmaAttributeView.swift; sourceTree = "<group>"; };
 		BA9D96042B05CC0E006AC37E /* BlueprintIndustryView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintIndustryView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA9D96062B1177D8006AC37E /* IndustryInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndustryInfoView.swift; sourceTree = "<group>"; };
@@ -1174,6 +1176,7 @@
 		BA3149D72A4783690076E6DD /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				BA9C8FF12B5DA8BC00F4DBAF /* Enums */,
 				BA3149D82A4783800076E6DD /* UserDefaultsKeys.swift */,
 			);
 			path = Constants;
@@ -1339,6 +1342,14 @@
 				BA9C8FEF2B4CF6A500F4DBAF /* IndustryPlannerManager+jobs.swift */,
 			);
 			path = IndustryPlannerManager;
+			sourceTree = "<group>";
+		};
+		BA9C8FF12B5DA8BC00F4DBAF /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				BA9C8FF22B5DA8D100F4DBAF /* Industry.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 		BA9D96082B117AB9006AC37E /* Industry */ = {
@@ -2369,6 +2380,7 @@
 				BACB52C92A686E770044CDA0 /* PostCharactersCharacterIdMailError520.swift in Sources */,
 				BACB51A12A686E770044CDA0 /* PostCharactersAffiliation200Ok.swift in Sources */,
 				BACB524B2A686E770044CDA0 /* GetMarketsRegionIdHistoryNotFound.swift in Sources */,
+				BA9C8FF32B5DA8D100F4DBAF /* Industry.swift in Sources */,
 				BACB52002A686E770044CDA0 /* GetFwLeaderboardsCharactersKills.swift in Sources */,
 				BAE069682AC89DBA0054EFCF /* AppModel.swift in Sources */,
 				BACB51882A686E760044CDA0 /* GetKillmailsKillmailIdKillmailHashItem.swift in Sources */,

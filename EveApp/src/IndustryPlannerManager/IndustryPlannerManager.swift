@@ -18,6 +18,8 @@ class IndustryPlan {
 class IndustryPlannerManager {
   let dbManager: DBManager
   
+  var cachedBlueprintModels: [Int64: BlueprintModel] = [:]
+  
   init(dbManager: DBManager) {
     self.dbManager = dbManager
     
@@ -31,31 +33,26 @@ class IndustryPlannerManager {
     // get jobs to run for materials
   }
   
-  func makePlan(for blueprintModel: BlueprintModel) {
+  func makePlan(for blueprintModel: BlueprintModel) -> ShipPlan {
     print("make plan for blueprintModel")
     let typeModel = DataManager.shared.dbManager!.getType(for: blueprintModel.blueprintTypeID)
     let blueprintActivities = blueprintModel.activities
-    guard let productTypeId = blueprintActivities.manufacturing.products.first?.typeId else { return }
+    guard let productTypeId = blueprintActivities.manufacturing.products.first?.typeId else { return .empty }
     let productTypeModel = DataManager.shared
       .dbManager!.getType(for: productTypeId)
-    //    guard let industryGroup = IndustryGroup(rawValue: typeModel.groupID)
-    //    else { return }
-    //    switch industryGroup {
-    //
-    //    }
+
     let inputMaterials = getInputMaterials(for: blueprintModel)
     // determine what thing we are making
     let blueprintInfo = BlueprintInfo(blueprintModel: blueprintModel, typeModel: typeModel, inputMaterials: getTypeModels(for: inputMaterials))
     let categoryModel = dbManager.getCategory(groupId: productTypeModel.groupID)
-    print("category \(categoryModel.name)")
+    //print("category \(categoryModel.name)")
     let categoryType = CategoryTypes(rawValue: categoryModel.categoryId)
-    print("got category type \(categoryType)")
+    //print("got category type \(categoryType)")
     switch categoryType {
-    case .ship: makeShipPlan2(for: blueprintInfo)
-    default: return
+    case .ship: return makeShipPlan2(for: blueprintInfo)
+    default: return .empty
     }
-    
-    print("got blueprintTypeId")
+  
   }
   
   func makePlan(for blueprintInfo: BlueprintInfo) {
@@ -125,11 +122,20 @@ class IndustryPlannerManager {
   }
   
   func getBlueprintModels(for values: [QuantityTypeModel]) -> [BlueprintInfo2] {
+    let ids = values.map { $0.typeId }
+    return getBlueprintModels2(for: ids)
+  }
+  
+  func getBlueprintModels2(for values: [Int64]) -> [BlueprintInfo2] {
     // get the blueprint model for provided inputs
     let materialBps = values.compactMap { value in
-      if let bp1 = dbManager.getBlueprint(for: value.typeId) {
+      if let existingBp = cachedBlueprintModels[value] {
+        return existingBp
+      } else if let bp1 = dbManager.getBlueprint(for: value) {
+        cachedBlueprintModels[value] = bp1
         return bp1
-      } else if let bp2 = dbManager.getBlueprint1(for: value.typeId) {
+      } else if let bp2 = dbManager.getBlueprint1(for: value) {
+        cachedBlueprintModels[value] = bp2
         return bp2
       }
       
@@ -150,15 +156,15 @@ class IndustryPlannerManager {
         inputMaterials = []
       }
       
-      let typeModel = dbManager.getType(for: matBp.blueprintTypeID)
-      let results = getTypeModels(for: inputMaterials)
+      //let typeModel = dbManager.getType(for: matBp.blueprintTypeID)
+      //let results = getTypeModels(for: inputMaterials)
       let product = manufacturing.products.first ?? reactions.products.first!
       
       return BlueprintInfo2(
         productId: product.typeId,
         productCount: product.quantity,
         blueprintModel: matBp,
-        typeModel: typeModel,
+        typeModel: nil, //typeModel,
         inputMaterials: inputMaterials
       )
     }
@@ -332,7 +338,7 @@ struct BlueprintInfo2 {
   let productId: Int64
   let productCount: Int64
   let blueprintModel: BlueprintModel
-  let typeModel: TypeModel
+  let typeModel: TypeModel?
   let inputMaterials: [QuantityTypeModel]
 }
 

@@ -81,9 +81,10 @@ extension DBManager {
   
   func getRandomBlueprint() -> BlueprintModel? {
     let blueprints = try! BlueprintModel.query(on: self.database)
+      .filter(\.$blueprintTypeID == 11394)
       .join(TypeModel.self, on: \TypeModel.$typeId == \BlueprintModel.$blueprintTypeID)
       .filter(TypeModel.self, \.$published == true)
-      .filter(TypeModel.self, \.$groupID == 105)
+      .filter(TypeModel.self, \.$metaGroupID == 2)
       .all()
       .wait()
     

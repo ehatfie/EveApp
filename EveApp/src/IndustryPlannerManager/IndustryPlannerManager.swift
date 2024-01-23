@@ -123,6 +123,7 @@ class IndustryPlannerManager {
   
   func getBlueprintModels(for values: [QuantityTypeModel]) -> [BlueprintInfo2] {
     let ids = values.map { $0.typeId }
+      .filter { BlueprintIds.FuelBlocks(rawValue: $0) == nil }
     return getBlueprintModels2(for: ids)
   }
   

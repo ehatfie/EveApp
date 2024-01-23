@@ -201,14 +201,14 @@ struct BlueprintDetailView: View {
 //      return (job.blueprintId, names[job.blueprintId]!, job.requiredRuns, job.productsPerRun, job.quantity)
 //    }
     
-    return ScrollView {
+    return //ScrollView {
       HStack(alignment: .top) {
-        inputListView("Zero Level", values: zeroLevelValues)
-        inputListView("First Level", values: firstLevelValues)
-        inputListView("Second Level", values: secondLevelValues)
-        inputListView("Third Level", values: thirdLevelValues)
+        inputListView("First Level", values: zeroLevelValues)
+        inputListView("Second Level", values: firstLevelValues)
+        inputListView("Third Level", values: secondLevelValues)
+       // inputListView("Third Level", values: thirdLevelValues)
       }
-    }
+   // }
   }
   
   func inputsView(for model: ShipPlanInputs) -> some View {
@@ -257,11 +257,10 @@ struct BlueprintDetailView: View {
   }
   
   func inputListView(_ text: String, values: [(Int64, String, Int)]) -> some View {
-    ScrollView {
       VStack(alignment: .leading, spacing: 5) {
         Text(text).font(.title2)
         Divider()
-        ForEach(values, id: \.0) { entry in
+        List(values, id: \.0) { entry in
           HStack(alignment: .center) {
             Text("\(entry.1) (\(entry.0))")
             
@@ -271,7 +270,7 @@ struct BlueprintDetailView: View {
         }
         Spacer()
       }.frame(maxWidth: 250)
-    }
+    
   }
   
   func jobListView(_ text: String, values: [(Int64, String, Int)]) -> some View {

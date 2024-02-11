@@ -81,16 +81,7 @@ extension IndustryPlannerManager {
     
     
     thirdLevelInputSums = doThing2(for: thirdLevelInputBps.map { $0.value }, values: secondLevelInputSums)
-//    secondLevel.forEach { one, two in
-//      // this doesnt work because we might pull the same blueprint info multiple times
-//      // for inputs that would be covered by for example one reaction run is being
-//      // counted as multiple runs
-//      let thirdLevel = two.flatMap { getThingForBlueprintInfo2($0) }
-//      
-//      let results = doThing2(for: thirdLevel, values: secondLevelInputSums)
-//      thirdLevelInputSums.merge(results, uniquingKeysWith: { $0 + $1 })
-//      print("thirdLevelInputSums \(thirdLevelInputSums[16644])")
-//    }
+
     let thirdLevelSumTook = start.timeIntervalSinceNow * -1
     print("third level sums took \(thirdLevelSumTook)")
     

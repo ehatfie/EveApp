@@ -197,9 +197,6 @@ struct BlueprintDetailView: View {
       return (value.blueprintId, names[value.blueprintId] ?? "", value.requiredRuns)
     }.sorted(by: { $0.0 < $1.0})
     
-//    let foo = jobs.map { job in
-//      return (job.blueprintId, names[job.blueprintId]!, job.requiredRuns, job.productsPerRun, job.quantity)
-//    }
     
     return //ScrollView {
       HStack(alignment: .top) {

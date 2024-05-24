@@ -15,6 +15,7 @@ struct DevelopHelperView: View {
   
     var body: some View {
         VStack {
+          loginButton()
           Text("Test")
             Button(action: {
               Task {
@@ -50,6 +51,16 @@ struct DevelopHelperView: View {
 
     
     return ModelSelectorView(showThing: $showThing)
+  }
+  
+  func loginButton() -> some View {
+    VStack {
+      Button(action: {
+        AuthManager.shared.login()
+      }, label: {
+        Text("Login")
+      })
+    }
   }
 }
 

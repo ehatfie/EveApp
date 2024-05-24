@@ -206,7 +206,7 @@ extension DBManager {
   }
   
   func loadTypeDogmaInfoDataAsync() async throws  {
-    print("loadTypeDogmaInfoDataAsync()")
+    
     
     let typeDogmaInfoCount = try await self.database
       .query(TypeDogmaInfoModel.self)
@@ -214,7 +214,7 @@ extension DBManager {
       .get()
     
     guard typeDogmaInfoCount == 0 else { return }
-    
+    print("loadTypeDogmaInfoDataAsync()")
     let start = Date()
     
     let info = try await readYamlAsync(for: .typeDogma, type: TypeDogmaData.self)
@@ -258,15 +258,6 @@ extension DBManager {
     
     try await result.save(on: database)
       .get()
-    //print("result saved")
-//    async let createEffects: Void = result.$effects.create(effects, on: database).get()
-//    //print("effect created")
-//    async let createAttributes: Void = result.$attributes.create(attributes, on: database)
-//      .get()
-//      
-//    
-//    _ = try await [createEffects, createAttributes]
-    //print("attributes created")
   }
   
 //  func saveModel(models: [any Model]) async {

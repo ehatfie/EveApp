@@ -8,8 +8,8 @@
 import Foundation
 
 struct AccessTokenData: Codable {
-    let aud: String
-    let scp: String
+    let aud: [String]
+    let scp: [String]
     let jti: String
     let iat: Int64
     let kid: String

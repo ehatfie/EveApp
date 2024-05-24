@@ -45,6 +45,11 @@
 		BA314A0D2A5CF66C0076E6DD /* GroupInfoResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA314A0C2A5CF66C0076E6DD /* GroupInfoResponseData.swift */; };
 		BA314A102A5CF8B10076E6DD /* ItemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA314A0F2A5CF8B10076E6DD /* ItemCategory.swift */; };
 		BA314A132A5D05590076E6DD /* ItemTypeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA314A122A5D05590076E6DD /* ItemTypeResponseData.swift */; };
+		BA5990FB2BF45972003108CF /* ESIScopes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5990FA2BF45972003108CF /* ESIScopes.swift */; };
+		BA5991002BF46020003108CF /* AssetsViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5990FF2BF46020003108CF /* AssetsViewer.swift */; };
+		BA5991052BF59F8B003108CF /* CharacterDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5991042BF59F8B003108CF /* CharacterDataModel.swift */; };
+		BA5991072BF99B97003108CF /* DataManager+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5991062BF99B97003108CF /* DataManager+Helpers.swift */; };
+		BA5991092BF99E72003108CF /* CharacterAssetsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5991082BF99E72003108CF /* CharacterAssetsDataModel.swift */; };
 		BA7100882ADB31F5001CD301 /* TypeMaterialsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7100872ADB31F5001CD301 /* TypeMaterialsModel.swift */; };
 		BA71008A2ADB3360001CD301 /* typeMaterials.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA7100892ADB3360001CD301 /* typeMaterials.yaml */; };
 		BA71008E2ADB453B001CD301 /* ItemDogmaExplorerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA71008D2ADB453B001CD301 /* ItemDogmaExplorerView.swift */; };
@@ -553,8 +558,8 @@
 		BA3149DC2A47852A0076E6DD /* HomeView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA3149DF2A47907F0076E6DD /* SomeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomeData.swift; sourceTree = "<group>"; };
 		BA3149E32A4BC3210076E6DD /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
-		BA3149E62A4BCA790076E6DD /* CharacterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterInfoView.swift; sourceTree = "<group>"; };
-		BA3149E82A4BCAF80076E6DD /* DataManager+Fetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+Fetching.swift"; sourceTree = "<group>"; };
+		BA3149E62A4BCA790076E6DD /* CharacterInfoView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CharacterInfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA3149E82A4BCAF80076E6DD /* DataManager+Fetching.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DataManager+Fetching.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BA3149EB2A4BCDA20076E6DD /* AccessTokenData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenData.swift; sourceTree = "<group>"; };
 		BA3149ED2A5366320076E6DD /* CharacterBlueprintData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterBlueprintData.swift; sourceTree = "<group>"; };
 		BA3149F02A5367930076E6DD /* CharacterPublicData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterPublicData.swift; sourceTree = "<group>"; };
@@ -572,6 +577,11 @@
 		BA314A0C2A5CF66C0076E6DD /* GroupInfoResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInfoResponseData.swift; sourceTree = "<group>"; };
 		BA314A0F2A5CF8B10076E6DD /* ItemCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategory.swift; sourceTree = "<group>"; };
 		BA314A122A5D05590076E6DD /* ItemTypeResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypeResponseData.swift; sourceTree = "<group>"; };
+		BA5990FA2BF45972003108CF /* ESIScopes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESIScopes.swift; sourceTree = "<group>"; };
+		BA5990FF2BF46020003108CF /* AssetsViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsViewer.swift; sourceTree = "<group>"; };
+		BA5991042BF59F8B003108CF /* CharacterDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDataModel.swift; sourceTree = "<group>"; };
+		BA5991062BF99B97003108CF /* DataManager+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+Helpers.swift"; sourceTree = "<group>"; };
+		BA5991082BF99E72003108CF /* CharacterAssetsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterAssetsDataModel.swift; sourceTree = "<group>"; };
 		BA7100872ADB31F5001CD301 /* TypeMaterialsModel.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TypeMaterialsModel.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA7100892ADB3360001CD301 /* typeMaterials.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = typeMaterials.yaml; sourceTree = "<group>"; };
 		BA71008D2ADB453B001CD301 /* ItemDogmaExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemDogmaExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -1137,6 +1147,7 @@
 				BA3149C72A1EF9A80076E6DD /* LoginView.swift */,
 				BA3149DC2A47852A0076E6DD /* HomeView.swift */,
 				BA3149E32A4BC3210076E6DD /* AuthView.swift */,
+				BA5990FF2BF46020003108CF /* AssetsViewer.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1144,6 +1155,7 @@
 		BA3149CC2A1EFA720076E6DD /* src */ = {
 			isa = PBXGroup;
 			children = (
+				BA5990FC2BF45F95003108CF /* Assets */,
 				BA9C8FE62B44C52D00F4DBAF /* IndustryPlannerManager */,
 				BA9D960F2B2A8B05006AC37E /* DevelopHelper */,
 				BA7100922ADF739F001CD301 /* ModelGenerator */,
@@ -1158,6 +1170,7 @@
 				BA3149CD2A1EFBE90076E6DD /* AuthManager.swift */,
 				BA3149D02A31528E0076E6DD /* DeepLinker.swift */,
 				BA3149D52A477D900076E6DD /* UserDefaultsHelper.swift */,
+				BA5990FA2BF45972003108CF /* ESIScopes.swift */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -1169,6 +1182,7 @@
 				BA3149E82A4BCAF80076E6DD /* DataManager+Fetching.swift */,
 				BA3149F92A5386570076E6DD /* DataManager+Authentication.swift */,
 				BA314A052A5CDCDB0076E6DD /* DataManager+Loading.swift */,
+				BA5991062BF99B97003108CF /* DataManager+Helpers.swift */,
 			);
 			path = DataManager;
 			sourceTree = "<group>";
@@ -1285,6 +1299,22 @@
 				BACB52DE2A68CCD70044CDA0 /* ItemTypes.swift */,
 			);
 			path = ItemTypes;
+			sourceTree = "<group>";
+		};
+		BA5990FC2BF45F95003108CF /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		BA5991012BF59F22003108CF /* CharacterData */ = {
+			isa = PBXGroup;
+			children = (
+				BA5991042BF59F8B003108CF /* CharacterDataModel.swift */,
+				BA5991082BF99E72003108CF /* CharacterAssetsDataModel.swift */,
+			);
+			path = CharacterData;
 			sourceTree = "<group>";
 		};
 		BA7100912ADF6562001CD301 /* Mocks */ = {
@@ -1845,6 +1875,7 @@
 		BAE0696B2AC89E500054EFCF /* DB */ = {
 			isa = PBXGroup;
 			children = (
+				BA5991012BF59F22003108CF /* CharacterData */,
 				BA9D96162B2FF49A006AC37E /* Misc */,
 				BAE069AC2ADB30F80054EFCF /* Industry */,
 				BAE0696C2AC89E630054EFCF /* GroupModel.swift */,
@@ -2050,6 +2081,7 @@
 				BACB51FC2A686E770044CDA0 /* GetCorporationsCorporationIdRoles200Ok.swift in Sources */,
 				BACB523A2A686E770044CDA0 /* GetCharactersCharacterIdMailLabelsOk.swift in Sources */,
 				BACB52532A686E770044CDA0 /* Unauthorized.swift in Sources */,
+				BA5991072BF99B97003108CF /* DataManager+Helpers.swift in Sources */,
 				BACB521A2A686E770044CDA0 /* GetOpportunitiesTasksTaskIdOk.swift in Sources */,
 				BACB52312A686E770044CDA0 /* GetUniverseGroupsGroupIdOk.swift in Sources */,
 				BAE0696F2AC89E780054EFCF /* CategoryModel.swift in Sources */,
@@ -2129,6 +2161,7 @@
 				BACB52612A686E770044CDA0 /* GetUniverseSchematicsSchematicIdNotFound.swift in Sources */,
 				BACB52642A686E770044CDA0 /* GetCorporationsCorporationIdOrders200Ok.swift in Sources */,
 				BACB51BC2A686E770044CDA0 /* PostCharactersCharacterIdAssetsLocationsPosition.swift in Sources */,
+				BA5991002BF46020003108CF /* AssetsViewer.swift in Sources */,
 				BACB52092A686E770044CDA0 /* DeleteFleetsFleetIdMembersMemberIdNotFound.swift in Sources */,
 				BACB51812A686E760044CDA0 /* GetDogmaAttributesAttributeIdOk.swift in Sources */,
 				BACB52452A686E770044CDA0 /* GetCorporationsCorporationIdStarbases200Ok.swift in Sources */,
@@ -2426,6 +2459,7 @@
 				BACB51F92A686E770044CDA0 /* GetCharactersCharacterIdSkillqueue200Ok.swift in Sources */,
 				BACB51F32A686E770044CDA0 /* GetCharactersCharacterIdFittingsItem.swift in Sources */,
 				BA9C8FEC2B44DF8D00F4DBAF /* BlueprintComponentListView.swift in Sources */,
+				BA5991092BF99E72003108CF /* CharacterAssetsDataModel.swift in Sources */,
 				BA3149F12A5367930076E6DD /* CharacterPublicData.swift in Sources */,
 				BACB52B92A686E770044CDA0 /* GetUniverseTypesTypeIdNotFound.swift in Sources */,
 				BACB51872A686E760044CDA0 /* GetFwLeaderboardsCharactersOk.swift in Sources */,
@@ -2438,6 +2472,7 @@
 				BACB515F2A686E760044CDA0 /* CalendarAPI.swift in Sources */,
 				BACB517D2A686E760044CDA0 /* ClonesAPI.swift in Sources */,
 				BACB51C42A686E770044CDA0 /* PostCharactersCharacterIdMailRecipient.swift in Sources */,
+				BA5990FB2BF45972003108CF /* ESIScopes.swift in Sources */,
 				BACB52852A686E770044CDA0 /* GetContractsPublicBidsContractId200Ok.swift in Sources */,
 				BACB51932A686E760044CDA0 /* GetCorporationsCorporationIdContainersLogs200Ok.swift in Sources */,
 				BACB52B82A686E770044CDA0 /* GetCorporationsCorporationIdWalletsDivisionJournal200Ok.swift in Sources */,
@@ -2510,6 +2545,7 @@
 				BACB52672A686E770044CDA0 /* GetUniverseSystemJumps200Ok.swift in Sources */,
 				BA7100882ADB31F5001CD301 /* TypeMaterialsModel.swift in Sources */,
 				BACB52102A686E770044CDA0 /* GetCorporationsCorporationIdDivisionsOk.swift in Sources */,
+				BA5991052BF59F8B003108CF /* CharacterDataModel.swift in Sources */,
 				BACB51B72A686E770044CDA0 /* GetCharactersCharacterIdClonesHomeLocation.swift in Sources */,
 				BA31499A2A1EF9660076E6DD /* EveAppApp.swift in Sources */,
 				BACB51C62A686E770044CDA0 /* GetDogmaEffectsEffectIdModifier.swift in Sources */,

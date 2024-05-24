@@ -20,12 +20,14 @@ class AuthViewModel: ObservableObject {
 
 struct AuthView: View {
     @ObservedObject var authViewModel = AuthViewModel()
+    @EnvironmentObject var homeViewModel: HomeViewModel
+    
     var body: some View {
         VStack(alignment: .center) {
             VStack(alignment: .leading, spacing: 10) {
-                if let accessTokenResponse = self.$authViewModel.accessTokenResponse.wrappedValue
+                if let accessTokenResponse = self.authViewModel.accessTokenResponse
                 {
-                    Text("AccessToken: yes")
+                    Text("AccessToken: \(accessTokenResponse.access_token)")
                         .truncationMode(.head)
                         .frame(maxWidth: 500)
                     Text("Expires in: \(accessTokenResponse.expires_in)")
@@ -43,9 +45,36 @@ struct AuthView: View {
             }
             .frame(maxWidth: 250)
             .border(.red)
+            Button(action: {
+                DataManager.shared.loadAccessTokenData()
+            }, label: {
+                Text("load local accessTokenData")
+            })
+            Button(action: {
+                DataManager.shared.loadAccessTokenData()
+            }, label: {
+                Text("clear local accessTokenData")
+            })
+
             LoginView()
+            
+            if homeViewModel.needsAuthSetup {
+                authSetupView()
+            }
         }
        
+    }
+    
+    func authSetupView() -> some View {
+        
+        VStack {
+            Text("Auth Setup Needed")
+            AuthSetupView(onSubmit: { clientInfo in
+                DataManager.shared.setClientInfo(clientInfo: clientInfo)
+                AuthManager.shared.setClientInfo(clientInfo: clientInfo)
+                
+            })
+        }
     }
 }
 

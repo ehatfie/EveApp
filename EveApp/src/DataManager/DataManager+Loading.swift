@@ -13,10 +13,6 @@ extension DataManager {
     
     func loadAccessTokenData() {
         print("loadAccessTokenData()")
-        guard accessTokenData == nil else {
-            print("accessTokenData loaded")
-            return
-        }
         
         guard let accessToken = accessTokenResponse?.access_token else {
             print("no access token")
@@ -31,13 +27,21 @@ extension DataManager {
             
             let result = try decoder.decode(AccessTokenData.self, from: jsonData)
             self.accessTokenData = result
-            print("got result \(result.characterID)")
-            
+            print("got characterID result \(result.characterID)")
+            let characterData = CharacterDataModel(characterID: result.characterID)
+            Task {
+                // TODO: only do if not there?
+                try? await self.dbManager?.save(characterData)
+            }
             // TODO: MOVE
             self.characterData = CharacterInfo(characterID: result.characterID)
         } catch let err {
             print("decode error \(err)")
         }
+        
+    }
+    
+    func clearAccessTokenData() {
         
     }
     

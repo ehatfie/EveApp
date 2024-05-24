@@ -142,8 +142,6 @@ struct IndustryHelperView: View {
           }
         }
       }
-      
-      
     }
   }
 }

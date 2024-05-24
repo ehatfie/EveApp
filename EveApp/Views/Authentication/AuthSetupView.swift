@@ -34,6 +34,9 @@ struct AuthSetupView: View {
             && !callbackURL.isEmpty {
                 Button(action: {
                     submit()
+                    clientID = ""
+                    secretKey = ""
+                    callbackURL = ""
                 }, label: {
                     Text("Submit")
                 })

@@ -39,7 +39,6 @@ class AuthManager: ObservableObject {
     
     func setClientInfo(clientInfo: ClientInfo) {
         self.clientInfo = clientInfo
-        
     }
     
     func generateCodeVerifier() -> String {
@@ -58,6 +57,7 @@ class AuthManager: ObservableObject {
             print("AuthManager.login() no client info")
             return
         }
+
         let codeVerifier = generateCodeVerifier().toBase64URL()
         self.codeVerifier = codeVerifier
         
@@ -73,9 +73,11 @@ class AuthManager: ObservableObject {
         )
         
         self.oauthSwift = oauthswift
-        
+    
         oauthswift.accessTokenBasicAuthentification = true
-        let scope = "esi-skills.read_skillqueue.v1"//"esi-characters.read_blueprints.v1"
+        let scope = "\(ESIScopes.assets.rawValue) \(ESIScopes.skillQueue.rawValue)"
+        print("Scope \(scope)")
+        //"esi-skills.read_skillqueue.v1"//"esi-characters.read_blueprints.v1"
         let handle = oauthswift.authorize(
             withCallbackURL: URL(string: clientInfo.callbackURL)!,
             scope: scope,
@@ -175,7 +177,9 @@ class AuthManager: ObservableObject {
             let result = try decoder.decode(AccessTokenResponse.self, from: data)
             self.validate(accessToken: result.access_token)
             print("process data result \(result)")
+            // This might should be a database entry?
             UserDefaultsHelper.saveToUserDefaults(data: result, key: .accessTokenResponse)
+            
             isLoggedIn = true
         } catch let error {
             print("Decode error \(error)")
@@ -184,6 +188,8 @@ class AuthManager: ObservableObject {
     }
     
     func refresh() {
+        print("refreshing with \(authCode)")
+        outhAuthorize(authCode: authCode)
         
     }
     
@@ -312,3 +318,8 @@ struct AccessTokenResponse: Codable {
     let token_type: String
     let refresh_token: String
 }
+
+/**
+ 
+ publicData esi-skills.read_skills.v1 esi-skills.read_skillqueue.v1 esi-clones.read_clones.v1 esi-characters.read_contacts.v1 esi-assets.read_assets.v1 esi-characters.write_contacts.v1 esi-characters.read_loyalty.v1 esi-characters.read_opportunities.v1 esi-characters.read_chat_channels.v1 esi-characters.read_medals.v1 esi-characters.read_standings.v1 esi-characters.read_agents_research.v1 esi-industry.read_character_jobs.v1 esi-characters.read_blueprints.v1 esi-characters.read_corporation_roles.v1 esi-contracts.read_character_contracts.v1 esi-clones.read_implants.v1 esi-characters.read_fatigue.v1 esi-characters.read_notifications.v1 esi-contracts.read_corporation_contracts.v1 esi-characters.read_titles.v1 esi-characters.read_fw_stats.v1 esi-characterstats.read.v1
+ */

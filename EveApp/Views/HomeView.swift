@@ -17,6 +17,8 @@ enum SideBarItem: String, Identifiable, CaseIterable {
   case itemDogmaExplorer
   case industryHelper
   case devSettings
+  case auth
+  case assets
 }
 
 class HomeViewModel: ObservableObject {
@@ -50,6 +52,7 @@ class HomeViewModel: ObservableObject {
   
   func checkForNeedsAuthentication() {
     let hasValue = UserDefaultsHelper.hasValueFor(key: .accessTokenResponse)
+    print("checkForNeedsAuthentication: hasValue \(hasValue)")
     needsAuthentication = !hasValue && !needsAuthSetup
     print("checkForNeedsAuthentication: \(needsAuthentication && !needsAuthSetup)")
   }
@@ -90,6 +93,8 @@ struct HomeView: View {
       switch selectedSideBarItem {
       case .characterInfo:
         CharacterInfoView()
+      case .assets:
+        AssetsViewer()
       case .reprocessingHelper:
         ReprocessingHelperView()
       case .skillQueue:
@@ -101,6 +106,9 @@ struct HomeView: View {
           .environmentObject(db)
       case .devSettings:
         DevelopHelperView()
+          .environmentObject(homeViewModel)
+      case .auth:
+        AuthView()
           .environmentObject(homeViewModel)
       case nil:
         EmptyView()

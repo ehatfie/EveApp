@@ -12,8 +12,8 @@ import NIO
 import Fluent
 
 class DBManager: ObservableObject {
-  let databases: Databases
-  let dbName = "TestDB16"
+  var databases: Databases
+  let dbName = "TestDB26"
   
   let numThreads = 16
   
@@ -35,32 +35,38 @@ class DBManager: ObservableObject {
   
   
   init() {
-    let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: numThreads)
-    let threadPool = NIOThreadPool(numberOfThreads: numThreads)
+      let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: self.numThreads)
+      let threadPool = NIOThreadPool(numberOfThreads: self.numThreads)
+      
+      //DispatchQueue.main.async {
+        threadPool.start()
+      //}
+      
+
+      self.databases = Databases(threadPool: threadPool, on: eventLoopGroup)
+
+      databases.use(.sqlite(.file(self.dbName)), as: .sqlite)
+      //databases.use(.sqlite(.memory), as: .sqlite)
+      databases.default(to: .sqlite)
     
-    threadPool.start()
-    
-    databases = Databases(threadPool: threadPool, on: eventLoopGroup)
-    
-    databases.use(.sqlite(.file(self.dbName)), as: .sqlite)
-    //databases.use(.sqlite(.memory), as: .sqlite)
-    databases.default(to: .sqlite)
+
     
     setup()
-    Task {
-      try? await setupModelsAsync()
-    }
+//    Task {
+//      try? await setupModelsAsync()
+//    }
     loadStaticData()
   }
   
   func setup() {
     do {
-      try categoryDataStuff()
-      try setupDogmaEffectModel()
-      
+
+      try setupCharacterDataModels()
     } catch let error {
       print("AppModel error setup \(error)")
     }
+    try? categoryDataStuff()
+    try? setupDogmaEffectModel()
     try? setupDogmaAttributeModel()
     try? setupDogmaAttributeCategoryModel()
     
@@ -72,7 +78,16 @@ class DBManager: ObservableObject {
     try? setupTypeDogmaInfoModel()
     
     try? setupTypeMaterialModels()
-    //try? setupBlueprintModel()
+    
+    try? setupBlueprintModel()
+    
+//    Task {
+//      try? await CharacterAssetsDataModel
+//        .ModelMigration()
+//        .prepare(on: database)
+//        .get()
+//    }
+
 
   }
   
@@ -139,7 +154,7 @@ class DBManager: ObservableObject {
   }
   
   func save(_ model: any Model) async throws {
-    //try model.save(on: database).get()
+    try await model.save(on: database).get()
   }
   
   func categoryDataStuff() throws {
@@ -212,6 +227,19 @@ class DBManager: ObservableObject {
       .wait()
   }
   
+  func setupCharacterDataModels() throws {
+    try CharacterDataModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
+    try CharacterPublicDataModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
+    try CharacterAssetsDataModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+  }
 
 }
 
@@ -236,6 +264,7 @@ extension DBManager {
       .prepare(on: database)
       .get()
   }
+  
 }
 
 

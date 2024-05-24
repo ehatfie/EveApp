@@ -232,3 +232,33 @@ extension DBManager {
       .wait()
   }
 }
+
+
+// MARK: - Character
+
+extension DBManager {
+  
+  func getCharacters() async -> [CharacterDataModel] {
+    do {
+       return try await  CharacterDataModel.query(on: self.database)
+        .with(\.$assetsData)
+        .all()
+        .get()
+    } catch let err {
+      print("DBManager.getCharacter() - error \(err)")
+      return []
+    }
+  }
+  
+  func getCharacter(by characterId: String) async -> CharacterDataModel? {
+    do {
+       return try await  CharacterDataModel.query(on: self.database)
+        .filter(\.$characterId == characterId)
+        .first()
+        .get()
+    } catch let err {
+      print("DBManager.getCharacter() - error \(err)")
+      return nil
+    }
+  }
+}

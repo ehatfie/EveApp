@@ -8,8 +8,6 @@
 import SwiftUI
 import FluentSQLiteDriver
 
-
-
 struct AssetsViewItem: Identifiable, Hashable {
     var id: String {
         return "\(typeId) + \(count)"

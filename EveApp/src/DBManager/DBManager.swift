@@ -41,8 +41,7 @@ class DBManager: ObservableObject {
       //DispatchQueue.main.async {
         threadPool.start()
       //}
-      
-
+    
       self.databases = Databases(threadPool: threadPool, on: eventLoopGroup)
 
       databases.use(.sqlite(.file(self.dbName)), as: .sqlite)
@@ -58,13 +57,20 @@ class DBManager: ObservableObject {
     loadStaticData()
   }
   
+  func log(_ text: String) {
+    print("DBManager - \(text)")
+  }
+  
   func setup() {
     do {
 
       try setupCharacterDataModels()
+      
     } catch let error {
       print("AppModel error setup \(error)")
     }
+    
+    try? setupAuthModels()
     try? categoryDataStuff()
     try? setupDogmaEffectModel()
     try? setupDogmaAttributeModel()
@@ -237,6 +243,13 @@ class DBManager: ObservableObject {
       .wait()
     
     try CharacterAssetsDataModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
+  }
+  
+  func setupAuthModels() throws {
+    try AuthModel.ModelMigration()
       .prepare(on: database)
       .wait()
   }

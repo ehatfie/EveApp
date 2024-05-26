@@ -25,6 +25,8 @@ enum Schemas: String {
     case characterDataModel = "characterDataModel"
     case characterPublicDataModel = "characterPublicDataModel"
     case characterAssetsDataModel = "characterAssetsDataModel"
+    
+    case auth = "authModel"
 }
 
 final class CategoryModel: Model {

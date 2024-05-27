@@ -41,8 +41,26 @@ extension DataManager {
         
     }
     
-    func clearAccessTokenData() {
+    func getAccessTokenData1() -> [AuthModel] {
+        print("loadAccessTokenData()")
         
+        guard let dbManager = self.dbManager else {
+            return []
+        }
+        guard let authModel = try? dbManager
+            .database
+            .query(AuthModel.self)
+            .all()
+            .wait()
+        else {
+            return []
+        }
+        return authModel
+    }
+    
+    func clearAccessTokenData() {
+        print("clearAccessTokenData()")
+        clearAccessTokenResponse()
     }
     
     func loadCategoryData() {

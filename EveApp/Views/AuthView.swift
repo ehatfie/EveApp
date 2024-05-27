@@ -9,12 +9,24 @@ import SwiftUI
 
 class AuthViewModel: ObservableObject {
     @Published var accessTokenResponse: AccessTokenResponse?
+    @Published var authModels: [AuthModel] = []
     
     init() {
         DataManager
             .shared
             .$accessTokenResponse
             .assign(to: &$accessTokenResponse)
+    }
+    
+    func loadAccessTokenData() {
+        authModels = DataManager.shared.getAccessTokenData1()
+    }
+    
+    func refreshAccessTokenData() {
+        Task {
+            try? await DataManager.shared.authManager1.refreshTokens()
+        }
+        
     }
 }
 
@@ -25,36 +37,27 @@ struct AuthView: View {
     var body: some View {
         VStack(alignment: .center) {
             VStack(alignment: .leading, spacing: 10) {
-                if let accessTokenResponse = self.authViewModel.accessTokenResponse
-                {
-                    Text("AccessToken: \(accessTokenResponse.access_token)")
-                        .truncationMode(.head)
-                        .frame(maxWidth: 500)
-                    Text("Expires in: \(accessTokenResponse.expires_in)")
-                    Text("RefreshToken \(accessTokenResponse.refresh_token)")
-                    Text("TokenType: \(accessTokenResponse.token_type)")
-                    
-                    HStack {
-                        Button(action: {
-                            DataManager.shared.refreshToken()
-                        }, label: {
-                            Text("Refresh")
-                        })
-                    }
-                }
+                authDataView(data: authViewModel.authModels)
             }
             .frame(maxWidth: 250)
             .border(.red)
             Button(action: {
-                DataManager.shared.loadAccessTokenData()
+                self.authViewModel.loadAccessTokenData()
             }, label: {
                 Text("load local accessTokenData")
             })
             Button(action: {
-                DataManager.shared.loadAccessTokenData()
+                DataManager.shared.clearAccessTokenData()
             }, label: {
                 Text("clear local accessTokenData")
             })
+            
+            Button(action: {
+                self.authViewModel.refreshAccessTokenData()
+            }, label: {
+                Text("Refresh AccessToken")
+            })
+
 
             LoginView()
             
@@ -63,6 +66,17 @@ struct AuthView: View {
             }
         }
        
+    }
+    
+    func authDataView(data: [AuthModel]) -> some View {
+        VStack {
+            ForEach(data, id: \.characterId) { authModel in
+                Text("CharacterId: \(authModel.characterId)")
+                Text("Expires on: \(Date(timeIntervalSinceReferenceDate: TimeInterval(authModel.expiration)))")
+                Text("RefreshToken \(authModel.refreshToken)")
+                Text("TokenType: \(authModel.tokenType)")
+            }
+        }
     }
     
     func authSetupView() -> some View {

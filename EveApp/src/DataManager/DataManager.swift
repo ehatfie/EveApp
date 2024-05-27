@@ -30,6 +30,7 @@ class DataManager: ObservableObject {
     @ObservedObject static var shared = DataManager()
     
     var dbManager: DBManager?
+    var authManager1: AuthManager1
     
     @Published var accessKey: String?
     @Published var accessTokenResponse: AccessTokenResponse? = nil
@@ -47,6 +48,8 @@ class DataManager: ObservableObject {
     @Environment(\.accessKey) var accessKey1: String?
     
     private init() {
+        authManager1 = AuthManager1()
+        
         DispatchQueue.main.async { [self] in
             loadClientInfo()
             loadAccessTokenResponse()
@@ -61,8 +64,8 @@ class DataManager: ObservableObject {
     
     func useAccessKey(_ value: String) {
         self.accessKey = value
-        
-        AuthManager.shared.outhAuthorize(authCode: value)
+        self.authManager1.oauthAuthorize(authCode: value)
+        //AuthManager.shared.outhAuthorize(authCode: value)
     }
     
     func loadAccessTokenResponse() {
@@ -76,6 +79,13 @@ class DataManager: ObservableObject {
         
         self.accessTokenResponse = foo
         AuthManager.shared.isLoggedIn = true
+    }
+    
+    func clearAccessTokenResponse() {
+        UserDefaultsHelper.removeValue(for: .accessTokenResponse)
+        self.accessTokenResponse = nil
+        AuthManager.shared.isLoggedIn = false
+        // will eventually delete from DB also
     }
     
     func loadCharacterData() {

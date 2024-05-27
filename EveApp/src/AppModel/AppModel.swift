@@ -20,6 +20,7 @@ final class AppModel: ObservableObject {
         self.dataManager = DataManager.shared
         
         self.dataManager.dbManager = dbManager
+        self.dataManager.authManager1.dbManager = dbManager
         
         dbManager.$dbLoading
             .assign(to: &dataManager.$dataLoading)

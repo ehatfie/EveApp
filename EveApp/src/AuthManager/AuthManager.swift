@@ -199,6 +199,7 @@ class AuthManager: ObservableObject {
 }
 
 extension AuthManager {
+    
     func decode(jwtToken jwt: String) -> [String: Any] {
       let segments = jwt.components(separatedBy: ".")
       return decodeJWTPart(segments[1]) ?? [:]
@@ -259,6 +260,7 @@ extension Data{
     
 }
 
+// MARK: - String extension helpers
 
 extension String {
     

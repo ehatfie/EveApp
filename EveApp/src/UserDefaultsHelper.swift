@@ -41,4 +41,10 @@ class UserDefaultsHelper {
     static func hasValueFor(key: UserDefaultKeys) -> Bool {
         return UserDefaults.standard.value(forKey: key.rawValue) != nil
     }
+    
+    static func removeValue(for key: UserDefaultKeys) {
+        let defaults = UserDefaults.standard
+        
+        defaults.removeObject(forKey: key.rawValue)
+    }
 }

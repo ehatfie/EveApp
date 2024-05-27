@@ -147,6 +147,7 @@ class AuthManager1: ObservableObject {
   }
   
   func process(data: Data, clientId: String) {
+    log("process()")
     let decoder = JSONDecoder()
     
     do {
@@ -245,8 +246,40 @@ class AuthManager1: ObservableObject {
     }
   }
   
-  func refreshTokens() {
+  func refreshTokens() async throws {
+    log("refreshTokens()")
+    if authConfig == nil {
+      setupAuthConfig()
+    }
+    guard let authConfig = self.authConfig else {
+      return
+    }
+    let authModels = try await AuthModel.query(on: dbManager!.database).all()
+    let refreshTokens = authModels.map { $0.refreshToken }
     
+    let requestConfig = refreshRequestBuilder(refreshToken: refreshTokens[0], authConfig: authConfig)
+    let oauthSwift = OAuth2Swift(
+      consumerKey: authConfig.clientInfo.clientID,
+      consumerSecret: authConfig.clientInfo.secretKey,
+      authorizeUrl: authConfig.authorizationCodeURL,
+      responseType: "code"
+    )
+    self.oauthSwift = oauthSwift
+    oauthSwift.startAuthorizedRequest(
+      requestConfig.url,
+      method: .POST,
+      parameters: requestConfig.params,
+      headers: requestConfig.requestHeaders,
+      body: requestConfig.requestBodyComponents.query?.data(using: .utf8)
+    ) { result in
+      switch result {
+      case .success(let response):
+        self.process(data: response.data, clientId: authConfig.clientInfo.clientID)
+      case .failure(let error):
+        print("error response \(error)")
+        print("localized error \(error.localizedDescription)")
+      }
+    }
   }
 }
 
@@ -293,6 +326,37 @@ extension AuthManager1 {
     return RequestConfig(url: url!, params: params, requestHeaders: requestHeaders, requestBodyComponents: requestBodyComponents)
   }
   
+  func refreshRequestBuilder(refreshToken: String, authConfig: AuthConfig) -> RequestConfig {
+    let urlString = "https://login.eveonline.com/v2/oauth/token"
+    let url = URL(string: urlString)
+    
+    // This can all be a request builder based on AuthConfig
+    let clientInfo = authConfig.clientInfo
+    let clientAuth = (clientInfo.clientID + ":" + clientInfo.secretKey).toBase64()
+    
+    let params: [String: String] = [
+      "grant_type": "refresh_token",
+      "refresh_token": refreshToken,
+    ]
+    
+    let requestHeaders: [String:String] = [
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Host": "login.eveonline.com",
+      "Authorization": "Basic \(clientAuth)"
+    ]
+    
+    
+    var requestBodyComponents = URLComponents()
+    
+    requestBodyComponents.queryItems = [
+      URLQueryItem(name: "grant_type", value: "refresh_Token"),
+      URLQueryItem(name: "refresh_token", value: refreshToken),
+      URLQueryItem(name: "client_id", value: clientInfo.clientID),
+      URLQueryItem(name: "code_verifier", value: authConfig.codeVerifier)
+    ]
+    
+    return RequestConfig(url: url!, params: params, requestHeaders: requestHeaders, requestBodyComponents: requestBodyComponents)
+  }
 }
 
 

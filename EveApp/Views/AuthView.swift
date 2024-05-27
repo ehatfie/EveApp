@@ -23,7 +23,10 @@ class AuthViewModel: ObservableObject {
     }
     
     func refreshAccessTokenData() {
-        DataManager.shared.authManager1.refreshTokens()
+        Task {
+            try? await DataManager.shared.authManager1.refreshTokens()
+        }
+        
     }
 }
 
@@ -48,6 +51,13 @@ struct AuthView: View {
             }, label: {
                 Text("clear local accessTokenData")
             })
+            
+            Button(action: {
+                self.authViewModel.refreshAccessTokenData()
+            }, label: {
+                Text("Refresh AccessToken")
+            })
+
 
             LoginView()
             

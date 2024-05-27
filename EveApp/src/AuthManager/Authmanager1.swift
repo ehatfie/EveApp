@@ -152,7 +152,7 @@ class AuthManager1: ObservableObject {
     
     do {
       let response = try decoder.decode(AccessTokenResponse.self, from: data)
-      self.validate(accessToken: response.access_token)
+      validate(accessToken: response.access_token)
       print("process data result \(response)")
       
       guard let accessTokenData = decodeAccessToken(data: response.access_token) else {
@@ -179,67 +179,18 @@ class AuthManager1: ObservableObject {
       let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
       
       let result = try decoder.decode(AccessTokenData.self, from: jsonData)
-      //self.accessTokenData = result
-      /**
-       Here we have received the access token data
-       */
       print("got characterID result \(result.characterID)")
-      //let characterData = CharacterDataModel(characterID: result.characterID)
-      //        Task {
-      //            // TODO: only do if not there?
-      //            try? await self.dbManager?.save(characterData)
-      //        }
-      // TODO: MOVE
-      //self.characterData = CharacterInfo(characterID: result.characterID)
     } catch let err {
       print("decode error \(err)")
     }
-    //print("validate: \(foo)")
   }
-  
-  func updateAccessToken(response: AccessTokenResponse, accessTokenData: AccessTokenData) async {
-    guard let dbManager = dbManager else {
-      return
-    }
-    do {
-      // maybe should move this logic to dbManager?
-      if let existing = try? await AuthModel
-        .query(on: dbManager.database)
-        .filter(\.$characterId == accessTokenData.characterID)
-        .first() {
-        existing.accessToken = response.access_token
-        try await existing.save(on: dbManager.database)
-      } else {
-        //let authModel = AuthModel(characterId: accessTokenData.characterID, response: response)
-        try await AuthModel(
-          characterId: accessTokenData.characterID,
-          response: response
-        ).create(on: dbManager.database)
-      }
-      
-    } catch let error {
-      log("updateAccessToken() - error \(error)")
-    }
-    /**
-     
-     let category = try! TypeModel.query(on: self.database)
-     .filter(\.$typeId == typeId)
-     .join(GroupModel.self, on: \GroupModel.$groupId == \TypeModel.$groupID)
-     .join(CategoryModel.self, on: \CategoryModel.$categoryId == \GroupModel.$categoryID)
-     .first()
-     .wait()!.joined(CategoryModel.self)
-     */
-  }
-  
+    
   func decodeAccessToken(data: String) -> AccessTokenData? {
     let decoder = JSONDecoder()
     let response = decode(jwtToken: data)
     do {
       let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-      
-      let result = try decoder.decode(AccessTokenData.self, from: jsonData)
-      
-      return result
+      return try decoder.decode(AccessTokenData.self, from: jsonData)
     } catch let err {
       print("decode error \(err)")
       return nil
@@ -256,8 +207,9 @@ class AuthManager1: ObservableObject {
     }
     let authModels = try await AuthModel.query(on: dbManager!.database).all()
     let refreshTokens = authModels.map { $0.refreshToken }
-    
+    // eventually we need to call for each synced character
     let requestConfig = refreshRequestBuilder(refreshToken: refreshTokens[0], authConfig: authConfig)
+    
     let oauthSwift = OAuth2Swift(
       consumerKey: authConfig.clientInfo.clientID,
       consumerSecret: authConfig.clientInfo.secretKey,
@@ -265,6 +217,7 @@ class AuthManager1: ObservableObject {
       responseType: "code"
     )
     self.oauthSwift = oauthSwift
+    
     oauthSwift.startAuthorizedRequest(
       requestConfig.url,
       method: .POST,
@@ -299,7 +252,6 @@ extension AuthManager1 {
     
     // This can all be a request builder based on AuthConfig
     let clientInfo = authConfig.clientInfo
-    let clientAuth = (clientInfo.clientID + ":" + clientInfo.secretKey).toBase64()
     
     let params: [String: String] = [
       "grant_type": "authorization_code",

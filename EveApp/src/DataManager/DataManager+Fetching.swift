@@ -374,7 +374,7 @@ extension DataManager {
   }
 }
 
-
+// MARK: - Assets
 extension DataManager {
   
   func fetchAssets(mocked: Bool = false) {
@@ -383,18 +383,19 @@ extension DataManager {
       makeMockAssets()
       return
     }
-    
-    guard let characterData = characterData else {
-      print("fetchAssets() - no character data")
+    guard let dbManager = dbManager else {
       return
     }
     
-    guard let accessTokenResponse = accessTokenResponse else {
-      print("fetchAs")
-      return
-    }
     
     Task {
+      let characters = try await dbManager.getCharacters()
+      
+      guard characters.count > 0,
+            let characterData = dbManager.getCharacter(by: characters[0].characterId) else {
+        return
+      }
+      
       if let (data, response) = await makeApiCallAsync(dataEndpoint: "assets/") {
         do {
           let string1 = String(data: data, encoding: .utf8)

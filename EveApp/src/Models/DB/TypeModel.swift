@@ -13,13 +13,13 @@ struct TypeData: Codable {
     let capacity: Double?
     let description: ThingName?
     let graphicID: Int?
-    let groupID: Int64
+    let groupID: Int64?
     let iconID: Int?
     let marketGroupID: Int?
     let mass: Double?
     let metaGroupID: Int?
     let name: ThingName?
-    let portionSize: Int
+    let portionSize: Int?
     let published: Bool
     let variationParentTypeID: Int?
     let radius: Double?
@@ -28,7 +28,7 @@ struct TypeData: Codable {
     let soundID: Int?
     let volume: Double?
     
-    init(capacity: Double? = nil, description: ThingName? = nil, graphicID: Int? = nil, groupID: Int64, iconID: Int? = nil, marketGroupID: Int? = nil, mass: Double? = nil, metaGroupID: Int? = nil, name: ThingName? = nil, portionSize: Int, published: Bool, variationParentTypeID: Int? = nil, radius: Double? = nil, raceID: Int? = nil, sofFactionName: String? = nil, soundID: Int? = nil, volume: Double? = nil)
+    init(capacity: Double? = nil, description: ThingName? = nil, graphicID: Int? = nil, groupID: Int64?, iconID: Int? = nil, marketGroupID: Int? = nil, mass: Double? = nil, metaGroupID: Int? = nil, name: ThingName? = nil, portionSize: Int? = nil, published: Bool, variationParentTypeID: Int? = nil, radius: Double? = nil, raceID: Int? = nil, sofFactionName: String? = nil, soundID: Int? = nil, volume: Double? = nil)
     {
         self.capacity = capacity
         self.description = description
@@ -87,7 +87,7 @@ final class TypeModel: Model, Content {
     var name: String
 
     @Field(key: "portion_size")
-    var portionSize: Int
+    var portionSize: Int?
 
     @Field(key: "published")
     var published: Bool
@@ -121,7 +121,7 @@ final class TypeModel: Model, Content {
         self.capacity = data.capacity
         self.description = data.description?.en
         self.graphicID = data.graphicID
-        self.groupID = data.groupID
+        self.groupID = data.groupID ?? -1
         self.iconID = data.iconID
         self.marketGroupID = data.marketGroupID
         self.mass = data.mass

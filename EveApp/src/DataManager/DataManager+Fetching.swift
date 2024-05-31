@@ -10,21 +10,25 @@ import Foundation
 extension DataManager {
   func fetchCharacterInfo() {
     print("fetchCharacterInfo()")
-    makeApiCall1(dataEndpoint: "") { data, response, error in
-      if let data = data {
-        do {
-          let characterPublicData = try JSONDecoder().decode(CharacterPublicDataResponse.self, from: data)
-          print("got json data \(characterPublicData)")
-          DispatchQueue.main.async {
-            self.processCharacterPublicData(response: characterPublicData)
-          }
-          
-        } catch let err {
-          print("got err \(err)")
-        }
-        
-      }
+    Task {
+      try? await fetchCharacterInfoAsync()
     }
+   
+//    makeApiCall1(dataEndpoint: "") { data, response, error in
+//      if let data = data {
+//        do {
+//          let characterPublicData = try JSONDecoder().decode(CharacterPublicDataResponse.self, from: data)
+//          print("got json data \(characterPublicData)")
+//          DispatchQueue.main.async {
+//            self.processCharacterPublicData(response: characterPublicData)
+//          }
+//          
+//        } catch let err {
+//          print("got err \(err)")
+//        }
+//        
+//      }
+//    }
   }
   
   func fetchSkillQueue() {
@@ -246,7 +250,7 @@ extension DataManager {
     task.resume()
   }
   
-  func makeApiCallAsync(dataEndpoint: String) async -> (Data, URLResponse)? {
+  func makeApiCallAsync1(dataEndpoint: String) async -> (Data, URLResponse)? {
     loadAccessTokenData()
     
     guard let accessToken = accessTokenResponse?.access_token else {
@@ -288,6 +292,17 @@ extension DataManager {
     return nil
   }
   
+  func makeApiCallAsync(dataEndpoint: String, authModel: AuthModel, page: Int? = nil) async -> (Data, URLResponse)?  {
+    let urlRequest = requestBuilder(dataEndpoint: dataEndpoint, authModel: authModel, page: page)
+    print("makeApiCallAsync1() - urlRequest \(urlRequest?.url?.string)")
+    do {
+      return try await URLSession.shared.data(for: urlRequest!)
+    } catch let err {
+      print("async api call error \(err)")
+    }
+    return nil
+  }
+  
   func processCharacterPublicData(response: CharacterPublicDataResponse) {
     let characterData = self.characterData
     characterData?.publicData = response
@@ -313,6 +328,50 @@ extension DataManager {
     let characterData = self.characterData
     characterData?.skillQueue = response
     self.characterData = characterData
+  }
+}
+
+// MARK: - RequestBuilder
+extension DataManager {
+  func requestBuilder(dataEndpoint: String, authModel: AuthModel, page: Int?) -> URLRequest? {
+    let endpoint = "https://esi.evetech.net/latest"
+    
+    guard let accessTokenData = decodeAccessToken(data: authModel.accessToken) else {
+      return nil
+    }
+    
+    let characterEndpoint = "/characters/\(accessTokenData.characterID)/"
+    
+    let urlString = endpoint + characterEndpoint + dataEndpoint
+    let url = URL(string: urlString)!
+    var url1 = URLComponents(string: urlString)!
+    
+    if let page = page {
+      url1.queryItems = APIHelper.mapValuesToQueryItems([
+        "page": page
+      ])
+    }
+    
+    var urlRequest = URLRequest(url: url1.url!)
+    
+    let headers: [String:String] = [
+      "Authorization": "Bearer \(authModel.accessToken)"
+    ]
+    
+    urlRequest.allHTTPHeaderFields = headers
+    return urlRequest
+  }
+  
+  func decodeAccessToken(data: String) -> AccessTokenData? {
+    let decoder = JSONDecoder()
+    let response = decode(jwtToken: data)
+    do {
+      let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
+      return try decoder.decode(AccessTokenData.self, from: jsonData)
+    } catch let err {
+      print("decode error \(err)")
+      return nil
+    }
   }
 }
 
@@ -374,7 +433,7 @@ extension DataManager {
   }
 }
 
-
+// MARK: - Assets
 extension DataManager {
   
   func fetchAssets(mocked: Bool = false) {
@@ -383,19 +442,19 @@ extension DataManager {
       makeMockAssets()
       return
     }
-    
-    guard let characterData = characterData else {
-      print("fetchAssets() - no character data")
+    guard let dbManager = dbManager else {
       return
     }
     
-    guard let accessTokenResponse = accessTokenResponse else {
-      print("fetchAs")
-      return
-    }
     
     Task {
-      if let (data, response) = await makeApiCallAsync(dataEndpoint: "assets/") {
+      let characters = try await dbManager.getCharacters()
+      
+//      guard characters.count > 0,
+//            let characterData = dbManager.getCharacter(by: characters[0].characterId) else {
+//        return
+//      }
+      if let (data, response) = await makeApiCallAsync1(dataEndpoint: "assets/") {
         do {
           let string1 = String(data: data, encoding: .utf8)
           print("assets response got \(string1)")
@@ -403,7 +462,7 @@ extension DataManager {
             .decode([GetCharactersCharacterIdAssets200Ok].self, from: data)
          //print("got json data \(characterAssetData)")
           
-          self.processCharacterAssetData(response: characterAssetData, characterId: characterData.characterID)
+//          self.processCharacterAssetData(response: characterAssetData, characterId: characterData.characterID)
           
         } catch let err {
           print("got err \(err)")

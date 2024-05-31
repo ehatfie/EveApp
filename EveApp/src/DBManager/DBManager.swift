@@ -13,9 +13,9 @@ import Fluent
 
 class DBManager: ObservableObject {
   var databases: Databases
-  let dbName = "TestDB26"
+  let dbName = "TestDB27"
   
-  let numThreads = 16
+  let numThreads = 6
   
   var logger: Logger = {
     var logger = Logger(label: "database.logger")

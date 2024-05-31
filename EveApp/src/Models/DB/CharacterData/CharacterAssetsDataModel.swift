@@ -89,4 +89,23 @@ final class CharacterAssetsDataModel: Model {
                 .delete()
         }
     }
+    
+//    static func edit(id:String, password:String? ) throws -> CharacterAssetsDataModel {
+//        try CharacterAssetsDataModel.find(
+//        guard var user:ClinicUser = try ClinicUser.find(id) else {
+//            throw Abort.notFound
+//        }
+//        // Is it the best way of doing this? Because with "guard" I should "return" or "throw", right?
+//        if password != nil {
+//            user.password = try BCrypt.hash(password: password!)
+//        }
+//        
+//        // TODO: update user's roles relationships
+//
+//        try user.save()
+//        
+//        return user
+//    }
 }
+
+

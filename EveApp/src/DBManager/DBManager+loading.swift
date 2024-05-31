@@ -47,10 +47,8 @@ extension DBManager {
     
     categories.forEach { key, value in
       let model = CategoryModel(id: key, data: value)
-      
-      
     }
-
+    
     let groupModesl = groups.map { key, value in
       return GroupModel(groupId: key, groupData: value)
     }
@@ -99,21 +97,20 @@ extension DBManager {
     guard typeModelCount == 0 else { return }
     let start = Date()
     print("loadTypeData() - Start")
-    let typeIds = try await readYamlAsync(for: .typeIDs, type: TypeData.self)
+    let typeIds = try await readYamlAsync2(for: .typeIDs, type: TypeData.self)
+    let typeModels = typeIds.map { value in
+      return TypeModel(typeId: Int64(value.0), data: value.1)
+    }
     let stop = start.timeIntervalSinceNow * -1
     
-    print("async \(stop)")
+    //print("async \(stop)")
+    //let typeIds1 = try await readYamlAsync(for: .typeIDs, type: TypeData.self)
     print("loadTypeData() -  got \(typeIds.count) types")
-    
-    let typeModels = typeIds.map { key, type in
-      return TypeModel(typeId: Int64(key), data: type)
-    }
-    
     print("loadTypeData() - created \(typeModels.count) type models")
     
-    try await splitAndSave(splits: 5, models: typeModels)
-
-    print("loadTypeData() - Done, took: \(start.timeIntervalSinceNow)")
+    try await splitAndSaveAsync(splits: 5, models: typeModels)
+    
+    print("loadTypeData() - Done, took: \(Date().timeIntervalSince(start))")
   }
   
   func loadDogmaAttributeData() async throws {
@@ -128,7 +125,7 @@ extension DBManager {
     try await dogmaAttributes.map { key, value in
       DogmaAttributeModel(attributeId: key, data: value)
     }.create(on: database).get()
-
+    
     print("loadDogmaAttributeData() - Done")
   }
   
@@ -260,14 +257,14 @@ extension DBManager {
       .get()
   }
   
-//  func saveModel(models: [any Model]) async {
-//    await models.create(on: database).get()
-//  }
+  //  func saveModel(models: [any Model]) async {
+  //    await models.create(on: database).get()
+  //  }
 }
 
 // MARK: - Misc Models
 extension DBManager {
-
+  
   
   func loadMiscDataAsync() async throws {
     print("loadMiscDataAsync() - start")
@@ -278,7 +275,7 @@ extension DBManager {
     } catch let error {
       print("loadMiscDataAsync - error: \(error)")
     }
-
+    
     
   }
   
@@ -307,23 +304,13 @@ extension DBManager {
     
     let url = URL(fileURLWithPath: path)
     let data = try Data(contentsOf: url)
+    print("readYamlAsync() - data read")
     let yaml = String(data: data, encoding: .utf8)!
+    print("readYamlAsync() - yanml string")
     let node = try Yams.compose(yaml: yaml)!
-    
+    print("readYamlAsync() - node created")
+    //let foo = decode2(splits: 0, some: node, type: T.self)
     return await decodeNode(node: node, type: T.self)
-  }
-  
-  func readYamlAsync2<T: Decodable>(for fileName: YamlFiles, type: T.Type) async throws -> [(Int64, T)] {
-    guard let path = Bundle.main.path(forResource: fileName.rawValue, ofType: "yaml") else {
-      throw NSError(domain: "", code: 0)
-    }
-    
-    let url = URL(fileURLWithPath: path)
-    let data = try Data(contentsOf: url)
-    let yaml = String(data: data, encoding: .utf8)!
-    let node = try Yams.compose(yaml: yaml)!
-    
-    return await decodeNode2(node: node, type: T.self)
   }
   
   func decodeNode<T: Decodable>(node: Yams.Node, type: T.Type) -> [Int64: T] {
@@ -356,12 +343,18 @@ extension DBManager {
       print("NO MAPPING")
       return [:]
     }
-    
     let keyValuePair = mapping.map { $0 }
     var returnValues: [Int64: T] = [:]
     
-    let results = await splitAndSort(splits: 5, some: keyValuePair, type: type)
+    async let one = decode2(splits: 0, some: Array(keyValuePair[0...1000]), type: type)
+    async let two = decode2(splits: 0, some: Array(keyValuePair[1001...2000]), type: type)
+    let start = Date()
+    _ = await [one, two]
+    print("Both took \(Date().timeIntervalSince(start))")
+    //let foo = await decode2(splits: 0, some: Array(keyValuePair[0...100]), type: type)
+    let results = await splitAndSort(splits: 3, some: keyValuePair, type: type)
     
+    print("decodeNode() - splitAndSort done")
     results.forEach { value in
       returnValues.merge(value, uniquingKeysWith: { one, _ in one })
     }
@@ -396,6 +389,7 @@ extension DBManager {
     async let firstThing = splitAndSort(splits: splits - 1, some: one, type: type)
     async let secondThing = splitAndSort(splits: splits - 1, some: two, type: type)
     
+    
     return await firstThing + secondThing
   }
   
@@ -414,13 +408,50 @@ extension DBManager {
     
     async let firstThing = splitAndSort2(splits: splits - 1, some: one, type: type)
     async let secondThing = splitAndSort2(splits: splits - 1, some: two, type: type)
-
+    
     return await firstThing + secondThing
   }
   
+  func decode2<T: Decodable>(splits: Int, some: [Node.Mapping.Element], type: T.Type) async -> [(Int64, T)] {
+    var returnValue: [(Int64,T)] = []
+    //print("decode2() - start splits \(splits) for \(some.count)")
+    let decoder = YAMLDecoder()
+    
+    let start = Date()
+    some.forEach { key, value in
+      guard let keyValue = key.int else { return }
+      do {
+        let result = try decoder.decode(T.self, from: value)
+        
+        returnValue.append((Int64(keyValue),result))
+      } catch let err {
+        print("Decode error \(err)")
+      }
+    }
+    //print("decode2() -  took \(Date().timeIntervalSince(start))")
+    return returnValue
+    //    let keyValueCount = some.count
+    //
+    //    let one = Array(some[0 ..< keyValueCount / 2])
+    //    let two = Array(some[keyValueCount / 2 ..< keyValueCount])
+    //
+    //    guard splits > 0 else {
+    //      async let firstThing = sortThing(some: one, type: type)
+    //      async let secondThing = sortThing(some: two, type: type)
+    //
+    //      return await [firstThing, secondThing].flatMap({$0})
+    //    }
+    //
+    //    async let firstThing = splitAndSort2(splits: splits - 1, some: one, type: type)
+    //    async let secondThing = splitAndSort2(splits: splits - 1, some: two, type: type)
+    //
+    //    return await firstThing + secondThing
+    // return []
+  }
   func sortThing<T: Decodable>(some: [Node.Mapping.Element], type: T.Type) async -> [Int64: T] {
     var returnValue: [Int64: T] = [:]
-    
+    //print("sortThing() - start for \(some.count)")
+    let start = Date()
     some.forEach { key, value in
       guard let keyValue = key.int else { return }
       do {
@@ -433,7 +464,7 @@ extension DBManager {
         print("Decode error \(err)")
       }
     }
-    
+   // print("sortThing() -  took \(start.timeIntervalSince(Date()))")
     return returnValue
   }
   
@@ -461,5 +492,39 @@ extension DBManager {
     async let secondThing: Void = splitAndSave(splits: splits - 1, models: bottom)
     _ = try await [firstThing, secondThing]
   }
-
+  
+  func splitAndSaveAsync<T: Model>(splits: Int, models: [T]) async throws {
+    let modelCount = models.count
+    
+    let top = Array(models[0 ..< modelCount / 2])
+    let bottom = Array(models[modelCount / 2 ..< modelCount])
+    
+    guard splits > 0 else {
+      try await models.create(on: database).get()
+      return
+    }
+    
+    await withTaskGroup(of: Void.self, body: { taskGroup in
+      
+      taskGroup.addTask {
+        do {
+          try await self.splitAndSaveAsync(splits: splits - 1, models: top)
+        } catch let err {
+          print("eee \(err)")
+        }
+      }
+      
+      taskGroup.addTask {
+        do {
+          try await self.splitAndSaveAsync(splits: splits - 1, models: bottom)
+        } catch let err {
+          print("eee \(err)")
+        }
+      }
+    })
+    
+    
+    //    _ = try await [firstThing, secondThing]
+  }
+  
 }

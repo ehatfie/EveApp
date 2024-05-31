@@ -12,11 +12,14 @@ struct DevelopHelperView: View {
   @EnvironmentObject var homeViewModel: HomeViewModel
   
   @State var showThing: Bool = false
-  
+  @State var splits: Int = 3
     var body: some View {
-        VStack {
-          loginButton()
-          Text("Test")
+      VStack {
+        HStack {
+          
+          VStack {
+            loginButton()
+            Text("Test")
             Button(action: {
               Task {
                 await DataManager.shared.dbManager?.deleteAll()
@@ -24,16 +27,21 @@ struct DevelopHelperView: View {
             }, label: {
               Text("Clear Database")
             })
-          
-          Button(action: {
-            showThing = true
-          }, label: {
-            Text("Delete some models")
+            
+            Button(action: {
+              showThing = true
+            }, label: {
+              Text("Delete some models")
+            })
+          }.sheet(isPresented: $showThing, content: {
+            selectModelsToDeleteView()
           })
-        }.sheet(isPresented: $showThing, content: {
-          selectModelsToDeleteView()
-        })
-        
+          
+          VStack {
+            splitTest()
+          }
+        }
+      }
     }
   
   func selectModelsToDeleteView() -> some View {
@@ -61,6 +69,29 @@ struct DevelopHelperView: View {
         Text("Login")
       })
     }
+  }
+  func splitTest() -> some View {
+    
+    VStack {
+      Stepper("splits: \(splits)", value: $splits)
+      Button(action: {
+        doSomething()
+      }, label: {
+        Text("Load Types")
+      })
+    }
+  }
+  func doSomething() {
+    Task {
+      do {
+        let results = try await DataManager.shared.dbManager?.readYamlAsync2(for: .typeIDs, type: TypeData.self, splits: splits)
+        print("results \(results?.count ?? -1)")
+      } catch let error {
+        print("DevHelperView.doSomething error \(error)")
+      }
+      
+    }
+    
   }
 }
 

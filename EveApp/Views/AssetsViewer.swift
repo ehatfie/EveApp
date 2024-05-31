@@ -55,9 +55,13 @@ class AssetsViewerViewModel: ObservableObject {
     }
     
     func fetchAssets() {
-        DataManager.shared.fetchAssets()
+        //DataManager.shared.fetchAssets()
         //let assets = DataManager.shared.characterData!.assets
         //self.assets = DataManager.shared.characterData!.assets
+        
+        Task {
+            await DataManager.shared.fetchAssetsAsync(mocked: false)
+        }
     }
     
     func getAssets() {
@@ -76,6 +80,24 @@ class AssetsViewerViewModel: ObservableObject {
                 .all()
                 .get()
             
+            let allAssets = try await character.$assetsData.query(on: db)
+                .all()
+                .get()
+            
+            var set = Set<Int64>()
+            
+            foos.forEach { value in
+                set.insert(value.typeId)
+            }
+            var set2 = Set<Int64>()
+            
+            allAssets.forEach { value in
+                if !set.contains(value.typeId) {
+                    set2.insert(value.typeId)
+                }
+            }
+            
+            print("types that didnt match \(set2)")
             print("got asset count \(foos.count)")
             let results = try foos.map { asset in
                 let typeModel = try asset.joined(TypeModel.self)
@@ -85,6 +107,21 @@ class AssetsViewerViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.viewItems = results
             }
+        }
+    }
+    func deleteAssets() {
+        Task {
+            guard let character = await DataManager.shared.dbManager!.getCharacters().first else {
+                print("deleteAssets() no character found")
+                return
+            }
+            do {
+               try await DataManager.shared.deleteAssets(characterModel: character)
+            } catch let erro {
+                print("delete assets error \(erro)")
+            }
+           
+            
         }
     }
 }
@@ -106,6 +143,12 @@ struct AssetsViewer: View {
                     viewModel.getAssets()
                 }, label: {
                     Text("get assets")
+                })
+                
+                Button(action: {
+                    viewModel.deleteAssets()
+                }, label: {
+                    Text("delete assets")
                 })
             }
 

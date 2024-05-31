@@ -153,7 +153,7 @@ class AuthManager1: ObservableObject {
     do {
       let response = try decoder.decode(AccessTokenResponse.self, from: data)
       validate(accessToken: response.access_token)
-      print("process data result \(response)")
+      //print("process data result \(response)")
       
       guard let accessTokenData = decodeAccessToken(data: response.access_token) else {
         log("process() - Didnt convert accessToken")

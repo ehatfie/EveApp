@@ -45,6 +45,7 @@
 		BA314A0D2A5CF66C0076E6DD /* GroupInfoResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA314A0C2A5CF66C0076E6DD /* GroupInfoResponseData.swift */; };
 		BA314A102A5CF8B10076E6DD /* ItemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA314A0F2A5CF8B10076E6DD /* ItemCategory.swift */; };
 		BA314A132A5D05590076E6DD /* ItemTypeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA314A122A5D05590076E6DD /* ItemTypeResponseData.swift */; };
+		BA5106942C09852900E9B344 /* DBManager+Fetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5106932C09852900E9B344 /* DBManager+Fetching.swift */; };
 		BA5990FB2BF45972003108CF /* ESIScopes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5990FA2BF45972003108CF /* ESIScopes.swift */; };
 		BA5991002BF46020003108CF /* AssetsViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5990FF2BF46020003108CF /* AssetsViewer.swift */; };
 		BA5991052BF59F8B003108CF /* CharacterDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5991042BF59F8B003108CF /* CharacterDataModel.swift */; };
@@ -63,6 +64,7 @@
 		BA7100A22AE898CA001CD301 /* blueprints.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA7100A12AE898CA001CD301 /* blueprints.yaml */; };
 		BA7100A52AEA1969001CD301 /* BlueprintExplorerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7100A42AEA1969001CD301 /* BlueprintExplorerView.swift */; };
 		BA7100A72AEB2D05001CD301 /* BlueprintDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */; };
+		BA7E4B382C068E9900B00158 /* DBManager+loading2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7E4B372C068E9900B00158 /* DBManager+loading2.swift */; };
 		BA982FB42C03D7CD00041EEB /* DBManager+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA982FB32C03D7CD00041EEB /* DBManager+Auth.swift */; };
 		BA9C8FE82B44C5F900F4DBAF /* IndustryPlannerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FE72B44C5F900F4DBAF /* IndustryPlannerManager.swift */; };
 		BA9C8FEA2B44D18C00F4DBAF /* ReactionsHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FE92B44D18C00F4DBAF /* ReactionsHelperView.swift */; };
@@ -505,6 +507,7 @@
 		BAE069A72ADA1D110054EFCF /* DogmaAttributeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE069A62ADA1D110054EFCF /* DogmaAttributeDetailView.swift */; };
 		BAE069A92ADA240A0054EFCF /* typeDogma.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BAE069A82ADA24090054EFCF /* typeDogma.yaml */; };
 		BAE069AB2ADB30140054EFCF /* DBManager+Industry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE069AA2ADB30140054EFCF /* DBManager+Industry.swift */; };
+		BAEBC02B2C0411C8009D8CC2 /* DM+Fetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEBC02A2C0411C8009D8CC2 /* DM+Fetching.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -580,6 +583,7 @@
 		BA314A0C2A5CF66C0076E6DD /* GroupInfoResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInfoResponseData.swift; sourceTree = "<group>"; };
 		BA314A0F2A5CF8B10076E6DD /* ItemCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategory.swift; sourceTree = "<group>"; };
 		BA314A122A5D05590076E6DD /* ItemTypeResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypeResponseData.swift; sourceTree = "<group>"; };
+		BA5106932C09852900E9B344 /* DBManager+Fetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBManager+Fetching.swift"; sourceTree = "<group>"; };
 		BA5990FA2BF45972003108CF /* ESIScopes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESIScopes.swift; sourceTree = "<group>"; };
 		BA5990FF2BF46020003108CF /* AssetsViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsViewer.swift; sourceTree = "<group>"; };
 		BA5991042BF59F8B003108CF /* CharacterDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDataModel.swift; sourceTree = "<group>"; };
@@ -598,6 +602,7 @@
 		BA7100A12AE898CA001CD301 /* blueprints.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = blueprints.yaml; sourceTree = "<group>"; };
 		BA7100A42AEA1969001CD301 /* BlueprintExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintDetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA7E4B372C068E9900B00158 /* DBManager+loading2.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+loading2.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BA982FB32C03D7CD00041EEB /* DBManager+Auth.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+Auth.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BA9C8FE72B44C5F900F4DBAF /* IndustryPlannerManager.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = IndustryPlannerManager.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA9C8FE92B44D18C00F4DBAF /* ReactionsHelperView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ReactionsHelperView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -1036,6 +1041,7 @@
 		BAE069A62ADA1D110054EFCF /* DogmaAttributeDetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DogmaAttributeDetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAE069A82ADA24090054EFCF /* typeDogma.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = typeDogma.yaml; sourceTree = "<group>"; };
 		BAE069AA2ADB30140054EFCF /* DBManager+Industry.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+Industry.swift"; sourceTree = "<group>"; tabWidth = 2; };
+		BAEBC02A2C0411C8009D8CC2 /* DM+Fetching.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DM+Fetching.swift"; sourceTree = "<group>"; tabWidth = 2; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1189,6 +1195,7 @@
 				BA3149F92A5386570076E6DD /* DataManager+Authentication.swift */,
 				BA314A052A5CDCDB0076E6DD /* DataManager+Loading.swift */,
 				BA5991062BF99B97003108CF /* DataManager+Helpers.swift */,
+				BAEBC02A2C0411C8009D8CC2 /* DM+Fetching.swift */,
 			);
 			path = DataManager;
 			sourceTree = "<group>";
@@ -1378,6 +1385,14 @@
 				BA9C8FEB2B44DF8C00F4DBAF /* BlueprintComponentListView.swift */,
 			);
 			path = BlueprintExplorer;
+			sourceTree = "<group>";
+		};
+		BA7E4B362C068E8500B00158 /* new */ = {
+			isa = PBXGroup;
+			children = (
+				BA7E4B372C068E9900B00158 /* DBManager+loading2.swift */,
+			);
+			path = new;
 			sourceTree = "<group>";
 		};
 		BA9C8FE62B44C52D00F4DBAF /* IndustryPlannerManager */ = {
@@ -1908,12 +1923,14 @@
 		BAE069722AC8A1370054EFCF /* DBManager */ = {
 			isa = PBXGroup;
 			children = (
+				BA7E4B362C068E8500B00158 /* new */,
 				BAE069732AC8A1420054EFCF /* DBManager.swift */,
 				BAE069752AC8A2900054EFCF /* DBManager+loading.swift */,
 				BAE069AA2ADB30140054EFCF /* DBManager+Industry.swift */,
 				BA71008F2ADF64F6001CD301 /* DBManager+Mocks.swift */,
 				BAE02EF32AFB183300AB695F /* DBManager+query.swift */,
 				BA982FB32C03D7CD00041EEB /* DBManager+Auth.swift */,
+				BA5106932C09852900E9B344 /* DBManager+Fetching.swift */,
 			);
 			path = DBManager;
 			sourceTree = "<group>";
@@ -2106,6 +2123,7 @@
 				BACB526C2A686E770044CDA0 /* GetCharactersCharacterIdPlanetsPlanetIdRoute.swift in Sources */,
 				BACB52352A686E770044CDA0 /* GetMarketsRegionIdOrdersUnprocessableEntity.swift in Sources */,
 				BACB515C2A686E760044CDA0 /* APIHelper.swift in Sources */,
+				BAEBC02B2C0411C8009D8CC2 /* DM+Fetching.swift in Sources */,
 				BACB517F2A686E760044CDA0 /* Configuration.swift in Sources */,
 				BACB521E2A686E770044CDA0 /* GetCorporationsCorporationIdIconsNotFound.swift in Sources */,
 				BACB52302A686E770044CDA0 /* GetUniverseGraphicsGraphicIdOk.swift in Sources */,
@@ -2452,6 +2470,7 @@
 				BACB51F62A686E770044CDA0 /* GetUniverseAncestries200Ok.swift in Sources */,
 				BA3149D92A4783800076E6DD /* UserDefaultsKeys.swift in Sources */,
 				BACB52422A686E770044CDA0 /* GetUniverseRaces200Ok.swift in Sources */,
+				BA5106942C09852900E9B344 /* DBManager+Fetching.swift in Sources */,
 				BACB519A2A686E760044CDA0 /* GetFwLeaderboardsActiveTotalActiveTotal1.swift in Sources */,
 				BACB52A32A686E770044CDA0 /* GetKillmailsKillmailIdKillmailHashItemsItem.swift in Sources */,
 				BACB52562A686E770044CDA0 /* GetAlliancesAllianceIdIconsOk.swift in Sources */,
@@ -2493,6 +2512,7 @@
 				BACB517D2A686E760044CDA0 /* ClonesAPI.swift in Sources */,
 				BACB51C42A686E770044CDA0 /* PostCharactersCharacterIdMailRecipient.swift in Sources */,
 				BA5990FB2BF45972003108CF /* ESIScopes.swift in Sources */,
+				BA7E4B382C068E9900B00158 /* DBManager+loading2.swift in Sources */,
 				BACB52852A686E770044CDA0 /* GetContractsPublicBidsContractId200Ok.swift in Sources */,
 				BACB51932A686E760044CDA0 /* GetCorporationsCorporationIdContainersLogs200Ok.swift in Sources */,
 				BACB52B82A686E770044CDA0 /* GetCorporationsCorporationIdWalletsDivisionJournal200Ok.swift in Sources */,

@@ -39,6 +39,10 @@ extension DBManager {
       log("updateAccessToken(): error \(error)")
     }
   }
+  
+  func getAuthModel(for characterId: String) async -> AuthModel? {
+    return try? await AuthModel.query(on: database).filter(\.$characterId == characterId).first()
+  }
 }
 
 // MARK: - CharacterData

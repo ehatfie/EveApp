@@ -32,7 +32,7 @@ class AuthViewModel: ObservableObject {
 
 struct AuthView: View {
     @ObservedObject var authViewModel = AuthViewModel()
-    @EnvironmentObject var homeViewModel: HomeViewModel
+    @Environment(HomeViewModel.self) var homeViewModel: HomeViewModel
     
     var body: some View {
         VStack(alignment: .center) {

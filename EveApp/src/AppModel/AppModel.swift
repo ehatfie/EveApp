@@ -12,9 +12,9 @@ import Combine
 import NIO
 import Fluent
 
-final class AppModel: ObservableObject {
-    @ObservedObject var dbManager = DBManager()
-    @ObservedObject var dataManager: DataManager
+@Observable final class AppModel {
+    var dbManager = DBManager()
+    var dataManager: DataManager
     
     init() {
         self.dataManager = DataManager.shared
@@ -22,8 +22,8 @@ final class AppModel: ObservableObject {
         self.dataManager.dbManager = dbManager
         self.dataManager.authManager1.dbManager = dbManager
         
-        dbManager.$dbLoading
-            .assign(to: &dataManager.$dataLoading)
+//        dbManager.$dbLoading
+//            .assign(to: &dataManager.$dataLoading)
 
     }
     

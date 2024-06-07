@@ -17,7 +17,7 @@ struct TypeInfoView: View {
       if let typeModel = selectedType {
         Text(typeModel.name + " \(typeModel.typeId)")
         typeInfo(for: typeModel)
-        industryInfo(for: typeModel)
+        //industryInfo(for: typeModel)
       }
     }
     

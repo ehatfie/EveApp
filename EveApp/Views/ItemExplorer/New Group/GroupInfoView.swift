@@ -19,10 +19,8 @@ struct GroupInfoView: View {
         Text(groupModel.name)
         itemList(groupModel: groupModel)
       }
-      
       Spacer()
     }
-    
   }
   
   // current data type, filter
@@ -30,10 +28,9 @@ struct GroupInfoView: View {
     let types = try! TypeModel
       .query(on: DataManager.shared.dbManager!.database)
       .filter(\.$groupID == groupModel.groupId)
-      .filter(\.$published == true)
       .all()
       .wait()
-    
+    print("item count \(types.count) for \(groupModel.groupId)")
     return List(types, id: \.typeId) { type in
       Text(type.name)
         .onTapGesture {

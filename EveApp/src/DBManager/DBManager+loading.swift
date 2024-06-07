@@ -203,8 +203,6 @@ extension DBManager {
   }
   
   func loadTypeDogmaInfoDataAsync() async throws  {
-    
-    
     let typeDogmaInfoCount = try await self.database
       .query(TypeDogmaInfoModel.self)
       .count()

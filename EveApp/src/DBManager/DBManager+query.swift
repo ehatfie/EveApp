@@ -79,6 +79,12 @@ extension DBManager {
       .wait()
   }
   
+  func getObjects<T: Model>(for type: T.Type) -> [T] {
+    try! T.query(on: self.database)
+      .all()
+      .wait()
+  }
+  
   func getRandomBlueprint() -> BlueprintModel? {
     let blueprints = try! BlueprintModel.query(on: self.database)
       .filter(\.$blueprintTypeID == 11394)
@@ -241,9 +247,31 @@ extension DBManager {
   func getCharacters() async -> [CharacterDataModel] {
     do {
        return try await  CharacterDataModel.query(on: self.database)
+        .with(\.$publicData)
         .with(\.$assetsData)
         .all()
         .get()
+    } catch let err {
+      print("DBManager.getCharacter() - error \(err)")
+      return []
+    }
+  }
+  
+  func getCharactersWithInfo() async -> [CharacterDataModel] {
+    do {
+//      let characterDataModels = try await CharacterDataModel.query(on: self.database)
+//        .with(\.$publicData)
+//        .with(\.$assetsData)
+//        .all()
+//        .get()
+      
+       return try await CharacterDataModel.query(on: self.database)
+        .with(\.$publicData)
+        .with(\.$assetsData)
+        .with(\.$corp)
+        .all()
+        .get()
+      
     } catch let err {
       print("DBManager.getCharacter() - error \(err)")
       return []

@@ -10,7 +10,7 @@ import OAuthSwift
 
 @main
 struct EveAppApp: App {
-    @StateObject var model = AppModel()
+    var model = AppModel()
     
     init() {
        //NSAppleEventManager.shared().setEventHandler(self, andSelector:#selector(handleGetURL(event:withReplyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
@@ -28,7 +28,7 @@ struct EveAppApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView(model: model)
+            ContentView()
                 .handlesExternalEvents(preferring: ["eveauth-app"], allowing: ["eveauth-app"])
                 .onOpenURL { (url) in
                     // Handle url here
@@ -44,6 +44,7 @@ struct EveAppApp: App {
                     self.accessKey = accessKey
                     print("deeplink \(deeplink)")
                 }
+                .environment(model)
                 
         }
     }

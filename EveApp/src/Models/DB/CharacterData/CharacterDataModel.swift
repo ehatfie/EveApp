@@ -35,9 +35,11 @@ final class CharacterDataModel: Model {
     @OptionalChild(for: \.$characterDataModel)
     var publicData: CharacterPublicDataModel?
     
-    
     @Children(for: \.$characterDataModel)
     var assetsData: [CharacterAssetsDataModel]
+    
+    @Siblings(through: CharacterCorporationModel.self, from: \.$character, to: \.$corporation)
+    public var corp: [CorporationInfoModel]
     
     init() { }
     

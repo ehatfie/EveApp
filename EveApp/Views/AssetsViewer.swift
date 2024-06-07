@@ -18,31 +18,36 @@ struct AssetsViewItem: Identifiable, Hashable {
     let count: Int
     let locationFlag: GetCharactersCharacterIdAssets200Ok.LocationFlag
     let locationType: GetCharactersCharacterIdAssets200Ok.LocationType
+    let locationId: Int64
     
     init(
         typeId: Int64,
         name: String,
         count: Int,
         locationFlag: GetCharactersCharacterIdAssets200Ok.LocationFlag,
-        locationType: GetCharactersCharacterIdAssets200Ok.LocationType
+        locationType: GetCharactersCharacterIdAssets200Ok.LocationType,
+        locationId: Int64
     ) {
         self.typeId = typeId
         self.name = name
         self.count = count
         self.locationFlag = locationFlag
         self.locationType = locationType
+        self.locationId = locationId
     }
     
     init(
         assetModel: CharacterAssetsDataModel,
         typeModel: TypeModel
     ) {
+        
         self.init(
             typeId: assetModel.itemId,
             name: typeModel.name,
             count: assetModel.quantity,
             locationFlag:.init(rawValue: assetModel.locationFlag)!,
-            locationType: .init(rawValue: assetModel.locationType)!
+            locationType: .init(rawValue: assetModel.locationType)!,
+            locationId: assetModel.locationId
         )
     }
 }
@@ -72,32 +77,19 @@ class AssetsViewerViewModel: ObservableObject {
                 return
             }
             let db = await DataManager.shared.dbManager!.database
-//            let assets = CharacterAssetsDataModel
-//                .query(on: DataManager.shared.dbManager!.database)
-                //.join(GroupModel.self, on: \GroupModel.$groupId == \TypeModel.$groupID)
+            
             let foos = try await character.$assetsData.query(on: db)
+                .filter(\.$locationType == GetCharactersCharacterIdAssets200Ok.LocationType.station.rawValue)
                 .join(TypeModel.self, on: \CharacterAssetsDataModel.$typeId == \TypeModel.$typeId)
                 .all()
                 .get()
+                .sorted(by: {$0.locationFlag < $1.locationFlag})
             
-            let allAssets = try await character.$assetsData.query(on: db)
+            let stationItems = try await character.$assetsData.query(on: db)
+                .filter(\.$locationType == GetCharactersCharacterIdAssets200Ok.LocationType.station.rawValue)
                 .all()
                 .get()
-            
-            var set = Set<Int64>()
-            
-            foos.forEach { value in
-                set.insert(value.typeId)
-            }
-            var set2 = Set<Int64>()
-            
-            allAssets.forEach { value in
-                if !set.contains(value.typeId) {
-                    set2.insert(value.typeId)
-                }
-            }
-            
-            print("types that didnt match \(set2)")
+            await DataManager.shared.fetchLocations(assets: stationItems)
             print("got asset count \(foos.count)")
             let results = try foos.map { asset in
                 let typeModel = try asset.joined(TypeModel.self)
@@ -154,7 +146,7 @@ struct AssetsViewer: View {
 
             VStack(alignment: .leading) {
                 List(viewModel.viewItems , id: \.id) { value in
-                    VStack {
+                    VStack(alignment: .leading) {
                         HStack {
                             Text(value.name)
                             Text("\(value.count)")
@@ -163,6 +155,8 @@ struct AssetsViewer: View {
                             Text(value.locationFlag.rawValue)
                             Text(value.locationType.rawValue)
                         }
+                        
+                        Text("\(value.locationId)")
                     }
                 }
 //                List(viewModel.assets, id: \.id ) { value in

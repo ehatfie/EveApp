@@ -9,7 +9,7 @@ import SwiftUI
 import Fluent
 
 struct DevelopHelperView: View {
-  @EnvironmentObject var homeViewModel: HomeViewModel
+  @Environment(HomeViewModel.self) var homeViewModel: HomeViewModel
   
   @State var showThing: Bool = false
   @State var splits: Int = 3
@@ -198,5 +198,5 @@ struct ModelPickerData: Identifiable {
 
 #Preview {
   DevelopHelperView()
-      .environmentObject(HomeViewModel())
+      .environment(HomeViewModel())
 }

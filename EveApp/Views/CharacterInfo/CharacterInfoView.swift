@@ -23,6 +23,22 @@ class CharacterInfoViewModel: ObservableObject {
     }
     
   }
+  
+  func fetchCharacterCorps() {
+    Task {
+      await DataManager.shared.fetchCorporationInfoForCharacters()
+    }
+  }
+  
+  func fetchCharacterPortrait() {
+    Task {
+      do {
+        try await DataManager.shared.fetchCharacterIcons()
+      } catch let err {
+        print("Errr \(err)")
+      }
+    }
+  }
 }
 
 struct CharacterInfoView: View {
@@ -57,6 +73,18 @@ struct CharacterInfoView: View {
           DataManager.shared.fetchCharacterInfo()
         }, label: {
           Text("get character info")
+        })
+        
+        Button(action: {
+          viewModel.fetchCharacterCorps()
+        }, label: {
+          Text("get corporation info")
+        })
+        
+        Button(action: {
+          viewModel.fetchCharacterPortrait()
+        }, label: {
+          Text("get character portrait")
         })
       }
     }

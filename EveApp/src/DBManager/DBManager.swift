@@ -11,7 +11,7 @@ import SwiftUI
 import NIO
 import Fluent
 
-class DBManager: ObservableObject {
+@Observable class DBManager {
   var databases: Databases
   let dbName = "TestDB27"
   
@@ -30,8 +30,8 @@ class DBManager: ObservableObject {
     )!
   }
   
-  @Published var dbLoading: Bool = false
-  @Published var dbLoaded: Bool = false
+  var dbLoading: Bool = false
+  var dbLoaded: Bool = false
   
   
   init() {
@@ -86,7 +86,7 @@ class DBManager: ObservableObject {
     try? setupTypeMaterialModels()
     
     try? setupBlueprintModel()
-    
+    try? setupMiscModels()
 //    Task {
 //      try? await CharacterAssetsDataModel
 //        .ModelMigration()
@@ -250,6 +250,20 @@ class DBManager: ObservableObject {
   
   func setupAuthModels() throws {
     try AuthModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+  }
+  
+  func setupMiscModels() throws {
+    try RaceModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
+    try CorporationInfoModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
+    try CharacterCorporationModel.ModelMigration()
       .prepare(on: database)
       .wait()
   }

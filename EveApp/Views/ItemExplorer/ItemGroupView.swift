@@ -24,16 +24,16 @@ class ItemGroupViewModel: ObservableObject {
     self.itemTypes = []
     
     //loadTypes()
-    let dbManager = DataManager.shared.dbManager
-    
-    cancellable = dbManager?
-      .$dbLoaded
-      .sink(receiveValue: { value in
-        if value == true {
-          print("")
-          self.loadTypesData()
-        }
-      })
+//    let dbManager = DataManager.shared.dbManager
+//    
+//    cancellable = dbManager?
+//      .$dbLoaded
+//      .sink(receiveValue: { value in
+//        if value == true {
+//          print("")
+//          self.loadTypesData()
+//        }
+//      })
   }
   
   func loadTypesData() {

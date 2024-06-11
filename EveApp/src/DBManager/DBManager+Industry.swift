@@ -7,6 +7,7 @@
 
 import Foundation
 import Yams
+import FluentKit
 
 extension DBManager {
   
@@ -62,5 +63,16 @@ extension DBManager {
     try await splitAndSave(splits: 2, models: blueprintModels)
     
     print("saved \(blueprintData.count) blueprints; took \(saveStart.timeIntervalSinceNow * -1)")
+  }
+}
+
+// MARK: - Fetching Industry things
+
+extension DBManager {
+  func getInputObjects(for materialTypeId: Int64) async throws -> TypeModel? {
+    try await TypeModel.query(on: self.database)
+      .filter(\.$typeId == materialTypeId)
+      .join(TypeMaterialsModel.self, on: \TypeMaterialsModel.$typeID == \TypeModel.$typeId)
+      .first()
   }
 }

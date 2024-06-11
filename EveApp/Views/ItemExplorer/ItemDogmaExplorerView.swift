@@ -8,44 +8,90 @@
 import SwiftUI
 import Fluent
 
-class ItemDogmaExplorerViewModel: ObservableObject {
-  @Published var data: [TypeDogmaInfoModel] = []
+struct ItemInfoDisplayable: Identifiable {
+  let id: UUID = UUID()
+  let typeDogmaInfoModel: TypeDogmaInfoModel
+  let typeModel: TypeModel
+}
+
+@Observable class ItemDogmaExplorerViewModel {
+  var data: [TypeDogmaInfoModel] = []
+  var items: [ItemInfoDisplayable] = []
   
   init() {
     let dbManager = DataManager.shared.dbManager
-    
-//    let results = try! TypeDogmaInfoModel.query(on: dbManager!.database)
-//      .all()
-//      .wait()
-//    print("ItemDogmaExplorerViewModel data count \(results.count)")
-//    self.data = results
   }
   
   func getData() {
-    let dbManager = DataManager.shared.dbManager
-    
-    let results = try! TypeDogmaInfoModel.query(on: dbManager!.database)
-      .all()
-      .wait()
-    print("ItemDogmaExplorerViewModel data count \(results.count)")
-    self.data = results
+    Task {
+      let dbManager = await DataManager.shared.dbManager
+      let models = try! await TypeDogmaInfoModel.query(on: dbManager!.database)
+        .join(TypeModel.self, on: \TypeDogmaInfoModel.$typeId == \TypeModel.$typeId)
+        .paginate(PageRequest(page: 1, per: 200))
+        .get()
+      
+      print("ItemDogmaExplorerViewModel data count \(models.items.count)")
+      self.data = models.items
+      
+      let results = await withTaskGroup(
+        of: ItemInfoDisplayable?.self,
+        returning: [ItemInfoDisplayable].self
+      ) { taskGroup in
+        var returnModels = [ItemInfoDisplayable]()
+        models.items.forEach { value in
+          taskGroup.addTask {
+            do {
+              let typeModel = try value.joined(TypeModel.self)
+              return ItemInfoDisplayable(
+                typeDogmaInfoModel: value,
+                typeModel: typeModel
+              )
+            } catch let error {
+              print("ItemInputInfoView - error \(error)")
+              return nil
+            }
+          }
+        }
+        
+        for await result in taskGroup {
+          if let result = result {
+            returnModels.append(result)
+          }
+          
+        }
+        
+        return returnModels
+      }
+      
+      self.items = results
+    }
   }
 }
 
 struct ItemDogmaExplorerView: View {
-  @ObservedObject var viewModel: ItemDogmaExplorerViewModel
+  var viewModel: ItemDogmaExplorerViewModel
   
-    var body: some View {
-      List($viewModel.data, id: \.id) { typeDogmaInfoModel in
+  var body: some View {
+    VStack {
+      List(viewModel.items, id: \.id) { item in
         HStack {
-          Text("\(typeDogmaInfoModel.typeId.wrappedValue)")
-          Text("attributes: \(typeDogmaInfoModel.attributes.count)")
-          Text("effects: \(typeDogmaInfoModel.effects.count)")
+          Text("\(item.typeModel.name)")
+          Text("attributes: \(item.typeDogmaInfoModel.attributes.count)")
+          Text("effects: \(item.typeDogmaInfoModel.effects.count)")
         }
       }.onAppear{
         viewModel.getData()
       }
+      
+//      List(viewModel.data, id: \.id) { typeDogmaInfoModel in
+//        HStack {
+//          Text("\(typeDogmaInfoModel.typeId)")
+//          Text("attributes: \(typeDogmaInfoModel.attributes.count)")
+//          Text("effects: \(typeDogmaInfoModel.effects.count)")
+//        }
+//      }
     }
+  }
 }
 
 #Preview {

@@ -21,14 +21,14 @@ class ItemCategoryGroupsListViewModel: ObservableObject {
     print("ItemCategoryGroupListVewiModel init")
     let dbManager = DataManager.shared.dbManager
     
-    cancellable = dbManager?
-      .$dbLoaded
-      .sink(receiveValue: { value in
-        if value == true {
-          print("")
-          self.loadGroupsData()
-        }
-      })
+//    cancellable = dbManager?
+//      .$dbLoaded
+//      .sink(receiveValue: { value in
+//        if value == true {
+//          print("")
+//          self.loadGroupsData()
+//        }
+//      })
   }
   
   func loadGroupsData() {

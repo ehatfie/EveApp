@@ -61,6 +61,10 @@ extension DataManager {
     func clearAccessTokenData() {
         print("clearAccessTokenData()")
         clearAccessTokenResponse()
+        
+        try? dbManager?.getObjects(for: AuthModel.self)
+            .delete(on: dbManager!.database)
+            .wait()
     }
     
     func loadCategoryData() {

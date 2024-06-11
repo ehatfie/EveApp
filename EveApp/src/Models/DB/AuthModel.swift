@@ -64,7 +64,7 @@ final class AuthModel: Model {
         }
             
         func revert(on database: any FluentKit.Database) async throws {
-            try await database.schema(CharacterPublicDataModel.schema)
+            try await database.schema(AuthModel.schema)
                 .delete()
         }
     }

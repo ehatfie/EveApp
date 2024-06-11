@@ -19,12 +19,13 @@ enum SideBarItem: String, Identifiable, CaseIterable {
   case devSettings
   case auth
   case assets
+  case itemExplorer
 }
 
-class HomeViewModel: ObservableObject {
-  @Published var needsAuthSetup: Bool = false
-  @Published var needsAuthentication: Bool = false
-  @Published var dataLoading: Bool = false
+@Observable class HomeViewModel {
+  var needsAuthSetup: Bool = false
+  var needsAuthentication: Bool = false
+  var dataLoading: Bool = false
   
   var cancellable: AnyCancellable?
   var cancellable2: AnyCancellable?
@@ -33,16 +34,16 @@ class HomeViewModel: ObservableObject {
     checkForNeedsAuthSetupData()
     checkForNeedsAuthentication()
     
-    self.cancellable = AuthManager.shared
-      .$isLoggedIn
-      .sink(receiveValue: { loggedIn in
-        DispatchQueue.main.async {
-          self.needsAuthentication = !loggedIn
-        }
-        
-      })
+//    self.cancellable = AuthManager.shared
+//      .$isLoggedIn
+//      .sink(receiveValue: { loggedIn in
+//        DispatchQueue.main.async {
+//          self.needsAuthentication = !loggedIn
+//        }
+//        
+//      })
     
-    DataManager.shared.$dataLoading.assign(to: &$dataLoading)
+    //DataManager.shared.$dataLoading.assign(to: &dataLoading)
   }
   
   func checkForNeedsAuthSetupData() {
@@ -69,8 +70,8 @@ class HomeViewModel: ObservableObject {
 }
 
 struct HomeView: View {
-  @ObservedObject var homeViewModel: HomeViewModel = HomeViewModel()
-  @EnvironmentObject var db: DBManager
+  var homeViewModel: HomeViewModel = HomeViewModel()
+  @Environment(DBManager.self) var db: DBManager
   
   @State var selectedSideBarItem: SideBarItem?
   
@@ -103,15 +104,18 @@ struct HomeView: View {
         ItemDogmaExplorerView(viewModel: ItemDogmaExplorerViewModel())
       case .industryHelper:
         IndustryHelperView()
-          .environmentObject(db)
+          .environment(db)
       case .devSettings:
         DevelopHelperView()
-          .environmentObject(homeViewModel)
+          .environment(homeViewModel)
       case .auth:
         AuthView()
-          .environmentObject(homeViewModel)
+          .environment(homeViewModel)
+      case .itemExplorer:
+        ItemExplorerView(viewModel: ItemExplorerViewModel())
       case nil:
-        EmptyView()
+        HomeInfoView(viewModel: HomeInfoViewModel(dbManager: db))
+          .environment(db)
       }
     }
   }
@@ -174,15 +178,16 @@ struct HomeView: View {
         })
         NavigationLink(destination: {
           DevelopHelperView()
-            .environmentObject(homeViewModel)
+            .environment(homeViewModel)
         }, label: {
           Text("Developer Helper View")
         })
       }
-    }.sheet(isPresented: $homeViewModel.dataLoading, content: {
-      Text("Data Loading ...")
-        .padding()
-    })
+    }
+//    }.sheet(isPresented: $homeViewModel.dataLoading, content: {
+//      Text("Data Loading ...")
+//        .padding()
+//    })
   }
 }
 

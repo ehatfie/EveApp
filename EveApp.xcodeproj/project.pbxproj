@@ -9,6 +9,16 @@
 /* Begin PBXBuildFile section */
 		BA04CA8B2AEDCAEB008D66B8 /* MaterialDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA04CA8A2AEDCAEB008D66B8 /* MaterialDetailView.swift */; };
 		BA04CA8D2AEDCB8B008D66B8 /* BlueprintMaterialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA04CA8C2AEDCB8B008D66B8 /* BlueprintMaterialView.swift */; };
+		BA1A940C2C0C378B0005B931 /* DM+LocationFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A940B2C0C378B0005B931 /* DM+LocationFetching.swift */; };
+		BA1A940E2C0C37BC0005B931 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A940D2C0C37BC0005B931 /* LocationModel.swift */; };
+		BA1A94102C0C3F410005B931 /* GetStationInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A940F2C0C3F410005B931 /* GetStationInfoResponse.swift */; };
+		BA1A94142C0D72040005B931 /* ItemInputInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A94132C0D72040005B931 /* ItemInputInfoView.swift */; };
+		BA20ADB92C0D821400095B4E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA20ADB82C0D821400095B4E /* Constants.swift */; };
+		BA20ADBC2C114F3000095B4E /* HomeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA20ADBB2C114F3000095B4E /* HomeInfoView.swift */; };
+		BA20ADBE2C1152B400095B4E /* CharacterInfoView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA20ADBD2C1152B400095B4E /* CharacterInfoView1.swift */; };
+		BA225BD12C115BB500D244C9 /* GetCorporationInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA225BD02C115BB500D244C9 /* GetCorporationInfoResponse.swift */; };
+		BA225BD32C115C7100D244C9 /* CorporationInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA225BD22C115C7100D244C9 /* CorporationInfoModel.swift */; };
+		BA225BD52C12B9DE00D244C9 /* CharacterCorporationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA225BD42C12B9DE00D244C9 /* CharacterCorporationModel.swift */; };
 		BA31499A2A1EF9660076E6DD /* EveAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3149992A1EF9660076E6DD /* EveAppApp.swift */; };
 		BA31499C2A1EF9660076E6DD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA31499B2A1EF9660076E6DD /* ContentView.swift */; };
 		BA31499E2A1EF9680076E6DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA31499D2A1EF9680076E6DD /* Assets.xcassets */; };
@@ -543,6 +553,16 @@
 /* Begin PBXFileReference section */
 		BA04CA8A2AEDCAEB008D66B8 /* MaterialDetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = MaterialDetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA04CA8C2AEDCB8B008D66B8 /* BlueprintMaterialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintMaterialView.swift; sourceTree = "<group>"; };
+		BA1A940B2C0C378B0005B931 /* DM+LocationFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DM+LocationFetching.swift"; sourceTree = "<group>"; };
+		BA1A940D2C0C37BC0005B931 /* LocationModel.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA1A940F2C0C3F410005B931 /* GetStationInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStationInfoResponse.swift; sourceTree = "<group>"; };
+		BA1A94132C0D72040005B931 /* ItemInputInfoView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemInputInfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA20ADB82C0D821400095B4E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		BA20ADBB2C114F3000095B4E /* HomeInfoView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = HomeInfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA20ADBD2C1152B400095B4E /* CharacterInfoView1.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CharacterInfoView1.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA225BD02C115BB500D244C9 /* GetCorporationInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCorporationInfoResponse.swift; sourceTree = "<group>"; };
+		BA225BD22C115C7100D244C9 /* CorporationInfoModel.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CorporationInfoModel.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA225BD42C12B9DE00D244C9 /* CharacterCorporationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCorporationModel.swift; sourceTree = "<group>"; };
 		BA3149962A1EF9660076E6DD /* EveApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EveApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA3149992A1EF9660076E6DD /* EveAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveAppApp.swift; sourceTree = "<group>"; };
 		BA31499B2A1EF9660076E6DD /* ContentView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -1074,6 +1094,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA1A940A2C0C376A0005B931 /* Fetching */ = {
+			isa = PBXGroup;
+			children = (
+				BA1A940B2C0C378B0005B931 /* DM+LocationFetching.swift */,
+			);
+			path = Fetching;
+			sourceTree = "<group>";
+		};
+		BA20ADBA2C114F2100095B4E /* HomeInfo */ = {
+			isa = PBXGroup;
+			children = (
+				BA20ADBB2C114F3000095B4E /* HomeInfoView.swift */,
+				BA20ADBD2C1152B400095B4E /* CharacterInfoView1.swift */,
+			);
+			path = HomeInfo;
+			sourceTree = "<group>";
+		};
 		BA31498D2A1EF9660076E6DD = {
 			isa = PBXGroup;
 			children = (
@@ -1148,6 +1185,7 @@
 		BA3149C42A1EF98C0076E6DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BA20ADBA2C114F2100095B4E /* HomeInfo */,
 				BA9D96132B2FD4B7006AC37E /* IndustryHelper */,
 				BA9D96122B2D779A006AC37E /* DeveloperSettings */,
 				BAE02EE82AF9CEC200AB695F /* ReprocessingHelper */,
@@ -1183,6 +1221,7 @@
 				BA3149D02A31528E0076E6DD /* DeepLinker.swift */,
 				BA3149D52A477D900076E6DD /* UserDefaultsHelper.swift */,
 				BA5990FA2BF45972003108CF /* ESIScopes.swift */,
+				BA20ADB82C0D821400095B4E /* Constants.swift */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -1190,6 +1229,7 @@
 		BA3149D22A315A530076E6DD /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
+				BA1A940A2C0C376A0005B931 /* Fetching */,
 				BA3149D32A315A650076E6DD /* DataManager.swift */,
 				BA3149E82A4BCAF80076E6DD /* DataManager+Fetching.swift */,
 				BA3149F92A5386570076E6DD /* DataManager+Authentication.swift */,
@@ -1326,6 +1366,8 @@
 			children = (
 				BA5991042BF59F8B003108CF /* CharacterDataModel.swift */,
 				BA5991082BF99E72003108CF /* CharacterAssetsDataModel.swift */,
+				BA225BD22C115C7100D244C9 /* CorporationInfoModel.swift */,
+				BA225BD42C12B9DE00D244C9 /* CharacterCorporationModel.swift */,
 			);
 			path = CharacterData;
 			sourceTree = "<group>";
@@ -1441,6 +1483,7 @@
 				BA9D96142B2FD4DC006AC37E /* IndustryHelperView.swift */,
 				BA9C8FE92B44D18C00F4DBAF /* ReactionsHelperView.swift */,
 				BA9C8FED2B4B3FFB00F4DBAF /* IndustryPlanInfoView.swift */,
+				BA1A94132C0D72040005B931 /* ItemInputInfoView.swift */,
 			);
 			path = IndustryHelper;
 			sourceTree = "<group>";
@@ -1880,6 +1923,8 @@
 			children = (
 				BAE02EE32AF3482C00AB695F /* GetCharacterSkillsResponse.swift */,
 				BA9D960B2B118159006AC37E /* GetCharactersIndustryJobsResponse.swift */,
+				BA1A940F2C0C3F410005B931 /* GetStationInfoResponse.swift */,
+				BA225BD02C115BB500D244C9 /* GetCorporationInfoResponse.swift */,
 			);
 			path = ESI;
 			sourceTree = "<group>";
@@ -1916,6 +1961,7 @@
 				BAE069872AC8DA850054EFCF /* DogmaAttributeCategoryModel.swift */,
 				BAE0698B2AD4F5130054EFCF /* TypeDogmaModel.swift */,
 				BA59910D2C004F42003108CF /* AuthModel.swift */,
+				BA1A940D2C0C37BC0005B931 /* LocationModel.swift */,
 			);
 			path = DB;
 			sourceTree = "<group>";
@@ -2129,6 +2175,7 @@
 				BACB52302A686E770044CDA0 /* GetUniverseGraphicsGraphicIdOk.swift in Sources */,
 				BACB51762A686E760044CDA0 /* IncursionsAPI.swift in Sources */,
 				BACB52582A686E770044CDA0 /* GetCorporationsCorporationIdContractsContractIdItemsError520.swift in Sources */,
+				BA20ADBC2C114F3000095B4E /* HomeInfoView.swift in Sources */,
 				BACB51C72A686E770044CDA0 /* GetUniverseRegionsRegionIdOk.swift in Sources */,
 				BACB51F42A686E770044CDA0 /* GetFwLeaderboardsActiveTotalActiveTotal.swift in Sources */,
 				BACB52A12A686E770044CDA0 /* GatewayTimeout.swift in Sources */,
@@ -2141,6 +2188,7 @@
 				BA9D960E2B197CB7006AC37E /* BlueprintModel2.swift in Sources */,
 				BACB52972A686E770044CDA0 /* PostUniverseIdsCharacter.swift in Sources */,
 				BACB52AB2A686E770044CDA0 /* GetFwLeaderboardsCharactersActiveTotalActiveTotal.swift in Sources */,
+				BA225BD52C12B9DE00D244C9 /* CharacterCorporationModel.swift in Sources */,
 				BA314A082A5CE41B0076E6DD /* ItemCategoryView.swift in Sources */,
 				BA314A132A5D05590076E6DD /* ItemTypeResponseData.swift in Sources */,
 				BACB51A32A686E770044CDA0 /* GetCorporationCorporationIdMiningObservers200Ok.swift in Sources */,
@@ -2211,6 +2259,8 @@
 				BACB51EE2A686E770044CDA0 /* GetFwLeaderboardsCorporationsOk.swift in Sources */,
 				BA3149D62A477D900076E6DD /* UserDefaultsHelper.swift in Sources */,
 				BA9D96152B2FD4DC006AC37E /* IndustryHelperView.swift in Sources */,
+				BA225BD32C115C7100D244C9 /* CorporationInfoModel.swift in Sources */,
+				BA225BD12C115BB500D244C9 /* GetCorporationInfoResponse.swift in Sources */,
 				BACB52182A686E770044CDA0 /* GetCharactersCharacterIdBookmarksFolders200Ok.swift in Sources */,
 				BACB527E2A686E770044CDA0 /* PostUiOpenwindowNewmailNewMail.swift in Sources */,
 				BACB52D62A686E780044CDA0 /* JSONEncodingHelper.swift in Sources */,
@@ -2268,10 +2318,12 @@
 				BA9D96072B1177D8006AC37E /* IndustryInfoView.swift in Sources */,
 				BACB51CE2A686E770044CDA0 /* GetDogmaDynamicItemsTypeIdItemIdNotFound.swift in Sources */,
 				BACB519D2A686E770044CDA0 /* GetKillmailsKillmailIdKillmailHashUnprocessableEntity.swift in Sources */,
+				BA1A94142C0D72040005B931 /* ItemInputInfoView.swift in Sources */,
 				BAE069A52ADA04BE0054EFCF /* DogmaAttributeCategoryView.swift in Sources */,
 				BACB51692A686E760044CDA0 /* CharacterAPI.swift in Sources */,
 				BACB523C2A686E770044CDA0 /* GetCharactersCharacterIdBookmarksItem.swift in Sources */,
 				BA71008E2ADB453B001CD301 /* ItemDogmaExplorerView.swift in Sources */,
+				BA20ADB92C0D821400095B4E /* Constants.swift in Sources */,
 				BACB52252A686E770044CDA0 /* GetUniverseConstellationsConstellationIdPosition.swift in Sources */,
 				BA7100902ADF64F6001CD301 /* DBManager+Mocks.swift in Sources */,
 				BACB51FE2A686E770044CDA0 /* GetContractsPublicBidsContractIdNotFound.swift in Sources */,
@@ -2299,14 +2351,17 @@
 				BAE0698C2AD4F5130054EFCF /* TypeDogmaModel.swift in Sources */,
 				BACB52752A686E770044CDA0 /* GetCharactersCharacterIdPlanets200Ok.swift in Sources */,
 				BA9D96032B05C126006AC37E /* TypeDogmaAttributeView.swift in Sources */,
+				BA1A940E2C0C37BC0005B931 /* LocationModel.swift in Sources */,
 				BACB519C2A686E770044CDA0 /* GetStatusOk.swift in Sources */,
 				BACB527C2A686E770044CDA0 /* GetCorporationsCorporationIdContacts200Ok.swift in Sources */,
 				BA3149E92A4BCAF80076E6DD /* DataManager+Fetching.swift in Sources */,
 				BACB52B42A686E770044CDA0 /* GetFwStatsVictoryPoints.swift in Sources */,
+				BA1A94102C0C3F410005B931 /* GetStationInfoResponse.swift in Sources */,
 				BACB51F52A686E770044CDA0 /* GetUniverseRegionsRegionIdNotFound.swift in Sources */,
 				BACB51B02A686E770044CDA0 /* GetLoyaltyStoresCorporationIdOffers200Ok.swift in Sources */,
 				BACB52AF2A686E770044CDA0 /* GetFwLeaderboardsYesterdayYesterday.swift in Sources */,
 				BACB51802A686E760044CDA0 /* GetCharactersCharacterIdAssets200Ok.swift in Sources */,
+				BA1A940C2C0C378B0005B931 /* DM+LocationFetching.swift in Sources */,
 				BACB52D02A686E780044CDA0 /* GetWarsWarIdOk.swift in Sources */,
 				BACB51602A686E760044CDA0 /* FactionWarfareAPI.swift in Sources */,
 				BACB51712A686E760044CDA0 /* RoutesAPI.swift in Sources */,
@@ -2456,6 +2511,7 @@
 				BAE069682AC89DBA0054EFCF /* AppModel.swift in Sources */,
 				BACB51882A686E760044CDA0 /* GetKillmailsKillmailIdKillmailHashItem.swift in Sources */,
 				BACB517A2A686E760044CDA0 /* SearchAPI.swift in Sources */,
+				BA20ADBE2C1152B400095B4E /* CharacterInfoView1.swift in Sources */,
 				BACB52D12A686E780044CDA0 /* GetCorporationsCorporationIdFwStatsKills.swift in Sources */,
 				BAE069912AD8F6960054EFCF /* DogmaExplorerView.swift in Sources */,
 				BACB51732A686E760044CDA0 /* FittingsAPI.swift in Sources */,
@@ -2679,7 +2735,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2732,7 +2789,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;

@@ -9,20 +9,19 @@ import SwiftUI
 import Combine
 
 struct ContentView: View {
-  @ObservedObject var model: AppModel
+  @Environment(AppModel.self) var model: AppModel
   @State private var isShowingSheet: Bool
   
   var anyCanellable: AnyCancellable?
   
-  init(model: AppModel) {
-    self.model = model
+  init() {
     isShowingSheet = false
   }
   
   var body: some View {
     VStack(alignment: .leading) {
       HomeView()
-        .environmentObject(model.dbManager)
+        .environment(model.dbManager)
     }
     .padding()
   }
@@ -30,6 +29,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    ContentView(model: AppModel())
+    ContentView()
   }
 }

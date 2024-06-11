@@ -21,10 +21,15 @@ enum Schemas: String {
     case typeMaterialsModel = "typeMaterialsModel"
     case blueprintModel = "blueprintModel"
     case raceModel = "raceModel"
+    case locationModel = "locationModel"
     
     case characterDataModel = "characterDataModel"
     case characterPublicDataModel = "characterPublicDataModel"
     case characterAssetsDataModel = "characterAssetsDataModel"
+    
+    case corporationInfoModel = "corporationInfoModel"
+    
+    case characterCorporationModel = "characterCorporationModel"
     
     case auth = "authModel"
 }

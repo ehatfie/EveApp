@@ -29,7 +29,7 @@ enum Race: Int64, CaseIterable, Identifiable {
 }
 
 struct IndustryHelperView: View {
-  @EnvironmentObject var db: DBManager
+  @Environment(DBManager.self) var db: DBManager
   
   @State var selectedRace: Race = .none
   
@@ -86,7 +86,8 @@ struct IndustryHelperView: View {
             .font(.title)
 
           if let type = try? item.joined(TypeMaterialsModel.self) {
-           infoRow(type)
+           //infoRow(type)
+            ItemInputInfoView(viewModel: ItemInputInfoViewModel(type))
           }
         }
       }

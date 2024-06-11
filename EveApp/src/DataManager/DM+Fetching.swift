@@ -151,16 +151,16 @@ extension DataManager {
     }
   }
   
-  func fetchIcon(for character: CharacterDataModel) async throws {
+  func fetchIcon(for character: CharacterDataModel) async throws -> GetCharactersCharacterIdPortraitOk?  {
     guard let authModel = await dbManager?.getAuthModel(for: character.characterId) else {
-      return
+      return nil
     }
     
     guard let (data, response) = await makeApiCallAsync3(
       dataEndpoint: "/characters/\(authModel.characterId)/portrait/",
       authModel: authModel
     ) else {
-      return
+      return nil
     }
     
     do {
@@ -169,10 +169,12 @@ extension DataManager {
       
       let portraitResponse = try JSONDecoder()
         .decode(GetCharactersCharacterIdPortraitOk.self, from: data)
+      return portraitResponse
       print("got characterPortrait response \(portraitResponse.px128x128)")
     } catch let err {
       print("fetchIcon error \(err)")
       print("")
+      return nil
     }
   }
 }

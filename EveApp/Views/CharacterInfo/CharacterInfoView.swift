@@ -10,6 +10,7 @@ import SwiftUI
 class CharacterInfoViewModel: ObservableObject {
   @Published var characterInfo: CharacterInfo?
   @Published var characterData: CharacterDataModel?
+  @Published var characterPortraitUrl: URL?
   
   init() {
     DataManager.shared
@@ -33,7 +34,14 @@ class CharacterInfoViewModel: ObservableObject {
   func fetchCharacterPortrait() {
     Task {
       do {
-        try await DataManager.shared.fetchCharacterIcons()
+        //try await DataManager.shared.fetchCharacterIcons()
+        let character = await DataManager.shared.dbManager!.getCharacters()[0]
+        let response = try await DataManager.shared.fetchIcon(for: character)
+        let url = URL(string: response?.px128x128 ?? "")
+        //let data = try? Data(contentsOf: url!)
+        DispatchQueue.main.async {
+          self.characterPortraitUrl = url
+        }
       } catch let err {
         print("Errr \(err)")
       }
@@ -63,9 +71,12 @@ struct CharacterInfoView: View {
               getPublicCharacterDataView(characterPublicData: publicData)
             }
             
+
+            
           } else {
             Text("No Character info found")
           }
+          
         }
       }
       HStack {
@@ -105,6 +116,9 @@ struct CharacterInfoView: View {
   @ViewBuilder
   func localDataView(characterData: CharacterDataModel) -> some View {
     VStack {
+      if let imageURL = self.viewModel.characterPortraitUrl {
+        AsyncImage(url: imageURL)
+      }
       if let publicData = try? characterData.$publicData
         .get(on: DataManager.shared.dbManager!.database)
         .wait()
@@ -135,6 +149,7 @@ struct CharacterInfoView: View {
 
         }
       }
+
     }
   }
   

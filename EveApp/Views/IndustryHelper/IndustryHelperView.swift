@@ -128,7 +128,7 @@ struct IndustryHelperView: View {
       
       
       return VStack(alignment: .leading) {
-        HStack {
+        VStack {
           ForEach(bar, id: \.1.materialTypeID) { type, data in
             VStack {
               if let name = type?.name {

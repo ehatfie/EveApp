@@ -55,6 +55,7 @@
 		BA314A0D2A5CF66C0076E6DD /* GroupInfoResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA314A0C2A5CF66C0076E6DD /* GroupInfoResponseData.swift */; };
 		BA314A102A5CF8B10076E6DD /* ItemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA314A0F2A5CF8B10076E6DD /* ItemCategory.swift */; };
 		BA314A132A5D05590076E6DD /* ItemTypeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA314A122A5D05590076E6DD /* ItemTypeResponseData.swift */; };
+		BA3C02C92C1A9EF200F32650 /* IPM+InputProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3C02C82C1A9EE900F32650 /* IPM+InputProcessing.swift */; };
 		BA5106942C09852900E9B344 /* DBManager+Fetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5106932C09852900E9B344 /* DBManager+Fetching.swift */; };
 		BA5990FB2BF45972003108CF /* ESIScopes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5990FA2BF45972003108CF /* ESIScopes.swift */; };
 		BA5991002BF46020003108CF /* AssetsViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5990FF2BF46020003108CF /* AssetsViewer.swift */; };
@@ -603,6 +604,7 @@
 		BA314A0C2A5CF66C0076E6DD /* GroupInfoResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInfoResponseData.swift; sourceTree = "<group>"; };
 		BA314A0F2A5CF8B10076E6DD /* ItemCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategory.swift; sourceTree = "<group>"; };
 		BA314A122A5D05590076E6DD /* ItemTypeResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypeResponseData.swift; sourceTree = "<group>"; };
+		BA3C02C82C1A9EE900F32650 /* IPM+InputProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IPM+InputProcessing.swift"; sourceTree = "<group>"; };
 		BA5106932C09852900E9B344 /* DBManager+Fetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBManager+Fetching.swift"; sourceTree = "<group>"; };
 		BA5990FA2BF45972003108CF /* ESIScopes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESIScopes.swift; sourceTree = "<group>"; };
 		BA5990FF2BF46020003108CF /* AssetsViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsViewer.swift; sourceTree = "<group>"; };
@@ -1440,6 +1442,7 @@
 		BA9C8FE62B44C52D00F4DBAF /* IndustryPlannerManager */ = {
 			isa = PBXGroup;
 			children = (
+				BA3C02C82C1A9EE900F32650 /* IPM+InputProcessing.swift */,
 				BA9C8FE72B44C5F900F4DBAF /* IndustryPlannerManager.swift */,
 				BA9C8FEF2B4CF6A500F4DBAF /* IndustryPlannerManager+jobs.swift */,
 			);
@@ -2428,6 +2431,7 @@
 				BACB527D2A686E770044CDA0 /* GetCharactersCharacterIdShipOk.swift in Sources */,
 				BACB52B02A686E770044CDA0 /* GetUniverseFactions200Ok.swift in Sources */,
 				BACB51E52A686E770044CDA0 /* GetCharactersCharacterIdContracts200Ok.swift in Sources */,
+				BA3C02C92C1A9EF200F32650 /* IPM+InputProcessing.swift in Sources */,
 				BA9D96052B05CC0E006AC37E /* BlueprintIndustryView.swift in Sources */,
 				BACB52A22A686E770044CDA0 /* PutFleetsFleetIdNotFound.swift in Sources */,
 				BACB526F2A686E770044CDA0 /* GetMarketsRegionIdHistoryError520.swift in Sources */,

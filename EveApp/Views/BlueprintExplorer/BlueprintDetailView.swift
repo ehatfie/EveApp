@@ -8,12 +8,29 @@
 import SwiftUI
 import Fluent
 
+@Observable class BlueprintDetailViewModel {
+  let industryPlanner: IndustryPlannerManager
+  var shipPlan: ShipPlan = .empty
+  
+  init(industryPlanner: IndustryPlannerManager) {
+    self.industryPlanner = industryPlanner
+  }
+  
+  func makePlan(blueprint: BlueprintModel) {
+    Task {
+      let plan = await self.industryPlanner.makePlan(for: blueprint)
+      self.shipPlan = plan
+    }
+  }
+}
 struct BlueprintDetailView: View {
   var blueprint: BlueprintModel
   var typeModel: TypeModel?
   
   let industryPlanner: IndustryPlannerManager
-  let shipPlan: ShipPlan
+  
+  @State var shipPlan: ShipPlan = .empty
+  var viewModel: BlueprintDetailViewModel
   
   init(blueprint: BlueprintModel, industryPlanner: IndustryPlannerManager) {
     let db = DataManager.shared.dbManager!.database
@@ -28,10 +45,11 @@ struct BlueprintDetailView: View {
       .wait()
     
     self.typeModel = foo
-    
-    let plan = industryPlanner.makePlan(for: blueprint)
-    shipPlan = plan
+    self.viewModel = BlueprintDetailViewModel(industryPlanner: industryPlanner)
+    self.viewModel.makePlan(blueprint: blueprint)
   }
+  
+
   // 45648
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
@@ -52,8 +70,8 @@ struct BlueprintDetailView: View {
 //          .border(.purple)
         
         VStack(alignment: .leading) {
-          inputsView(for: shipPlan.inputs)
-          shipPlanView(for: shipPlan)
+          inputsView(for: viewModel.shipPlan.inputs)
+          shipPlanView(for: viewModel.shipPlan)
           Spacer()
         }
         

@@ -204,7 +204,7 @@ extension DBManager {
     return foo
   }
   
-  func getBlueprint(for typeId: Int64) -> BlueprintModel? {
+  func getManufacturingBlueprint(for typeId: Int64) -> BlueprintModel? {
     let db = self.database
     guard let sql = db as? SQLDatabase else {
       return nil
@@ -221,7 +221,7 @@ extension DBManager {
       .wait()
   }
   
-  func getBlueprint1(for typeId: Int64) -> BlueprintModel? {
+  func getReactionBlueprint(for typeId: Int64) -> BlueprintModel? {
     let db = self.database
     guard let sql = db as? SQLDatabase else {
       return nil

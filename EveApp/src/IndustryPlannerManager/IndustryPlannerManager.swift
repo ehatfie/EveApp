@@ -54,6 +54,29 @@ class IndustryPlannerManager {
     }
   
   }
+  func makePlan(for blueprintModel: BlueprintModel) async -> ShipPlan {
+    print("make plan for blueprintModel")
+    let typeModel = await DataManager.shared.dbManager!.getType(for: blueprintModel.blueprintTypeID)
+    let blueprintActivities = blueprintModel.activities
+    guard let productTypeId = blueprintActivities.manufacturing.products.first?.typeId else { return .empty }
+    let productTypeModel = await DataManager.shared
+      .dbManager!.getType(for: productTypeId)
+
+    let inputMaterials = getInputMaterials(for: blueprintModel)
+    // determine what thing we are making
+    //let blueprintInfo = BlueprintInfo(blueprintModel: blueprintModel, typeModel: typeModel, inputMaterials: getTypeModels(for: inputMaterials))
+    let categoryModel = dbManager.getCategory(groupId: productTypeModel.groupID)
+    //print("category \(categoryModel.name)")
+    let categoryType = CategoryTypes(rawValue: categoryModel.categoryId)
+    //print("got category type \(categoryType)")
+    
+    let blueprintInfo: BlueprintInfo2 = makeBlueprintInfo(for: blueprintModel)
+    switch categoryType {
+    case .ship: return await makeShipPlan(for: blueprintInfo)//makeShipPlan2(for: blueprintInfo)
+    default: return .empty
+    }
+  
+  }
   
   func makePlan(for blueprintInfo: BlueprintInfo) {
     print("Make plan for \(blueprintInfo.typeModel.name)")
@@ -80,7 +103,7 @@ class IndustryPlannerManager {
     return blueprintInfos
   }
   
-  func getThingForBlueprintInfo2(_ value: BlueprintInfo2) -> [BlueprintInfo2] {
+  func getInputBlueprintsForBlueprintInfo2(_ value: BlueprintInfo2) -> [BlueprintInfo2] {
     let inputMaterials = value.inputMaterials
     let blueprintInfos = getBlueprintModels(for: inputMaterials)
 //    blueprintInfos.forEach { value in
@@ -91,11 +114,17 @@ class IndustryPlannerManager {
     return blueprintInfos
   }
   
+  func getInputBlueprintsForBlueprintInfo2(_ value: BlueprintInfo2) async -> [BlueprintInfo2] {
+    let inputMaterials = value.inputMaterials
+    let blueprintInfos = await getFilteredBlueprintModels(for: inputMaterials)
+    return blueprintInfos
+  }
+  
   func getBlueprintInfos(for values: [ItemQuantityInfo]) -> [BlueprintInfo] {
     let materialBps = values.compactMap { value in
-      if let bp1 = dbManager.getBlueprint(for:value.typeModel.typeId) {
+      if let bp1 = dbManager.getManufacturingBlueprint(for:value.typeModel.typeId) {
         return bp1
-      } else if let bp2 = dbManager.getBlueprint1(for:value.typeModel.typeId) {
+      } else if let bp2 = dbManager.getReactionBlueprint(for:value.typeModel.typeId) {
         return bp2
       }
       
@@ -132,10 +161,10 @@ class IndustryPlannerManager {
     let materialBps = values.compactMap { value in
       if let existingBp = cachedBlueprintModels[value] {
         return existingBp
-      } else if let bp1 = dbManager.getBlueprint(for: value) {
+      } else if let bp1 = dbManager.getManufacturingBlueprint(for: value) {
         cachedBlueprintModels[value] = bp1
         return bp1
-      } else if let bp2 = dbManager.getBlueprint1(for: value) {
+      } else if let bp2 = dbManager.getReactionBlueprint(for: value) {
         cachedBlueprintModels[value] = bp2
         return bp2
       }
@@ -173,32 +202,6 @@ class IndustryPlannerManager {
   }
   
   func getTypeModels(for items: [QuantityTypeModel]) -> [ItemQuantityInfo] {
-    let results = items.compactMap { quantityTypeModel in
-      let typeModel = try! TypeModel.query(on: dbManager.database)
-        .filter(\.$typeId == quantityTypeModel.typeId)
-        .first()
-        .wait()!
-      
-      return ItemQuantityInfo(typeModel: typeModel, quantityTypeModel: quantityTypeModel)
-    }
-    return results
-  }
-  
-//  func getTypeModels2(for items: [QuantityTypeModel]) -> [InputMaterialInfo] {
-//    let results = items.compactMap { quantityTypeModel in
-//      let typeModel = try! TypeModel.query(on: dbManager.database)
-//        .filter(\.$typeId == quantityTypeModel.typeId)
-//        .first()
-//        .wait()!
-//      
-//      let bpModel = getMaterialBp(for: quantityTypeModel.typeId)
-//      
-//      return InputMaterialInfo(typeModel: typeModel, quantity: quantityTypeModel.quantity, blueprintModel: bpModel)
-//    }
-//    return results
-//  }
-  
-  func doSomething(items: [QuantityTypeModel]) -> [ItemQuantityInfo] {
     let results = items.compactMap { quantityTypeModel in
       let typeModel = try! TypeModel.query(on: dbManager.database)
         .filter(\.$typeId == quantityTypeModel.typeId)
@@ -309,9 +312,9 @@ extension IndustryPlannerManager {
   }
   
   func getMaterialBp(for typeId: Int64) -> BlueprintModel? {
-    if let bp1 = dbManager.getBlueprint(for: typeId) {
+    if let bp1 = dbManager.getManufacturingBlueprint(for: typeId) {
       return bp1
-    } else if let bp2 = dbManager.getBlueprint1(for: typeId) {
+    } else if let bp2 = dbManager.getReactionBlueprint(for: typeId) {
       return bp2
     }
     return nil

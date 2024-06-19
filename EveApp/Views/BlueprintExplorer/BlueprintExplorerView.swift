@@ -9,7 +9,7 @@ import SwiftUI
 import Fluent
 
 class BlueprintExplorerViewModel: ObservableObject {
-  @Published var searchText: String = "legion"
+  @Published var searchText: String = "Curse"
   @Published var searchResults: [TypeModel] = []
   @Published var selectedBlueprint: BlueprintModel?
   
@@ -77,8 +77,8 @@ struct BlueprintExplorerView: View {
       if let selectedBlueprint = viewModel.selectedBlueprint {
         blueprintInfo(for: selectedBlueprint)
           .border(.red)
-        BlueprintComponentView(blueprintModel: selectedBlueprint)
-          .border(.blue)
+        //BlueprintComponentView(blueprintModel: selectedBlueprint)
+          //.border(.blue)
       } else {
         
       }
@@ -102,7 +102,7 @@ struct BlueprintExplorerView: View {
       TextField(
         "title",
         text: $viewModel.searchText,
-        prompt: Text("legion")
+        prompt: Text("Curse")
       ).frame(maxWidth: 350)
       
       Button(action: {

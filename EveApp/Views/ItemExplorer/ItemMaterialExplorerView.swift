@@ -59,7 +59,7 @@ struct ItemMaterialExplorerView: View {
         TextField(
           "title",
           text: $viewModel.searchText.text,
-          prompt: Text("legion")
+          prompt: Text("Curse")
         ).frame(maxWidth: 250)
         
         Button(action: {

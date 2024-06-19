@@ -21,6 +21,7 @@ extension IndustryPlannerManager {
     //makePlan2(for: blueprintInfo)
   }
   
+
   //
   func makeShipPlan2(for blueprintInfo: BlueprintInfo) -> ShipPlan {
     print("makeShipPlan2()")
@@ -34,6 +35,7 @@ extension IndustryPlannerManager {
     blueprintInfo.inputMaterials.forEach { value in
       zeroLevelInputs[value.quantityTypeModel.typeId] = Int(value.quantityTypeModel.quantity)
     }
+    
     // These are the blueprint models for all inputs to the ship
     let firstLevel: [BlueprintInfo2] = getBlueprintModels(for: materials)
     let firstLevelTook = start.timeIntervalSinceNow * -1
@@ -41,7 +43,7 @@ extension IndustryPlannerManager {
     
     start = Date()
     // this might should contain a count of number needed
-    let secondLevel: [(Int64, [BlueprintInfo2])] = firstLevel.map { ($0.productId, getThingForBlueprintInfo2($0)) }
+    let secondLevel: [(Int64, [BlueprintInfo2])] = firstLevel.map { ($0.productId, getInputBlueprintsForBlueprintInfo2($0)) }
     print("second level")
     let secondLevelTook = start.timeIntervalSinceNow * -1
     print("second level took \(secondLevelTook) to fetch")
@@ -70,7 +72,7 @@ extension IndustryPlannerManager {
     
     start = Date()
     let thirdLevel = secondLevel.flatMap { one, two in
-      return two.flatMap { getThingForBlueprintInfo2($0) }
+      return two.flatMap { getInputBlueprintsForBlueprintInfo2($0) }
     }
     
     var thirdLevelInputBps: [Int64: BlueprintInfo2] = [:]
@@ -78,8 +80,6 @@ extension IndustryPlannerManager {
     thirdLevel.forEach { value in
       thirdLevelInputBps[value.productId] = value
     }
-    
-    
     thirdLevelInputSums = doThing2(for: thirdLevelInputBps.map { $0.value }, values: secondLevelInputSums)
 
     let thirdLevelSumTook = start.timeIntervalSinceNow * -1
@@ -121,6 +121,7 @@ extension IndustryPlannerManager {
     var diction: [Int64: BlueprintInfo2] = [:]
     var inputSums: [Int64: Int] = [:]
     
+    // Filter out stuff we arent making
     inputMaterialBlueprints.forEach { value in
       guard BlueprintIds.FuelBlocks(rawValue: value.productId) == nil else {
         //inputSums[value.productId] = values[value.productId]
@@ -129,6 +130,7 @@ extension IndustryPlannerManager {
       diction[value.productId] = value
     }
     
+    //
     inputMaterials.forEach { material in
       guard let blueprintInfo = diction[material.typeId] else {
         if BlueprintIds.FuelBlocks(rawValue: material.typeId) == nil {
@@ -138,8 +140,8 @@ extension IndustryPlannerManager {
         
         return
       }
-      let need = values[blueprintInfo.productId]
-      let makes = blueprintInfo.productCount
+      //let need = values[blueprintInfo.productId]
+      //let makes = blueprintInfo.productCount
       // 16673 fernite carbide
       // 46206 fernite carbide reaction formula
       // this values is the wrong one
@@ -157,7 +159,7 @@ extension IndustryPlannerManager {
     return inputSums
   }
   
-  func sumInputs2(on inputMaterials: [QuantityTypeModel], values: [Int64: Int]) -> [Int64: Int] {
+  func sumInputs5(on inputMaterials: [QuantityTypeModel], values: [Int64: Int]) -> [Int64: Int] {
     //print("sumInputs2")
     let inputMaterialBlueprints: [BlueprintInfo2] = getBlueprintModels(for: inputMaterials)
 
@@ -204,7 +206,7 @@ extension IndustryPlannerManager {
     
     return inputSums
   }
-  
+  // sums with relation to some runs needed
   func sumInputs3(on blueprintInfo: BlueprintInfo2, values: [Int64: Int]) -> [Int64: Int] {
     //print("sumInputs2")
     let inputMaterials = blueprintInfo.inputMaterials
@@ -214,7 +216,7 @@ extension IndustryPlannerManager {
 
     var diction: [Int64: BlueprintInfo2] = [:]
     var inputSums: [Int64: Int] = [:]
-    
+    //filter out fuel blocks
     inputMaterialBlueprints.forEach { value in
       guard BlueprintIds.FuelBlocks(rawValue: value.productId) == nil else {
         // inputSums[value.productId] = values[value.productId]
@@ -315,6 +317,12 @@ extension IndustryPlannerManager {
     return inputSums
   }
   
+  // this should sum all the inputs for an array of blueprints. Returns dictionary of
+  //
+  // Params -
+  
+
+  
   // this should sum all the inputs for an array of blueprints
   func doThing2(for blueprintInfos: [BlueprintInfo2], values: [Int64: Int]) -> [Int64: Int] {
     print("do thing \(blueprintInfos.map { $0.blueprintModel.blueprintTypeID})")
@@ -384,6 +392,123 @@ extension IndustryPlannerManager {
     }
   }
 }
+
+// MARK: - Async
+extension IndustryPlannerManager {
+  
+  func getFilteredBlueprintModels(for values: [QuantityTypeModel]) async -> [BlueprintInfo2] {
+    
+    let ids = values.map { $0.typeId }
+      .filter { BlueprintIds.FuelBlocks(rawValue: $0) == nil } // filter out things we dont want to make
+    
+    return await getBlueprintModels(for: ids)
+  }
+  
+  func getBlueprintModels(for values: [QuantityTypeModel]) async -> [BlueprintInfo2] {
+    return await getBlueprintModels(for: values.map { $0.typeId })
+  }
+  
+  func getBlueprintModels(for values: [Int64]) async -> [BlueprintInfo2] {
+    // get the blueprint model for provided itemId
+    let materialBps: [BlueprintModel] = values.compactMap { value in
+      if let existingBp = cachedBlueprintModels[value] {
+        return existingBp
+      } else if let bp1 = dbManager.getManufacturingBlueprint(for: value) {
+        cachedBlueprintModels[value] = bp1
+        return bp1
+      } else if let bp2 = dbManager.getReactionBlueprint(for: value) {
+        cachedBlueprintModels[value] = bp2
+        return bp2
+      }
+      
+      return nil
+    }
+    
+    let blueprintInfos: [BlueprintInfo2] = materialBps.map { matBp in
+      var inputMaterials: [QuantityTypeModel]
+      
+      let manufacturing = matBp.activities.manufacturing
+      let reactions = matBp.activities.reaction
+      
+      if manufacturing.materials.count > 0 {
+        inputMaterials = manufacturing.materials
+      } else if reactions.materials.count > 0 {
+        inputMaterials = reactions.materials
+      } else {
+        inputMaterials = []
+      }
+      
+      //let typeModel = dbManager.getType(for: matBp.blueprintTypeID)
+      //let results = getTypeModels(for: inputMaterials)
+      let product = manufacturing.products.first ?? reactions.products.first!
+      
+      return BlueprintInfo2(
+        productId: product.typeId,
+        productCount: product.quantity,
+        blueprintModel: matBp,
+        typeModel: nil, //typeModel,
+        inputMaterials: inputMaterials
+      )
+    }
+    return blueprintInfos
+  }
+  
+  /// Returns the `BlueprintModel` for a typeId checking for manufacturing and reaction blueprints
+  func getMaterialBlueprint(for typeId: Int64) -> BlueprintModel? {
+    if let existingBp = cachedBlueprintModels[typeId] {
+      return existingBp
+    } else if let bp1 = dbManager.getManufacturingBlueprint(for: typeId) {
+      cachedBlueprintModels[typeId] = bp1
+      return bp1
+    } else if let bp2 = dbManager.getReactionBlueprint(for: typeId) {
+      cachedBlueprintModels[typeId] = bp2
+      return bp2
+    } else {
+      return nil
+    }
+  }
+  
+  func makeBlueprintInfo(for blueprintModel: BlueprintModel) -> BlueprintInfo2 {
+    var inputMaterials: [QuantityTypeModel]
+    
+    let manufacturing = blueprintModel.activities.manufacturing
+    let reactions = blueprintModel.activities.reaction
+    
+    if manufacturing.materials.count > 0 {
+      inputMaterials = manufacturing.materials
+    } else if reactions.materials.count > 0 {
+      inputMaterials = reactions.materials
+    } else {
+      inputMaterials = []
+    }
+    
+    //let typeModel = dbManager.getType(for: matBp.blueprintTypeID)
+    //let results = getTypeModels(for: inputMaterials)
+    let product = manufacturing.products.first ?? reactions.products.first!
+    
+    return BlueprintInfo2(
+      productId: product.typeId,
+      productCount: product.quantity,
+      blueprintModel: blueprintModel,
+      typeModel: nil, //typeModel,
+      inputMaterials: inputMaterials
+    )
+  }
+  
+  /// Takes an array of BlueprintInfo2 and returns a dictionary of the unique values and their productId
+  func getUniqueBlueprintInfo(for blueprints: [BlueprintInfo2]) async -> [Int64: BlueprintInfo2] {
+    var uniqueBPs: [Int64: BlueprintInfo2] = [:]
+    blueprints.forEach { value in
+      guard BlueprintIds.FuelBlocks(rawValue: value.productId) == nil else {
+        return
+      }
+      uniqueBPs[value.productId] = value
+    }
+    return uniqueBPs
+  }
+  
+}
+  
 
 class TestJob {
   let quantity: Int64

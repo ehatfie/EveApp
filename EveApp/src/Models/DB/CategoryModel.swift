@@ -26,6 +26,8 @@ enum Schemas: String {
     case characterDataModel = "characterDataModel"
     case characterPublicDataModel = "characterPublicDataModel"
     case characterAssetsDataModel = "characterAssetsDataModel"
+    case characterSkillsDataModel = "characterSkillsDataModel"
+    case characterSkillModel = "characterSkillModel"
     
     case corporationInfoModel = "corporationInfoModel"
     

@@ -56,6 +56,10 @@
 		BA314A102A5CF8B10076E6DD /* ItemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA314A0F2A5CF8B10076E6DD /* ItemCategory.swift */; };
 		BA314A132A5D05590076E6DD /* ItemTypeResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA314A122A5D05590076E6DD /* ItemTypeResponseData.swift */; };
 		BA3C02C92C1A9EF200F32650 /* IPM+InputProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3C02C82C1A9EE900F32650 /* IPM+InputProcessing.swift */; };
+		BA3C02CB2C22855100F32650 /* CharacterSkillsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3C02CA2C22853D00F32650 /* CharacterSkillsDataModel.swift */; };
+		BA3C02CD2C228C7800F32650 /* CharacterSkillModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3C02CC2C228C7400F32650 /* CharacterSkillModel.swift */; };
+		BA3C02D12C2517CA00F32650 /* CharacterSkillsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3C02D02C2517CA00F32650 /* CharacterSkillsView.swift */; };
+		BA3C02D32C252C5100F32650 /* SkillGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3C02D22C252C5100F32650 /* SkillGroupView.swift */; };
 		BA5106942C09852900E9B344 /* DBManager+Fetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5106932C09852900E9B344 /* DBManager+Fetching.swift */; };
 		BA5990FB2BF45972003108CF /* ESIScopes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5990FA2BF45972003108CF /* ESIScopes.swift */; };
 		BA5991002BF46020003108CF /* AssetsViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5990FF2BF46020003108CF /* AssetsViewer.swift */; };
@@ -605,6 +609,10 @@
 		BA314A0F2A5CF8B10076E6DD /* ItemCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategory.swift; sourceTree = "<group>"; };
 		BA314A122A5D05590076E6DD /* ItemTypeResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypeResponseData.swift; sourceTree = "<group>"; };
 		BA3C02C82C1A9EE900F32650 /* IPM+InputProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IPM+InputProcessing.swift"; sourceTree = "<group>"; };
+		BA3C02CA2C22853D00F32650 /* CharacterSkillsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSkillsDataModel.swift; sourceTree = "<group>"; };
+		BA3C02CC2C228C7400F32650 /* CharacterSkillModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSkillModel.swift; sourceTree = "<group>"; };
+		BA3C02D02C2517CA00F32650 /* CharacterSkillsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSkillsView.swift; sourceTree = "<group>"; };
+		BA3C02D22C252C5100F32650 /* SkillGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillGroupView.swift; sourceTree = "<group>"; };
 		BA5106932C09852900E9B344 /* DBManager+Fetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBManager+Fetching.swift"; sourceTree = "<group>"; };
 		BA5990FA2BF45972003108CF /* ESIScopes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESIScopes.swift; sourceTree = "<group>"; };
 		BA5990FF2BF46020003108CF /* AssetsViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsViewer.swift; sourceTree = "<group>"; };
@@ -1271,6 +1279,8 @@
 				BA3149E62A4BCA790076E6DD /* CharacterInfoView.swift */,
 				BA3149F42A5383990076E6DD /* SkillQueueView.swift */,
 				BA9D96062B1177D8006AC37E /* IndustryInfoView.swift */,
+				BA3C02D02C2517CA00F32650 /* CharacterSkillsView.swift */,
+				BA3C02D22C252C5100F32650 /* SkillGroupView.swift */,
 			);
 			path = CharacterInfo;
 			sourceTree = "<group>";
@@ -1366,6 +1376,8 @@
 		BA5991012BF59F22003108CF /* CharacterData */ = {
 			isa = PBXGroup;
 			children = (
+				BA3C02CC2C228C7400F32650 /* CharacterSkillModel.swift */,
+				BA3C02CA2C22853D00F32650 /* CharacterSkillsDataModel.swift */,
 				BA5991042BF59F8B003108CF /* CharacterDataModel.swift */,
 				BA5991082BF99E72003108CF /* CharacterAssetsDataModel.swift */,
 				BA225BD22C115C7100D244C9 /* CorporationInfoModel.swift */,
@@ -2214,6 +2226,7 @@
 				BACB51622A686E760044CDA0 /* UniverseAPI.swift in Sources */,
 				BACB51FA2A686E770044CDA0 /* GetCharactersCharacterIdContractsContractIdBids200Ok.swift in Sources */,
 				BACB52322A686E770044CDA0 /* GetCorporationsCorporationIdOrdersHistory200Ok.swift in Sources */,
+				BA3C02CB2C22855100F32650 /* CharacterSkillsDataModel.swift in Sources */,
 				BACB52112A686E770044CDA0 /* GetContractsPublicRegionIdNotFound.swift in Sources */,
 				BACB52432A686E770044CDA0 /* DeleteFleetsFleetIdWingsWingIdNotFound.swift in Sources */,
 				BACB52042A686E770044CDA0 /* PostCharactersCharacterIdAssetsLocations200Ok.swift in Sources */,
@@ -2323,6 +2336,7 @@
 				BACB519D2A686E770044CDA0 /* GetKillmailsKillmailIdKillmailHashUnprocessableEntity.swift in Sources */,
 				BA1A94142C0D72040005B931 /* ItemInputInfoView.swift in Sources */,
 				BAE069A52ADA04BE0054EFCF /* DogmaAttributeCategoryView.swift in Sources */,
+				BA3C02D12C2517CA00F32650 /* CharacterSkillsView.swift in Sources */,
 				BACB51692A686E760044CDA0 /* CharacterAPI.swift in Sources */,
 				BACB523C2A686E770044CDA0 /* GetCharactersCharacterIdBookmarksItem.swift in Sources */,
 				BA71008E2ADB453B001CD301 /* ItemDogmaExplorerView.swift in Sources */,
@@ -2407,6 +2421,7 @@
 				BACB51C22A686E770044CDA0 /* PostUniverseIdsCorporation.swift in Sources */,
 				BA9D960C2B118159006AC37E /* GetCharactersIndustryJobsResponse.swift in Sources */,
 				BACB52052A686E770044CDA0 /* GetCorporationsCorporationIdDivisionsHangarHangar.swift in Sources */,
+				BA3C02CD2C228C7800F32650 /* CharacterSkillModel.swift in Sources */,
 				BACB52062A686E770044CDA0 /* GetCorporationsCorporationIdFacilities200Ok.swift in Sources */,
 				BACB52D42A686E780044CDA0 /* GetContractsPublicItemsContractIdForbidden.swift in Sources */,
 				BACB522D2A686E770044CDA0 /* GetCharactersCharacterIdSearchOk.swift in Sources */,
@@ -2484,6 +2499,7 @@
 				BACB515E2A686E760044CDA0 /* AlamofireImplementations.swift in Sources */,
 				BACB52D32A686E780044CDA0 /* GetCharactersCharacterIdOrdersHistory200Ok.swift in Sources */,
 				BACB52692A686E770044CDA0 /* GetCharactersCharacterIdClonesOk.swift in Sources */,
+				BA3C02D32C252C5100F32650 /* SkillGroupView.swift in Sources */,
 				BA04CA8D2AEDCB8B008D66B8 /* BlueprintMaterialView.swift in Sources */,
 				BACB51A42A686E770044CDA0 /* GetMarketsRegionIdHistory200Ok.swift in Sources */,
 				BACB51582A686E760044CDA0 /* JSONEncodableEncoding.swift in Sources */,

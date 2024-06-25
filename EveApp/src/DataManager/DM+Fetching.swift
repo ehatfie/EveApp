@@ -238,6 +238,7 @@ extension DataManager {
 }
 
 // MARK: - Api callers
+
 extension DataManager {
   func makeApiCallAsync3(dataEndpoint: String, authModel: AuthModel, page: Int? = nil) async -> (Data, URLResponse)?  {
     let urlRequest = requestBuilder2(dataEndpoint: dataEndpoint, authModel: authModel, page: page)
@@ -278,9 +279,52 @@ extension DataManager {
   }
 }
 
+// MARK: - Skills
+
+extension DataManager {
+  func fetchSkillsForCharacters() async {
+    print("fetchSkillsForCharacters()")
+    guard let characters = await dbManager?.getCharacters() else {
+      return
+    }
+    
+    await withTaskGroup(of: Void.self) { taskGroup in
+      characters.forEach{ characterDataModel in
+        taskGroup.addTask {
+          await self.fetchSkillsForCharacter(characterModel: characterDataModel)
+        }
+      }
+    }
+  }
+  
+  func fetchSkillsForCharacter(characterModel: CharacterDataModel) async {
+    guard let authModel = await dbManager?.getAuthModel(for: characterModel.characterId) else {
+      return
+    }
+    
+    guard let (data, response) = await makeApiCallAsync3(
+      dataEndpoint: "/characters/\(characterModel.characterId)/skills",
+      authModel: authModel
+    ) else {
+      return
+    }
+    let string1 = String(data: data, encoding: .utf8)
+    print("fetch skills for character response got \(string1!)")
+    do {
+      let skills = try JSONDecoder().decode(GetCharactersCharacterIdSkillsOk.self, from: data)
+      let skillsModels = CharacterSkillsDataModel(characterId: characterModel.characterId, data: skills)
+      try await characterModel.$skillsData.create(skillsModels, on: dbManager!.database)
+      print("got skills \(skills)")
+      //await self.dbManager?.save(skills, for: characterModel)
+    } catch {
+      print("Error decoding skills: \(error)")
+    }
+  }
+}
 
 // MARK: - Corporation
 
+                          
 extension DataManager {
   
   func fetchCorporationInfoForCharacters() async {

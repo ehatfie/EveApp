@@ -13,7 +13,7 @@ import Fluent
 
 @Observable class DBManager {
   var databases: Databases
-  let dbName = "TestDB27"
+  let dbName = "TestDB28"
   
   let numThreads = 6
   
@@ -243,6 +243,10 @@ import Fluent
       .wait()
     
     try CharacterAssetsDataModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
+    try CharacterSkillsDataModel.ModelMigration()
       .prepare(on: database)
       .wait()
     

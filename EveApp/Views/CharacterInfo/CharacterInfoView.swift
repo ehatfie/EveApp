@@ -18,7 +18,13 @@ class CharacterInfoViewModel: ObservableObject {
       .assign(to: &$characterInfo)
     
     do {
-      self.characterData = try CharacterDataModel.query(on: DataManager.shared.dbManager!.database).first().wait()
+      self.characterData = try CharacterDataModel
+        .query(on: DataManager.shared.dbManager!.database)
+        .with(\.$skillsData)
+        .first()
+        .wait()
+      let foo = self.characterData?.skillsData?.skills ?? []
+      print("got skills \(foo.count)")
     } catch let error {
       print("CharacterDataModel query error \(error)")
     }
@@ -47,6 +53,14 @@ class CharacterInfoViewModel: ObservableObject {
       }
     }
   }
+  
+  func fetchCharacterSkills() {
+    Task {
+      await DataManager.shared.fetchSkillsForCharacters()
+      let foo = self.characterData?.skillsData?.skills ?? []
+      print("got skills \(foo.count)")
+    }
+  }
 }
 
 struct CharacterInfoView: View {
@@ -61,18 +75,22 @@ struct CharacterInfoView: View {
           VStack {
             Text("characterId: \(characterData.characterId)")
             localDataView(characterData: characterData)
-            
+          }
+          if let skillsData = viewModel.characterData?.skillsData {
+            VStack {
+              
+              Text("Skills Info")
+              CharacterSkillsView(characterModel: characterData,skillsData: skillsData)
+            }
           }
         }
+        
         VStack(alignment: .leading) {
           if let characterData = self.$viewModel.characterInfo.wrappedValue {
             Text("characterId: \(characterData.characterID)")
             if let publicData = characterData.publicData {
               getPublicCharacterDataView(characterPublicData: publicData)
             }
-            
-
-            
           } else {
             Text("No Character info found")
           }
@@ -96,6 +114,12 @@ struct CharacterInfoView: View {
           viewModel.fetchCharacterPortrait()
         }, label: {
           Text("get character portrait")
+        })
+        
+        Button(action: {
+          viewModel.fetchCharacterSkills()
+        }, label: {
+          Text("get character skills")
         })
       }
     }

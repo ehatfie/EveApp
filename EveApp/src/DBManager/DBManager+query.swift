@@ -187,6 +187,62 @@ extension DBManager {
     return results
   }
   
+  func getSkillGroups(for characterId: String) async -> [SkillGroup] {
+    guard
+      let character =  try! await CharacterDataModel.query(on: self.database)
+        .filter(\.$characterId == characterId)
+        .with(\.$skillsData)
+        .first()
+        .get(),
+      let skillsData = character.skillsData
+    else {
+      print("no characterModel found for \(characterId)")
+      return []
+    }
+    
+    let skillIds = skillsData.skills.map { Int64($0.skillId) }.sorted(by: { $0 < $1})
+    
+    let typeModels = try! await TypeModel.query(on: self.database)
+      .filter(\.$typeId ~~ skillIds)
+      .all()
+      .get()
+      .sorted(by: {$0.typeId < $1.typeId})
+    
+    var skillDict = [Int64: CharacterSkillModel]()
+    
+    skillsData.skills.forEach { value in
+      skillDict[Int64(value.skillId)] = value
+    }
+    
+    let results = typeModels.compactMap { typeModel -> (CharacterSkillModel, TypeModel)? in
+      guard let skillModel = skillDict[Int64(typeModel.typeId)] else {
+        return nil
+      }
+      
+      return (skillModel, typeModel)
+    }
+    
+    var skillsByGroup: [Int64: [SkillInfo]] = [:]
+    
+    results.forEach { skill, typeModel in
+     // guard let group = getGroup(for: typeModel.groupID) else { return }
+      if let existing = skillsByGroup[typeModel.groupID] {
+        skillsByGroup[typeModel.groupID] = existing + [SkillInfo(skillModel: skill, typeModel: typeModel)]
+      } else {
+        skillsByGroup[typeModel.groupID] = [SkillInfo(skillModel: skill, typeModel: typeModel)]
+      }
+    }
+    
+    let skillGroups = skillsByGroup.compactMap { key, value -> SkillGroup? in
+      guard let group = getGroup(for: key) else {
+        return nil
+      }
+      return SkillGroup(group: group, skills: value)
+    }
+    
+    return skillGroups
+  }
+  
   
 }
 

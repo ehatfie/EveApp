@@ -63,7 +63,7 @@ final class TypeModel: Model, Content {
     var capacity: Double?
 
     @Field(key: "description")
-    var description: String?
+    var descriptionString: String?
 
     @Field(key: "graphic_id")
     var graphicID: Int?
@@ -119,7 +119,7 @@ final class TypeModel: Model, Content {
         self.id = UUID()
         self.typeId = typeId
         self.capacity = data.capacity
-        self.description = data.description?.en
+        self.descriptionString = data.description?.en
         self.graphicID = data.graphicID
         self.groupID = data.groupID ?? -1
         self.iconID = data.iconID

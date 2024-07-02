@@ -24,19 +24,19 @@ final class DogmaEffectModel: Model, Content {
     var displayNameID: String?
 
     @Field(key: "dischargeAttributeId")
-    var dischargeAttributeID: Int?
+    var dischargeAttributeID: Int64?
 
     @Field(key: "distribution")
-    var distribution: Int?
+    var distribution: Int64?
 
     @Field(key: "durationAttributeId")
-    var durationAttributeID: Int?
+    var durationAttributeID: Int64?
 
     @Field(key: "effectCategory")
-    var effectCategory: Int
+    var effectCategory: Int64
 
     @Field(key: "effectId")
-    var effectID: Int
+    var effectID: Int64
 
     @Field(key: "effectName")
     var effectName: String
@@ -165,11 +165,11 @@ struct DogmaEffectData: Codable {
     let descriptionID: ThingName?
     let disallowAutoRepeat: Bool
     let displayNameID: ThingName?
-    let dischargeAttributeID: Int?
-    let distribution: Int?
-    let durationAttributeID: Int?
-    let effectCategory: Int
-    let effectID: Int
+    let dischargeAttributeID: Int64?
+    let distribution: Int64?
+    let durationAttributeID: Int64?
+    let effectCategory: Int64
+    let effectID: Int64
     let effectName: String
     let electronicChance: Bool
     let guid: String?

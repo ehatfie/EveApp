@@ -53,3 +53,4 @@ struct TypeDogmaAttributeCategoryData: Codable {
     let description: String?
     let name: String
 }
+

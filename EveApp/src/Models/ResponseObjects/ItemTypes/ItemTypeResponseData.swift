@@ -11,7 +11,7 @@ import Foundation
 struct ItemTypeResponseData: Codable {
     let capactiy: Float?
     let description: String
-    let dogma_attributes: [DogmaAttribute]
+    let dogma_attributes: [DogmaAttributeData]
     let dogma_effects: [DogmaEffect]
     let graphic_id: Int32?
     let group_id: Int32
@@ -25,7 +25,7 @@ struct ItemTypeResponseData: Codable {
     let radius: Float
 }
 
-struct DogmaAttribute: Codable {
+struct DogmaAttributeData: Codable {
     let attribute_id: Int32
     let value: Float
 }

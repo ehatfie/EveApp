@@ -14,17 +14,17 @@ struct TypeDogmaData: Codable {
 }
 
 struct DogmaAttributeInfo: Codable {
-  let attributeID: Int
+  let attributeID: Int64
   let value: Double
 }
 
 struct DogmaEffectInfo: Codable {
-  let effectID: Int
+  let effectID: Int64
   let isDefault: Bool
 }
 
 final class TypeDogmaAttribute: Fields {
-  @Field(key: "attributeId") var attributeID: Int
+  @Field(key: "attributeId") var attributeID: Int64
   @Field(key: "value") var value: Double
   
   init() {
@@ -39,7 +39,7 @@ final class TypeDogmaAttribute: Fields {
 }
 
 final class TypeDogmaEffect: Fields {
-  @Field(key: "effectID") var effectID: Int
+  @Field(key: "effectID") var effectID: Int64
   @Field(key: "isDefault") var isDefault: Bool
   
   init() {
@@ -72,7 +72,7 @@ final class TypeDogmaInfoModel: Model {
     self.typeId = typeId
     self.attributes = []
     
-    var set = Set<Int>()
+    var set = Set<Int64>()
 
     let dogmaAttributeValues = data.dogmaAttributes.map { TypeDogmaAttribute(data: $0)}
     
@@ -132,12 +132,12 @@ final class TypeDogmaAttributeInfoModel: Model {
   @Parent(key: "typeDogmaInfoModel")
   var typeDogmaInfoModel: TypeDogmaInfoModel
   @Field(key: "typeId") var typeID: Int64
-  @Field(key: "attributeId") var attributeID: Int
+  @Field(key: "attributeId") var attributeID: Int64
   @Field(key: "value") var value: Double
   
   init() { }
   
-  init(typeID: Int64, attributeID: Int, value: Double) {
+  init(typeID: Int64, attributeID: Int64, value: Double) {
     self.id = UUID()
     self.typeID = typeID
     self.attributeID = attributeID
@@ -152,7 +152,7 @@ struct CreateTypeDogmaAttributeInfoModel: Migration {
       .id()
       .field("typeDogmaInfoModel", .uuid, .required, .references(Schemas.typeDogmaInfo.rawValue, "id"))
       .field("typeId", .int64, .required)
-      .field("attributeId", .int, .required)
+      .field("attributeId", .int64, .required)
       .field("value", .double, .required)
       .create()
   }
@@ -171,12 +171,12 @@ final class TypeDogmaEffectInfoModel: Model {
   @Parent(key: "typeDogmaInfoModel")
   var typeDogmaInfoModel: TypeDogmaInfoModel
   
-  @Field(key: "effectID") var effectID: Int
+  @Field(key: "effectID") var effectID: Int64
   @Field(key: "isDefault") var isDefault: Bool
   
   init() { }
   
-  init(effectID: Int, isDefault: Bool) {
+  init(effectID: Int64, isDefault: Bool) {
     self.id = UUID()
     self.effectID = effectID
     self.isDefault = isDefault
@@ -188,7 +188,7 @@ struct CreateTypeDogmaEffectInfoModel: Migration {
     database.schema(TypeDogmaEffectInfoModel.schema)
       .id()
       .field("typeDogmaInfoModel", .uuid, .required, .references(Schemas.typeDogmaInfo.rawValue, "id"))
-      .field("effectID", .int, .required)
+      .field("effectID", .int64, .required)
       .field("isDefault", .bool, .required)
       .create()
   }

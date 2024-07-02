@@ -138,8 +138,10 @@ struct EqualWidthLayout: Layout {
     let spacing = spacing(subviews: subviews)
     let totalSpacing = spacing.reduce(0.0, +)
     
-    return CGSize(width: maxSize.width * CGFloat(subviews.count) + totalSpacing,
-                  height: maxSize.height)
+    return CGSize(
+      width: maxSize.width * CGFloat(subviews.count) + totalSpacing,
+      height: maxSize.height
+    )
   }
 
   func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout Void) {

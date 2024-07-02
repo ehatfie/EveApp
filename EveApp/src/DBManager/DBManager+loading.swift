@@ -120,7 +120,7 @@ extension DBManager {
     }
     
     print("loadDogmaAttributeData() - Start")
-    let dogmaAttributes = try await readYamlAsync(for: .dogmaAttrbutes, type: DogmaAttributeData.self)
+    let dogmaAttributes = try await readYamlAsync(for: .dogmaAttrbutes, type: DogmaAttributeData1.self)
     
     try await dogmaAttributes.map { key, value in
       DogmaAttributeModel(attributeId: key, data: value)

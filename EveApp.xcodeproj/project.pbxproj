@@ -60,6 +60,7 @@
 		BA3C02CD2C228C7800F32650 /* CharacterSkillModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3C02CC2C228C7400F32650 /* CharacterSkillModel.swift */; };
 		BA3C02D12C2517CA00F32650 /* CharacterSkillsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3C02D02C2517CA00F32650 /* CharacterSkillsView.swift */; };
 		BA3C02D32C252C5100F32650 /* SkillGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3C02D22C252C5100F32650 /* SkillGroupView.swift */; };
+		BA3C02D62C2A6B4700F32650 /* SkillGroupEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3C02D52C2A6B4700F32650 /* SkillGroupEntryView.swift */; };
 		BA5106942C09852900E9B344 /* DBManager+Fetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5106932C09852900E9B344 /* DBManager+Fetching.swift */; };
 		BA5990FB2BF45972003108CF /* ESIScopes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5990FA2BF45972003108CF /* ESIScopes.swift */; };
 		BA5991002BF46020003108CF /* AssetsViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5990FF2BF46020003108CF /* AssetsViewer.swift */; };
@@ -613,6 +614,7 @@
 		BA3C02CC2C228C7400F32650 /* CharacterSkillModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSkillModel.swift; sourceTree = "<group>"; };
 		BA3C02D02C2517CA00F32650 /* CharacterSkillsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSkillsView.swift; sourceTree = "<group>"; };
 		BA3C02D22C252C5100F32650 /* SkillGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillGroupView.swift; sourceTree = "<group>"; };
+		BA3C02D52C2A6B4700F32650 /* SkillGroupEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillGroupEntryView.swift; sourceTree = "<group>"; };
 		BA5106932C09852900E9B344 /* DBManager+Fetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBManager+Fetching.swift"; sourceTree = "<group>"; };
 		BA5990FA2BF45972003108CF /* ESIScopes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESIScopes.swift; sourceTree = "<group>"; };
 		BA5990FF2BF46020003108CF /* AssetsViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsViewer.swift; sourceTree = "<group>"; };
@@ -1275,12 +1277,12 @@
 		BA3149E52A4BCA5D0076E6DD /* CharacterInfo */ = {
 			isa = PBXGroup;
 			children = (
+				BA3C02D42C2A6B0500F32650 /* SkillGroupView */,
 				BA9D96082B117AB9006AC37E /* Industry */,
 				BA3149E62A4BCA790076E6DD /* CharacterInfoView.swift */,
 				BA3149F42A5383990076E6DD /* SkillQueueView.swift */,
 				BA9D96062B1177D8006AC37E /* IndustryInfoView.swift */,
 				BA3C02D02C2517CA00F32650 /* CharacterSkillsView.swift */,
-				BA3C02D22C252C5100F32650 /* SkillGroupView.swift */,
 			);
 			path = CharacterInfo;
 			sourceTree = "<group>";
@@ -1364,6 +1366,15 @@
 				BACB52DE2A68CCD70044CDA0 /* ItemTypes.swift */,
 			);
 			path = ItemTypes;
+			sourceTree = "<group>";
+		};
+		BA3C02D42C2A6B0500F32650 /* SkillGroupView */ = {
+			isa = PBXGroup;
+			children = (
+				BA3C02D22C252C5100F32650 /* SkillGroupView.swift */,
+				BA3C02D52C2A6B4700F32650 /* SkillGroupEntryView.swift */,
+			);
+			path = SkillGroupView;
 			sourceTree = "<group>";
 		};
 		BA5990FC2BF45F95003108CF /* Assets */ = {
@@ -2636,6 +2647,7 @@
 				BACB51C12A686E770044CDA0 /* GetCorporationsCorporationIdWalletsDivisionTransactions200Ok.swift in Sources */,
 				BACB52BA2A686E770044CDA0 /* GetFwStatsKills.swift in Sources */,
 				BACB52A82A686E770044CDA0 /* GetCharactersCharacterIdWalletTransactions200Ok.swift in Sources */,
+				BA3C02D62C2A6B4700F32650 /* SkillGroupEntryView.swift in Sources */,
 				BA3149D12A31528E0076E6DD /* DeepLinker.swift in Sources */,
 				BACB52962A686E770044CDA0 /* GetCharactersCharacterIdPlanetsPlanetIdPin.swift in Sources */,
 				BACB519B2A686E770044CDA0 /* GetCharactersCharacterIdCalendar200Ok.swift in Sources */,

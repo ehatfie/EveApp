@@ -84,7 +84,7 @@ struct TypeDogmaInfoView: View {
 }
 
 struct EffectDisplayable: Identifiable {
-  var id: Int
+  var id: Int64
   
   let typeDogmaEffect: TypeDogmaEffect
   let dogmaEffectModel: DogmaEffectModel
@@ -97,7 +97,7 @@ struct EffectDisplayable: Identifiable {
 }
 
 struct AttributeDisplayable: Identifiable {
-  var id: Int
+  var id: Int64
   
   let typeDogmaAttribute: TypeDogmaAttribute
   let dogmaAttributeModel: DogmaAttributeModel

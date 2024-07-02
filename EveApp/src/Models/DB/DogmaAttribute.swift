@@ -16,10 +16,10 @@ final class DogmaAttributeModel: Model, Content {
     var id: UUID?
 
     @Field(key: "attributeId")
-    var attributeID: Int
+    var attributeID: Int64
 
     @Field(key: "categoryId")
-    var categoryID: Int?
+    var categoryID: Int64?
 
     @Field(key: "dataType")
     var dataType: Int
@@ -29,7 +29,10 @@ final class DogmaAttributeModel: Model, Content {
 
     @Field(key: "description")
     var attributeDescription: String?
-
+    
+    @Field(key: "displayNameID")
+    var displayNameID: String?
+    
     @Field(key: "highIsGood")
     var highIsGood: Bool
 
@@ -56,13 +59,14 @@ final class DogmaAttributeModel: Model, Content {
 
     init() {}
 
-    init(id: UUID? = nil, attributeID: Int, categoryID: Int?, dataType: Int, defaultValue: Double, description: String?, highIsGood: Bool, iconID: Int?, name: String, published: Bool, stackable: Bool, tooltipDescriptionID: String?, tooltipTitleID: String?, unitID: Int?) {
+    init(id: UUID? = nil, attributeID: Int64, categoryID: Int64?, dataType: Int, defaultValue: Double, description: String?, displayNameID: String?, highIsGood: Bool, iconID: Int?, name: String, published: Bool, stackable: Bool, tooltipDescriptionID: String?, tooltipTitleID: String?, unitID: Int?) {
         self.id = id
         self.attributeID = attributeID
         self.categoryID = categoryID
         self.dataType = dataType
         self.defaultValue = defaultValue
         self.attributeDescription = description
+        self.displayNameID = displayNameID
         self.highIsGood = highIsGood
         self.iconID = iconID
         self.name = name
@@ -73,13 +77,14 @@ final class DogmaAttributeModel: Model, Content {
         self.unitID = unitID
     }
     
-    init(attributeId: Int64, data: DogmaAttributeData) {
+    init(attributeId: Int64, data: DogmaAttributeData1) {
         self.id = UUID()
         self.attributeID = data.attributeID
         self.categoryID = data.categoryID
         self.dataType = data.dataType
         self.defaultValue = data.defaultValue
         self.attributeDescription = data.description
+        self.displayNameID = data.displayNameID?.en
         self.highIsGood = data.highIsGood
         self.iconID = data.iconID
         self.name = data.name
@@ -100,6 +105,7 @@ struct CreateDogmaAttributeModelMigration: Migration {
             .field("dataType", .int, .required)
             .field("defaultValue", .double, .required)
             .field("description", .string)
+            .field("displayNameID", .string)
             .field("highIsGood", .bool, .required)
             .field("iconId", .int)
             .field("name", .string, .required)
@@ -116,12 +122,13 @@ struct CreateDogmaAttributeModelMigration: Migration {
     }
 }
 
-struct DogmaAttributeData: Codable {
-    let attributeID: Int
-    let categoryID: Int?
+struct DogmaAttributeData1: Codable {
+    let attributeID: Int64
+    let categoryID: Int64?
     let dataType: Int
     let defaultValue: Double
     let description: String?
+    let displayNameID: ThingName?
     let highIsGood: Bool
     let iconID: Int?
     let name: String
@@ -130,4 +137,35 @@ struct DogmaAttributeData: Codable {
     let tooltipDescriptionID: ThingName?
     let tooltipTitleID: ThingName?
     let unitID: Int?
+    
+    init(attributeID: Int64,
+         categoryID: Int64? = nil,
+         dataType: Int = 0,
+         defaultValue: Double,
+         description: String?,
+         displayNameID: ThingName? = nil,
+         highIsGood: Bool = true,
+         iconID: Int? = nil,
+         name: String,
+         published: Bool = false,
+         stackable: Bool = false,
+         tooltipDescriptionID: ThingName? = nil,
+         tooltipTitleID: ThingName? = nil,
+         unitID: Int? = nil
+    ) {
+        self.attributeID = attributeID
+        self.categoryID = categoryID
+        self.dataType = dataType
+        self.defaultValue = defaultValue
+        self.description = description
+        self.displayNameID = displayNameID
+        self.highIsGood = highIsGood
+        self.iconID = iconID
+        self.name = name
+        self.published = published
+        self.stackable = stackable
+        self.tooltipDescriptionID = tooltipDescriptionID
+        self.tooltipTitleID = tooltipTitleID
+        self.unitID = unitID
+    }
 }

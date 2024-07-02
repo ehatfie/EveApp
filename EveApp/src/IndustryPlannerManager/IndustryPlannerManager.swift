@@ -60,7 +60,7 @@ class IndustryPlannerManager {
     let blueprintActivities = blueprintModel.activities
     guard let productTypeId = blueprintActivities.manufacturing.products.first?.typeId else { return .empty }
     let productTypeModel = await DataManager.shared
-      .dbManager!.getType(for: productTypeId)
+      .dbManager!.getType(for: productTypeId)!
 
     let inputMaterials = getInputMaterials(for: blueprintModel)
     // determine what thing we are making

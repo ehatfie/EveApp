@@ -13,7 +13,7 @@ import Fluent
 
 @Observable class DBManager {
   var databases: Databases
-  let dbName = "TestDB28"
+  let dbName = "TestDB29"
   
   let numThreads = 6
   

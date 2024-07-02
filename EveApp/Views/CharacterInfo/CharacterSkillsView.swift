@@ -24,6 +24,10 @@ struct SkillInfo: Identifiable {
     
     let skillModel: CharacterSkillModel
     let typeModel: TypeModel
+    let dogma: TypeDogmaInfoModel
+    let skillDogmaInfo: SkillDogmaAttributeInfo?
+    let skillEffectInfo: SkillEffectInfo
+    let skillDescription: String
 }
 
 @Observable
@@ -53,14 +57,12 @@ struct CharacterSkillsView: View {
     
     
     init(characterModel: CharacterDataModel, skillsData: CharacterSkillsDataModel) {
-        
         self.characterModel = characterModel
         self.skillsData = skillsData
         // get skill categories
         let skillIds = skillsData.skills.map { Int64($0.skillId) }
         self.viewModel = CharacterSkillViewModel(characterModel: characterModel)
        // self.skillsData = skillsData
-       
     }
     
     var body: some View {

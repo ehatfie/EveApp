@@ -18,7 +18,7 @@ class DogmaAttributeCategoryViewModel: ObservableObject {
     let dbManager = DataManager.shared.dbManager
     
     let results = try! DogmaAttributeModel.query(on: dbManager!.database)
-      .filter(\.$categoryID == Int(dogmaAttributeCategory.categoryId))
+      .filter(\.$categoryID == dogmaAttributeCategory.categoryId)
       .all()
       .wait()
     self.dogmaAttributes = results

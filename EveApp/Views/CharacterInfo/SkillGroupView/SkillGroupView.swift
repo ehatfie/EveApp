@@ -11,6 +11,7 @@ struct SkillGroupView: View {
     let skillGroup: SkillGroup
     @State var expanded = false
     var body: some View {
+        
         VStack(alignment: .leading) {
             HStack {
                 Text("\(skillGroup.group.name)")
@@ -26,7 +27,6 @@ struct SkillGroupView: View {
                 }
                 .padding(.horizontal, 10)
                 .padding(.vertical, 1)
-                .frame(maxWidth: .infinity)
             }
             Spacer()
         }
@@ -35,6 +35,7 @@ struct SkillGroupView: View {
             expanded.toggle()
         }.border(.blue)
     }
+    
 }
 
 #Preview {

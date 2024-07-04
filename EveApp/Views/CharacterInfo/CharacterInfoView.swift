@@ -84,18 +84,18 @@ struct CharacterInfoView: View {
             }
           }
         }
-        
-        VStack(alignment: .leading) {
-          if let characterData = self.$viewModel.characterInfo.wrappedValue {
-            Text("characterId: \(characterData.characterID)")
-            if let publicData = characterData.publicData {
-              getPublicCharacterDataView(characterPublicData: publicData)
-            }
-          } else {
-            Text("No Character info found")
-          }
-          
-        }
+        Spacer()
+//        VStack(alignment: .leading) {
+//          if let characterData = self.$viewModel.characterInfo.wrappedValue {
+//            Text("characterId: \(characterData.characterID)")
+//            if let publicData = characterData.publicData {
+//              getPublicCharacterDataView(characterPublicData: publicData)
+//            }
+//          } else {
+//            Text("No Character info found")
+//          }
+//          
+//        }
       }
       HStack {
         Button(action: {

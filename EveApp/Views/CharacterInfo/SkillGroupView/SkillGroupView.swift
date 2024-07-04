@@ -24,16 +24,16 @@ struct SkillGroupView: View {
                     ForEach(skillGroup.skills, id: \.id) { skill in
                         SkillGroupEntryView(skill: skill)
                     }
-                }
+                }.frame(maxWidth: 400)
                 .padding(.horizontal, 10)
                 .padding(.vertical, 1)
             }
             Spacer()
         }
-        .frame(maxWidth: .infinity)
+        //.frame(maxWidth: .infinity)
         .onTapGesture {
             expanded.toggle()
-        }.border(.blue)
+        }
     }
     
 }

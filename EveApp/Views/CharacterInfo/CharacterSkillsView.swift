@@ -74,9 +74,12 @@ struct CharacterSkillsView: View {
                     Text("unallocated SP: \(skillsData.unallocatedSp ?? 0)")
                 }
                 ScrollView {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 5) {
                         ForEach(viewModel.skillGroups, id: \.group.groupId) { skillGroup in
                             SkillGroupView(skillGroup: skillGroup)
+                            Rectangle()
+                                .frame(height: 1)
+                                .background(.black)
                         }
                     }
                 }

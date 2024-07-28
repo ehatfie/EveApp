@@ -250,6 +250,9 @@ import Fluent
       .prepare(on: database)
       .wait()
     
+    try CharacterIndustryJobModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
   }
   
   func setupAuthModels() throws {

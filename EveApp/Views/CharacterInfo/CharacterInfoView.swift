@@ -21,6 +21,7 @@ class CharacterInfoViewModel: ObservableObject {
       self.characterData = try CharacterDataModel
         .query(on: DataManager.shared.dbManager!.database)
         .with(\.$skillsData)
+        .with(\.$industryJobsData)
         .first()
         .wait()
       let foo = self.characterData?.skillsData?.skills ?? []
@@ -59,6 +60,15 @@ class CharacterInfoViewModel: ObservableObject {
       await DataManager.shared.fetchSkillsForCharacters()
       let foo = self.characterData?.skillsData?.skills ?? []
       print("got skills \(foo.count)")
+    }
+  }
+  
+  func fetchCharacterIndustryJobs() {
+    Task {
+      await DataManager.shared.fetchIndustryJobsForCharacters()
+      
+      let foo = self.characterData?.industryJobsData ?? []
+      print("got industry jobs \(foo.count)")
     }
   }
 }
@@ -120,6 +130,12 @@ struct CharacterInfoView: View {
           viewModel.fetchCharacterSkills()
         }, label: {
           Text("get character skills")
+        })
+        
+        Button(action: {
+          viewModel.fetchCharacterIndustryJobs()
+        }, label: {
+          Text("get industry jobs")
         })
       }
     }

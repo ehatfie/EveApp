@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SkillsDataRepresentable {
     let skillsData: CharacterSkillsDataModel
-    
 }
 
 struct SkillGroup {
@@ -55,7 +54,6 @@ struct CharacterSkillsView: View {
     let skillsData: CharacterSkillsDataModel
     let viewModel: CharacterSkillViewModel
     
-    
     init(characterModel: CharacterDataModel, skillsData: CharacterSkillsDataModel) {
         self.characterModel = characterModel
         self.skillsData = skillsData
@@ -75,7 +73,10 @@ struct CharacterSkillsView: View {
                 }
                 ScrollView {
                     VStack(alignment: .leading, spacing: 5) {
-                        ForEach(viewModel.skillGroups, id: \.group.groupId) { skillGroup in
+                        ForEach(
+                            viewModel.skillGroups,
+                            id: \.group.groupId
+                        ) { skillGroup in
                             SkillGroupView(skillGroup: skillGroup)
                             Rectangle()
                                 .frame(height: 1)

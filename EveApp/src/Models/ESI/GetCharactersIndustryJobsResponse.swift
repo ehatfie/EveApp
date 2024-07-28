@@ -28,13 +28,13 @@ public struct GetCharactersIndustryJobsResponse: Codable {
     /** ID of the character which completed this job */
     public var completedCharacterId: Int?
     /** Date and time when this job was completed */
-    public var completedDate: Date?
+    public var completedDate: String?
     /** The sume of job installation fee and industry facility tax */
     public var cost: Double?
     /** Job duration in seconds */
     public var duration: Int
     /** Date and time when this job finished */
-    public var endDate: Date
+    public var endDate: String
     /** ID of the facility where this job is running */
     public var facilityId: Int64
     /** ID of the character which installed this job */
@@ -46,7 +46,7 @@ public struct GetCharactersIndustryJobsResponse: Codable {
     /** Location ID of the location to which the output of the job will be delivered. Normally a station ID, but can also be a corporation facility */
     public var outputLocationId: Int64
     /** Date and time when this job was paused (i.e. time when the facility where this job was installed went offline) */
-    public var pauseDate: Date?
+    public var pauseDate: String?
     /** Chance of success for invention */
     public var probability: Float?
     /** Type ID of product (manufactured, copied or invented) */
@@ -54,7 +54,7 @@ public struct GetCharactersIndustryJobsResponse: Codable {
     /** Number of runs for a manufacturing job, or number of copies to make for a blueprint copy */
     public var runs: Int
     /** Date and time when this job started */
-    public var startDate: Date
+    public var startDate: String
     /** ID of the station where industry facility is located */
     public var stationId: Int64
     /** status string */
@@ -62,7 +62,7 @@ public struct GetCharactersIndustryJobsResponse: Codable {
     /** Number of successful runs for this job. Equal to runs unless this is an invention job */
     public var successfulRuns: Int?
 
-    public init(activityId: Int, blueprintId: Int64, blueprintLocationId: Int64, blueprintTypeId: Int, completedCharacterId: Int? = nil, completedDate: Date? = nil, cost: Double? = nil, duration: Int, endDate: Date, facilityId: Int64, installerId: Int, jobId: Int, licensedRuns: Int? = nil, outputLocationId: Int64, pauseDate: Date? = nil, probability: Float? = nil, productTypeId: Int? = nil, runs: Int, startDate: Date, stationId: Int64, status: Status, successfulRuns: Int? = nil) {
+    public init(activityId: Int, blueprintId: Int64, blueprintLocationId: Int64, blueprintTypeId: Int, completedCharacterId: Int? = nil, completedDate: String? = nil, cost: Double? = nil, duration: Int, endDate: String, facilityId: Int64, installerId: Int, jobId: Int, licensedRuns: Int? = nil, outputLocationId: Int64, pauseDate: String? = nil, probability: Float? = nil, productTypeId: Int? = nil, runs: Int, startDate: String, stationId: Int64, status: Status, successfulRuns: Int? = nil) {
         self.activityId = activityId
         self.blueprintId = blueprintId
         self.blueprintLocationId = blueprintLocationId

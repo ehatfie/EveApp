@@ -118,7 +118,7 @@ extension DataManager {
       return
     }
     
-    guard let (data, response) = await makeApiCallAsync(
+    guard let (data, _) = await makeApiCallAsync(
       dataEndpoint: "",
       authModel: authModel
     ) else {
@@ -142,7 +142,7 @@ extension DataManager {
       characters.forEach { character in
         taskGroup.addTask {
           do {
-            try await self.fetchIcon(for: character)
+            _ = try await self.fetchIcon(for: character)
           } catch let err {
             print("taskGroup erro \(err)")
           }
@@ -156,7 +156,7 @@ extension DataManager {
       return nil
     }
     
-    guard let (data, response) = await makeApiCallAsync3(
+    guard let (data, _) = await makeApiCallAsync3(
       dataEndpoint: "/characters/\(authModel.characterId)/portrait/",
       authModel: authModel
     ) else {
@@ -324,7 +324,6 @@ extension DataManager {
 
 // MARK: - Corporation
 
-                          
 extension DataManager {
   
   func fetchCorporationInfoForCharacters() async {
@@ -396,4 +395,73 @@ extension DataManager {
     }
   }
   
+}
+
+// MARK: - IndustryJobs
+
+extension DataManager {
+  func fetchIndustryJobsForCharacters() async {
+    guard let characters = await dbManager?.getCharacters() else {
+      return
+    }
+    
+    await withTaskGroup(of: Void.self) { taskGroup in
+      for character in characters {
+        taskGroup.addTask {
+          await self.fetchIndustryJobs(for: character)
+        }
+      }
+    }
+  }
+  
+  func fetchIndustryJobs(
+    for characterModel: CharacterDataModel
+  ) async {
+    guard 
+      let authModel = await dbManager?.getAuthModel(
+        for: characterModel.characterId
+      )
+    else {
+      return
+    }
+    
+    let characterId = characterModel.characterId
+    let dataEndpoint = "/characters/\(characterId)/industry/jobs/"
+    
+    guard let (data, _) = await makeApiCallAsync3(
+      dataEndpoint: dataEndpoint,
+      authModel: authModel
+    ) else {
+      return
+    }
+    
+    let string1 = String(data: data, encoding: .utf8)
+    print("get industry jobs response got \(string1!)")
+    
+    do {
+      let industryJobsResponse = try JSONDecoder()
+        .decode(
+          [GetCharactersIndustryJobsResponse].self,
+          from: data
+        )
+      
+      let industryJobsModels = industryJobsResponse.map {
+        CharacterIndustryJobModel(
+          characterId: characterId,
+          data: $0
+        )
+      }
+      
+      print("got industryJobsModel \(industryJobsModels.count)")
+      
+      let database = dbManager!.database
+      try await characterModel.$industryJobsData
+        .create(
+          industryJobsModels,
+          on: database
+        )
+    } catch let err {
+      print("fetch industry jobs err \(err)")
+    }
+  }
 }

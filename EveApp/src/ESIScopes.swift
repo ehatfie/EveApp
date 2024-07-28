@@ -15,6 +15,6 @@ enum ESIScopes: String {
     case skillQueue = "esi-skills.read_skillqueue.v1"
     case assets = "esi-assets.read_assets.v1"
     case structureInfo = "esi-universe.read_structures.v1" //esi-universe.read_structures.v1
-    
+    case characterIndustryJobs = "esi-industry.read_character_jobs.v1"
     
 }

@@ -34,6 +34,8 @@ final class CharacterSkillModel: Fields {
         self.skillpointsInSkill = skillPointsInSkill
         self.trainedSkillLevel = trainedSkillLevel
        // self.characterId = characterId
+        //GetCharactersCharacterIdIndustryJobs200Ok
+        //GetCharactersIndustryJobsResponse
     }
     
     convenience init(characterId: String, data: GetCharactersCharacterIdSkillsSkill) {

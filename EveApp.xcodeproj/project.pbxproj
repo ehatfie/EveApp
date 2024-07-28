@@ -487,6 +487,8 @@
 		BACB52DB2A68B9700044CDA0 /* ItemGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB52DA2A68B9700044CDA0 /* ItemGroupView.swift */; };
 		BACB52DD2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB52DC2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift */; };
 		BACB52DF2A68CCD70044CDA0 /* ItemTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB52DE2A68CCD70044CDA0 /* ItemTypes.swift */; };
+		BADF1BB82C3B80800007A1F5 /* CharacterIndustryDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADF1BB72C3B80800007A1F5 /* CharacterIndustryDataModel.swift */; };
+		BADF1BBA2C3B82350007A1F5 /* CharacterIndustryJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADF1BB92C3B82290007A1F5 /* CharacterIndustryJob.swift */; };
 		BAE02EE42AF3482C00AB695F /* GetCharacterSkillsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EE32AF3482C00AB695F /* GetCharacterSkillsResponse.swift */; };
 		BAE02EE72AF34F4000AB695F /* BlueprintComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EE62AF34F4000AB695F /* BlueprintComponentView.swift */; };
 		BAE02EEA2AF9CEE600AB695F /* ReprocessingHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EE92AF9CEE600AB695F /* ReprocessingHelperView.swift */; };
@@ -1040,6 +1042,8 @@
 		BACB52DA2A68B9700044CDA0 /* ItemGroupView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemGroupView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BACB52DC2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemCategoryGroupsListView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BACB52DE2A68CCD70044CDA0 /* ItemTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTypes.swift; sourceTree = "<group>"; };
+		BADF1BB72C3B80800007A1F5 /* CharacterIndustryDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterIndustryDataModel.swift; sourceTree = "<group>"; };
+		BADF1BB92C3B82290007A1F5 /* CharacterIndustryJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterIndustryJob.swift; sourceTree = "<group>"; };
 		BAE02EE32AF3482C00AB695F /* GetCharacterSkillsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCharacterSkillsResponse.swift; sourceTree = "<group>"; };
 		BAE02EE62AF34F4000AB695F /* BlueprintComponentView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintComponentView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAE02EE92AF9CEE600AB695F /* ReprocessingHelperView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ReprocessingHelperView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -1387,12 +1391,14 @@
 		BA5991012BF59F22003108CF /* CharacterData */ = {
 			isa = PBXGroup;
 			children = (
+				BADF1BB92C3B82290007A1F5 /* CharacterIndustryJob.swift */,
 				BA3C02CC2C228C7400F32650 /* CharacterSkillModel.swift */,
 				BA3C02CA2C22853D00F32650 /* CharacterSkillsDataModel.swift */,
 				BA5991042BF59F8B003108CF /* CharacterDataModel.swift */,
 				BA5991082BF99E72003108CF /* CharacterAssetsDataModel.swift */,
 				BA225BD22C115C7100D244C9 /* CorporationInfoModel.swift */,
 				BA225BD42C12B9DE00D244C9 /* CharacterCorporationModel.swift */,
+				BADF1BB72C3B80800007A1F5 /* CharacterIndustryDataModel.swift */,
 			);
 			path = CharacterData;
 			sourceTree = "<group>";
@@ -2187,6 +2193,7 @@
 				BACB51FC2A686E770044CDA0 /* GetCorporationsCorporationIdRoles200Ok.swift in Sources */,
 				BACB523A2A686E770044CDA0 /* GetCharactersCharacterIdMailLabelsOk.swift in Sources */,
 				BACB52532A686E770044CDA0 /* Unauthorized.swift in Sources */,
+				BADF1BBA2C3B82350007A1F5 /* CharacterIndustryJob.swift in Sources */,
 				BA5991072BF99B97003108CF /* DataManager+Helpers.swift in Sources */,
 				BACB521A2A686E770044CDA0 /* GetOpportunitiesTasksTaskIdOk.swift in Sources */,
 				BACB52312A686E770044CDA0 /* GetUniverseGroupsGroupIdOk.swift in Sources */,
@@ -2600,6 +2607,7 @@
 				BACB51C42A686E770044CDA0 /* PostCharactersCharacterIdMailRecipient.swift in Sources */,
 				BA5990FB2BF45972003108CF /* ESIScopes.swift in Sources */,
 				BA7E4B382C068E9900B00158 /* DBManager+loading2.swift in Sources */,
+				BADF1BB82C3B80800007A1F5 /* CharacterIndustryDataModel.swift in Sources */,
 				BACB52852A686E770044CDA0 /* GetContractsPublicBidsContractId200Ok.swift in Sources */,
 				BACB51932A686E760044CDA0 /* GetCorporationsCorporationIdContainersLogs200Ok.swift in Sources */,
 				BACB52B82A686E770044CDA0 /* GetCorporationsCorporationIdWalletsDivisionJournal200Ok.swift in Sources */,

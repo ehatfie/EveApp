@@ -66,7 +66,7 @@ class AuthManager1: ObservableObject {
       state: state,
       codeVerifier: codeVerifier,
       codeChallenge: codeVerifier.sha256(),
-      scopes: .init([.assets, .skills, .skillQueue, .structureInfo])
+      scopes: .init([.assets, .skills, .skillQueue, .structureInfo, .characterIndustryJobs])
     )
     
     self.authConfig = authConfig

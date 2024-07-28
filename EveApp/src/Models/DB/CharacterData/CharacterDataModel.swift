@@ -41,6 +41,9 @@ final class CharacterDataModel: Model {
     @Children(for: \.$characterDataModel)
     var assetsData: [CharacterAssetsDataModel]
     
+    @Children(for: \.$characterDataModel)
+    var industryJobsData: [CharacterIndustryJobModel]
+    
     @Siblings(through: CharacterCorporationModel.self, from: \.$character, to: \.$corporation)
     public var corp: [CorporationInfoModel]
     

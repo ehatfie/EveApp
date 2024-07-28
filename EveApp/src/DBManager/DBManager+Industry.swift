@@ -36,11 +36,8 @@ extension DBManager {
     }
     
     try await splitAndSave(splits: 2, models: typeMaterialModels)
-//    try typeMaterials.forEach { key, value in
-//      try typeMaterialModel.save(on: database).wait()
-//    }
+
     print("got \(typeMaterials.count)")
-    
     print("loadTypeMaterialData() - End; Took - \(start.timeIntervalSinceNow * -1)")
   }
   
@@ -52,7 +49,6 @@ extension DBManager {
     }
     
     let blueprintData = try await readYamlAsync(for: .blueprints, type: BlueprintData.self)
-    
     
     let blueprintModels = blueprintData.map { key, value in
         return BlueprintModel(data: value)

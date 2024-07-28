@@ -60,13 +60,13 @@ extension GetCharactersIndustryJobsResponse {
             blueprintLocationId: 0,
             blueprintTypeId: 0,
             duration: 1000,
-            endDate: Date(),
+            endDate: "",
             facilityId: 0,
             installerId: 0,
             jobId: 0,
             outputLocationId: 0,
             runs: 10,
-            startDate: Date(),
+            startDate: "",
             stationId: 0,
             status: .active
         )
@@ -79,13 +79,13 @@ extension GetCharactersIndustryJobsResponse {
           blueprintLocationId: 0,
           blueprintTypeId: 0,
           duration: 1000,
-          endDate: Date(),
+          endDate: "",
           facilityId: 0,
           installerId: 0,
           jobId: 1,
           outputLocationId: 0,
           runs: 10,
-          startDate: Date(),
+          startDate: "",
           stationId: 0,
           status: .active
       )

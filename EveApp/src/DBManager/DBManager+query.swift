@@ -28,6 +28,13 @@ extension DBManager {
       .wait()
   }
   
+  func getGroups(with groupIds: [Int64]) async -> [GroupModel] {
+    return try! await GroupModel.query(on: self.database)
+      .filter(\.$groupId ~~ groupIds)
+      .all()
+      .get()
+  }
+  
   func getGroup(for groupId: Int64) -> GroupModel? {
     return try! GroupModel.query(on: self.database)
       .filter(\.$groupId == groupId)
@@ -442,6 +449,33 @@ extension DBManager {
       .wait()
   }
   
+  func getBlueprintModelAsync(for typeId: Int64) async -> BlueprintModel? {
+    let db = self.database
+    let blueprintModel = try? await BlueprintModel.query(on: db)
+      .filter(\.$blueprintTypeID == typeId)
+      .first()
+      .get()
+    
+    return blueprintModel
+  }
+  
+  func getManufacturingBlueprintWithInput(of typeId: Int64) async -> BlueprintModel? {
+    let db = self.database
+    guard let sql = db as? SQLDatabase else {
+      return nil
+    }
+    let queryString =
+      """
+        select b.*, value from blueprintModel b,
+        json_each(b.activities_manufacturing_materials)
+        where json_extract(value, '$.typeId') = \("\(typeId)")
+      """
+    
+    return try? await sql.raw(SQLQueryString(queryString))
+      .first(decoding: BlueprintModel.self)
+      .get()
+  }
+  
   func getReactionBlueprint(for typeId: Int64) -> BlueprintModel? {
     let db = self.database
     guard let sql = db as? SQLDatabase else {
@@ -457,6 +491,88 @@ extension DBManager {
     return try? sql.raw(SQLQueryString(queryString))
       .first(decoding: BlueprintModel.self)
       .wait()
+  }
+  
+  func getReactionBlueprintAsync(for typeId: Int64) async -> BlueprintModel? {
+    let db = self.database
+    guard let sql = db as? SQLDatabase else {
+      return nil
+    }
+    let queryString =
+      """
+        select b.*, value from blueprintModel b,
+        json_each(b.activities_reaction_products)
+        where json_extract(value, '$.typeId') = \("\(typeId)")
+      """
+    
+    return try? await sql.raw(SQLQueryString(queryString))
+      .first(decoding: BlueprintModel.self)
+      .get()
+  }
+  
+  func getReactionBlueprintWithInput(of typeId: Int64) async -> BlueprintModel? {
+    let db = self.database
+    guard let sql = db as? SQLDatabase else {
+      return nil
+    }
+    let queryString =
+      """
+        select b.*, value from blueprintModel b,
+        json_each(b.activities_reaction_materials)
+        where json_extract(value, '$.typeId') = \("\(typeId)")
+      """
+    
+    return try? await sql.raw(SQLQueryString(queryString))
+      .first(decoding: BlueprintModel.self)
+      
+  }
+  
+  func getReactionBlueprintsWIthInputs(of typeIds: [Int64]) async -> [BlueprintModel] {
+    let results = await withTaskGroup(of: BlueprintModel?.self, returning: [BlueprintModel].self) { taskGroup in
+      for typeId in typeIds {
+        taskGroup.addTask {
+          return await self.getReactionBlueprintWithInput(of: typeId)
+        }
+      }
+      var values: [BlueprintModel] = []
+      for await result in taskGroup {
+        guard let result = result else {
+          continue
+        }
+        
+        values.append(result)
+      }
+      //let results = try await taskGroup.waitForAll()
+      return values//results
+    }
+    
+    return results
+  }
+  //getManufacturingBlueprintWithInput
+  func getManufacturingBlueprintsWithInputs(of typeIds: [Int64]) async -> [BlueprintModel] {
+    let results = await withTaskGroup(of: BlueprintModel?.self, returning: [BlueprintModel].self) { taskGroup in
+      for typeId in typeIds {
+        taskGroup.addTask {
+          return await self.getManufacturingBlueprintWithInput(of: typeId)
+        }
+      }
+      var values: [BlueprintModel] = []
+      for await result in taskGroup {
+        guard let result = result else {
+          continue
+        }
+        
+        values.append(result)
+      }
+      //let results = try await taskGroup.waitForAll()
+      return values//results
+    }
+    
+    return results
+  }
+  
+  func getBlueprintModel(for typeId: Int64) async -> BlueprintModel? {
+    return await self.getBlueprintModelAsync(for: typeId)
   }
 }
 

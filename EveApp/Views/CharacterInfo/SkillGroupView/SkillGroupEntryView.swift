@@ -12,36 +12,37 @@ struct SkillGroupEntryView: View {
     let skill: SkillInfo
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                Text(skill.typeModel.name)
-                    .font(.headline)
-                Text("\(skill.skillModel.trainedSkillLevel) / 5")
-            }
-            
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(alignment: .top, spacing: 10) {
-                    if let info = skill.skillDogmaInfo?.skillMiscAttributes {
-                        Text("\(info.primaryAttribute.name.capitalized) / \(info.secondaryAttribute.name.capitalized)")
+            GroupBox(content: {
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        Text(skill.typeModel.name)
+                            .font(.headline)
+                        Text("\(skill.skillModel.trainedSkillLevel) / 5")
+                        Spacer()
                     }
                     
-                    HStack(alignment: .top) {
-                        if let info = skill.skillDogmaInfo?.skillMiscAttributes {
-                            Text("\(skill.skillModel.skillpointsInSkill) / \(info.skillTimeConstant * 256000)")
-                            Text("x\(info.skillTimeConstant)")
-                        } else {
-                            Text("\(skill.skillModel.skillpointsInSkill)")
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack(alignment: .top, spacing: 10) {
+                            if let info = skill.skillDogmaInfo?.skillMiscAttributes {
+                                Text("\(info.primaryAttribute.name.capitalized) / \(info.secondaryAttribute.name.capitalized)")
+                            }
+                            
+                            HStack(alignment: .top) {
+                                if let info = skill.skillDogmaInfo?.skillMiscAttributes {
+                                    Text("\(skill.skillModel.skillpointsInSkill) / \(info.skillTimeConstant * 256000)")
+                                    Text("x\(info.skillTimeConstant)")
+                                } else {
+                                    Text("\(skill.skillModel.skillpointsInSkill)")
+                                }
+                            }
                         }
+                        
+                        Text(skill.typeModel.descriptionString ?? "")
                     }
                 }
-                
-                Text(skill.typeModel.descriptionString ?? "")
-            }
-
+            })
+            .groupBoxStyle(CustomGroupBoxStyle())
         }
-        .padding()
-        .background(Color(red: 102/255, green: 98/255, blue: 98/255))
-        .cornerRadius(10)
-        .padding()
     }
 }
 
@@ -83,4 +84,17 @@ struct SkillGroupEntryView: View {
             ), skillDescription: ""
         )
     )
+}
+
+struct CustomGroupBoxStyle: GroupBoxStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        VStack(alignment: .leading) {
+            configuration.label
+            configuration.content
+        }
+        .padding()
+        .background(Color.pink.opacity(0.2))
+        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        //.clipShape(RoundedRectangle(cornerRadius: 20))
+    }
 }

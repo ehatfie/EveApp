@@ -39,7 +39,7 @@ extension IndustryPlannerManager {
             blueprints: thirdLevelBlueprints,
             values: thirdLevelSums
         )
-        
+        print("got sums")
         var bp1: [Int64: BlueprintInfo2] = [:]
         firstLevelBlueprints.forEach { value in
             bp1[value.productId] = value
@@ -57,7 +57,7 @@ extension IndustryPlannerManager {
             blueprints: thirdLevelBlueprints,
             values: thirdLevelSums
         )
-        
+        print("got jobs")
         return ShipPlan(
             jobs:
                 ShipPlanJobs(

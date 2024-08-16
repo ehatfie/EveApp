@@ -20,13 +20,15 @@ struct SkillGroupView: View {
             }
             
             if expanded {
-                VStack(alignment: .leading, spacing: 2) {
-                    ForEach(skillGroup.skills, id: \.id) { skill in
-                        SkillGroupEntryView(skill: skill)
-                    }
-                }.frame(maxWidth: 400)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 1)
+                //EqualWidthLayout {
+                VStack(alignment: .center, spacing: 5) {
+                    //EqualWidthLayout {
+                        ForEach(skillGroup.skills, id: \.id) { skill in
+                            SkillGroupEntryView(skill: skill)
+                        }
+                   // }
+                   // }//.padding(.vertical, 1)
+                }.padding(.horizontal, 5)
             }
             Spacer()
         }

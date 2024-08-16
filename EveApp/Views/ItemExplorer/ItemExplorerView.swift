@@ -133,45 +133,88 @@ struct EqualWidthLayout: Layout {
   
   func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout Void) -> CGSize {
       // accept the full proposed space, replacing any nil values with a sensible default
+    print("proposal \(proposal)")
+    //let maxSize = maxSize(subviews: subviews)
+    let maxWidth = min(maxWidth(subviews: subviews), proposal.width ?? .infinity)
+    let maxHeight = maxHeight(subviews: subviews, maxWidth: maxWidth)
+    let maxSize = CGSize(width: maxWidth, height: maxHeight)
     
-    let maxSize = maxSize(subviews: subviews)
     let spacing = spacing(subviews: subviews)
     let totalSpacing = spacing.reduce(0.0, +)
     
+    print("max size \(maxSize)")
     return CGSize(
-      width: maxSize.width * CGFloat(subviews.count) + totalSpacing,
-      height: maxSize.height
+      width: maxWidth,
+      height: maxSize.height * CGFloat(subviews.count) + totalSpacing
     )
   }
 
   func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout Void) {
+    print("placeSubviews in \(bounds)")
+    let padding = 8
     
-    let maxSize = maxSize(subviews: subviews)
+    let maxWidth = min(maxWidth(subviews: subviews), (bounds.width - CGFloat(padding * 2)))
+    let maxHeight = maxHeight(subviews: subviews, maxWidth: maxWidth)
+    let maxSize = CGSize(width: maxWidth, height: maxHeight)
+    
+    //var maxSize = maxSize(subviews: subviews)
     let spacing = spacing(subviews: subviews)
+    
+    print("maxSize \(maxSize) spacing \(spacing)")
+    
+//    if maxSize.width > bounds.width {
+//      print("replacing max size \(maxSize.width) with \(bounds.width)")
+//      maxSize = CGSize(width: bounds.width, height: maxSize.height)
+//    }
     
     let sizeProposal = ProposedViewSize(width: maxSize.width,
                                         height: maxSize.height)
+    print("sizeProposal \(sizeProposal)")
     
-    var x = bounds.minX + maxSize.width / 2
+    var x = bounds.midX - maxSize.width / 2
+    var y = bounds.minY + maxSize.height / 2
     
     for index in subviews.indices {
-      subviews[index].place(at: CGPoint(x: x, y: bounds.midY),
+      subviews[index].place(at: CGPoint(x: bounds.midX, y: y),
                             anchor: .center,
                             proposal: sizeProposal)
-      x += maxSize.width + spacing[index]
+      //x += maxSize.width + spacing[index]
+      y += maxSize.height + spacing[index]
     }
   }
   
   private func maxSize(subviews: Subviews) -> CGSize {
+    let subviewSizes = subviews.map { $0.sizeThatFits(.unspecified) }
 
-        let subviewSizes = subviews.map { $0.sizeThatFits(.unspecified) }
+    let maxSize: CGSize = subviewSizes.reduce(.zero, { result, size in
+      CGSize(
+        width: max(result.width, size.width),
+        height: max(result.height, size.height))
+    })
 
-        let maxSize: CGSize = subviewSizes.reduce(.zero, { result, size in
-            CGSize(width: max(result.width, size.width),
-                   height: max(result.height, size.height))
-        })
+    return maxSize
+  }
+  
+  private func maxWidth(subviews: Subviews) -> CGFloat {
+    let subviewSizes = subviews.map { $0.sizeThatFits(.unspecified) }
+    
+    let maxWidth: CGFloat = subviewSizes.reduce(.zero, { result, size in
+          max(result, size.width)
+        }
+    )
+    return maxWidth
+  }
+  
+  private func maxHeight(subviews: Subviews, maxWidth: CGFloat) -> CGFloat {
+    let subviewSizes = subviews.map { $0.sizeThatFits(ProposedViewSize(width: maxWidth, height: nil))}
+    
+    
+    let maxHeight: CGFloat = subviewSizes.reduce(.zero, { result, size in
+          max(result, size.height)
+        }
+    )
 
-        return maxSize
+      return maxHeight
     }
     
     private func spacing(subviews: Subviews) -> [CGFloat] {
@@ -181,7 +224,7 @@ struct EqualWidthLayout: Layout {
             guard index < subviews.count - 1 else { return 0.0 }
 
             return subviews[index].spacing.distance(to: subviews[index + 1].spacing,
-                                                    along: .horizontal)
+                                                  along: .vertical)
         }
     }
 }

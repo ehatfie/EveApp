@@ -404,17 +404,23 @@ struct IndustryPlanJob {
  
  
  */
+protocol GroupEnum: RawRepresentable where RawValue == Int64 { }
 
+enum IndustryGroup: Int64, CaseIterable, GroupEnum {
+  enum Reactions: Int64, CaseIterable, GroupEnum {
+    //case compositeReactions = 429
+    case simpleReactions = 436
+    case complexReactions = 484
+  }
+  
+  enum Materials: Int64, CaseIterable, GroupEnum {
+    case constructionComponents = 334
+    case intermediateMaterials = 428
+    case moonMaterials = 427
+    case composites = 429
+  }
 
-enum IndustryGroup: Int64 {
-  case constructionComponents = 334
-  case constructionComponentsBlueprints = 447
-  case intermediateMaterials = 428
-  case compositeReactions = 429
   case compositeReactionsFormula = 1888
-  case simpleReactions = 436
-  case complexReactions = 484
-  case moonMaterials = 427
 }
 
 enum BlueprintGroups: Int64 {

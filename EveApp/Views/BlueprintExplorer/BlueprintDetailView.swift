@@ -19,6 +19,7 @@ import Fluent
   func makePlan(blueprint: BlueprintModel) {
     Task {
       let plan = await self.industryPlanner.makePlan(for: blueprint)
+      print("makePlan result \(plan)")
       self.shipPlan = plan
     }
   }
@@ -200,19 +201,19 @@ struct BlueprintDetailView: View {
       }
     
     let zeroLevelValues = model.zeroLevelJobs.map { value in
-      return (value.blueprintId, names[value.blueprintId] ?? "", value.requiredRuns)
+      return (value.blueprintId, names[value.blueprintId] ?? "NA", value.requiredRuns)
     }.sorted(by: { $0.0 < $1.0})
     
     let firstLevelValues = model.firstLevelJobs.map { value in
-        return (value.blueprintId, names[value.blueprintId] ?? "", value.requiredRuns)
+        return (value.blueprintId, names[value.blueprintId] ?? "NA", value.requiredRuns)
     }.sorted(by: { $0.0 < $1.0})
     
     let secondLevelValues = model.secondLevelJobs.map { value in
-        return (value.blueprintId, names[value.blueprintId] ?? "", value.requiredRuns)
+        return (value.blueprintId, names[value.blueprintId] ?? "NA", value.requiredRuns)
     }.sorted(by: { $0.0 < $1.0})
     
     let thirdLevelValues = model.thirdLevelJobs.map { value in
-      return (value.blueprintId, names[value.blueprintId] ?? "", value.requiredRuns)
+      return (value.blueprintId, names[value.blueprintId] ?? "NA", value.requiredRuns)
     }.sorted(by: { $0.0 < $1.0})
     
     
@@ -261,13 +262,13 @@ struct BlueprintDetailView: View {
     
     return VStack(alignment: .leading, spacing: 10) {
       HStack(alignment: .top) {
-        inputListView("Zero Level", values: zeroLevelValues)
+        inputListView("Zero Level \(zeroLevelValues.count)", values: zeroLevelValues)
         inputListView("First Level", values: firstLevelValues)
         inputListView("Second Level", values: secondLevelValues)
         inputListView("Third Level", values: thirdLevelValues)
       }
       Spacer()
-    }.frame(maxHeight: 500)
+    }.frame(maxHeight: .infinity)
     .border(.blue)
   }
   
@@ -277,15 +278,13 @@ struct BlueprintDetailView: View {
         Divider()
         List(values, id: \.0) { entry in
           HStack(alignment: .center) {
-            Text("\(entry.1) (\(entry.0))")
-            
+            Text("\(entry.1)")
             Spacer()
             Text("\(entry.2)")
           }
         }
         Spacer()
       }.frame(maxWidth: 250)
-    
   }
   
   func jobListView(_ text: String, values: [(Int64, String, Int)]) -> some View {

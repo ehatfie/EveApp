@@ -80,15 +80,13 @@ struct CharacterInfoView: View {
   var body: some View {
     VStack(alignment: .leading) {
       HStack(alignment: .top, spacing: 10) {
-        
         if let characterData = viewModel.characterData {
-          VStack {
+          VStack(alignment: .leading) {
             Text("characterId: \(characterData.characterId)")
             localDataView(characterData: characterData)
-          }
+          }.frame(maxWidth: 250)
           if let skillsData = viewModel.characterData?.skillsData {
             VStack {
-              
               Text("Skills Info")
               CharacterSkillsView(characterModel: characterData,skillsData: skillsData)
             }
@@ -194,9 +192,10 @@ struct CharacterInfoView: View {
   }
   
   func lineItem(primary: String, secondary: String) -> some View {
-    HStack {
+    HStack(alignment: .top) {
       Text(primary)
       Text(secondary)
+      Spacer()
     }
   }
   

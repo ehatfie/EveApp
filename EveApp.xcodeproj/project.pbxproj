@@ -98,6 +98,9 @@
 		BA9D96152B2FD4DC006AC37E /* IndustryHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96142B2FD4DC006AC37E /* IndustryHelperView.swift */; };
 		BA9D96182B2FF4E5006AC37E /* RaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96172B2FF4E5006AC37E /* RaceModel.swift */; };
 		BA9D961A2B30088B006AC37E /* races.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA9D96192B30088A006AC37E /* races.yaml */; };
+		BAA88E422C55DA8B0001BF42 /* PotentialIIndustryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA88E412C55DA8B0001BF42 /* PotentialIIndustryView.swift */; };
+		BAA88E442C586DCF0001BF42 /* PotentialIndustryFiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA88E432C586DCF0001BF42 /* PotentialIndustryFiltersView.swift */; };
+		BAA88E462C61C8AB0001BF42 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA88E452C61C8A70001BF42 /* Theme.swift */; };
 		BAB271D52A6867B5004F01B7 /* DataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB271D42A6867B4004F01B7 /* DataFetcher.swift */; };
 		BAB271F72A686918004F01B7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BAB271F62A686918004F01B7 /* Alamofire */; };
 		BACB51582A686E760044CDA0 /* JSONEncodableEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB4FD62A686E740044CDA0 /* JSONEncodableEncoding.swift */; };
@@ -654,6 +657,9 @@
 		BA9D96142B2FD4DC006AC37E /* IndustryHelperView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = IndustryHelperView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA9D96172B2FF4E5006AC37E /* RaceModel.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = RaceModel.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA9D96192B30088A006AC37E /* races.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = races.yaml; sourceTree = "<group>"; };
+		BAA88E412C55DA8B0001BF42 /* PotentialIIndustryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PotentialIIndustryView.swift; sourceTree = "<group>"; };
+		BAA88E432C586DCF0001BF42 /* PotentialIndustryFiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PotentialIndustryFiltersView.swift; sourceTree = "<group>"; };
+		BAA88E452C61C8A70001BF42 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		BAB271D42A6867B4004F01B7 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
 		BACB4FD62A686E740044CDA0 /* JSONEncodableEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONEncodableEncoding.swift; sourceTree = "<group>"; };
 		BACB4FD72A686E740044CDA0 /* APIs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIs.swift; sourceTree = "<group>"; };
@@ -1201,6 +1207,7 @@
 		BA3149C42A1EF98C0076E6DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BAA88E402C55DA5E0001BF42 /* PotentialIndustryView */,
 				BA20ADBA2C114F2100095B4E /* HomeInfo */,
 				BA9D96132B2FD4B7006AC37E /* IndustryHelper */,
 				BA9D96122B2D779A006AC37E /* DeveloperSettings */,
@@ -1221,6 +1228,7 @@
 		BA3149CC2A1EFA720076E6DD /* src */ = {
 			isa = PBXGroup;
 			children = (
+				BAA88E452C61C8A70001BF42 /* Theme.swift */,
 				BA59910A2C003781003108CF /* AuthManager */,
 				BA5990FC2BF45F95003108CF /* Assets */,
 				BA9C8FE62B44C52D00F4DBAF /* IndustryPlannerManager */,
@@ -1526,6 +1534,15 @@
 				BA9D96172B2FF4E5006AC37E /* RaceModel.swift */,
 			);
 			path = Misc;
+			sourceTree = "<group>";
+		};
+		BAA88E402C55DA5E0001BF42 /* PotentialIndustryView */ = {
+			isa = PBXGroup;
+			children = (
+				BAA88E412C55DA8B0001BF42 /* PotentialIIndustryView.swift */,
+				BAA88E432C586DCF0001BF42 /* PotentialIndustryFiltersView.swift */,
+			);
+			path = PotentialIndustryView;
 			sourceTree = "<group>";
 		};
 		BAB271CF2A637916004F01B7 /* Packages */ = {
@@ -2262,6 +2279,7 @@
 				BACB51982A686E760044CDA0 /* GetKillmailsKillmailIdKillmailHashOk.swift in Sources */,
 				BACB522A2A686E770044CDA0 /* GetUniversePlanetsPlanetIdPosition.swift in Sources */,
 				BACB52C82A686E770044CDA0 /* GetFleetsFleetIdWingsNotFound.swift in Sources */,
+				BAA88E442C586DCF0001BF42 /* PotentialIndustryFiltersView.swift in Sources */,
 				BACB523E2A686E770044CDA0 /* GetKillmailsKillmailIdKillmailHashAttacker.swift in Sources */,
 				BACB52602A686E770044CDA0 /* GetFwLeaderboardsKills.swift in Sources */,
 				BAE02EF22AFB11D200AB695F /* TypeDogmaInfoView.swift in Sources */,
@@ -2347,6 +2365,7 @@
 				BACB51A22A686E770044CDA0 /* GetFwLeaderboardsCorporationsYesterdayYesterday1.swift in Sources */,
 				BACB51722A686E760044CDA0 /* OpportunitiesAPI.swift in Sources */,
 				BACB52412A686E770044CDA0 /* PostCharactersCharacterIdFittingsCreated.swift in Sources */,
+				BAA88E422C55DA8B0001BF42 /* PotentialIIndustryView.swift in Sources */,
 				BACB525C2A686E770044CDA0 /* ServiceUnavailable.swift in Sources */,
 				BACB52942A686E770044CDA0 /* GetUniverseGraphicsGraphicIdNotFound.swift in Sources */,
 				BA9D96072B1177D8006AC37E /* IndustryInfoView.swift in Sources */,
@@ -2635,6 +2654,7 @@
 				BACB51ED2A686E770044CDA0 /* GetMarketsGroupsMarketGroupIdOk.swift in Sources */,
 				BACB522E2A686E770044CDA0 /* GetCharactersCharacterIdStandings200Ok.swift in Sources */,
 				BACB51C32A686E770044CDA0 /* GetFwLeaderboardsLastWeekLastWeek1.swift in Sources */,
+				BAA88E462C61C8AB0001BF42 /* Theme.swift in Sources */,
 				BACB52A02A686E770044CDA0 /* PostUniverseNamesNotFound.swift in Sources */,
 				BACB52222A686E770044CDA0 /* GetCharactersCharacterIdFwStatsOk.swift in Sources */,
 				BACB516E2A686E760044CDA0 /* InsuranceAPI.swift in Sources */,

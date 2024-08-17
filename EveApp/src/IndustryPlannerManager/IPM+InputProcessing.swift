@@ -27,7 +27,6 @@ extension IndustryPlannerManager {
         )
         
         let secondLevel: [BlueprintInfo2] = await getUniqueInputBlueprints(for: firstLevelBlueprints)
-        
         let thirdLevelSums = await sumBlueprintInfoInputs(
             blueprints: secondLevel,
             values: secondLevelSums
@@ -39,6 +38,7 @@ extension IndustryPlannerManager {
             blueprints: thirdLevelBlueprints,
             values: thirdLevelSums
         )
+        
         print("got sums")
         var bp1: [Int64: BlueprintInfo2] = [:]
         firstLevelBlueprints.forEach { value in
@@ -105,26 +105,6 @@ extension IndustryPlannerManager {
         return inputSums
     }
         
-//        func sumMultipleAdjustedInputs(blueprintInfo: [BlueprintInfo2], values: [Int64: Int]) async -> [Int64: Int] {
-//            
-//            let result = await withTaskGroup(
-//                of: [Int64: Int].self,
-//                returning: [Int64: Int].self
-//            ) { taskGroup in
-//                var returnValue: [Int64: Int]
-//                blueprintInfo.forEach { blueprint in
-//                    taskGroup.addTask {
-//                        return await self.sumAdjustedInputs(blueprintInfo: blueprint, values: values)
-//                    }
-//                }
-//                
-//                for await result in taskGroup {
-//                    
-//                }
-//            }
-//            return [:]
-//        }
-        
     /// Sum the input materials needed to make N objects represented by a BlueprintInfo2
     func sumAdjustedInputs(blueprintInfo: BlueprintInfo2, values: [Int64: Int]) async -> [Int64: Int] {
         guard let numToMake = values[blueprintInfo.productId],
@@ -175,7 +155,6 @@ extension IndustryPlannerManager {
 
 // MARK: - Job creation
 extension IndustryPlannerManager {
-    
     func makeJobsForInputSums(
         blueprints: [BlueprintInfo2],
         values: [Int64: Int]
@@ -214,8 +193,6 @@ extension IndustryPlannerManager {
         values: [Int64: Int]
     ) async -> [Int64: Int] {
         print("sum inputs on blueprintInfos values:\(values)")
-        //print("do thing \(blueprintInfos.map { $0.blueprintModel.blueprintTypeID})")
-        //print("do thing values \(values)")
         var inputSums: [Int64: Int] = [:]
         
         inputSums = await withTaskGroup(
@@ -241,7 +218,10 @@ extension IndustryPlannerManager {
     }
     
     // this should only sum the values in the provided array nothing else
-    func sumValues(on inputMaterials: [QuantityTypeModel], values: [Int64: Int]) async -> [Int64: Int] {
+    func sumValues(
+        on inputMaterials: [QuantityTypeModel],
+        values: [Int64: Int]
+    ) async -> [Int64: Int] {
       print("sumInputsAsync")
       var inputSums: [Int64: Int] = [:]
       
@@ -253,7 +233,9 @@ extension IndustryPlannerManager {
     }
     
     /// Gets an array of all BlueprintInfo for the inputs of a blueprint
-    func getBlueprintInfo(for blueprints: [BlueprintInfo2]) async -> [(Int64, [BlueprintInfo2])] {
+    func getBlueprintInfo(
+        for blueprints: [BlueprintInfo2]
+    ) async -> [(Int64, [BlueprintInfo2])] {
         await withTaskGroup(
             of: (Int64, [BlueprintInfo2]).self,
             returning: [(Int64, [BlueprintInfo2])].self

@@ -33,42 +33,15 @@ class IndustryPlannerManager {
     // get jobs to run for materials
   }
   
-  func makePlan(for blueprintModel: BlueprintModel) -> ShipPlan {
-    print("make plan for blueprintModel")
-    let typeModel = DataManager.shared.dbManager!.getType(for: blueprintModel.blueprintTypeID)
-    let blueprintActivities = blueprintModel.activities
-    guard let productTypeId = blueprintActivities.manufacturing.products.first?.typeId else { return .empty }
-    let productTypeModel = DataManager.shared
-      .dbManager!.getType(for: productTypeId)
-
-    let inputMaterials = getInputMaterials(for: blueprintModel)
-    // determine what thing we are making
-    let blueprintInfo = BlueprintInfo(blueprintModel: blueprintModel, typeModel: typeModel, inputMaterials: getTypeModels(for: inputMaterials))
-    let categoryModel = dbManager.getCategory(groupId: productTypeModel.groupID)
-    //print("category \(categoryModel.name)")
-    let categoryType = CategoryTypes(rawValue: categoryModel.categoryId)
-    //print("got category type \(categoryType)")
-    switch categoryType {
-    case .ship: return makeShipPlan2(for: blueprintInfo)
-    default: return .empty
-    }
-  
-  }
   func makePlan(for blueprintModel: BlueprintModel) async -> ShipPlan {
     print("make plan for blueprintModel")
-    let typeModel = await DataManager.shared.dbManager!.getType(for: blueprintModel.blueprintTypeID)
     let blueprintActivities = blueprintModel.activities
     guard let productTypeId = blueprintActivities.manufacturing.products.first?.typeId else { return .empty }
-    let productTypeModel = await DataManager.shared
-      .dbManager!.getType(for: productTypeId)!
-
-    let inputMaterials = getInputMaterials(for: blueprintModel)
+    let productTypeModel = await dbManager.getType(for: productTypeId)!
+    
     // determine what thing we are making
-    //let blueprintInfo = BlueprintInfo(blueprintModel: blueprintModel, typeModel: typeModel, inputMaterials: getTypeModels(for: inputMaterials))
     let categoryModel = dbManager.getCategory(groupId: productTypeModel.groupID)
-    //print("category \(categoryModel.name)")
     let categoryType = CategoryTypes(rawValue: categoryModel.categoryId)
-    //print("got category type \(categoryType)")
     
     let blueprintInfo: BlueprintInfo2 = makeBlueprintInfo(for: blueprintModel)
     switch categoryType {
@@ -76,20 +49,6 @@ class IndustryPlannerManager {
     default: return .empty
     }
   
-  }
-  
-  func makePlan(for blueprintInfo: BlueprintInfo) {
-    print("Make plan for \(blueprintInfo.typeModel.name)")
-    let blueprintModel = blueprintInfo.blueprintModel
-    let typeModel = blueprintInfo.typeModel
-    let materials = blueprintModel.activities.manufacturing.materials
-    
-    let inputs: [ItemQuantityInfo] = getTypeModels(for: materials)
-    // add the input materials to the original BlueprintInfo
-    let blueprintInfo1 = BlueprintInfo(blueprintModel: blueprintModel, typeModel: typeModel, inputMaterials: inputs)
-    
-    // get the BlueprintInfo objects for all material inputs of the original blueprintInfo
-    let inputMaterialBlueprintInfos: [BlueprintInfo] = getThingForBlueprintInfo(blueprintInfo1)
   }
   
   func getThingForBlueprintInfo(_ value: BlueprintInfo) -> [BlueprintInfo] {
@@ -217,7 +176,7 @@ class IndustryPlannerManager {
 // Depth first versions?
 extension IndustryPlannerManager {
   func makePlan3(for blueprintModel: BlueprintModel) -> IndustryPlanJob? {
-    let typeModel = DataManager.shared.dbManager!.getType(for: blueprintModel.blueprintTypeID)
+    let typeModel = dbManager.getType(for: blueprintModel.blueprintTypeID)
     let blueprintActivities = blueprintModel.activities
     
     guard let productTypeId = blueprintActivities.manufacturing.products.first?.typeId else { return nil }

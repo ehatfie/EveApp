@@ -98,6 +98,7 @@
 		BA9D96152B2FD4DC006AC37E /* IndustryHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96142B2FD4DC006AC37E /* IndustryHelperView.swift */; };
 		BA9D96182B2FF4E5006AC37E /* RaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96172B2FF4E5006AC37E /* RaceModel.swift */; };
 		BA9D961A2B30088B006AC37E /* races.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA9D96192B30088A006AC37E /* races.yaml */; };
+		BAA69B9A2C700E36007399D7 /* BlueprintProductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA69B992C700E36007399D7 /* BlueprintProductionView.swift */; };
 		BAA88E422C55DA8B0001BF42 /* PotentialIIndustryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA88E412C55DA8B0001BF42 /* PotentialIIndustryView.swift */; };
 		BAA88E442C586DCF0001BF42 /* PotentialIndustryFiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA88E432C586DCF0001BF42 /* PotentialIndustryFiltersView.swift */; };
 		BAA88E462C61C8AB0001BF42 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA88E452C61C8A70001BF42 /* Theme.swift */; };
@@ -657,7 +658,8 @@
 		BA9D96142B2FD4DC006AC37E /* IndustryHelperView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = IndustryHelperView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA9D96172B2FF4E5006AC37E /* RaceModel.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = RaceModel.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA9D96192B30088A006AC37E /* races.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = races.yaml; sourceTree = "<group>"; };
-		BAA88E412C55DA8B0001BF42 /* PotentialIIndustryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PotentialIIndustryView.swift; sourceTree = "<group>"; };
+		BAA69B992C700E36007399D7 /* BlueprintProductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintProductionView.swift; sourceTree = "<group>"; };
+		BAA88E412C55DA8B0001BF42 /* PotentialIIndustryView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = PotentialIIndustryView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAA88E432C586DCF0001BF42 /* PotentialIndustryFiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PotentialIndustryFiltersView.swift; sourceTree = "<group>"; };
 		BAA88E452C61C8A70001BF42 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		BAB271D42A6867B4004F01B7 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
@@ -1541,6 +1543,7 @@
 			children = (
 				BAA88E412C55DA8B0001BF42 /* PotentialIIndustryView.swift */,
 				BAA88E432C586DCF0001BF42 /* PotentialIndustryFiltersView.swift */,
+				BAA69B992C700E36007399D7 /* BlueprintProductionView.swift */,
 			);
 			path = PotentialIndustryView;
 			sourceTree = "<group>";
@@ -2451,6 +2454,7 @@
 				BA7100A52AEA1969001CD301 /* BlueprintExplorerView.swift in Sources */,
 				BACB51E62A686E770044CDA0 /* GetUniverseCategoriesCategoryIdOk.swift in Sources */,
 				BACB529D2A686E770044CDA0 /* GetKillmailsKillmailIdKillmailHashVictim.swift in Sources */,
+				BAA69B9A2C700E36007399D7 /* BlueprintProductionView.swift in Sources */,
 				BACB51FF2A686E770044CDA0 /* PostUniverseIdsFaction.swift in Sources */,
 				BACB52912A686E770044CDA0 /* PostCharactersCharacterIdFittingsItem.swift in Sources */,
 				BA7100A02AE89483001CD301 /* BlueprintModel.swift in Sources */,

@@ -24,6 +24,7 @@ import Fluent
     }
   }
 }
+
 struct BlueprintDetailView: View {
   var blueprint: BlueprintModel
   var typeModel: TypeModel?
@@ -54,7 +55,6 @@ struct BlueprintDetailView: View {
   // 45648
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
-      Text("Blueprint Detail View")
       HStack {
         if let typeModel = self.typeModel {
           Text("\(typeModel.name)")
@@ -200,7 +200,8 @@ struct BlueprintDetailView: View {
         names[value.typeId] = value.name
       }
     
-    let zeroLevelValues = model.zeroLevelJobs.map { value in
+    let zeroLevelValues: [(Int64, String, Int)]
+    = model.zeroLevelJobs.map { value in
       return (value.blueprintId, names[value.blueprintId] ?? "NA", value.requiredRuns)
     }.sorted(by: { $0.0 < $1.0})
     

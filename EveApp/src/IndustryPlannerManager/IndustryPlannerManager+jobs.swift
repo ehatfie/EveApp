@@ -8,113 +8,15 @@
 import Foundation
 
 extension IndustryPlannerManager {
-  // This could work but we dont need to fetch TypeModel for each thing, dont need ItemQuantityInfo.
-  func makeShipPlan(for blueprintInfo: BlueprintInfo) {
-    let blueprintModel = blueprintInfo.blueprintModel
-    let typeModel = blueprintInfo.typeModel
-    let materials = blueprintModel.activities.manufacturing.materials
-    
-    let firstLevel: [ItemQuantityInfo] = getTypeModels(for: materials)
-    
-    print()
-      
-    //makePlan2(for: blueprintInfo)
-  }
-  
-
-  //
-  func makeShipPlan2(for blueprintInfo: BlueprintInfo) -> ShipPlan {
-    print("makeShipPlan2()")
-    // This is a ship blueprint
-    let blueprintModel = blueprintInfo.blueprintModel
-    let materials: [QuantityTypeModel] = blueprintModel.activities.manufacturing.materials
-    
-    var start = Date()
-    var zeroLevelInputs: [Int64: Int] = [:]
-    
-    blueprintInfo.inputMaterials.forEach { value in
-      zeroLevelInputs[value.quantityTypeModel.typeId] = Int(value.quantityTypeModel.quantity)
-    }
-    
-    // These are the blueprint models for all inputs to the ship
-    let firstLevel: [BlueprintInfo2] = getBlueprintModels(for: materials)
-    let firstLevelTook = start.timeIntervalSinceNow * -1
-    print("first level took \(firstLevelTook) to fetch")
-    
-    start = Date()
-    // this might should contain a count of number needed
-    let secondLevel: [(Int64, [BlueprintInfo2])] = firstLevel.map { ($0.productId, getInputBlueprintsForBlueprintInfo2($0)) }
-    print("second level")
-    let secondLevelTook = start.timeIntervalSinceNow * -1
-    print("second level took \(secondLevelTook) to fetch")
-    // these should be Rolled tungsten alloy
-    
-    // all the blueprint infos for the materials of a productID blueprint info
-    // var diction2: [Int64: [BlueprintInfo2]] = [:]
-    let zeroLevelInputModels = blueprintInfo.inputMaterials.map { $0.quantityTypeModel }
-    
-    start = Date()
-    // sum inputs for all zero level inputs, resulting in the first level of inputs
-    let firstLevelInputSums: [Int64: Int] = sumInputs(on: zeroLevelInputModels, values: zeroLevelInputs)
-    let firstLevelSumTook = start.timeIntervalSinceNow * -1
-    print("first level sum took \(firstLevelSumTook)")
-    
-
-    var secondLevelInputSums: [Int64: Int] = [:]
-    
-    start = Date()
-    secondLevelInputSums = doThing(for: firstLevel, values: firstLevelInputSums)
-    
-    let secondLevelSumsTook = start.timeIntervalSinceNow * -1
-    print("second level sums took \(secondLevelSumsTook)")
-    
-    var thirdLevelInputSums: [Int64: Int] = [:]
-    
-    start = Date()
-    let thirdLevel = secondLevel.flatMap { one, two in
-      return two.flatMap { getInputBlueprintsForBlueprintInfo2($0) }
-    }
-    
-    var thirdLevelInputBps: [Int64: BlueprintInfo2] = [:]
-    
-    thirdLevel.forEach { value in
-      thirdLevelInputBps[value.productId] = value
-    }
-    thirdLevelInputSums = doThing2(for: thirdLevelInputBps.map { $0.value }, values: secondLevelInputSums)
-
-    let thirdLevelSumTook = start.timeIntervalSinceNow * -1
-    print("third level sums took \(thirdLevelSumTook)")
-    
-    print()
-    
-    let zeroLevelJobs: [TestJob] = makeJobsForInputSums(values: zeroLevelInputs)
-    let firstLevelJobs: [TestJob] = makeJobsForInputSums(values: firstLevelInputSums)
-    let secondLevelJobs: [TestJob] = makeJobsForInputSums(values: secondLevelInputSums)
-    let thirdLevelJobs: [TestJob] = makeJobsForInputSums(values: thirdLevelInputSums)
-    
-    let shipPlanJobs = ShipPlanJobs(
-      zeroLevelJobs: zeroLevelJobs,
-      firstLevelJobs: firstLevelJobs,
-      secondLevelJobs: secondLevelJobs,
-      thirdLevelJobs: thirdLevelJobs
-    )
-    
-    let shipPlanInputs = ShipPlanInputs(
-      zeroLevelInputs: zeroLevelInputs,
-      firstLevelInputs: firstLevelInputSums,
-      secondLevelInputs: secondLevelInputSums,
-      thirdLevelInputs: thirdLevelInputSums
-    )
-    
-    return ShipPlan(jobs: shipPlanJobs, inputs: shipPlanInputs)
-  }
-  
   func printNames(for typeIds: [Int64]) {
     let names = dbManager.getTypeNames(for: typeIds).map{$0.name}
     print("type names \(names)")
   }
   
-  func sumInputs(on inputMaterials: [QuantityTypeModel], values: [Int64: Int]) -> [Int64: Int] {
+  func sumInputs(
+    on inputMaterials: [QuantityTypeModel],
+    values: [Int64: Int]
+  ) -> [Int64: Int] {
     print("sumInputs")
     let inputMaterialBlueprints: [BlueprintInfo2] = getBlueprintModels(for: inputMaterials)
 
@@ -159,53 +61,6 @@ extension IndustryPlannerManager {
     return inputSums
   }
   
-  func sumInputs5(on inputMaterials: [QuantityTypeModel], values: [Int64: Int]) -> [Int64: Int] {
-    //print("sumInputs2")
-    let inputMaterialBlueprints: [BlueprintInfo2] = getBlueprintModels(for: inputMaterials)
-
-    var diction: [Int64: BlueprintInfo2] = [:]
-    var inputSums: [Int64: Int] = [:]
-    
-    inputMaterialBlueprints.forEach { value in
-      guard BlueprintIds.FuelBlocks(rawValue: value.productId) == nil else {
-        // inputSums[value.productId] = values[value.productId]
-        return
-      }
-      diction[value.productId] = value
-    }
-    
-    inputMaterials.forEach { material in
-      
-      guard let blueprintInfo = diction[material.typeId] else {
-        if BlueprintIds.FuelBlocks(rawValue: material.typeId) == nil {
-          let thisMaterialQuantity = Int(material.quantity)
-          let existingSums = inputSums[material.typeId] ?? 0
-          
-          let newValue = Int(material.quantity) + (inputSums[material.typeId] ?? 0)
-          print("this material \(thisMaterialQuantity) \(existingSums) newValue: \(newValue)")
-          inputSums[material.typeId] = newValue
-        }
-        
-        return
-      }
-      let need = values[blueprintInfo.productId]
-      let makes = blueprintInfo.productCount
-      // 16673 fernite carbide
-      // 46206 fernite carbide reaction formula
-      // this values is the wrong one
-      let numToMake = Int(ceil(Double(values[blueprintInfo.productId] ?? 1) / Double(blueprintInfo.productCount)))
-      //print("\(blueprintInfo.productId) need \(need) \(blueprintInfo.blueprintModel.blueprintTypeID) makes \(makes) num to make \(numToMake)")
-      let productsPerRun = blueprintInfo.productCount
-      let requiredRuns = Int(ceil(Double(numToMake) / Double(productsPerRun)))
-      //print("required runs \(requiredRuns) productsPerRun \(productsPerRun)")
-      blueprintInfo.inputMaterials.forEach { inputMaterial in
-        let inputCount = Int(inputMaterial.quantity) * requiredRuns
-        inputSums[inputMaterial.typeId] = (inputSums[inputMaterial.typeId] ?? 0) + Int(inputCount)
-      }
-    }
-    
-    return inputSums
-  }
   // sums with relation to some runs needed
   func sumInputs3(on blueprintInfo: BlueprintInfo2, values: [Int64: Int]) -> [Int64: Int] {
     //print("sumInputs2")
@@ -316,13 +171,7 @@ extension IndustryPlannerManager {
     
     return inputSums
   }
-  
-  // this should sum all the inputs for an array of blueprints. Returns dictionary of
-  //
-  // Params -
-  
 
-  
   // this should sum all the inputs for an array of blueprints
   func doThing2(for blueprintInfos: [BlueprintInfo2], values: [Int64: Int]) -> [Int64: Int] {
     print("do thing \(blueprintInfos.map { $0.blueprintModel.blueprintTypeID})")
@@ -374,14 +223,7 @@ extension IndustryPlannerManager {
     
     return jobs
   }
-  
-  func doJobThing(for blueprintInfos: [BlueprintInfo2]) -> [TestJob] {
-  
-    return blueprintInfos.flatMap { blueprintInfo in
-      return getJobs(for: blueprintInfo.inputMaterials)
-    }
-  }
-  
+    
   func getInputMaterials(for blueprintModel: BlueprintModel) -> [QuantityTypeModel]  {
     let manufacturing = blueprintModel.activities.manufacturing.materials
     let reaction = blueprintModel.activities.reaction.materials
@@ -396,8 +238,9 @@ extension IndustryPlannerManager {
 // MARK: - Async
 extension IndustryPlannerManager {
   
-  func getFilteredBlueprintModels(for values: [QuantityTypeModel]) async -> [BlueprintInfo2] {
-    
+  func getFilteredBlueprintModels(
+    for values: [QuantityTypeModel]
+  ) async -> [BlueprintInfo2] {
     let ids = values.map { $0.typeId }
       .filter { BlueprintIds.FuelBlocks(rawValue: $0) == nil } // filter out things we dont want to make
     

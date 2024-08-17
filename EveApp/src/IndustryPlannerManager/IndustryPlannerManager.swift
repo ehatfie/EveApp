@@ -54,22 +54,15 @@ class IndustryPlannerManager {
   func getThingForBlueprintInfo(_ value: BlueprintInfo) -> [BlueprintInfo] {
     let inputMaterials = value.inputMaterials
     let blueprintInfos = getBlueprintInfos(for: inputMaterials)
-//    blueprintInfos.forEach { value in
-//      let names = value.inputMaterials.map { ($0.typeModel.name, $0.quantityTypeModel.quantity) }
-//      print("3. inputs for \(value.typeModel.name) \(names)")
-//    }
-//    
+
     return blueprintInfos
   }
   
-  func getInputBlueprintsForBlueprintInfo2(_ value: BlueprintInfo2) -> [BlueprintInfo2] {
+  func getInputBlueprintsForBlueprintInfo2(
+    _ value: BlueprintInfo2
+  ) -> [BlueprintInfo2] {
     let inputMaterials = value.inputMaterials
     let blueprintInfos = getBlueprintModels(for: inputMaterials)
-//    blueprintInfos.forEach { value in
-//      let names = value.inputMaterials.map { ($0.typeId, $0.quantity) }
-//      //print("3. inputs for \(value.typeModel.name) \(names)")
-//    }
-    
     return blueprintInfos
   }
   

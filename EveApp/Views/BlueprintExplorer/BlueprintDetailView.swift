@@ -19,7 +19,6 @@ import Fluent
   func makePlan(blueprint: BlueprintModel) {
     Task {
       let plan = await self.industryPlanner.makePlan(for: blueprint)
-      print("makePlan result \(plan)")
       self.shipPlan = plan
     }
   }
@@ -274,6 +273,7 @@ struct BlueprintDetailView: View {
   }
   
   func inputListView(_ text: String, values: [(Int64, String, Int)]) -> some View {
+    GroupBox {
       VStack(alignment: .leading, spacing: 5) {
         Text(text).font(.title2)
         Divider()
@@ -286,6 +286,7 @@ struct BlueprintDetailView: View {
         }
         Spacer()
       }.frame(maxWidth: 250)
+    }
   }
   
   func jobListView(_ text: String, values: [(Int64, String, Int)]) -> some View {

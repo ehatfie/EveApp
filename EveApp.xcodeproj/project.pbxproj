@@ -99,6 +99,7 @@
 		BA9D96182B2FF4E5006AC37E /* RaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D96172B2FF4E5006AC37E /* RaceModel.swift */; };
 		BA9D961A2B30088B006AC37E /* races.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA9D96192B30088A006AC37E /* races.yaml */; };
 		BAA69B9A2C700E36007399D7 /* BlueprintProductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA69B992C700E36007399D7 /* BlueprintProductionView.swift */; };
+		BAA69B9C2C702B77007399D7 /* IndustryPlannerManager+IndustryJobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA69B9B2C70296E007399D7 /* IndustryPlannerManager+IndustryJobs.swift */; };
 		BAA88E422C55DA8B0001BF42 /* PotentialIIndustryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA88E412C55DA8B0001BF42 /* PotentialIIndustryView.swift */; };
 		BAA88E442C586DCF0001BF42 /* PotentialIndustryFiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA88E432C586DCF0001BF42 /* PotentialIndustryFiltersView.swift */; };
 		BAA88E462C61C8AB0001BF42 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA88E452C61C8A70001BF42 /* Theme.swift */; };
@@ -659,6 +660,7 @@
 		BA9D96172B2FF4E5006AC37E /* RaceModel.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = RaceModel.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA9D96192B30088A006AC37E /* races.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = races.yaml; sourceTree = "<group>"; };
 		BAA69B992C700E36007399D7 /* BlueprintProductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueprintProductionView.swift; sourceTree = "<group>"; };
+		BAA69B9B2C70296E007399D7 /* IndustryPlannerManager+IndustryJobs.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "IndustryPlannerManager+IndustryJobs.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BAA88E412C55DA8B0001BF42 /* PotentialIIndustryView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = PotentialIIndustryView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAA88E432C586DCF0001BF42 /* PotentialIndustryFiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PotentialIndustryFiltersView.swift; sourceTree = "<group>"; };
 		BAA88E452C61C8A70001BF42 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -1483,6 +1485,7 @@
 			children = (
 				BA3C02C82C1A9EE900F32650 /* IPM+InputProcessing.swift */,
 				BA9C8FE72B44C5F900F4DBAF /* IndustryPlannerManager.swift */,
+				BAA69B9B2C70296E007399D7 /* IndustryPlannerManager+IndustryJobs.swift */,
 				BA9C8FEF2B4CF6A500F4DBAF /* IndustryPlannerManager+jobs.swift */,
 			);
 			path = IndustryPlannerManager;
@@ -2618,6 +2621,7 @@
 				BA5991092BF99E72003108CF /* CharacterAssetsDataModel.swift in Sources */,
 				BA3149F12A5367930076E6DD /* CharacterPublicData.swift in Sources */,
 				BACB52B92A686E770044CDA0 /* GetUniverseTypesTypeIdNotFound.swift in Sources */,
+				BAA69B9C2C702B77007399D7 /* IndustryPlannerManager+IndustryJobs.swift in Sources */,
 				BACB51872A686E760044CDA0 /* GetFwLeaderboardsCharactersOk.swift in Sources */,
 				BACB52BB2A686E770044CDA0 /* PostUniverseIdsSystem.swift in Sources */,
 				BACB52B32A686E770044CDA0 /* GetCharactersCharacterIdMailRecipient.swift in Sources */,

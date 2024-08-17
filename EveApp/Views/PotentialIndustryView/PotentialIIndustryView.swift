@@ -36,7 +36,12 @@ struct TypeQuantityDisplayable {
   
   var blueprintDetails: BlueprintModel?
   
+  let industryPlannerManager: IndustryPlannerManager
+  let dbManager: DBManager
+  
   init() {
+    self.dbManager = DataManager.shared.dbManager!
+    self.industryPlannerManager = IndustryPlannerManager(dbManager: dbManager)
     Task {
       await setupSelectedCharacters()
       await getGroupFilters()
@@ -168,12 +173,14 @@ struct TypeQuantityDisplayable {
   
   func setBlueprintDetail(for typeId: Int64) async {
     print("set blueprint Detail \(typeId)")
-    let blueprintModel = await DataManager.shared.dbManager!.getBlueprintModel(for: typeId)
-    print("got blueprintModel \(blueprintModel?.blueprintTypeID)")
+    guard let blueprintModel = await dbManager.getBlueprintModel(for: typeId) else {
+      blueprintDetails = nil
+      return
+    }
+    print("got blueprintModel \(blueprintModel.blueprintTypeID)")
     blueprintDetails = blueprintModel
+    let plan = await self.industryPlannerManager.makePlan(for: blueprintModel)
     
-    let manager = IndustryPlannerManager(dbManager: DataManager.shared.dbManager!)
-    // manager.makeShipPlan2(for: <#T##BlueprintInfo#>)
   }
 }
 

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Fluent
+import TestPackage1
 
 class CharacterInfoData: Identifiable{
   var id: String {

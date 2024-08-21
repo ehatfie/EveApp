@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TestPackage1
 
 class CharacterInfoViewModel: ObservableObject {
   @Published var characterInfo: CharacterInfo?

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import TestPackage1
 
 /// Loading stuff from user defaults
 

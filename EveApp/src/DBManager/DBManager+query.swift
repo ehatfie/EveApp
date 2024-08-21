@@ -8,6 +8,7 @@
 import Foundation
 import Fluent
 import FluentSQL
+import TestPackage1
 
 struct TypeNamesResult {
   let typeId: Int64

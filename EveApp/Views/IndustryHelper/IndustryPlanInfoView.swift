@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TestPackage1
 
 struct IndustryPlanInfoView: View {
   let inputMaterialInfo: InputMaterialInfo

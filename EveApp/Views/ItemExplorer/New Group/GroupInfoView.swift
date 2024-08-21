@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Fluent
+import TestPackage1
 
 struct GroupInfoView: View {
   @Binding var selectedGroup: GroupModel? // nextThing

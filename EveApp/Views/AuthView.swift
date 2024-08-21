@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TestPackage1
 
 class AuthViewModel: ObservableObject {
     @Published var accessTokenResponse: AccessTokenResponse?

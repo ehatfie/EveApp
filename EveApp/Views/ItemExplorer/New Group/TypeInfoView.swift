@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Fluent
+import TestPackage1
 
 struct TypeInfoView: View {
   @Binding var selectedType: TypeModel?

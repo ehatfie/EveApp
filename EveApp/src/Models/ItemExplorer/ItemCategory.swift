@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import TestPackage1
 
 class ItemCategory: Identifiable {
     var categoryId: Int32

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TestPackage1
 
 enum IndustryType {
     case manufacturing

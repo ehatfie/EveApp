@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TestPackage1
 
 struct CharacterInfoView1: View {
   var characterInfo: [CharacterInfoData]

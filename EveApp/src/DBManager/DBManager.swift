@@ -11,6 +11,8 @@ import SwiftUI
 import NIO
 import Fluent
 
+import TestPackage1
+
 @Observable class DBManager {
   var databases: Databases
   let dbName = "TestDB29"

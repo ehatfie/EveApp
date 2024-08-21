@@ -7,6 +7,7 @@
 
 import Foundation
 import Fluent
+import TestPackage1
 
 class IndustryPlan {
   // type of plan

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FluentSQLiteDriver
+import TestPackage1
 
 struct AssetsViewItem: Identifiable, Hashable {
     var id: String {

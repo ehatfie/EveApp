@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FluentKit
+import TestPackage1
 
 struct AssetInfoDisplayable {
   let asset: CharacterAssetsDataModel
@@ -30,7 +31,9 @@ struct TypeQuantityDisplayable {
   var blueprintNames: [TypeNamesResult] = []
   
   var filters = Set<PotentialIndustryFilter>()
-  var selectedGroupFilters = Set<Int64>()
+  var selectedGroupFilters = Set<Int64>(
+    [IndustryGroup.Materials.constructionComponents.rawValue]
+  )
   var groupFilters = [PIGroupFilterDisplayable]()
   var filterGroups: [PIFilterGroup] = []
   
@@ -45,6 +48,8 @@ struct TypeQuantityDisplayable {
     Task {
       await setupSelectedCharacters()
       await getGroupFilters()
+      await getAssets()
+      await getMakesStuff()
     }
   }
   
@@ -72,6 +77,7 @@ struct TypeQuantityDisplayable {
       PIFilterGroup(title: "Materials", filters: materialGroups)
     ]
   }
+  
   func characterList() -> [CharacterDataModel] {
     
     return []
@@ -173,13 +179,19 @@ struct TypeQuantityDisplayable {
   
   func setBlueprintDetail(for typeId: Int64) async {
     print("set blueprint Detail \(typeId)")
+    await self.industryPlannerManager.createIndustryJobPlan(
+      for: typeId
+    )
     guard let blueprintModel = await dbManager.getBlueprintModel(for: typeId) else {
       blueprintDetails = nil
       return
     }
-    print("got blueprintModel \(blueprintModel.blueprintTypeID)")
-    blueprintDetails = blueprintModel
-    let plan = await self.industryPlannerManager.makePlan(for: blueprintModel)
+    //print("got blueprintModel \(blueprintModel.blueprintTypeID)")
+    //blueprintDetails = blueprintModel
+    
+//    await self.industryPlannerManager.createIndustryJobPlan(
+//      for: blueprintModel.blueprintTypeID
+//    )
     
   }
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TestPackage1
 
 struct DogmaAttributeDetailView: View {
   @Binding var dogmaAttribute: DogmaAttributeModel

@@ -5,11 +5,11 @@
 //  Created by Erik Hatfield on 6/12/24.
 //
 import Foundation
+import TestPackage1
 
 extension IndustryPlannerManager {
     func makeShipPlan(for blueprintInfo: BlueprintInfo2) async -> ShipPlan {
         print("makeShipPlan() - async")
-        
         let blueprintModel = blueprintInfo.blueprintModel
         let materials: [QuantityTypeModel] = blueprintModel.activities.manufacturing.materials
         

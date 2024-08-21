@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import TestPackage1
 /*
  
  open class SwaggerClientAPI {

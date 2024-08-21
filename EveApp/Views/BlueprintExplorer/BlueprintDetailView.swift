@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Fluent
+import TestPackage1
 
 @Observable class BlueprintDetailViewModel {
   let industryPlanner: IndustryPlannerManager

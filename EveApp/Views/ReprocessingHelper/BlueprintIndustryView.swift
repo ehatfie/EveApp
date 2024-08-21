@@ -4,7 +4,7 @@
 //
 //  Created by Erik Hatfield on 11/15/23.
 //
-
+import TestPackage1
 import SwiftUI
 import Combine
 import Fluent
@@ -130,26 +130,6 @@ struct RandomBlueprintPicker: View {
   }
 }
 
-extension CategoryModel: Equatable, Hashable {
-  static func == (lhs: CategoryModel, rhs: CategoryModel) -> Bool {
-    lhs.categoryId < rhs.categoryId
-  }
-  
-  func hash(into hasher: inout Hasher) {
-    hasher.combine(categoryId)
-    //hasher.combine(label)
-    //hasher.combine(command)
-  }
-}
 
-extension GroupModel: Equatable, Hashable {
-  static func == (lhs: GroupModel, rhs: GroupModel) -> Bool {
-    lhs.groupId < rhs.groupId
-  }
-  
-  func hash(into hasher: inout Hasher) {
-    hasher.combine(groupId)
-    //hasher.combine(label)
-    //hasher.combine(command)
-  }
-}
+
+

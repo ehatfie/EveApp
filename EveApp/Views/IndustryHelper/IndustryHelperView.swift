@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FluentKit
+import TestPackage1
 
 enum Race: Int64, CaseIterable, Identifiable {
   var id: Int64 { rawValue }

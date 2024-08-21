@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import TestPackage1
 
 class ItemCategoryID: Identifiable {
   var id: Int32

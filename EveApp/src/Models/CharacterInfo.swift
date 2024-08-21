@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import TestPackage1
 
 class CharacterInfo {
     let characterID: String

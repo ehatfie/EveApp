@@ -12,6 +12,8 @@ import SwiftUI
 import NIO
 import Fluent
 
+import TestPackage1
+
 
 // MARK: - Auth
 

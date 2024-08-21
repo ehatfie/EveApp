@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TestPackage1
 
 struct ItemCategoryView: View {
     @State var category: ItemCategory

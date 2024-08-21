@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TestPackage1
 
 struct ItemTypeDetailView: View {
     let typeModel: TypeModel

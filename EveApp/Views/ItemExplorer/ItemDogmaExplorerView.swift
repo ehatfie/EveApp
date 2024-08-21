@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Fluent
+import TestPackage1
 
 struct ItemInfoDisplayable: Identifiable {
   let id: UUID = UUID()

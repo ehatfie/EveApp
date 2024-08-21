@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import TestPackage1
 
 extension DataManager {
   func fetchCharacterInfo() {

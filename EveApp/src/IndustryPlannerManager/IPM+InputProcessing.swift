@@ -5,7 +5,7 @@
 //  Created by Erik Hatfield on 6/12/24.
 //
 import Foundation
-import TestPackage1
+import ModelLibrary
 
 extension IndustryPlannerManager {
     func makeShipPlan(for blueprintInfo: BlueprintInfo2) async -> ShipPlan {

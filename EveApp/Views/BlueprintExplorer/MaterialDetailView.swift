@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Fluent
-import TestPackage1
+import ModelLibrary
 
 struct QuantityType {
   var quantity: Int64

@@ -8,7 +8,8 @@
 import Foundation
 import Fluent
 import FluentSQLiteDriver
-import TestPackage1
+import ModelLibrary
+import TestPackage3
 
 // MARK: - Assets
 extension DataManager {

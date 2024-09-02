@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Fluent
-import TestPackage1
+import ModelLibrary
 
 class DogmaAttributeViewModel: ObservableObject {
   var dogmaAttribute: DogmaAttributeModel

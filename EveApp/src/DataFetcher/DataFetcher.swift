@@ -6,10 +6,11 @@
 //
 
 import Foundation
-import TestPackage1
+import ModelLibrary
+import TestPackage3
 /*
  
- open class SwaggerClientAPI {
+ @MainActor open class SwaggerClientAPI {
      public static var basePath = "https://esi.evetech.net/"
      public static var credential: URLCredential?
      public static var customHeaders: [String:String] = [:]
@@ -23,6 +24,8 @@ class DataFetcher {
        // self.credential = URLCredential(
         
     }
+    
+    @MainActor
     func test() {
         
         UniverseAPI.getUniverseCategories(datasource: .tranquility, ifNoneMatch: nil, completion: { result, error  in

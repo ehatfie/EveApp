@@ -7,7 +7,7 @@
 
 import Foundation
 import Yams
-import TestPackage1
+import ModelLibrary
 
 enum YamlFiles: String {
   case categoryIDs = "categoryIDs"

@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Combine
-import TestPackage1
+import ModelLibrary
 
 struct BlueprintMaterialView: View {
     @Binding var blueprintMaterials: BlueprintManufacturingModel

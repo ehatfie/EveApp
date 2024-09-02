@@ -8,7 +8,7 @@
 import SwiftUI
 import Fluent
 import FluentSQL
-import TestPackage1
+import ModelLibrary
 
 enum IndustryGroups: Int {
   case mineral = 18

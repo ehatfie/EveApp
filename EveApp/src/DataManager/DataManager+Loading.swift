@@ -6,7 +6,8 @@
 //
 
 import Foundation
-import TestPackage1
+import ModelLibrary
+import TestPackage3
 
 /// Loading stuff from user defaults
 

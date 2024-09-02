@@ -12,7 +12,7 @@ import SwiftUI
 import NIO
 import Fluent
 
-import TestPackage1
+import ModelLibrary
 
 
 // MARK: - Auth

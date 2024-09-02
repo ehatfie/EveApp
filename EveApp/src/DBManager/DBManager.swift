@@ -11,7 +11,7 @@ import SwiftUI
 import NIO
 import Fluent
 
-import TestPackage1
+import ModelLibrary
 
 @Observable class DBManager {
   var databases: Databases
@@ -50,12 +50,8 @@ import TestPackage1
       //databases.use(.sqlite(.memory), as: .sqlite)
       databases.default(to: .sqlite)
     
-
-    
     setup()
-//    Task {
-//      try? await setupModelsAsync()
-//    }
+
     loadStaticData()
   }
   

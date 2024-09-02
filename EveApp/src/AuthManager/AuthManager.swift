@@ -9,7 +9,7 @@ import Foundation
 import OAuthSwift
 import CommonCrypto
 import CryptoKit
-import TestPackage1
+import ModelLibrary
 
 class AuthManager: ObservableObject {
     static let shared = AuthManager()

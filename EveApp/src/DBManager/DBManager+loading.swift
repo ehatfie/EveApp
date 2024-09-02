@@ -8,7 +8,7 @@
 import Foundation
 import Yams
 import Fluent
-import TestPackage1
+import ModelLibrary
 
 extension DBManager {
   func loadDogmaData() async  {

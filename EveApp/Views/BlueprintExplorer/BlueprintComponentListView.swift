@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import TestPackage1
+import ModelLibrary
 
 struct BlueprintComponentListView: View {
   var listData: BlueprintComponentListData

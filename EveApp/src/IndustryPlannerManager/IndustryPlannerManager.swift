@@ -7,7 +7,7 @@
 
 import Foundation
 import Fluent
-import TestPackage1
+import ModelLibrary
 
 class IndustryPlan {
   // type of plan
@@ -299,6 +299,46 @@ struct BlueprintInfo2 {
   let inputMaterials: [QuantityTypeModel]
 }
 
+struct BlueprintDisplayInfo: Hashable {
+  let productId: Int64
+  let productCount: Int64
+  let blueprintId: Int64
+  let blueprintName: String
+  let inputMaterials: [IdentifiedQuantity]
+  
+  init(
+    productId: Int64,
+    productCount: Int64,
+    blueprintId: Int64,
+    blueprintName: String,
+    inputMaterials: [IdentifiedQuantity]
+  ) {
+    self.productId = productId
+    self.productCount = productCount
+    self.blueprintId = blueprintId
+    self.blueprintName = blueprintName
+    self.inputMaterials = inputMaterials
+  }
+  
+  init(blueprintInfo: BlueprintInfo2) {
+    self.productId = blueprintInfo.productId
+    self.productCount = blueprintInfo.productCount
+    self.blueprintId = blueprintInfo.blueprintModel.blueprintTypeID
+    self.blueprintName = blueprintInfo.typeModel?.name ?? "NO_NAME"
+    self.inputMaterials = blueprintInfo.inputMaterials.map {
+      IdentifiedQuantity(
+        id: $0.typeId,
+        quantity: $0.quantity
+      )
+    }
+  }
+}
+
+struct IdentifiedQuantity: Hashable {
+  let id: Int64
+  let quantity: Int64
+}
+
 struct InputMaterialInfo {
   let typeModel: TypeModel
   let quantity: Int
@@ -364,6 +404,12 @@ enum IndustryGroup: Int64, CaseIterable, GroupEnum {
     //case compositeReactions = 429
     case simpleReactions = 436
     case complexReactions = 484
+  }
+  
+  enum ReactionFormulas: Int64, CaseIterable, GroupEnum {
+    case compositeReactionFormula = 1888
+    case polymerReactionFormula = 1889
+    case biochemicalReactionFormula = 1890
   }
   
   enum Materials: Int64, CaseIterable, GroupEnum {

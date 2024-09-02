@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TestPackage1
+import ModelLibrary
 
 extension IndustryPlannerManager {
   func printNames(for typeIds: [Int64]) {

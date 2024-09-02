@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import TestPackage1
+import ModelLibrary
 
 // Could use a better name
 struct SkillGroupEntryView: View {

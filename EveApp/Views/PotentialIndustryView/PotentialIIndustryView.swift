@@ -7,7 +7,7 @@
 
 import SwiftUI
 import FluentKit
-import TestPackage1
+import ModelLibrary
 
 struct AssetInfoDisplayable {
   let asset: CharacterAssetsDataModel

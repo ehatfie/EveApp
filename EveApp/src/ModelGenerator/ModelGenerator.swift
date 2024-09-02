@@ -7,7 +7,7 @@
 
 import Foundation
 import FluentKit
-import TestPackage1
+import ModelLibrary
 
 protocol SomeProtocol: Model {
   init(id: Int64, data: Codable)

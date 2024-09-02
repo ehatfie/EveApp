@@ -8,7 +8,7 @@
 import Foundation
 import OAuthSwift
 import Fluent
-import TestPackage1
+import ModelLibrary
 
 struct AuthConfig {
   let clientInfo: ClientInfo

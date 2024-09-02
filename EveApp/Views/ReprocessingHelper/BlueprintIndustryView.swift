@@ -4,7 +4,7 @@
 //
 //  Created by Erik Hatfield on 11/15/23.
 //
-import TestPackage1
+import ModelLibrary
 import SwiftUI
 import Combine
 import Fluent

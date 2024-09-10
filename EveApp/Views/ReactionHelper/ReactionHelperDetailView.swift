@@ -77,72 +77,23 @@ struct CharacterPickerView: View {
 // pass in some manager that caches the assets we have collected that this
 // view can just ask what it wants and not have to fetch it multiple times
 struct ReactionHelperDetailView: View {
-  let blueprintInfo: BlueprintInfo2
-  let blueprintDisplayInfo: [Int64: BlueprintDisplayInfo]
-  let characterInfo: IdentifiedString?
+  //let blueprintInfo: BlueprintInfo2
+  //let blueprintDisplayInfo: [Int64: BlueprintDisplayInfo]
   
-  let assetsViewModel: ReactionHelperDetailAssetsViewModel?
-  var nameDict: [Int64: String] = [:]
-  var inputDict: [Int64: Int64] = [:]
+  //@Binding var nameDict: [Int64: IdentifiedString]
+  @Binding var inputValues: [(IdentifiedString, IdentifiedQuantity)]
+  @Binding var assetValues: [(IdentifiedString, IdentifiedQuantity)]
+  @Binding var modifiedAssetValues: [(IdentifiedString, IdentifiedQuantity)]
+  @Binding var productValues: [(IdentifiedString, IdentifiedQuantity)]
+  //var inputMaterials: [IdentifiedQuantity]
   
-  var inputMaterials: [IdentifiedQuantity]
-  
-  @State var numRuns: Int = 1
+  @Binding var numRuns: Int
+  var pickerHandler: PickerHandler
 
-  init(
-    blueprintInfo: BlueprintInfo2,
-    blueprintDisplayInfo: [Int64: BlueprintDisplayInfo],
-    characterInfo: IdentifiedString?,
-    inputMats: [IdentifiedQuantity]
-  ) {
-    self.blueprintInfo = blueprintInfo
-    self.characterInfo = characterInfo
-    self.blueprintDisplayInfo = blueprintDisplayInfo
-    if let characterInfo = characterInfo {
-      self.assetsViewModel = ReactionHelperDetailAssetsViewModel(
-        blueprintModel: blueprintInfo.blueprintModel,
-        characterInfo: characterInfo
-      )
-      
-    } else {
-      assetsViewModel = nil
-    }
-    let allInputs = Array(blueprintDisplayInfo.values)
-      .map {
-        $0.inputMaterials
-      }.flatMap{ $0 }
-    
-    let allInputIds = allInputs.map{ $0.id }
-    print("all input ids count \(allInputIds.count)")
-    let inputTypeIds = blueprintInfo.inputMaterials.map { $0.typeId }
-    + [blueprintInfo.productId]
-    + allInputIds
-    
-    let typeModels = try! TypeModel.query(on: DataManager.shared.dbManager!.database)
-      .filter(\.$typeId ~~ inputTypeIds)
-      .all()
-      .wait()
-    
-    
-    for typeModel in typeModels {
-      nameDict[typeModel.typeId] = typeModel.name
-    }
-    
-    let inputMaterials = allInputs //blueprintInfo.inputMaterials
-  
-    for inputMaterial in inputMaterials {
-      inputDict[inputMaterial.id] = inputMaterial.quantity
-    }
-    
-    self.inputMaterials = inputMats
-  }
   
   var body: some View {
     VStack(alignment: .leading) {
       HStack {
-        ForEach(Array(self.blueprintDisplayInfo.values), id: \.blueprintId) { entry in
-          Text(entry.blueprintName)
-        }
         //Text("\(blueprintInfo.typeModel?.name ?? "")")
         Spacer()
         runsPicker()
@@ -150,105 +101,73 @@ struct ReactionHelperDetailView: View {
       
       Grid(alignment:.top) {
         GridRow {
-          //HStack(alignment: .top) {
-          VStack(alignment: .leading) {
-            if let assetsViewModel = assetsViewModel {
-              assetsView(assetsViewModel: assetsViewModel)
-            }
-            
-            if let assetsViewModel = assetsViewModel {
-              //VStack {
-              HStack(alignment: .top) {
-                GroupBox(
-                  content: {
-                    VStack(alignment: .leading) {
-                      ForEach(inputMaterials, id: \.id) { inputMaterial in
-                        HStack {
-                          Text(nameDict[inputMaterial.id] ?? "")
-                          Spacer()
-                          Text("\(inputMaterial.quantity * Int64(numRuns))")
-                        }
-                      }
-                    }
-                  },
-                  label: {
-                    Label("Inputs", systemImage: "creditcard.fill")
-                  }
-                )
-                
-                GroupBox(
-                  content: {
-                    HStack {
-                      Text(nameDict[blueprintInfo.productId] ?? "")
-                      Spacer()
-                      Text("\(blueprintInfo.productCount * Int64(numRuns))")
-                    }
-                    
-                  },
-                  label: {
-                    Label("Output", systemImage: "creditcard.fill")
-                  }
-                )
-
-              }
-            }
-          }
+          makeBox(text: "Asset Values", items: assetValues)
+          makeBox(text: "Modified Values", items: modifiedAssetValues)
+        }
+        GridRow {
+          makeBox(text: "Input Values", items: inputValues, numRuns)
+          makeBox(text: "Product Values", items: productValues, numRuns)
         }
       }
+      
       Spacer()
     }
   }
   
-  @ViewBuilder
-  func assetsView(assetsViewModel: ReactionHelperDetailAssetsViewModel) -> some View {
-      //VStack {
-      HStack(alignment: .center) {
-        GroupBox(
-          content: {
-            VStack(alignment: .leading) {
-              ForEach(
-                assetsViewModel.assets,
-                id: \.id
-              ) { assetInfoDisplayable in
-                HStack {
-                  Text(assetInfoDisplayable.value)
-                  Spacer()
-                  Text("\(assetsViewModel.assetsDict[assetInfoDisplayable.id] ?? 0)")
-                }
-                
-              }
+  
+  func makeModifiedAssets() -> some View {
+    makeBox(text: "Modified Assets", items: makeModifiedAssetsItem(), numRuns)
+  }
+  
+  func makeModifiedAssetsItem() -> [(IdentifiedString, IdentifiedQuantity)] {
+    var returnValues = [(IdentifiedString, IdentifiedQuantity)]()
+    
+    guard !inputValues.isEmpty && !assetValues.isEmpty else { return [] }
+    guard inputValues.count == assetValues.count else {
+      print("InputValues \(inputValues) assetValues \(assetValues)")
+      return []
+    }
+    print("inputvalues count \(inputValues.count)")
+    for i in 0..<inputValues.count {
+      let usedQuantity = inputValues[i].1.quantity * Int64(numRuns)
+      
+      let assetQuantity = assetValues[i].1.quantity
+      let assetId = assetValues[i].1.id
+      print("Start \(assetQuantity) used \(usedQuantity) end \(assetQuantity - usedQuantity)")
+      let identifiedString = assetValues[i].0
+      let identifiedQuantity = IdentifiedQuantity(
+        id: assetId,
+        quantity: assetQuantity - usedQuantity
+      )
+      
+      let returnValue: (IdentifiedString, IdentifiedQuantity) = (identifiedString, identifiedQuantity)
+      
+      returnValues.append(returnValue)
+    }
+    print("return values \(returnValues)")
+    return returnValues
+  }
+  
+  func makeBox(
+    text: String,
+    items: [(IdentifiedString, IdentifiedQuantity)],
+    _ runsModifier: Int = 1
+  ) -> some View {
+    GroupBox {
+      Text(text)
+      Divider()
+      ScrollView {
+        VStack(alignment: .leading) {
+          ForEach(items, id: \.0.id) { value in
+            HStack {
+              Text(value.0.value)
+              Spacer()
+              Text("\(value.1.quantity * Int64(runsModifier))")
             }
-          },
-          label: {
-            Label(
-              "Relevant Assets for \(characterInfo?.value ?? "nil")",
-              systemImage: "creditcard.fill")
           }
-        )
-        
-        GroupBox(
-          content: {
-            VStack(alignment: .leading) {
-              ForEach(
-                assetsViewModel.assets,
-                id: \.id
-              ) { assetInfoDisplayable in
-                HStack {
-                  Text(assetInfoDisplayable.value)
-                  Spacer()
-                  Text("\(modifiedAssetQuantity(assetTypeId: assetInfoDisplayable.id))")
-                }
-                
-              }
-            }
-          },
-          label: {
-            Label(
-              "Outcome Assets for \(characterInfo?.value ?? "nil")",
-              systemImage: "creditcard.fill")
-          }
-        )
+        }
       }
+    }
   }
   
   func runsPicker() -> some View {
@@ -257,13 +176,9 @@ struct ReactionHelperDetailView: View {
         label: {
           Text("Runs: \(numRuns)")
         },
-        onIncrement: {
-          numRuns += 1
-        },
+        onIncrement: pickerHandler.onIncrement,
         onDecrement: {
-          if numRuns > 0 {
-            numRuns -= 1
-          }
+
         },
         onEditingChanged: { _ in
           
@@ -272,26 +187,27 @@ struct ReactionHelperDetailView: View {
   }
   
   func modifiedAssetQuantity(assetTypeId: Int64) -> Int64 {
-    guard let assetsViewModel = assetsViewModel else { return 0 }
-    let existingAssets = assetsViewModel.assetsDict[assetTypeId] ?? 0
-    let inputQuantity = (inputDict[assetTypeId] ?? 0) * Int64(numRuns)
-    
-    return existingAssets - inputQuantity
+//    guard let assetsViewModel = assetsViewModel else { return 0 }
+//    let existingAssets = assetsViewModel.assetsDict[assetTypeId] ?? 0
+//    let inputQuantity = (inputDict[assetTypeId] ?? 0) * Int64(numRuns)
+//    
+//    return existingAssets - inputQuantity
+    return 0
   }
   
 }
 
 #Preview {
   
-  ReactionHelperDetailView(
-    blueprintInfo: BlueprintInfo2(
-      productId: 0,
-      productCount: 0,
-      blueprintModel: BlueprintModel(),
-      typeModel: nil,
-      inputMaterials: []
-    ), blueprintDisplayInfo: [:],
-    characterInfo: nil,
-    inputMats: []
-  )
+//  ReactionHelperDetailView(
+////    blueprintInfo: BlueprintInfo2(
+////      productId: 0,
+////      productCount: 0,
+////      blueprintModel: BlueprintModel(),
+////      typeModel: nil,
+////      inputMaterials: []
+////    ), blueprintDisplayInfo: [:],
+////    characterInfo: nil,
+////    inputMats: []
+//  )
 }

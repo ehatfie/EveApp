@@ -1161,14 +1161,23 @@ extension DBManager {
     let materials: [QuantityTypeModel] = blueprintModel.activities.reaction.materials
     let materialIDs: [Int64] = materials.map({ $0.typeId })
     
+    return await getCharacterAssetsWithTypeForValues(characterID: characterID, typeIds: materialIDs)
+  }
+  
+  // gets the assets a character has that matches in blueprint inputs
+  func getCharacterAssetsWithTypeForValues(
+    characterID: String,
+    typeIds: [Int64]
+  ) async -> [AssetInfoDisplayable] {
+    
     guard let character = await getCharacter(by: characterID) else { return [] }
     
     let assets = try! await character.$assetsData.query(on: database)
-      .filter(\.$typeId ~~ materialIDs)
+      .filter(\.$typeId ~~ typeIds)
       .join(TypeModel.self, on: \CharacterAssetsDataModel.$typeId == \TypeModel.$typeId)
       .all()
       .get()
-    
+    // not necessary
     let results = assets.map { asset in
       let typeModel = try! asset.joined(TypeModel.self)
       return AssetInfoDisplayable(asset: asset, typeModel: typeModel)
@@ -1177,6 +1186,26 @@ extension DBManager {
     return results
   }
   
+  func getCharacterAssetsForValues(
+    characterID: String,
+    typeIds: [Int64]
+  ) async -> [AssetQuantityInfo] {
+    
+    guard let character = await getCharacter(by: characterID) else { return [] }
+    
+    let assets = try! await character.$assetsData.query(on: database)
+      .filter(\.$typeId ~~ typeIds)
+      .all()
+      .get()
+
+    return assets.map{ AssetQuantityInfo(typeId: $0.typeId, quantity: Int64($0.quantity))}
+  }
+  
+}
+
+struct AssetQuantityInfo {
+  let typeId: Int64
+  let quantity: Int64
 }
 
 struct SkillAttributeInfo {

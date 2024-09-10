@@ -303,11 +303,8 @@ extension DBManager {
     
     let url = URL(fileURLWithPath: path)
     let data = try Data(contentsOf: url)
-    print("readYamlAsync() - data read")
     let yaml = String(data: data, encoding: .utf8)!
-    print("readYamlAsync() - yanml string")
     let node = try Yams.compose(yaml: yaml)!
-    print("readYamlAsync() - node created")
     //let foo = decode2(splits: 0, some: node, type: T.self)
     return await decodeNode(node: node, type: T.self)
   }

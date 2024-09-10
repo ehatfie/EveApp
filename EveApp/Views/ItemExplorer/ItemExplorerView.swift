@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import ModelLibrary
 
 class ItemCategoryID: Identifiable {
   var id: Int32

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ModelLibrary
 
 extension IndustryPlannerManager {
   func printNames(for typeIds: [Int64]) {
@@ -311,7 +312,9 @@ extension IndustryPlannerManager {
     }
   }
   
-  func makeBlueprintInfo(for blueprintModel: BlueprintModel) -> BlueprintInfo2 {
+  func makeBlueprintInfo(
+    for blueprintModel: BlueprintModel
+  ) -> BlueprintInfo2 {
     var inputMaterials: [QuantityTypeModel]
     
     let manufacturing = blueprintModel.activities.manufacturing

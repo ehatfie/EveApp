@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ModelLibrary
 
 enum IndustryType {
     case manufacturing

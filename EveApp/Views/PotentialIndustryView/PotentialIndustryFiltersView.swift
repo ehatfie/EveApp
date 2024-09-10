@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ModelLibrary
 
 enum PotentialIndustryFilter: Hashable, CaseIterable, Identifiable {
     case completelyCompletable

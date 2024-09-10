@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Fluent
+import ModelLibrary
 
 struct TypeInfoView: View {
   @Binding var selectedType: TypeModel?

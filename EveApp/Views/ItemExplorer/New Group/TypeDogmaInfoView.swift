@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Fluent
+import ModelLibrary
 
 struct TypeDogmaInfoView: View {
   var dogmaInfoModel: TypeDogmaInfoModel

@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import Fluent
+import ModelLibrary
 
 class ItemGroupViewModel: ObservableObject {
   let itemGroup: GroupModel

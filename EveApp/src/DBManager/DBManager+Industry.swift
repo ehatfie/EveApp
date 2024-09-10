@@ -8,6 +8,7 @@
 import Foundation
 import Yams
 import FluentKit
+import ModelLibrary
 
 extension DBManager {
   

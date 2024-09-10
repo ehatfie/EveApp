@@ -7,6 +7,7 @@
 
 import Foundation
 import Yams
+import ModelLibrary
 
 enum YamlFiles: String {
   case categoryIDs = "categoryIDs"
@@ -29,39 +30,36 @@ class ThingCategory {
     let published: Bool = true
 }
 
-struct CategoryData: Codable {
-    let name: ThingName
-    let published: Bool
-}
 
-struct ThingName: Codable {
-    let de: String?
-    let en: String?
-    let es: String?
-    let fr: String?
-    let ja: String?
-    let ru: String?
-    let zh: String?
-    
-    init(name: String) {
-        self.init(en: name)
-    }
-    
-    internal init(
-        de: String? = nil,
-        en: String? = nil,
-        es: String? = nil,
-        fr: String? = nil,
-        ja: String? = nil,
-        ru: String? = nil,
-        zh: String? = nil
-    ) {
-        self.de = de
-        self.en = en
-        self.es = es
-        self.fr = fr
-        self.ja = ja
-        self.ru = ru
-        self.zh = zh
-    }
-}
+
+//struct ThingName: Codable {
+//    let de: String?
+//    let en: String?
+//    let es: String?
+//    let fr: String?
+//    let ja: String?
+//    let ru: String?
+//    let zh: String?
+//    
+//    init(name: String) {
+//        self.init(en: name)
+//    }
+//    
+//    internal init(
+//        de: String? = nil,
+//        en: String? = nil,
+//        es: String? = nil,
+//        fr: String? = nil,
+//        ja: String? = nil,
+//        ru: String? = nil,
+//        zh: String? = nil
+//    ) {
+//        self.de = de
+//        self.en = en
+//        self.es = es
+//        self.fr = fr
+//        self.ja = ja
+//        self.ru = ru
+//        self.zh = zh
+//    }
+//}

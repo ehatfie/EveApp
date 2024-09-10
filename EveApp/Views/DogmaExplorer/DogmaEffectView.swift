@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ModelLibrary
 
 struct DogmaEffectView: View {
     @Binding var dogmaEffect: DogmaEffectModel

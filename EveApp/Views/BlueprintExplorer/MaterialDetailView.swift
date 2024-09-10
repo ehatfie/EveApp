@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Fluent
+import ModelLibrary
 
 struct QuantityType {
   var quantity: Int64

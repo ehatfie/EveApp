@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Fluent
+import ModelLibrary
 
 struct TypeDogmaAttributeView: View {
     let dogmaAttribute: TypeDogmaAttribute

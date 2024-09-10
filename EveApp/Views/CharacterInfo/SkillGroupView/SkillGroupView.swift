@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ModelLibrary
 
 struct SkillGroupView: View {
     let skillGroup: SkillGroup

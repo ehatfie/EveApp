@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ModelLibrary
 
 // Could use a better name
 struct SkillGroupEntryView: View {

@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import ModelLibrary
+import TestPackage3
 
 extension DataManager {
   func fetchCharacterInfo() {
@@ -122,7 +124,7 @@ extension DataManager {
     })
   }
   
-  func fetchCategoryInfoFor(categoryID: Int32) {
+  @MainActor func fetchCategoryInfoFor(categoryID: Int32) {
     print("Fetch category info For \(categoryID)")
     guard self.categoryInfoByID[categoryID] == nil else {
       print("Already fetched category info for \(categoryID)")
@@ -469,16 +471,6 @@ extension DataManager {
         }
       }
     }
-    
-    
-    //        AssetsAPI.getCharactersCharacterIdAssets(characterId: Int(characterData.characterID)!,
-    //
-    //                                                 token: accessTokenResponse.access_token,
-    //                                                 completion: { response, error in
-    //
-    //            print("getCharactersCharacterIdAssets \(response) error: \(error)")
-    //
-    //        })
   }
   
   func processCharacterAssetData(response: [GetCharactersCharacterIdAssets200Ok], characterId: String) {

@@ -17,11 +17,13 @@ import Fluent
     var dataManager: DataManager
     
     init() {
+        let start = Date()
+        print("++ AppModel init start")
         self.dataManager = DataManager.shared
         
         self.dataManager.dbManager = dbManager
         self.dataManager.authManager1.dbManager = dbManager
-        
+        print("++ AppModel init done \(Date().timeIntervalSince(start))")
 //        dbManager.$dbLoading
 //            .assign(to: &dataManager.$dataLoading)
 

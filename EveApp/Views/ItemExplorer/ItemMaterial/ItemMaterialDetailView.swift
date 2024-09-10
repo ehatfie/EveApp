@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Fluent
+import ModelLibrary
 
 @MainActor
 class ItemMaterialDetailViewModel: ObservableObject {

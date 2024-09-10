@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Fluent
+import ModelLibrary
 
 class BlueprintExplorerViewModel: ObservableObject {
   @Published var searchText: String = "Curse"

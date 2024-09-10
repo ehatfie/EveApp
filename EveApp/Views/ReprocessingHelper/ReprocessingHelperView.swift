@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Fluent
+import ModelLibrary
 
 struct ReprocessingHelperView: View {
   @State var materials: [TypeModel]

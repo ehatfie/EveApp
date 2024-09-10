@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FluentKit
+import ModelLibrary
 
 class InputInfo: Identifiable {
   var id = UUID()

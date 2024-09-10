@@ -8,6 +8,7 @@
 import SwiftUI
 import Fluent
 import Combine
+import ModelLibrary
 
 //@MainActor
 @Observable class ItemMaterialExplorerViewModel {

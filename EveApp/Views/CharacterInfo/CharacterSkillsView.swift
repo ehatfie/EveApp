@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ModelLibrary
 
 struct SkillsDataRepresentable {
     let skillsData: CharacterSkillsDataModel

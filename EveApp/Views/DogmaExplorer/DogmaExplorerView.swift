@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Fluent
+import ModelLibrary
 
 class DogmaExplorerViewModel: ObservableObject {
   var dogmaEffect: [DogmaEffectModel] = []

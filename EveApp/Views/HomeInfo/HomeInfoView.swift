@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Fluent
+import ModelLibrary
 
 class CharacterInfoData: Identifiable{
   var id: String {
@@ -101,7 +102,7 @@ struct HomeInfoView: View {
     var body: some View {
       VStack(alignment: .center) {
         Text("HomeInfoView")
-        
+
         CharacterInfoView1(characterInfo: viewModel.characterInfo)
           .border(.red)
           .padding()

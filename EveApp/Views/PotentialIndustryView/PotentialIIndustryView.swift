@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FluentKit
+import ModelLibrary
 
 struct AssetInfoDisplayable {
   let asset: CharacterAssetsDataModel
@@ -30,16 +31,25 @@ struct TypeQuantityDisplayable {
   var blueprintNames: [TypeNamesResult] = []
   
   var filters = Set<PotentialIndustryFilter>()
-  var selectedGroupFilters = Set<Int64>()
+  var selectedGroupFilters = Set<Int64>(
+    [IndustryGroup.Materials.constructionComponents.rawValue]
+  )
   var groupFilters = [PIGroupFilterDisplayable]()
   var filterGroups: [PIFilterGroup] = []
   
   var blueprintDetails: BlueprintModel?
   
+  let industryPlannerManager: IndustryPlannerManager
+  let dbManager: DBManager
+  
   init() {
+    self.dbManager = DataManager.shared.dbManager!
+    self.industryPlannerManager = IndustryPlannerManager(dbManager: dbManager)
     Task {
       await setupSelectedCharacters()
       await getGroupFilters()
+      await getAssets()
+      await getMakesStuff()
     }
   }
   
@@ -67,6 +77,7 @@ struct TypeQuantityDisplayable {
       PIFilterGroup(title: "Materials", filters: materialGroups)
     ]
   }
+  
   func characterList() -> [CharacterDataModel] {
     
     return []
@@ -168,12 +179,20 @@ struct TypeQuantityDisplayable {
   
   func setBlueprintDetail(for typeId: Int64) async {
     print("set blueprint Detail \(typeId)")
-    let blueprintModel = await DataManager.shared.dbManager!.getBlueprintModel(for: typeId)
-    print("got blueprintModel \(blueprintModel?.blueprintTypeID)")
-    blueprintDetails = blueprintModel
+    await self.industryPlannerManager.createIndustryJobPlan(
+      for: typeId
+    )
+    guard let blueprintModel = await dbManager.getBlueprintModel(for: typeId) else {
+      blueprintDetails = nil
+      return
+    }
+    //print("got blueprintModel \(blueprintModel.blueprintTypeID)")
+    //blueprintDetails = blueprintModel
     
-    let manager = IndustryPlannerManager(dbManager: DataManager.shared.dbManager!)
-    // manager.makeShipPlan2(for: <#T##BlueprintInfo#>)
+//    await self.industryPlannerManager.createIndustryJobPlan(
+//      for: blueprintModel.blueprintTypeID
+//    )
+    
   }
 }
 

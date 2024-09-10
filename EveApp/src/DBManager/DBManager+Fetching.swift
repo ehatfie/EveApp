@@ -6,7 +6,18 @@
 //
 
 import Foundation
+import ModelLibrary
 
+// MARK: - Reactions
 extension DBManager {
-    
+    func getReactionList() async{
+        
+    }
+}
+
+// MARK: - Assets {
+extension DBManager {
+    func getAssetsForReaction(blueprintModel: BlueprintModel) {
+        
+    }
 }

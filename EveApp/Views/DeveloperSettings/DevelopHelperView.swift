@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Fluent
+import ModelLibrary
 
 struct DevelopHelperView: View {
   @Environment(HomeViewModel.self) var homeViewModel: HomeViewModel

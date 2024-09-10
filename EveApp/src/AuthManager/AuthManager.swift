@@ -9,6 +9,7 @@ import Foundation
 import OAuthSwift
 import CommonCrypto
 import CryptoKit
+import ModelLibrary
 
 class AuthManager: ObservableObject {
     static let shared = AuthManager()
@@ -313,13 +314,6 @@ extension String {
     
 }
 
-
-struct AccessTokenResponse: Codable {
-    let access_token: String
-    let expires_in: Int
-    let token_type: String
-    let refresh_token: String
-}
 
 /**
  

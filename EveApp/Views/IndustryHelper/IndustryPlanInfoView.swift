@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ModelLibrary
 
 struct IndustryPlanInfoView: View {
   let inputMaterialInfo: InputMaterialInfo

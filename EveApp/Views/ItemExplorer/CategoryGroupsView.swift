@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import ModelLibrary
 
 class CategoryGroupsViewModel: ObservableObject {
     let itemCategory: ItemCategory // CategoryInfoResponseData?

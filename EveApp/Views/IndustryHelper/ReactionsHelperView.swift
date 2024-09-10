@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ModelLibrary
 
 struct ReactionsHelperView: View {
   var items: [TypeModel]

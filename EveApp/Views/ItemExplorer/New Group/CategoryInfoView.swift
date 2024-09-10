@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Fluent
+import ModelLibrary
 
 struct CategoryInfoView: View {
   @Binding var selectedCategory: CategoryModel?

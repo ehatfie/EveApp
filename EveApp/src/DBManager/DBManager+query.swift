@@ -8,6 +8,7 @@
 import Foundation
 import Fluent
 import FluentSQL
+import ModelLibrary
 
 struct TypeNamesResult {
   let typeId: Int64
@@ -580,7 +581,7 @@ extension DBManager {
 // MARK: - Character
 
 extension DBManager {
-  
+  @MainActor
   func getCharacters() async -> [CharacterDataModel] {
     do {
       return try await  CharacterDataModel.query(on: self.database)
@@ -596,12 +597,6 @@ extension DBManager {
   
   func getCharactersWithInfo() async -> [CharacterDataModel] {
     do {
-      //      let characterDataModels = try await CharacterDataModel.query(on: self.database)
-      //        .with(\.$publicData)
-      //        .with(\.$assetsData)
-      //        .all()
-      //        .get()
-      
       return try await CharacterDataModel.query(on: self.database)
         .with(\.$publicData)
         .with(\.$assetsData)
@@ -1153,6 +1148,64 @@ extension DBManager {
   
     return nil
   }
+}
+
+// MARK: - Assets
+extension DBManager {
+  
+  // gets the assets a character has that matches in blueprint inputs
+  func getCharacterAssetsForReaction(
+    characterID: String,
+    blueprintModel: BlueprintModel
+  ) async -> [AssetInfoDisplayable] {
+    let materials: [QuantityTypeModel] = blueprintModel.activities.reaction.materials
+    let materialIDs: [Int64] = materials.map({ $0.typeId })
+    
+    return await getCharacterAssetsWithTypeForValues(characterID: characterID, typeIds: materialIDs)
+  }
+  
+  // gets the assets a character has that matches in blueprint inputs
+  func getCharacterAssetsWithTypeForValues(
+    characterID: String,
+    typeIds: [Int64]
+  ) async -> [AssetInfoDisplayable] {
+    
+    guard let character = await getCharacter(by: characterID) else { return [] }
+    
+    let assets = try! await character.$assetsData.query(on: database)
+      .filter(\.$typeId ~~ typeIds)
+      .join(TypeModel.self, on: \CharacterAssetsDataModel.$typeId == \TypeModel.$typeId)
+      .all()
+      .get()
+    // not necessary
+    let results = assets.map { asset in
+      let typeModel = try! asset.joined(TypeModel.self)
+      return AssetInfoDisplayable(asset: asset, typeModel: typeModel)
+    }
+      
+    return results
+  }
+  
+  func getCharacterAssetsForValues(
+    characterID: String,
+    typeIds: [Int64]
+  ) async -> [AssetQuantityInfo] {
+    
+    guard let character = await getCharacter(by: characterID) else { return [] }
+    
+    let assets = try! await character.$assetsData.query(on: database)
+      .filter(\.$typeId ~~ typeIds)
+      .all()
+      .get()
+
+    return assets.map{ AssetQuantityInfo(typeId: $0.typeId, quantity: Int64($0.quantity))}
+  }
+  
+}
+
+struct AssetQuantityInfo {
+  let typeId: Int64
+  let quantity: Int64
 }
 
 struct SkillAttributeInfo {

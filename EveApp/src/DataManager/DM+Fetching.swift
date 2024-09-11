@@ -9,7 +9,9 @@ import Foundation
 import Fluent
 import FluentSQLiteDriver
 import ModelLibrary
+//import TestPackage1
 import TestPackage3
+
 
 // MARK: - Assets
 extension DataManager {
@@ -244,7 +246,7 @@ extension DataManager {
 extension DataManager {
   func makeApiCallAsync3(dataEndpoint: String, authModel: AuthModel, page: Int? = nil) async -> (Data, URLResponse)?  {
     let urlRequest = requestBuilder2(dataEndpoint: dataEndpoint, authModel: authModel, page: page)
-    print("makeApiCallAsync1() - urlRequest \(urlRequest?.url?.string)")
+    print("makeApiCallAsync3() - urlRequest \(urlRequest?.url?.string)")
     do {
       return try await URLSession.shared.data(for: urlRequest!)
     } catch let err {
@@ -467,3 +469,5 @@ extension DataManager {
     }
   }
 }
+
+

@@ -23,6 +23,7 @@ enum SideBarItem: String, Identifiable, CaseIterable {
   case blueprintExplorer
   case potentialIndustry
   case reactionHelper
+  case killboard
 }
 
 @Observable class HomeViewModel {
@@ -122,6 +123,8 @@ struct HomeView: View {
         PotentialIIndustryView(viewModel: PotentialIndustryViewModel())
       case .reactionHelper:
         ReactionHelperView()
+      case .killboard:
+        KillboardView()
       case nil:
         HomeInfoView(viewModel: HomeInfoViewModel(dbManager: db))
           .environment(db)

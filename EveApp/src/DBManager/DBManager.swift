@@ -85,6 +85,7 @@ import ModelLibrary
     
     try? setupBlueprintModel()
     try? setupMiscModels()
+    try? setupKillboardModels()
 //    Task {
 //      try? await CharacterAssetsDataModel
 //        .ModelMigration()
@@ -272,6 +273,20 @@ import ModelLibrary
       .prepare(on: database)
       .wait()
   }
+  
+  func setupKillboardModels() throws {
+    try ESIKillmailModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
+    try ZKillmailModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
+
+  }
+  
+  
 
 }
 

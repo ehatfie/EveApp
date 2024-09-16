@@ -584,7 +584,7 @@ extension DBManager {
   @MainActor
   func getCharacters() async -> [CharacterDataModel] {
     do {
-      return try await  CharacterDataModel.query(on: self.database)
+      return try await CharacterDataModel.query(on: self.database)
         .with(\.$publicData)
         .with(\.$assetsData)
         .all()

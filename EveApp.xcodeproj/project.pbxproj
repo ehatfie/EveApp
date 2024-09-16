@@ -15,7 +15,7 @@
 		BA0AFEFC2C75937E003959D7 /* SwiftUIPreviews.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0AFEF22C75937E003959D7 /* SwiftUIPreviews.framework */; };
 		BA0AFF012C75937E003959D7 /* SwiftUIPreviewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0AFF002C75937E003959D7 /* SwiftUIPreviewsTests.swift */; };
 		BA0AFF022C75937E003959D7 /* SwiftUIPreviews.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0AFEF42C75937E003959D7 /* SwiftUIPreviews.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BA1A940C2C0C378B0005B931 /* DM+LocationFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A940B2C0C378B0005B931 /* DM+LocationFetching.swift */; };
+		BA1A940C2C0C378B0005B931 /* DM+KillmailFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A940B2C0C378B0005B931 /* DM+KillmailFetching.swift */; };
 		BA1A94142C0D72040005B931 /* ItemInputInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A94132C0D72040005B931 /* ItemInputInfoView.swift */; };
 		BA20ADB92C0D821400095B4E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA20ADB82C0D821400095B4E /* Constants.swift */; };
 		BA20ADBC2C114F3000095B4E /* HomeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA20ADBB2C114F3000095B4E /* HomeInfoView.swift */; };
@@ -79,6 +79,7 @@
 		BA7100A22AE898CA001CD301 /* blueprints.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA7100A12AE898CA001CD301 /* blueprints.yaml */; };
 		BA7100A52AEA1969001CD301 /* BlueprintExplorerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7100A42AEA1969001CD301 /* BlueprintExplorerView.swift */; };
 		BA7100A72AEB2D05001CD301 /* BlueprintDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */; };
+		BA7718FF2C909DCE00227488 /* KillboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7718FE2C909DCE00227488 /* KillboardView.swift */; };
 		BA7E4B382C068E9900B00158 /* DBManager+loading2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7E4B372C068E9900B00158 /* DBManager+loading2.swift */; };
 		BA982FB42C03D7CD00041EEB /* DBManager+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA982FB32C03D7CD00041EEB /* DBManager+Auth.swift */; };
 		BA9C8FE82B44C5F900F4DBAF /* IndustryPlannerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FE72B44C5F900F4DBAF /* IndustryPlannerManager.swift */; };
@@ -235,7 +236,7 @@
 		BA0AFEF52C75937E003959D7 /* SwiftUIPreviews.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = SwiftUIPreviews.docc; sourceTree = "<group>"; };
 		BA0AFEFB2C75937E003959D7 /* SwiftUIPreviewsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUIPreviewsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA0AFF002C75937E003959D7 /* SwiftUIPreviewsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPreviewsTests.swift; sourceTree = "<group>"; };
-		BA1A940B2C0C378B0005B931 /* DM+LocationFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DM+LocationFetching.swift"; sourceTree = "<group>"; };
+		BA1A940B2C0C378B0005B931 /* DM+KillmailFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DM+KillmailFetching.swift"; sourceTree = "<group>"; };
 		BA1A94132C0D72040005B931 /* ItemInputInfoView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemInputInfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA20ADB82C0D821400095B4E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BA20ADBB2C114F3000095B4E /* HomeInfoView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = HomeInfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -300,6 +301,7 @@
 		BA7100A12AE898CA001CD301 /* blueprints.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = blueprints.yaml; sourceTree = "<group>"; };
 		BA7100A42AEA1969001CD301 /* BlueprintExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintDetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA7718FE2C909DCE00227488 /* KillboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillboardView.swift; sourceTree = "<group>"; };
 		BA7E4B372C068E9900B00158 /* DBManager+loading2.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+loading2.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BA982FB32C03D7CD00041EEB /* DBManager+Auth.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+Auth.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BA9C8FE72B44C5F900F4DBAF /* IndustryPlannerManager.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = IndustryPlannerManager.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -444,7 +446,7 @@
 		BA1A940A2C0C376A0005B931 /* Fetching */ = {
 			isa = PBXGroup;
 			children = (
-				BA1A940B2C0C378B0005B931 /* DM+LocationFetching.swift */,
+				BA1A940B2C0C378B0005B931 /* DM+KillmailFetching.swift */,
 			);
 			path = Fetching;
 			sourceTree = "<group>";
@@ -543,6 +545,7 @@
 		BA3149C42A1EF98C0076E6DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BA7718FD2C909DBD00227488 /* Killboard */,
 				BAA69B9D2C743904007399D7 /* ReactionHelper */,
 				BAA88E402C55DA5E0001BF42 /* PotentialIndustryView */,
 				BA20ADBA2C114F2100095B4E /* HomeInfo */,
@@ -763,6 +766,14 @@
 				BA9C8FEB2B44DF8C00F4DBAF /* BlueprintComponentListView.swift */,
 			);
 			path = BlueprintExplorer;
+			sourceTree = "<group>";
+		};
+		BA7718FD2C909DBD00227488 /* Killboard */ = {
+			isa = PBXGroup;
+			children = (
+				BA7718FE2C909DCE00227488 /* KillboardView.swift */,
+			);
+			path = Killboard;
 			sourceTree = "<group>";
 		};
 		BA7E4B362C068E8500B00158 /* new */ = {
@@ -1267,7 +1278,7 @@
 				BAE069A72ADA1D110054EFCF /* DogmaAttributeDetailView.swift in Sources */,
 				BA9D96032B05C126006AC37E /* TypeDogmaAttributeView.swift in Sources */,
 				BA3149E92A4BCAF80076E6DD /* DataManager+Fetching.swift in Sources */,
-				BA1A940C2C0C378B0005B931 /* DM+LocationFetching.swift in Sources */,
+				BA1A940C2C0C378B0005B931 /* DM+KillmailFetching.swift in Sources */,
 				BAE069742AC8A1420054EFCF /* DBManager.swift in Sources */,
 				BAE0697E2AC8CBE10054EFCF /* ItemTypeDetailView.swift in Sources */,
 				BA3149D42A315A650076E6DD /* DataManager.swift in Sources */,
@@ -1303,6 +1314,7 @@
 				BA7E4B382C068E9900B00158 /* DBManager+loading2.swift in Sources */,
 				BA7100942ADF73AE001CD301 /* ModelGenerator.swift in Sources */,
 				BA314A0A2A5CF4EC0076E6DD /* CategoryGroupsView.swift in Sources */,
+				BA7718FF2C909DCE00227488 /* KillboardView.swift in Sources */,
 				BACB52DB2A68B9700044CDA0 /* ItemGroupView.swift in Sources */,
 				BAA88E462C61C8AB0001BF42 /* Theme.swift in Sources */,
 				BA9D960A2B117ACC006AC37E /* IndustryListView.swift in Sources */,

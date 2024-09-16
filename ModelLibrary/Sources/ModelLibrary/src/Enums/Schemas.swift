@@ -35,4 +35,9 @@ public enum Schemas: String {
     case characterCorporationModel = "characterCorporationModel"
     
     case auth = "authModel"
+    
+    public enum Killmail: String {
+        case zkill = "zkill"
+        case esi = "esi"
+    }
 }

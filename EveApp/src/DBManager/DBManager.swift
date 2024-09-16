@@ -261,6 +261,14 @@ import ModelLibrary
   }
   
   func setupMiscModels() throws {
+    try CharacterIdentifiersModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
+    try SolarSystemModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
     try RaceModel.ModelMigration()
       .prepare(on: database)
       .wait()

@@ -13,6 +13,7 @@ final public class ESIKillmailModel: Model {
     static public let schema = Schemas.Killmail.esi.rawValue
     //@Field(key: "skills") public var skills: [CharacterSkillModel]
     @ID(key: .id) public var id: UUID?
+    //@ID(custom: "foo") var id: Int?
     @Field(key: "attackers") public var attackers: [ESIKmAttacker]
     @Field(key: "killmail_id") public var killmailId: Int64
     @Field(key: "killmail_time") public var killmailTime: String

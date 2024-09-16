@@ -49,37 +49,6 @@ class CharacterInfoData: Identifiable{
           corporationData: $0.corp.first
         )
       }
-//      let result = await withTaskGroup(of: CharacterInfoData?.self, returning: [CharacterInfoData].self) { taskGroup in
-//        characterInfo.forEach{ characterModel in
-//          taskGroup.addTask {
-//            do {
-//              let corpInfoModel = try await CorporationInfoModel.query(on: self.dbManager.database)
-//                .filter(\.$corporationId == characterModel.publicData?.corporationId ?? -1)
-//                .first()
-//                .get()
-//              return CharacterInfoData(
-//                characterDataModel: characterModel,
-//                publicData: characterModel.publicData,
-//                corporationData: corpInfoModel
-//                )
-//            } catch let err {
-//              print("error \(err)")
-//              return nil
-//            }
-//            
-//          }
-//        }
-//        
-//        var returnModels = [CharacterInfoData]()
-//        for await result in taskGroup {
-//          if let result = result {
-//            returnModels.append(result)
-//          }
-//          
-//        }
-//        
-//        return returnModels
-//      }
       
       DispatchQueue.main.async {
         print("got characterInfo \(characterInfo.count)")

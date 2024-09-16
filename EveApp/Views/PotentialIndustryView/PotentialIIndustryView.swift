@@ -85,6 +85,7 @@ struct TypeQuantityDisplayable {
   
   func getAssets() async {
     self.blueprintNames = []
+    self.blueprintDetails = nil
     // Given an array of items we want to figure out what things it goes into
     let dbManager = await DataManager.shared.dbManager!
     do {
@@ -187,7 +188,7 @@ struct TypeQuantityDisplayable {
       return
     }
     //print("got blueprintModel \(blueprintModel.blueprintTypeID)")
-    //blueprintDetails = blueprintModel
+    blueprintDetails = blueprintModel
     
 //    await self.industryPlannerManager.createIndustryJobPlan(
 //      for: blueprintModel.blueprintTypeID

@@ -9,6 +9,8 @@ import Foundation
 import Fluent
 import FluentSQL
 import ModelLibrary
+import FluentKit
+
 
 struct TypeNamesResult {
   let typeId: Int64
@@ -526,6 +528,27 @@ extension DBManager {
     return try? await sql.raw(SQLQueryString(queryString))
       .first(decoding: BlueprintModel.self)
       
+  }
+  
+  func getAllESIKillMailModels() async -> [ESIKillmailModel] {
+    let db = self.database
+    guard let sql = db as? SQLDatabase else {
+      return []
+    }
+
+    let queryString =
+      """
+        SELECT * FROM esi
+        INNER JOIN zkill ON esi.killmail_id = zkill.killmail_id
+        INNER JOIN solarSystems ON esi.solar_system_id = solarSystems.system_id
+        GROUP BY esi.killmail_id
+      """
+    
+    let result = (try? await sql.raw(SQLQueryString(queryString))
+      .all(decoding: ESIKillmailModel.self)
+      .get()) ?? []
+    
+    return result
   }
   
   func getReactionBlueprintsWIthInputs(of typeIds: [Int64]) async -> [BlueprintModel] {

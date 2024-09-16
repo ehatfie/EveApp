@@ -28,6 +28,8 @@ public enum Schemas: String {
     case characterSkillModel = "characterSkillModel"
     case characterIndustryDataModel = "characterIndustryDataModel"
     case characterIndustryJobModel = "characterIndustryJobModel"
+    
+    case characterIdentifiersModel = "characterIdentifiersModel"
 
     
     case corporationInfoModel = "corporationInfoModel"
@@ -39,5 +41,9 @@ public enum Schemas: String {
     public enum Killmail: String {
         case zkill = "zkill"
         case esi = "esi"
+    }
+    
+    public enum Universe: String {
+        case solarSystems = "solarSystems"
     }
 }

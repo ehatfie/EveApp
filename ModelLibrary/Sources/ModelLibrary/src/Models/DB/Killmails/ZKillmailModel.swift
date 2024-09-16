@@ -26,7 +26,6 @@ final public class ZKillmailModel: Model {
     @Field(key: "awox") public var awox: Bool
     @Field(key: "labels") public var labels: String
     
-    
     public init() { }
     
     public init(

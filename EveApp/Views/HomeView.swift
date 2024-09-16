@@ -11,19 +11,19 @@ import Combine
 enum SideBarItem: String, Identifiable, CaseIterable {
   var id: String { rawValue }
   
-  case characterInfo
-  case reprocessingHelper
-  case skillQueue
-  case itemDogmaExplorer
-  case industryHelper
-  case devSettings
   case auth
-  case assets
-  case itemExplorer
+  case characterInfo
+  case industryHelper
+  case reprocessingHelper
   case blueprintExplorer
+  case devSettings
+  case assets
   case potentialIndustry
   case reactionHelper
   case killboard
+  //case skillQueue
+  //case itemDogmaExplorer
+  //case itemExplorer
 }
 
 @Observable class HomeViewModel {
@@ -96,27 +96,25 @@ struct HomeView: View {
       }
     } detail: {
       switch selectedSideBarItem {
+      case .auth:
+        AuthView()
+          .environment(homeViewModel)
       case .characterInfo:
         CharacterInfoView()
       case .assets:
         AssetsViewer()
       case .reprocessingHelper:
         ReprocessingHelperView()
-      case .skillQueue:
-        SkillQueueView(viewModel: SkillQueueViewModel())
-      case .itemDogmaExplorer:
-        ItemDogmaExplorerView(viewModel: ItemDogmaExplorerViewModel())
+//      case .itemDogmaExplorer:
+//        ItemDogmaExplorerView(viewModel: ItemDogmaExplorerViewModel())
       case .industryHelper:
         IndustryHelperView()
           .environment(db)
       case .devSettings:
         DevelopHelperView()
           .environment(homeViewModel)
-      case .auth:
-        AuthView()
-          .environment(homeViewModel)
-      case .itemExplorer:
-        ItemExplorerView(viewModel: ItemExplorerViewModel())
+//      case .itemExplorer:
+//        ItemExplorerView(viewModel: ItemExplorerViewModel())
       case .blueprintExplorer:
         BlueprintExplorerView()
       case .potentialIndustry:
@@ -128,6 +126,7 @@ struct HomeView: View {
       case nil:
         HomeInfoView(viewModel: HomeInfoViewModel(dbManager: db))
           .environment(db)
+      default: EmptyView()
       }
     }
   }

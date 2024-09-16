@@ -22,7 +22,7 @@ import FluentKit
     init() {
         loadModels()
         Task {
-            await self.loadDisplayData()
+            await self.loadDisplayData2()
         }
     }
     
@@ -66,18 +66,99 @@ import FluentKit
     func loadDisplayData() async {
         let dbManager = await DataManager.shared.dbManager!
         //      .join(TypeMaterialsModel.self, on: \TypeMaterialsModel.$typeID == \TypeModel.$typeId)
-        let killmails = (try? await ZKillmailModel.query(on: dbManager.database)
-            .join(ESIKillmailModel.self, on: \ZKillmailModel.$killmailId == \ESIKillmailModel.$killmailId)
-            .all()
-            .get()) ?? []
+        let killmails = (
+            try? await ZKillmailModel.query(on: dbManager.database)
+                .join(ESIKillmailModel.self, on: \ZKillmailModel.$killmailId == \ESIKillmailModel.$killmailId)
+                .join(SolarSystemModel.self, on: \SolarSystemModel.$systemID == \ESIKillmailModel.$solarSystemId)
+                .all()
+        ) ?? []
         
+        var characterDict: [Int64: CharacterIdentifiersModel] = [:]
+        
+        let characterIdentifiers = (try? await CharacterIdentifiersModel.query(on: dbManager.database)
+            .all()) ?? []
+        
+        for value in characterIdentifiers {
+            characterDict[value.characterID] = value
+        }
+        
+        let killmailIds = killmails.map { $0.killmailId }
+        print("killmailIds: \(killmailIds.count)")
         let displayInfo = killmails.compactMap { zKillmail -> KillmailDisplayInfo? in
-            guard let esiKillmail = try? zKillmail.joined(ESIKillmailModel.self) else {
+            guard
+                let esiKillmail = try? zKillmail.joined(ESIKillmailModel.self),
+                let solarSystemInfo = try? zKillmail.joined(SolarSystemModel.self)
+            else {
                 return nil
             }
-            return KillmailDisplayInfo(zkill: zKillmail, esi: esiKillmail)
+            
+            let attackersInfo: [CharacterIdentifiersModel] = esiKillmail.attackers
+                .compactMap({ attacker in
+                    guard let characterId = attacker.characterId else {
+                        return nil
+                    }
+                    return characterDict[characterId]
+                })
+            guard let victimId = esiKillmail.victim.first?.characterId,
+                  let victimInfo: CharacterIdentifiersModel = characterDict[victimId]
+            else {
+                return nil
+            }
+            
+            return KillmailDisplayInfo(
+                zkill: zKillmail,
+                esi: esiKillmail,
+                systemName: solarSystemInfo.name,
+                attackersIdentifiers: attackersInfo,
+                victimIdentifier: victimInfo
+            )
         }
         print("got killmails \(killmails.count)")
+        self.killmailDisplayInfo = displayInfo
+    }
+    
+    func loadDisplayData2() async {
+        let dbManager = await DataManager.shared.dbManager!
+        var characterDict: [Int64: CharacterIdentifiersModel] = [:]
+        
+        let characterIdentifiers = (try? await CharacterIdentifiersModel.query(on: dbManager.database)
+            .all()) ?? []
+        
+        for value in characterIdentifiers {
+            characterDict[value.characterID] = value
+        }
+        
+        let killmails = await DataManager.shared.dbManager!.getAllESIKillMailModels()
+        
+        let displayInfo = killmails.compactMap { esiKillmail -> KillmailDisplayInfo? in
+            guard
+                let zKillmail = try? esiKillmail.joined(ZKillmailModel.self),
+                let solarSystemInfo = try? esiKillmail.joined(SolarSystemModel.self)
+            else {
+                return nil
+            }
+            
+            let attackersInfo: [CharacterIdentifiersModel] = esiKillmail.attackers
+                .compactMap({ attacker in
+                    guard let characterId = attacker.characterId else {
+                        return nil
+                    }
+                    return characterDict[characterId]
+                })
+            guard let victimId = esiKillmail.victim.first?.characterId,
+                  let victimInfo: CharacterIdentifiersModel = characterDict[victimId]
+            else {
+                return nil
+            }
+            
+            return KillmailDisplayInfo(
+                zkill: zKillmail,
+                esi: esiKillmail,
+                systemName: solarSystemInfo.name,
+                attackersIdentifiers: attackersInfo,
+                victimIdentifier: victimInfo
+            )
+        }
         self.killmailDisplayInfo = displayInfo
     }
     
@@ -146,6 +227,7 @@ import FluentKit
                 guard let result = result else { continue }
                 returnValues.append(result)
             }
+            
             return returnValues
         }
         
@@ -155,10 +237,163 @@ import FluentKit
         
         do {
             try await models.create(on: DataManager.shared.dbManager!.database)
+            let systemIds = models.map { $0.solarSystemId }
+            
+            
         } catch let err {
             print("save esi models error \(err)")
         }
     }
+    
+    func updateNames() async {
+        let systemIds = esiModels.map{ $0.solarSystemId }
+        await fetchSolarSystemInfo(for: systemIds)
+        
+        let characterIds = esiModels.map { killmail in
+            var returnValues: [Int64] = []
+            
+            if let characterId = killmail.victim[0].characterId  {
+                returnValues.append(characterId)
+            }
+            
+            let attackerIds = killmail.attackers.compactMap { $0.characterId}
+            returnValues.append(contentsOf: attackerIds)
+            
+            return returnValues
+        }.flatMap { $0 }
+        
+        await fetchCharacterInfos(for: characterIds)
+    }
+    
+    func removeDuplicates() async {
+        let db = await DataManager.shared.dbManager!.database
+        let killmails = (try? await ZKillmailModel.query(on: db)
+            .all()
+        ) ?? []
+        
+        let esiKillmails = (try? await ESIKillmailModel.query(on: db)
+            .filter(\.$solarSystemId == 31002199)
+            .all()
+        ) ?? []
+        
+        let test1 = (
+            try? await ZKillmailModel.query(on: db)
+            .join(ESIKillmailModel.self, on: \ZKillmailModel.$killmailId == \ESIKillmailModel.$killmailId)
+            .all()
+        ) ?? []
+        
+        let test2 = (
+            try? await ZKillmailModel.query(on: db)
+            .join(ESIKillmailModel.self, on: \ZKillmailModel.$killmailId == \ESIKillmailModel.$killmailId)
+            .join(SolarSystemModel.self, on: \SolarSystemModel.$systemID == \ESIKillmailModel.$solarSystemId)
+            .all()
+        ) ?? []
+        
+        let test3 = (
+            try? await ESIKillmailModel.query(on: db)
+            .filter(ESIKillmailModel.self, \.$solarSystemId == 31002199)
+            .join(
+                SolarSystemModel.self,
+                on: \SolarSystemModel.$systemID == \ESIKillmailModel.$solarSystemId,
+                method: .inner
+            )
+            .all()
+        ) ?? []
+        let test4 = (
+            try? await SolarSystemModel.query(on: db)
+                .all()
+        ) ?? []
+        
+        let test5 = (
+            try? await SolarSystemModel.query(on: db)
+                .join(
+                    ESIKillmailModel.self,
+                    on: \SolarSystemModel.$systemID == \ESIKillmailModel.$solarSystemId,
+                    method: .inner
+                )
+            .all()
+        ) ?? []
+        
+        
+            
+        print("got \(killmails.count) zkillmails and \(esiKillmails.count) esikillmails")
+        print("got \(test4.count) solarSystemModel")
+        print("got \(test1.count) zkillmail + esiKillmail")
+        print("got \(test2.count) zkillmail + esiKillmail + solarSystemModel")
+        print("got \(test3.count) esiKillmail + solarSystemModel")
+        print("got \(test5.count) solarSystem + esiKillmail")
+        for value in test3 {
+            guard let solarSystemModel = try? value.joined(SolarSystemModel.self) else { continue }
+            //print("value (\(value.killmailId) \(value.solarSystemId)) (\(solarSystemModel.systemID) \(solarSystemModel.name))")
+        }
+        for value in test5 {
+            guard let esiKillmailModel = try? value.joined(ESIKillmailModel.self) else { continue }
+            //print("value1 (\(esiKillmailModel.killmailId) \(esiKillmailModel.solarSystemId)) (\(value.systemID) \(value.name))")
+        }
+    }
+    
+    func fetchSolarSystemInfo(for objects: [Int64]) async {
+        /*
+         Planet.query(on: database)
+             .field(\.$id).field(\.$name)
+             .all()
+         */
+        let db = await DataManager.shared.dbManager!.database
+        let foo = (
+            try? await SolarSystemModel.query(on: db)
+            .field(\.$systemID)
+            .all()
+        ) ?? []
+        let existingIDs = foo.map { $0.systemID }
+        let filteredNewIDs = objects.filter({ value in
+            return !existingIDs.contains(value)
+        })
+        print("getting system info for \(filteredNewIDs)")
+        let results = await DataManager.shared.fetchMultipleSolarSystemInfo(
+            systemIds: filteredNewIDs
+        )
+        
+        let systemModels = results.map { SolarSystemModel(data: $0) }
+        
+        do {
+            try await systemModels.create(on: db)
+            print("created \(systemModels.count) SolarSystemModel")
+        } catch let err {
+            print("save system models err \(err)")
+        }
+    }
+    
+    func fetchCharacterInfos(for characterIDs: [Int64]) async {
+        let db = await DataManager.shared.dbManager!.database
+        let foo = (
+            try? await CharacterIdentifiersModel.query(on: db)
+                .all()
+        ) ?? []
+        
+        let existingIDs = foo.map({ $0.characterID })
+        let filteredNewIDs = characterIDs.filter{ value in
+            return !existingIDs.contains(value)
+        }
+        
+        let results = await DataManager.shared.fetchCharacterInfos(
+            for: filteredNewIDs
+        )
+        
+        let characterIdentifierModels = results.map { id, response in
+            return CharacterIdentifiersModel(
+                characterId: id,
+                data: response
+            )
+        }
+        
+        do {
+            try await characterIdentifierModels.create(on: db)
+            print("created \(characterIdentifierModels.count) CharacterIdentifierModels")
+        } catch let err {
+            print("save system models err \(err)")
+        }
+    }
+    
     
     func fetchESIKillmail(
         killmailId: Int64,
@@ -183,13 +418,27 @@ struct KillmailDisplayInfo: Identifiable {
     var id: Int64 {
         return zkill.killmailId
     }
+//    var id: String {
+//        return UUID().uuidString
+//    }
     
     let zkill: ZKillmailModel
     let esi: ESIKillmailModel
+    let systemName: String
+    let attackersIdentifiers: [CharacterIdentifiersModel]
+    let victimIdentifier: CharacterIdentifiersModel
 }
 
 struct KillboardView: View {
     @State var viewModel = KillboardViewModel()
+    
+    let dateFormatter: DateFormatter = {
+          let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+//          formatter.dateStyle = .long
+          return dateFormatter
+      }()
     
     var body: some View {
         VStack {
@@ -230,28 +479,48 @@ struct KillboardView: View {
     }
     
     func killmailDataView() -> some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, spacing: 15) {
-                ForEach(viewModel.killmailDisplayInfo, id: \.id) { value in
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text("\(value.id)")
-                        
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text("\(value.esi.killmailTime)")
-                                Text("location: \(value.esi.solarSystemId)")
+        Group {
+            HStack {
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 15) {
+                        ForEach(viewModel.killmailDisplayInfo, id: \.id) { value in
+                            GroupBox {
+                                VStack(alignment: .leading, spacing: 5) {
+                                    VStack(alignment: .leading, spacing: 3) {
+                                        HStack {
+                                            Spacer()
+                                            Text("\(ISO8601DateFormatter().date(from: value.esi.killmailTime)!, formatter: dateFormatter)")
+                                        }
+                                        Text("zkill: \(value.zkill.killmailId) ESI: \(value.esi.killmailId)")
+                                        Text("location: \(value.systemName)")
+                                        Text("victim: \(value.victimIdentifier.name)")
+                                        Text("attackers: \(value.esi.attackers.count)")
+                                        VStack(alignment: .leading) {
+                                            Text("Attackers")
+                                            VStack(alignment: .leading) {
+//                                                ForEach(value.attackersIdentifiers, id: \.characterID) { info in
+//                                                    Text("\(info.name) \(info.characterID)")
+//                                                }
+                                            }.padding(.leading, 5)
+                                            
+                                        }
+                                    }
+                                    
+                                    HStack {
+                                        Spacer()
+                                        VStack(alignment: .trailing) {
+                                            label(text: "destroyed value:", value: "\(value.zkill.destroyedValue)")
+                                            label(text: "dropped value:", value: "\(value.zkill.droppedValue)")
+                                            label(text: "fitted value:", value: "\(value.zkill.fittedValue)")
+                                        }.frame(maxWidth: 250)
+                                    }
+                                   
+                                }
                             }
-                            Text("victim: \(value.esi.victim.first!.characterId ?? -1)")
-                            Text("attackers: \(value.esi.attackers.count)")
                         }
-                        
-                        VStack(alignment: .leading) {
-                            label(text: "destroyed value:", value: "\(value.zkill.destroyedValue)")
-                            label(text: "dropped value:", value: "\(value.zkill.droppedValue)")
-                            label(text: "fitted value:", value: "\(value.zkill.fittedValue)")
-                        }.frame(maxWidth: 250)
                     }
-                }
+                }//.frame(idealWidth: 400)
+                Spacer().frame(maxWidth: .infinity)
             }
         }
     }
@@ -289,6 +558,20 @@ struct KillboardView: View {
                     Text("process")
                 })
                 
+                Button(action: {
+                    Task {
+                        await viewModel.updateNames()
+                    }
+                }, label: {
+                    Text("update name")
+                })
+                Button(action: {
+                    Task {
+                        await viewModel.removeDuplicates()
+                    }
+                }, label: {
+                    Text("remove duplicates")
+                })
             }
            
         }.padding()

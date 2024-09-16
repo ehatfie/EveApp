@@ -100,14 +100,17 @@ struct ReactionHelperDetailView: View {
       }
       
       Grid(alignment:.top) {
-        GridRow {
+        //GridRow {
+        HStack {
           makeBox(text: "Asset Values", items: assetValues)
           makeBox(text: "Modified Values", items: modifiedAssetValues)
         }
-        GridRow {
+        //GridRow {
+        HStack {
           makeBox(text: "Input Values", items: inputValues, numRuns)
           makeBox(text: "Product Values", items: productValues, numRuns)
         }
+        Spacer()
       }
       
       Spacer()
@@ -166,7 +169,7 @@ struct ReactionHelperDetailView: View {
             }
           }
         }
-      }
+      }.frame(minWidth: .zero)
     }
   }
   

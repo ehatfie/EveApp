@@ -263,7 +263,7 @@ struct BlueprintDetailView: View {
     
     return VStack(alignment: .leading, spacing: 10) {
       HStack(alignment: .top) {
-        inputListView("Zero Level \(zeroLevelValues.count)", values: zeroLevelValues)
+        inputListView("Zero Level", values: zeroLevelValues)
         inputListView("First Level", values: firstLevelValues)
         inputListView("Second Level", values: secondLevelValues)
         inputListView("Third Level", values: thirdLevelValues)

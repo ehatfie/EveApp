@@ -426,23 +426,6 @@ extension DBManager {
     }
     //print("decode2() -  took \(Date().timeIntervalSince(start))")
     return returnValue
-    //    let keyValueCount = some.count
-    //
-    //    let one = Array(some[0 ..< keyValueCount / 2])
-    //    let two = Array(some[keyValueCount / 2 ..< keyValueCount])
-    //
-    //    guard splits > 0 else {
-    //      async let firstThing = sortThing(some: one, type: type)
-    //      async let secondThing = sortThing(some: two, type: type)
-    //
-    //      return await [firstThing, secondThing].flatMap({$0})
-    //    }
-    //
-    //    async let firstThing = splitAndSort2(splits: splits - 1, some: one, type: type)
-    //    async let secondThing = splitAndSort2(splits: splits - 1, some: two, type: type)
-    //
-    //    return await firstThing + secondThing
-    // return []
   }
   func sortThing<T: Decodable>(some: [Node.Mapping.Element], type: T.Type) async -> [Int64: T] {
     var returnValue: [Int64: T] = [:]

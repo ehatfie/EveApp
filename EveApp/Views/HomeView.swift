@@ -21,6 +21,7 @@ enum SideBarItem: String, Identifiable, CaseIterable {
   case potentialIndustry
   case reactionHelper
   case killboard
+  case characterIndustryView
   //case skillQueue
   //case itemDogmaExplorer
   //case itemExplorer
@@ -123,6 +124,8 @@ struct HomeView: View {
         ReactionHelperView()
       case .killboard:
         KillboardView()
+      case .characterIndustryView:
+        CharacterIndustryView(viewModel: CharacterIndustryViewModel())
       case nil:
         HomeInfoView(viewModel: HomeInfoViewModel(dbManager: db))
           .environment(db)

@@ -86,6 +86,25 @@ public struct GetCharactersIndustryJobsResponse: Codable {
         self.status = status
         self.successfulRuns = successfulRuns
     }
+    
+    public init() {
+        self.init(
+            activityId: 0,
+            blueprintId: 0,
+            blueprintLocationId: 0,
+            blueprintTypeId: 0,
+            duration: 0,
+            endDate: "",
+            facilityId: 0,
+            installerId: 0,
+            jobId: 0,
+            outputLocationId: 0,
+            runs: 0,
+            startDate: "",
+            stationId: 0,
+            status: .active
+        )
+    }
 
     public enum CodingKeys: String, CodingKey {
         case activityId = "activity_id"

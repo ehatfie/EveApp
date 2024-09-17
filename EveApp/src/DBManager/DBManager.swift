@@ -233,6 +233,10 @@ import ModelLibrary
   }
   
   func setupCharacterDataModels() throws {
+    try CharacterIndustryJobModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
     try CharacterDataModel.ModelMigration()
       .prepare(on: database)
       .wait()
@@ -249,9 +253,7 @@ import ModelLibrary
       .prepare(on: database)
       .wait()
     
-    try CharacterIndustryJobModel.ModelMigration()
-      .prepare(on: database)
-      .wait()
+
   }
   
   func setupAuthModels() throws {

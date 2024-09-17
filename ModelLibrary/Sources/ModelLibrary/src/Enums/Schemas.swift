@@ -20,6 +20,7 @@ public enum Schemas: String {
     case blueprintModel = "blueprintModel"
     case raceModel = "raceModel"
     case locationModel = "locationModel"
+    case stationOperation = "stationOperation"
     
     case characterDataModel = "characterDataModel"
     case characterPublicDataModel = "characterPublicDataModel"

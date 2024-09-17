@@ -20,27 +20,28 @@ final public class CharacterIndustryJobModel: Model {
         case reverted = "reverted"
     }
     
-    @ID(key: .id) public var id: UUID?
+    @ID(custom: "character_industry_job_id", generatedBy: .user)
+    public var id: Int?
     
-    @Parent(key: "characterId")
+    @Parent(key: "character_id")
     public var characterDataModel: CharacterDataModel
 
-    @Field(key: "activityID")
+    @Field(key: "activity_id")
     public var activityId: Int
 
-    @Field(key: "blueprintID")
+    @Field(key: "blueprint_id")
     public var blueprintId: Int64
 
-    @Field(key: "blueprintLocationID")
+    @Field(key: "blueprint_location_id")
     public var blueprintLocationId: Int64
 
-    @Field(key: "blueprintTypeID")
+    @Field(key: "blueprint_type_id")
     public var blueprintTypeId: Int64
 
-    @Field(key: "completedCharacterID")
+    @Field(key: "completed_character_id")
     public var completedCharacterId: Int?
 
-    @Field(key: "completedDate")
+    @Field(key: "completed_date")
     public var completedDate: String?
     
     @Field(key: "cost")
@@ -49,46 +50,46 @@ final public class CharacterIndustryJobModel: Model {
     @Field(key: "duration")
     public var duration: Int
     
-    @Field(key: "endDate")
+    @Field(key: "end_date")
     public var endDate: String
     
-    @Field(key: "facilityID")
+    @Field(key: "facility_id")
     public var facilityId: Int64
     
-    @Field(key: "installerID")
+    @Field(key: "installer_id")
     public var installerId: Int64
     
-    @Field(key: "jobID")
+    @Field(key: "job_id")
     public var jobId: Int
     
-    @Field(key: "licensedRuns")
+    @Field(key: "licensed_runs")
     public var licensedRuns: Int?
     
-    @Field(key: "outputLocationID")
+    @Field(key: "output_location_id")
     public var outputLocationId: Int64
     
-    @Field(key: "pauseDate")
+    @Field(key: "pause_date")
     public var pauseDate: String?
     
     @Field(key: "probability")
     public var probability: Float?
     
-    @Field(key: "productTypeID")
+    @Field(key: "product_type_id")
     public var productTypeId: Int64?
     
     @Field(key: "runs")
     public var runs: Int
     
-    @Field(key: "startDate")
+    @Field(key: "start_date")
     public var startDate: String
     
-    @Field(key: "stationID")
+    @Field(key: "station_id")
     public var stationId: Int64
     
     @Field(key: "status")
     public var status: Status
     
-    @Field(key: "successfulRuns")
+    @Field(key: "successful_runs")
     public var successfulRuns: Int?
 
     public init() {}
@@ -117,6 +118,7 @@ final public class CharacterIndustryJobModel: Model {
         status: Status,
         successfulRuns: Int? = nil
     ) {
+        self.id = jobId
         self.activityId = activityId
         self.blueprintId = blueprintId
         self.blueprintLocationId = blueprintLocationId
@@ -201,34 +203,36 @@ extension CharacterIndustryJobModel {
         public func prepare(on database: any FluentKit.Database) async throws {
             try await database.schema(CharacterIndustryJobModel.schema)
                 .id()
+                .field("character_industry_job_id", .int)
                 .field(
-                    "characterId",
+                    "character_id",
                     .uuid,
                     .required,
                     .references(Schemas.characterDataModel.rawValue, "id")
                 )
-                .field("activityID", .int, .required)
-                .field("blueprintID", .int64, .required)
-                .field("blueprintLocationID", .int64, .required)
-                .field("blueprintTypeID", .int64, .required)
-                .field("completedCharacterID", .int)
-                .field("completedDate", .string)
+                .field("activity_id", .int, .required)
+                .field("blueprint_id", .int64, .required)
+                .field("blueprint_location_id", .int64, .required)
+                .field("blueprint_type_id", .int64, .required)
+                .field("completed_character_id", .int)
+                .field("completed_date", .string)
                 .field("cost", .double)
                 .field("duration", .int, .required)
-                .field("endDate", .string, .required)
-                .field("facilityID", .int64, .required)
-                .field("installerID", .int64, .required)
-                .field("jobID", .int, .required)
-                .field("licensedRuns", .int)
-                .field("outputLocationID", .int64, .required)
-                .field("pauseDate", .string)
+                .field("end_date", .string, .required)
+                .field("facility_id", .int64, .required)
+                .field("installer_id", .int64, .required)
+                .field("job_id", .int, .required)
+                .field("licensed_runs", .int)
+                .field("output_location_id", .int64, .required)
+                .field("pause_date", .string)
                 .field("probability", .float)
-                .field("productTypeID", .int64)
+                .field("product_type_id", .int64)
                 .field("runs", .int, .required)
-                .field("startDate", .string, .required)
-                .field("stationID", .int64, .required)
+                .field("start_date", .string, .required)
+                .field("station_id", .int64, .required)
                 .field("status", .string, .required)
-                .field("successfulRuns", .int)
+                .field("successful_runs", .int)
+                .unique(on: "character_industry_job_id")
                 .create()
         }
 

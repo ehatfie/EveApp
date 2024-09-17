@@ -1173,6 +1173,86 @@ extension DBManager {
   }
 }
 
+// MARK: - IndustryJobs {
+extension DBManager {
+  func getIndustryJobModels() async -> [CharacterIndustryJobModel] {
+    do {
+      let result = try await CharacterIndustryJobModel
+        .query(on: self.database)
+        .all()
+      
+      //try await getIndustryJobDisplayInfo(data: result)
+      
+      return result
+    } catch let error {
+      print("query error: \(error.localizedDescription)")
+      return []
+    }
+  }
+  
+  func getIndustryJobDisplayInfo(data: [CharacterIndustryJobModel]) async throws -> [IndustryJobDisplayable] {
+    let result = await withTaskGroup(of: IndustryJobDisplayable?.self, returning: [IndustryJobDisplayable].self) { taskGroup in
+      for value in data {
+        taskGroup.addTask {
+          return try? await self.getIndustryJobDisplayInfo(for: value)
+        }
+      }
+      var returnValue: [IndustryJobDisplayable] = []
+      
+      for await response in taskGroup {
+        guard let response = response else { continue }
+        returnValue.append(response)
+      }
+      
+      return returnValue
+    }
+    
+    return result
+  }
+  
+  func getIndustryJobDisplayInfo(for jobModel: CharacterIndustryJobModel) async throws -> IndustryJobDisplayable {
+    let blueprintId = jobModel.blueprintTypeId
+    let locationId = jobModel.blueprintLocationId
+    
+    let productTypeId = jobModel.productTypeId
+    
+    let blueprintName = try await getBlueprintName(blueprintId)
+    let blueprintLocationName = try await getBlueprintLocationName(locationId)
+    var productName: String? = nil
+    
+    if let productTypeId {
+      productName = await getType(for: productTypeId)?.name
+      
+    }
+    
+    return IndustryJobDisplayable(
+      industryJobModel: jobModel,
+      blueprintName: blueprintName,
+      blueprintLocationName: blueprintLocationName,
+      productName: productName
+    )
+  }
+  
+  func getBlueprintName(_ typeId: Int64) async throws -> String {
+    print("get blueprint name for \(typeId)")
+   guard let blueprint = try await BlueprintModel.query(on: database)
+      .filter(\.$blueprintTypeID == typeId)
+      .join(TypeModel.self, on: \TypeModel.$typeId == \BlueprintModel.$blueprintTypeID)
+      .first()
+      .get() else {
+     return ""
+   }
+    
+    let typeModel = try blueprint.joined(TypeModel.self)
+    
+    return typeModel.name
+  }
+  
+  func getBlueprintLocationName(_ locationId: Int64) async throws -> String {
+    return "UNKNOWN_LOCATION"
+  }
+}
+
 // MARK: - Assets
 extension DBManager {
   

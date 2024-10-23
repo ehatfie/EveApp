@@ -12,6 +12,7 @@ enum SideBarItem: String, Identifiable, CaseIterable {
   var id: String { rawValue }
   
   case auth
+  case industryPlanner
   case characterInfo
   case industryHelper
   case reprocessingHelper
@@ -22,9 +23,6 @@ enum SideBarItem: String, Identifiable, CaseIterable {
   case reactionHelper
   case killboard
   case characterIndustryView
-  //case skillQueue
-  //case itemDogmaExplorer
-  //case itemExplorer
 }
 
 @Observable class HomeViewModel {
@@ -106,16 +104,12 @@ struct HomeView: View {
         AssetsViewer()
       case .reprocessingHelper:
         ReprocessingHelperView()
-//      case .itemDogmaExplorer:
-//        ItemDogmaExplorerView(viewModel: ItemDogmaExplorerViewModel())
       case .industryHelper:
         IndustryHelperView()
           .environment(db)
       case .devSettings:
         DevelopHelperView()
           .environment(homeViewModel)
-//      case .itemExplorer:
-//        ItemExplorerView(viewModel: ItemExplorerViewModel())
       case .blueprintExplorer:
         BlueprintExplorerView()
       case .potentialIndustry:
@@ -126,6 +120,8 @@ struct HomeView: View {
         KillboardView()
       case .characterIndustryView:
         CharacterIndustryView(viewModel: CharacterIndustryViewModel())
+      case .industryPlanner:
+        IndustryPlannerView(viewModel: IndustryPlannerViewModel())
       case nil:
         HomeInfoView(viewModel: HomeInfoViewModel(dbManager: db))
           .environment(db)

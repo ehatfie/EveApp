@@ -325,18 +325,23 @@ struct BlueprintDisplayInfo: Hashable {
     self.productCount = blueprintInfo.productCount
     self.blueprintId = blueprintInfo.blueprintModel.blueprintTypeID
     self.blueprintName = blueprintInfo.typeModel?.name ?? "NO_NAME"
-    self.inputMaterials = blueprintInfo.inputMaterials.map {
-      IdentifiedQuantity(
-        id: $0.typeId,
-        quantity: $0.quantity
-      )
-    }
+    self.inputMaterials = blueprintInfo.inputMaterials.map { IdentifiedQuantity($0) }
   }
 }
 
 struct IdentifiedQuantity: Hashable {
   let id: Int64
   let quantity: Int64
+  
+  init(id: Int64, quantity: Int64) {
+    self.id = id
+    self.quantity = quantity
+  }
+  
+  init(_ data: QuantityTypeModel) {
+    self.id = data.typeId
+    self.quantity = data.quantity
+  }
 }
 
 struct InputMaterialInfo {

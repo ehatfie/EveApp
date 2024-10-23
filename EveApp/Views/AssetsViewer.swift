@@ -46,7 +46,7 @@ struct AssetsViewItem: Identifiable, Hashable {
         self.init(
             typeId: assetModel.itemId,
             name: typeModel.name,
-            count: assetModel.quantity,
+            count: Int(assetModel.quantity),
             locationFlag:.init(rawValue: assetModel.locationFlag)!,
             locationType: .init(rawValue: assetModel.locationType)!,
             locationId: assetModel.locationId

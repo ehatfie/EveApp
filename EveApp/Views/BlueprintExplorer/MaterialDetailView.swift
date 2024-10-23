@@ -9,16 +9,16 @@ import SwiftUI
 import Fluent
 import ModelLibrary
 
-struct QuantityType {
-  var quantity: Int64
-  var typeId: Int64
+public struct QuantityType {
+  public var quantity: Int64
+  public var typeId: Int64
   
-  init(_ model: QuantityTypeModel) {
+  public init(_ model: QuantityTypeModel) {
     self.quantity = model.quantity
     self.typeId = model.typeId
   }
   
-  init(_ model: MaterialDataModel) {
+  public init(_ model: MaterialDataModel) {
     self.quantity = model.quantity
     self.typeId = model.materialTypeID
   }

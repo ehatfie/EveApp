@@ -18,7 +18,7 @@ struct TypeQuantityDisplayable {
   var id: Int64 {
     typeModel.typeId
   }
-  let quantity: Int
+  let quantity: Int64
   let typeModel: TypeModel
 }
 
@@ -124,7 +124,7 @@ struct TypeQuantityDisplayable {
         let key = assetInfo.asset.typeId
         
         if let existingValue = result[key] {
-          let newQuantity = existingValue.quantity + assetInfo.asset.quantity
+          let newQuantity = Int64(existingValue.quantity) + Int64(assetInfo.asset.quantity)
           result[key] = TypeQuantityDisplayable(
             quantity: newQuantity,
             typeModel: existingValue.typeModel
@@ -132,7 +132,7 @@ struct TypeQuantityDisplayable {
         }
         
         result[key] = TypeQuantityDisplayable(
-          quantity: assetInfo.asset.quantity,
+          quantity: Int64(assetInfo.asset.quantity),
           typeModel: assetInfo.typeModel
         )
       }
@@ -156,7 +156,7 @@ struct TypeQuantityDisplayable {
     var itemsDictionary: [Int64: Int] = [:]
     for asset in assets {
       let currentValue = itemsDictionary[asset.asset.typeId] ?? 0
-      itemsDictionary[asset.asset.typeId] = currentValue + asset.asset.quantity
+      itemsDictionary[asset.asset.typeId] = currentValue + Int(asset.asset.quantity)
     }
     
     let keys = itemsDictionary.keys

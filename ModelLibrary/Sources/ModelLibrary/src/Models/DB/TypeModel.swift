@@ -9,24 +9,24 @@ import Foundation
 import Fluent
 import Vapor
 
-public struct TypeData: Codable {
-    public let capacity: Double?
-    public let description: ThingName?
-    public let graphicID: Int?
-    public let groupID: Int64?
-    public let iconID: Int?
-    public let marketGroupID: Int?
-    public let mass: Double?
-    public let metaGroupID: Int?
-    public let name: ThingName?
-    public let portionSize: Int?
-    public let published: Bool
-    public let variationParentTypeID: Int?
-    public let radius: Double?
-    public let raceID: Int?
-    public let sofFactionName: String?
-    public let soundID: Int?
-    public let volume: Double?
+    public struct TypeData: Codable {
+        public let capacity: Double?
+        public let description: ThingName?
+        public let graphicID: Int?
+        public let groupID: Int64?
+        public let iconID: Int?
+        public let marketGroupID: Int?
+        public let mass: Double?
+        public let metaGroupID: Int?
+        public let name: ThingName?
+        public let portionSize: Int?
+        public let published: Bool
+        public let variationParentTypeID: Int?
+        public let radius: Double?
+        public let raceID: Int?
+        public let sofFactionName: String?
+        public let soundID: Int?
+        public let volume: Double?
     
     public init(capacity: Double? = nil, description: ThingName? = nil, graphicID: Int? = nil, groupID: Int64?, iconID: Int? = nil, marketGroupID: Int? = nil, mass: Double? = nil, metaGroupID: Int? = nil, name: ThingName? = nil, portionSize: Int? = nil, published: Bool, variationParentTypeID: Int? = nil, radius: Double? = nil, raceID: Int? = nil, sofFactionName: String? = nil, soundID: Int? = nil, volume: Double? = nil)
     {

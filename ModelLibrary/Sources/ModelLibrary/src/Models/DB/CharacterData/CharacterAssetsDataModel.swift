@@ -15,7 +15,7 @@ final public class CharacterAssetsDataModel: Model {
     @ID(key: .id) public var id: UUID?
     
     @Parent(key: "characterId")
-    public var characterDataModel: CharacterDataModel
+    var characterDataModel: CharacterDataModel
     
     @Field(key: "isBlueprintCopy") public var isBlueprintCopy: Bool?
     @Field(key: "isSingleton") public var isSingleton: Bool
@@ -23,12 +23,12 @@ final public class CharacterAssetsDataModel: Model {
     @Field(key: "locationFlag") public var locationFlag: String
     @Field(key: "locationId") public var locationId: Int64
     @Field(key: "locationType") public var locationType: String
-    @Field(key: "quantity") public var quantity: Int
+    @Field(key: "quantity") public var quantity: Int64
     @Field(key: "typeId") public var typeId: Int64
     
-    public init() { }
+     public init() { }
     
-    public init(
+     init(
         id: UUID? = nil,
         isBlueprintCopy: Bool? = nil,
         isSingleton: Bool,
@@ -36,7 +36,7 @@ final public class CharacterAssetsDataModel: Model {
         locationFlag: String,
         locationId: Int64,
         locationType: String,
-        quantity: Int,
+        quantity: Int64,
         typeId: Int
     ) {
         self.id = id
@@ -59,7 +59,7 @@ final public class CharacterAssetsDataModel: Model {
             locationFlag: data.locationFlag.rawValue,
             locationId: data.locationId,
             locationType: data.locationType.rawValue,
-            quantity: data.quantity,
+            quantity: Int64(data.quantity),
             typeId: data.typeId
         )
     }
@@ -81,7 +81,7 @@ final public class CharacterAssetsDataModel: Model {
                 .field("locationFlag", .string, .required)
                 .field("locationId", .int64, .required)
                 .field("locationType", .string, .required)
-                .field("quantity", .int, .required)
+                .field("quantity", .int64, .required)
                 .field("typeId", .int64, .required)
                 .create()
         }

@@ -89,6 +89,15 @@ extension DBManager {
     return results
   }
   
+  func getTypeNames(for typeIds: [Int64]) async -> [TypeNamesResult] {
+    let results = try! await TypeModel.query(on: self.database)
+      .filter(\.$typeId ~~ typeIds)
+      .all()
+      .get()
+      .map({ TypeNamesResult(typeId: $0.typeId, name: $0.name) })
+    return results
+  }
+  
   func getObjects<T: Model>(for type: T.Type, filter: ModelFieldFilter<T, T>) -> [T] {
     try! T.query(on: self.database)
       .filter(filter)
@@ -1235,17 +1244,51 @@ extension DBManager {
   
   func getBlueprintName(_ typeId: Int64) async throws -> String {
     print("get blueprint name for \(typeId)")
-   guard let blueprint = try await BlueprintModel.query(on: database)
+    guard let blueprint = try await BlueprintModel.query(on: database)
       .filter(\.$blueprintTypeID == typeId)
       .join(TypeModel.self, on: \TypeModel.$typeId == \BlueprintModel.$blueprintTypeID)
       .first()
-      .get() else {
+      .get()
+    else {
      return ""
    }
     
     let typeModel = try blueprint.joined(TypeModel.self)
     
     return typeModel.name
+  }
+  
+  func getBlueprintNames(_ typeIds: [Int64]) async throws -> [(Int64, String)] {
+//    let manufacturing = await getManufacturingBlueprintsWithInputs(of: typeIds)
+//    let reactions = await getReactionBlueprintsWIthInputs(of: typeIds)
+//    let blueprintIds = (manufacturing + reactions).map { $0.blueprintTypeID }
+    let result = await withTaskGroup(
+      of: (Int64, String?).self,
+      returning: [(Int64, String)].self
+    ) { taskGroup in
+      for typeId in typeIds {
+        taskGroup.addTask {
+          let name = try? await self.getBlueprintName(typeId)
+          return (typeId, name)
+        }
+      }
+      
+      var returnValues: [(Int64, String)] = []
+      for await result in taskGroup {
+        guard let name = result.1 else { continue }
+        returnValues.append((result.0, name))
+      }
+      return returnValues
+    }
+    return result
+  }
+  
+  func getBlueprintId(named name: String) async -> Int64? {
+    let db = await DataManager.shared.dbManager!.database
+    let typeModel = try? await TypeModel.query(on: db)
+      .filter(\.$name == name).first()
+      .get()
+    return typeModel?.typeId
   }
   
   func getBlueprintLocationName(_ locationId: Int64) async throws -> String {
@@ -1255,6 +1298,122 @@ extension DBManager {
 
 // MARK: - Assets
 extension DBManager {
+  // Helper to get all character assets that match the blueprint inputs
+  func getCharacterAssetsForBlueprint1(characterID: String, blueprintId: Int64) async -> [AssetQuantityInfo] {
+    guard let blueprintModel = await getBlueprintModel(for: blueprintId) else {
+      return []
+    }
+    
+    var assetIds: Set<Int64> = []
+    
+    let reactionInputs = blueprintModel.activities.reaction.materials
+    let manufacturingInputs = blueprintModel.activities.manufacturing.materials
+    
+    // insert inputs into a set
+    reactionInputs.forEach { assetIds.insert($0.typeId) }
+    manufacturingInputs.forEach { assetIds.insert($0.typeId) }
+    
+    return await getCharacterAssetsForValues(
+      characterID: characterID,
+      typeIds: Array(assetIds)
+    )
+  }
+  
+  func getCharacterAssetsForBlueprint(characterID: String, blueprintId: Int64) async -> [AssetInfoDisplayable] {
+    guard let blueprintModel = await getBlueprintModel(for: blueprintId) else {
+      return []
+    }
+    
+    var assetIds: Set<Int64> = []
+    
+    let reactionInputs = blueprintModel.activities.reaction.materials
+    let manufacturingInputs = blueprintModel.activities.manufacturing.materials
+    
+    // insert inputs into a set
+    reactionInputs.forEach { assetIds.insert($0.typeId) }
+    manufacturingInputs.forEach { assetIds.insert($0.typeId) }
+    
+    // get character assets for unique values, since
+    let characterAssets = await getCharacterAssetsForValues(
+      characterID: characterID,
+      typeIds: Array(assetIds)
+    )
+    
+    var assetDict: [Int64: Int64] = [:]
+    
+    for asset in characterAssets {
+      assetDict[asset.typeId, default: 0] += asset.quantity
+    }
+    
+    let typeModels = getTypes(for: Array(assetIds))
+    
+    let returnValues = typeModels.map { value in
+      TypeQuantityDisplayable(quantity: assetDict[value.typeId, default: 0], typeModel: value)
+    }
+    
+    //TypeQuantityDisplayable
+    return []
+  }
+  
+  func getDisplayableCharacterAssetsForBlueprint(
+    characterID: String,
+    blueprintId: Int64
+  ) async -> [TypeQuantityDisplayable] {
+    guard let blueprintModel = await getBlueprintModel(for: blueprintId) else {
+      return []
+    }
+    
+    var assetIds: Set<Int64> = []
+    
+    let reactionInputs = blueprintModel.activities.reaction.materials
+    let manufacturingInputs = blueprintModel.activities.manufacturing.materials
+    
+    // insert inputs into a set
+    reactionInputs.forEach { assetIds.insert($0.typeId) }
+    manufacturingInputs.forEach { assetIds.insert($0.typeId) }
+    
+    // get character assets for unique values, since
+    let characterAssets = await getCharacterAssetsForValues(
+      characterID: characterID,
+      typeIds: Array(assetIds)
+    )
+    
+    var assetDict: [Int64: Int64] = [:]
+    var blueprintInputDict: [Int64: Int64] = [:]
+    
+    for reactionInput in reactionInputs {
+      blueprintInputDict[reactionInput.typeId, default: 0] += reactionInput.quantity
+    }
+    
+    for manufacturingInput in manufacturingInputs {
+      blueprintInputDict[manufacturingInput.typeId, default: 0] += manufacturingInput.quantity
+    }
+    
+    for asset in characterAssets {
+      assetDict[asset.typeId, default: 0] += asset.quantity
+    }
+    
+    let keySet1: Set<Int64> = Set(blueprintInputDict.keys)
+    let keySet2: Set<Int64> = Set(assetDict.keys)
+    
+    let keySet3: Set<Int64> = keySet1.symmetricDifference(keySet2)
+    let keySet4: Set<Int64> = keySet2.symmetricDifference(keySet1)
+    
+    print("keySet3 \(keySet3)")
+    print("keySet4 \(keySet4)")
+    
+    let typeModels = getTypes(for: Array(assetIds))
+    
+    let returnValues: [TypeQuantityDisplayable] = typeModels.compactMap { value -> TypeQuantityDisplayable? in
+      guard let existingValue = assetDict[value.typeId] else {
+        return nil
+      }
+      
+      return TypeQuantityDisplayable(quantity: existingValue, typeModel: value)
+    }
+    
+    return returnValues
+  }
   
   // gets the assets a character has that matches in blueprint inputs
   func getCharacterAssetsForReaction(
@@ -1280,6 +1439,7 @@ extension DBManager {
       .join(TypeModel.self, on: \CharacterAssetsDataModel.$typeId == \TypeModel.$typeId)
       .all()
       .get()
+    
     // not necessary
     let results = assets.map { asset in
       let typeModel = try! asset.joined(TypeModel.self)
@@ -1293,7 +1453,6 @@ extension DBManager {
     characterID: String,
     typeIds: [Int64]
   ) async -> [AssetQuantityInfo] {
-    
     guard let character = await getCharacter(by: characterID) else { return [] }
     
     let assets = try! await character.$assetsData.query(on: database)
@@ -1301,9 +1460,8 @@ extension DBManager {
       .all()
       .get()
 
-    return assets.map{ AssetQuantityInfo(typeId: $0.typeId, quantity: Int64($0.quantity))}
+    return assets.map { AssetQuantityInfo(typeId: $0.typeId, quantity: Int64($0.quantity)) }
   }
-  
 }
 
 struct AssetQuantityInfo {

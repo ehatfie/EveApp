@@ -101,9 +101,14 @@ final public class BlueprintModel: Model {
 
     @ID(key: .id) public var id: UUID?
 
-    @Group(key: "activities") public var activities: BlueprintActivityModel
-    @Field(key: "blueprintTypeID") public var blueprintTypeID: Int64
-    @Field(key: "maxProductionLimit") public var maxProductionLimit: Int64
+    @Group(key: "activities")
+    public var activities: BlueprintActivityModel
+    
+    @Field(key: "blueprintTypeID")
+    public var blueprintTypeID: Int64
+    
+    @Field(key: "maxProductionLimit")
+    public var maxProductionLimit: Int64
 
     public init() {}
 
@@ -227,7 +232,6 @@ extension BlueprintActivityModel {
 
         self.researchMaterial.time = data.research_material?.time ?? 0
         self.researchTime.time = data.research_time?.time ?? 0
-
     }
 }
 

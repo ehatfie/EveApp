@@ -110,7 +110,7 @@ import FluentKit
                 esi: esiKillmail,
                 systemName: solarSystemInfo.name,
                 attackersIdentifiers: attackersInfo,
-                victimIdentifier: victimInfo
+                victimIdentifier: victimInfo, victimShipName: ""
             )
         }
         print("got killmails \(killmails.count)")
@@ -150,13 +150,17 @@ import FluentKit
             else {
                 return nil
             }
-            
+            var shipName: String = "SOME SHIP"
+            if let shipTypeID = esiKillmail.victim.first?.shipTypeId {
+                shipName = dbManager.getTypeNames(for: [shipTypeID])[0].name
+            }//.map(\.name)
             return KillmailDisplayInfo(
                 zkill: zKillmail,
                 esi: esiKillmail,
                 systemName: solarSystemInfo.name,
                 attackersIdentifiers: attackersInfo,
-                victimIdentifier: victimInfo
+                victimIdentifier: victimInfo,
+                victimShipName: shipName
             )
         }
         self.killmailDisplayInfo = displayInfo
@@ -427,6 +431,7 @@ struct KillmailDisplayInfo: Identifiable {
     let systemName: String
     let attackersIdentifiers: [CharacterIdentifiersModel]
     let victimIdentifier: CharacterIdentifiersModel
+    let victimShipName: String
 }
 
 struct KillboardView: View {
@@ -491,9 +496,9 @@ struct KillboardView: View {
                                             Spacer()
                                             Text("\(ISO8601DateFormatter().date(from: value.esi.killmailTime)!, formatter: dateFormatter)")
                                         }
-                                        Text("zkill: \(value.zkill.killmailId) ESI: \(value.esi.killmailId)")
+                                        //Text("zkill: \(value.zkill.killmailId) ESI: \(value.esi.killmailId)")
                                         Text("location: \(value.systemName)")
-                                        Text("victim: \(value.victimIdentifier.name)")
+                                        Text("victim: \(value.victimIdentifier.name) - \(value.victimShipName)")
                                         Text("attackers: \(value.esi.attackers.count)")
                                         VStack(alignment: .leading) {
                                             Text("Attackers")
@@ -512,7 +517,7 @@ struct KillboardView: View {
                                             label(text: "destroyed value:", value: "\(value.zkill.destroyedValue)")
                                             label(text: "dropped value:", value: "\(value.zkill.droppedValue)")
                                             label(text: "fitted value:", value: "\(value.zkill.fittedValue)")
-                                        }.frame(maxWidth: 250)
+                                        }//.frame(maxWidth: 450)
                                     }
                                    
                                 }

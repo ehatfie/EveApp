@@ -224,6 +224,64 @@ extension IndustryPlannerManager {
     
     return jobs
   }
+  
+  func makeJobsForInputSums(inputs: [Int64: Int64]) -> [TestJob] {
+    // get blueprints for input materials
+    
+    let inputMaterialIds = inputs.keys.map { $0 }
+    let inputMaterialBlueprints = getBlueprintModels2(for: inputMaterialIds)
+    
+    var uniqueBPs: [Int64: BlueprintInfo2] = [:]
+    
+    inputMaterialBlueprints.forEach { value in
+      guard BlueprintIds.FuelBlocks(rawValue: value.productId) == nil else {
+        return
+      }
+      uniqueBPs[value.productId] = value
+    }
+    
+    let jobs: [TestJob] = inputs.compactMap { key, value -> TestJob? in
+      guard let blueprintInfo = uniqueBPs[key] else {
+        return nil
+      }
+      let inputQuantity = value
+      let productsPerRun = blueprintInfo.productCount
+      let requiredRuns = Int(ceil(Double(inputQuantity) / Double(productsPerRun)))
+      
+      return TestJob(
+        quantity: Int64(value),
+        productId: blueprintInfo.productId,
+        inputs: blueprintInfo.inputMaterials,
+        blueprintId: blueprintInfo.blueprintModel.blueprintTypeID,
+        productsPerRun: Int(blueprintInfo.productCount),
+        requiredRuns: requiredRuns
+      )
+    }
+    
+    return jobs
+  }
+  
+  func makeDisplayableJobsForInputSums(inputs: [Int64: Int64]) async -> [DisplayableJob] {
+    let jobs = makeJobsForInputSums(inputs: inputs)
+    
+    var jobsDict: [Int64: TestJob] = [:]
+    
+    for job in jobs {
+      jobsDict[job.blueprintId] = job
+    }
+    
+    let idSet: Set<Int64> = Set(jobsDict.keys)
+    //let names = await dbManager.getTypeNames(for: Array(idSet))
+    let names1: [(Int64, String)] = (try? await dbManager.getBlueprintNames(Array(idSet))) ?? []
+    
+    let displayableJobs: [DisplayableJob] = names1.compactMap { value -> DisplayableJob? in
+      guard let existingJob = jobsDict[value.0] else { return nil }
+      print("got name \(value.1)")
+      return DisplayableJob(existingJob, productName: "", blueprintName: value.1)
+    }
+    
+    return displayableJobs //jobs.map(\.init)
+  }
     
   func getInputMaterials(for blueprintModel: BlueprintModel) -> [QuantityTypeModel]  {
     let manufacturing = blueprintModel.activities.manufacturing.materials
@@ -294,6 +352,7 @@ extension IndustryPlannerManager {
         inputMaterials: inputMaterials
       )
     }
+    
     return blueprintInfos
   }
   
@@ -383,6 +442,33 @@ class TestJob {
     self.productsPerRun = productsPerRun
     self.requiredRuns = requiredRuns
   }
+}
+
+struct DisplayableJob: Identifiable {
+  var id: Int64 {
+    productId
+  }
+  let quantity: Int64
+  let productId: Int64
+  let productName: String
+  let blueprintName: String
+  let inputs: [IdentifiedQuantity]
+  let requiredRuns: Int
+  
+  init(_ data: TestJob, productName: String, blueprintName: String) {
+    self.quantity = data.quantity
+    self.productId = data.productId
+    self.productName = productName
+    self.blueprintName = blueprintName
+    self.inputs = data.inputs.map { IdentifiedQuantity($0)}
+    self.requiredRuns = data.requiredRuns
+  }
+}
+
+struct DisplayableQuantity {
+  let id: Int64
+  let quantity: Int64
+  let name: String
 }
 
 struct ShipPlan {

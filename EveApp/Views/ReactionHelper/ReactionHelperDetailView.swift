@@ -65,7 +65,10 @@ struct CharacterPickerView: View {
     for asset in characterAssets {
       let existingQuantity = assetsDict[asset.asset.typeId] ?? 0
       assetsDict[asset.asset.typeId] = existingQuantity + Int64(asset.asset.quantity)
-      assetNames[asset.asset.typeId] = IdentifiedString(id: asset.asset.typeId, value: asset.typeModel.name)
+      assetNames[asset.asset.typeId] = IdentifiedString(
+        id: asset.asset.typeId,
+        value: asset.typeModel.name
+      )
     }
     
     assets = assetNames.map { $0.value }

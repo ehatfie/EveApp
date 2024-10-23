@@ -69,6 +69,11 @@
 		BA5991002BF46020003108CF /* AssetsViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5990FF2BF46020003108CF /* AssetsViewer.swift */; };
 		BA5991072BF99B97003108CF /* DataManager+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5991062BF99B97003108CF /* DataManager+Helpers.swift */; };
 		BA59910C2C003792003108CF /* Authmanager1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA59910B2C003792003108CF /* Authmanager1.swift */; };
+		BA5F7ABD2C9F72D2007DDA12 /* NumPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5F7ABC2C9F72C0007DDA12 /* NumPicker.swift */; };
+		BA5F7ABF2C9F7ABB007DDA12 /* IPProductPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5F7ABE2C9F7ABB007DDA12 /* IPProductPickerView.swift */; };
+		BA5F7AC12CA253A1007DDA12 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5F7AC02CA253A1007DDA12 /* SwiftUIView.swift */; };
+		BA5F7AC32CA25C89007DDA12 /* IPCategoryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5F7AC22CA25C89007DDA12 /* IPCategoryPicker.swift */; };
+		BA5F7AC62CA26773007DDA12 /* IPCharacterPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5F7AC52CA26773007DDA12 /* IPCharacterPickerView.swift */; };
 		BA6825C82C797AD300C103E9 /* ReactionHelperDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6825C72C797AD300C103E9 /* ReactionHelperDetailView.swift */; };
 		BA71008A2ADB3360001CD301 /* typeMaterials.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA7100892ADB3360001CD301 /* typeMaterials.yaml */; };
 		BA71008E2ADB453B001CD301 /* ItemDogmaExplorerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA71008D2ADB453B001CD301 /* ItemDogmaExplorerView.swift */; };
@@ -107,6 +112,7 @@
 		BAB271F72A686918004F01B7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BAB271F62A686918004F01B7 /* Alamofire */; };
 		BACB52DB2A68B9700044CDA0 /* ItemGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB52DA2A68B9700044CDA0 /* ItemGroupView.swift */; };
 		BACB52DD2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB52DC2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift */; };
+		BADE5CE02C9F47DC00E78357 /* IndustryPlannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADE5CDF2C9F47DC00E78357 /* IndustryPlannerView.swift */; };
 		BAE02EE72AF34F4000AB695F /* BlueprintComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EE62AF34F4000AB695F /* BlueprintComponentView.swift */; };
 		BAE02EEA2AF9CEE600AB695F /* ReprocessingHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EE92AF9CEE600AB695F /* ReprocessingHelperView.swift */; };
 		BAE02EEC2AF9EA7100AB695F /* CategoryInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EEB2AF9EA7100AB695F /* CategoryInfoView.swift */; };
@@ -293,6 +299,11 @@
 		BA5990FF2BF46020003108CF /* AssetsViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsViewer.swift; sourceTree = "<group>"; };
 		BA5991062BF99B97003108CF /* DataManager+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+Helpers.swift"; sourceTree = "<group>"; };
 		BA59910B2C003792003108CF /* Authmanager1.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Authmanager1.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA5F7ABC2C9F72C0007DDA12 /* NumPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumPicker.swift; sourceTree = "<group>"; };
+		BA5F7ABE2C9F7ABB007DDA12 /* IPProductPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPProductPickerView.swift; sourceTree = "<group>"; };
+		BA5F7AC02CA253A1007DDA12 /* SwiftUIView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA5F7AC22CA25C89007DDA12 /* IPCategoryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPCategoryPicker.swift; sourceTree = "<group>"; };
+		BA5F7AC52CA26773007DDA12 /* IPCharacterPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPCharacterPickerView.swift; sourceTree = "<group>"; };
 		BA6825C72C797AD300C103E9 /* ReactionHelperDetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ReactionHelperDetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA7100892ADB3360001CD301 /* typeMaterials.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = typeMaterials.yaml; sourceTree = "<group>"; };
 		BA71008D2ADB453B001CD301 /* ItemDogmaExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemDogmaExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -330,6 +341,7 @@
 		BAB271D42A6867B4004F01B7 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
 		BACB52DA2A68B9700044CDA0 /* ItemGroupView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemGroupView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BACB52DC2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemCategoryGroupsListView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BADE5CDF2C9F47DC00E78357 /* IndustryPlannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndustryPlannerView.swift; sourceTree = "<group>"; };
 		BAE02EE62AF34F4000AB695F /* BlueprintComponentView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintComponentView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAE02EE92AF9CEE600AB695F /* ReprocessingHelperView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ReprocessingHelperView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAE02EEB2AF9EA7100AB695F /* CategoryInfoView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CategoryInfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -549,6 +561,8 @@
 		BA3149C42A1EF98C0076E6DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BA5F7ABB2C9F72B8007DDA12 /* Common */,
+				BADE5CDE2C9F47BF00E78357 /* IndustryPlannerView */,
 				BA738B182C97BF18001C0D6E /* CharacterIndustryView */,
 				BA7718FD2C909DBD00227488 /* Killboard */,
 				BAA69B9D2C743904007399D7 /* ReactionHelper */,
@@ -725,6 +739,14 @@
 			path = AuthManager;
 			sourceTree = "<group>";
 		};
+		BA5F7ABB2C9F72B8007DDA12 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				BA5F7ABC2C9F72C0007DDA12 /* NumPicker.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		BA7100912ADF6562001CD301 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -885,6 +907,18 @@
 				BAB271D42A6867B4004F01B7 /* DataFetcher.swift */,
 			);
 			path = DataFetcher;
+			sourceTree = "<group>";
+		};
+		BADE5CDE2C9F47BF00E78357 /* IndustryPlannerView */ = {
+			isa = PBXGroup;
+			children = (
+				BADE5CDF2C9F47DC00E78357 /* IndustryPlannerView.swift */,
+				BA5F7ABE2C9F7ABB007DDA12 /* IPProductPickerView.swift */,
+				BA5F7AC02CA253A1007DDA12 /* SwiftUIView.swift */,
+				BA5F7AC22CA25C89007DDA12 /* IPCategoryPicker.swift */,
+				BA5F7AC52CA26773007DDA12 /* IPCharacterPickerView.swift */,
+			);
+			path = IndustryPlannerView;
 			sourceTree = "<group>";
 		};
 		BAE02EE82AF9CEC200AB695F /* ReprocessingHelper */ = {
@@ -1264,12 +1298,14 @@
 				BA738B1C2C9907CF001C0D6E /* CharacterIndustryJobRow.swift in Sources */,
 				BA3149DD2A47852A0076E6DD /* HomeView.swift in Sources */,
 				BA982FB42C03D7CD00041EEB /* DBManager+Auth.swift in Sources */,
+				BA5F7AC12CA253A1007DDA12 /* SwiftUIView.swift in Sources */,
 				BA738B1A2C97BF2A001C0D6E /* CharacterIndustryView.swift in Sources */,
 				BAA88E442C586DCF0001BF42 /* PotentialIndustryFiltersView.swift in Sources */,
 				BAE02EF22AFB11D200AB695F /* TypeDogmaInfoView.swift in Sources */,
 				BA04CA8B2AEDCAEB008D66B8 /* MaterialDetailView.swift in Sources */,
 				BA5991002BF46020003108CF /* AssetsViewer.swift in Sources */,
 				BAE02EE72AF34F4000AB695F /* BlueprintComponentView.swift in Sources */,
+				BA5F7ABD2C9F72D2007DDA12 /* NumPicker.swift in Sources */,
 				BAB271D52A6867B5004F01B7 /* DataFetcher.swift in Sources */,
 				BAE0696A2AC89E350054EFCF /* AppModel+loading.swift in Sources */,
 				BA3149E02A47907F0076E6DD /* SomeData.swift in Sources */,
@@ -1278,6 +1314,7 @@
 				BA71009E2AE36B03001CD301 /* ItemMaterialDetailView.swift in Sources */,
 				BA3149C82A1EF9A80076E6DD /* LoginView.swift in Sources */,
 				BA9C8FEA2B44D18C00F4DBAF /* ReactionsHelperView.swift in Sources */,
+				BA5F7AC62CA26773007DDA12 /* IPCharacterPickerView.swift in Sources */,
 				BA59910C2C003792003108CF /* Authmanager1.swift in Sources */,
 				BAE02EEA2AF9CEE600AB695F /* ReprocessingHelperView.swift in Sources */,
 				BAA88E422C55DA8B0001BF42 /* PotentialIIndustryView.swift in Sources */,
@@ -1296,8 +1333,10 @@
 				BA3149E92A4BCAF80076E6DD /* DataManager+Fetching.swift in Sources */,
 				BA1A940C2C0C378B0005B931 /* DM+KillmailFetching.swift in Sources */,
 				BAE069742AC8A1420054EFCF /* DBManager.swift in Sources */,
+				BADE5CE02C9F47DC00E78357 /* IndustryPlannerView.swift in Sources */,
 				BAE0697E2AC8CBE10054EFCF /* ItemTypeDetailView.swift in Sources */,
 				BA3149D42A315A650076E6DD /* DataManager.swift in Sources */,
+				BA5F7ABF2C9F7ABB007DDA12 /* IPProductPickerView.swift in Sources */,
 				BA9D96112B2A8B19006AC37E /* DevelopHelperView.swift in Sources */,
 				BAE02EF02AFB0E0100AB695F /* TypeInfoView.swift in Sources */,
 				BA7100A52AEA1969001CD301 /* BlueprintExplorerView.swift in Sources */,
@@ -1321,6 +1360,7 @@
 				BA9C8FF02B4CF6A500F4DBAF /* IndustryPlannerManager+jobs.swift in Sources */,
 				BA3149D92A4783800076E6DD /* UserDefaultsKeys.swift in Sources */,
 				BA5106942C09852900E9B344 /* DBManager+Fetching.swift in Sources */,
+				BA5F7AC32CA25C89007DDA12 /* IPCategoryPicker.swift in Sources */,
 				BA9C8FE82B44C5F900F4DBAF /* IndustryPlannerManager.swift in Sources */,
 				BAA69B9F2C74398E007399D7 /* ReactionHelperView.swift in Sources */,
 				BA9C8FEC2B44DF8D00F4DBAF /* BlueprintComponentListView.swift in Sources */,

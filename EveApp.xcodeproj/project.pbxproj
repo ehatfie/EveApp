@@ -88,7 +88,8 @@
 		BA738B1A2C97BF2A001C0D6E /* CharacterIndustryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA738B192C97BF2A001C0D6E /* CharacterIndustryView.swift */; };
 		BA738B1C2C9907CF001C0D6E /* CharacterIndustryJobRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA738B1B2C9907CF001C0D6E /* CharacterIndustryJobRow.swift */; };
 		BA7577732CF3F8CB00BE56A2 /* IndyTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7577722CF3F8C300BE56A2 /* IndyTool.swift */; };
-		BA7718FF2C909DCE00227488 /* KillboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7718FE2C909DCE00227488 /* KillboardView.swift */; };
+		BA7577752CF5358300BE56A2 /* KillboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7577742CF5358300BE56A2 /* KillboardView.swift */; };
+		BA7718FF2C909DCE00227488 /* KillboardViewOLD.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7718FE2C909DCE00227488 /* KillboardViewOLD.swift */; };
 		BA7E4B382C068E9900B00158 /* DBManager+loading2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7E4B372C068E9900B00158 /* DBManager+loading2.swift */; };
 		BA982FB42C03D7CD00041EEB /* DBManager+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA982FB32C03D7CD00041EEB /* DBManager+Auth.swift */; };
 		BA9C8FE82B44C5F900F4DBAF /* IndustryPlannerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FE72B44C5F900F4DBAF /* IndustryPlannerManager.swift */; };
@@ -324,7 +325,8 @@
 		BA738B192C97BF2A001C0D6E /* CharacterIndustryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterIndustryView.swift; sourceTree = "<group>"; };
 		BA738B1B2C9907CF001C0D6E /* CharacterIndustryJobRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterIndustryJobRow.swift; sourceTree = "<group>"; };
 		BA7577722CF3F8C300BE56A2 /* IndyTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndyTool.swift; sourceTree = "<group>"; };
-		BA7718FE2C909DCE00227488 /* KillboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillboardView.swift; sourceTree = "<group>"; };
+		BA7577742CF5358300BE56A2 /* KillboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillboardView.swift; sourceTree = "<group>"; };
+		BA7718FE2C909DCE00227488 /* KillboardViewOLD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillboardViewOLD.swift; sourceTree = "<group>"; };
 		BA7E4B372C068E9900B00158 /* DBManager+loading2.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+loading2.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BA982FB32C03D7CD00041EEB /* DBManager+Auth.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+Auth.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BA9C8FE72B44C5F900F4DBAF /* IndustryPlannerManager.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = IndustryPlannerManager.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -823,7 +825,8 @@
 		BA7718FD2C909DBD00227488 /* Killboard */ = {
 			isa = PBXGroup;
 			children = (
-				BA7718FE2C909DCE00227488 /* KillboardView.swift */,
+				BA7718FE2C909DCE00227488 /* KillboardViewOLD.swift */,
+				BA7577742CF5358300BE56A2 /* KillboardView.swift */,
 			);
 			path = Killboard;
 			sourceTree = "<group>";
@@ -1368,6 +1371,7 @@
 				BA5F7ABF2C9F7ABB007DDA12 /* IPProductPickerView.swift in Sources */,
 				BA7577732CF3F8CB00BE56A2 /* IndyTool.swift in Sources */,
 				BA9D96112B2A8B19006AC37E /* DevelopHelperView.swift in Sources */,
+				BA7577752CF5358300BE56A2 /* KillboardView.swift in Sources */,
 				BAE02EF02AFB0E0100AB695F /* TypeInfoView.swift in Sources */,
 				BA7100A52AEA1969001CD301 /* BlueprintExplorerView.swift in Sources */,
 				BAA69B9A2C700E36007399D7 /* BlueprintProductionView.swift in Sources */,
@@ -1401,7 +1405,7 @@
 				BA7E4B382C068E9900B00158 /* DBManager+loading2.swift in Sources */,
 				BA7100942ADF73AE001CD301 /* ModelGenerator.swift in Sources */,
 				BA314A0A2A5CF4EC0076E6DD /* CategoryGroupsView.swift in Sources */,
-				BA7718FF2C909DCE00227488 /* KillboardView.swift in Sources */,
+				BA7718FF2C909DCE00227488 /* KillboardViewOLD.swift in Sources */,
 				BACB52DB2A68B9700044CDA0 /* ItemGroupView.swift in Sources */,
 				BAA88E462C61C8AB0001BF42 /* Theme.swift in Sources */,
 				BA9D960A2B117ACC006AC37E /* IndustryListView.swift in Sources */,

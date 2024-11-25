@@ -7,6 +7,10 @@
 import Foundation
 import ModelLibrary
 
+struct IndyJob {
+    
+}
+
 class IndyTool {
     let dbManager: DBManager
     var characterID: String? = nil
@@ -63,10 +67,14 @@ class IndyTool {
                 guard amountMissing > 0 else { continue }
                 print("Adding missing input \(input.id) matching \(matchingAssetQuantity) needed \(amountNeeded) missing \(amountMissing)")
                 returnValues[input.id] = amountMissing
-                
             }
         }
+        
         return returnValues
+    }
+    
+    func makeJobs(for values: [Int64: Int64]) -> [IndyJob] {
+        return []
     }
     
     func loadCharacterAssets(for typeIds: [Int64]) async {

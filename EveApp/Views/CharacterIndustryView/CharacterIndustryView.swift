@@ -9,28 +9,6 @@ import FluentSQL
 import ModelLibrary
 import SwiftUI
 
-struct IndustryJobDisplayable: Identifiable {
-    var id: Int {
-        return industryJobModel.jobId
-    }
-    let industryJobModel: CharacterIndustryJobModel
-    let blueprintName: String  // = try await getBlueprintName(blueprintId)
-    let blueprintLocationName: String  // = try await getBlueprintLocationName(locationId)
-    let productName: String?
-    
-    init(
-        industryJobModel: CharacterIndustryJobModel,
-        blueprintName: String,
-        blueprintLocationName: String,
-        productName: String?
-    ) {
-        self.industryJobModel = industryJobModel
-        self.blueprintName = blueprintName
-        self.blueprintLocationName = blueprintLocationName
-        self.productName = productName
-    }
-}
-
 @Observable class CharacterIndustryViewModel {
     var industryJobs: [IndustryJobDisplayable] = []
     let dbManager: DBManager

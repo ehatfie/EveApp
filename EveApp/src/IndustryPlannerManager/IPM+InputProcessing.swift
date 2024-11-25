@@ -46,16 +46,16 @@ extension IndustryPlannerManager {
         }
         
         let zeroLevelJobs = await makeJobsForInputSums(
-            blueprints: firstLevelBlueprints, 
-            values: firstLevelSums
+            inputBlueprints: firstLevelBlueprints,
+            inputValues: firstLevelSums
         )
         let firstLevelJobs = await makeJobsForInputSums(
-            blueprints: secondLevel,
-            values: secondLevelSums
+            inputBlueprints: secondLevel,
+            inputValues: secondLevelSums
         )
         let secondLevelJobs = await makeJobsForInputSums(
-            blueprints: thirdLevelBlueprints,
-            values: thirdLevelSums
+            inputBlueprints: thirdLevelBlueprints,
+            inputValues: thirdLevelSums
         )
         print("got jobs")
         return ShipPlan(
@@ -156,13 +156,13 @@ extension IndustryPlannerManager {
 // MARK: - Job creation
 extension IndustryPlannerManager {
     func makeJobsForInputSums(
-        blueprints: [BlueprintInfo2],
-        values: [Int64: Int]
+        inputBlueprints: [BlueprintInfo2],
+        inputValues: [Int64: Int]
     ) async -> [TestJob] {
         //these blueprints should be unique but lets make sure
-        let uniqueBlueprints = await self.getUniqueBlueprintInfo(for: blueprints)
+        let uniqueBlueprints = await self.getUniqueBlueprintInfo(for: inputBlueprints)
         
-        let jobs: [TestJob] = values.compactMap({ key, value -> TestJob? in
+        let jobs: [TestJob] = inputValues.compactMap({ key, value -> TestJob? in
             guard let blueprintInfo = uniqueBlueprints[key] else {
               return nil
             }
@@ -186,18 +186,19 @@ extension IndustryPlannerManager {
     
 }
 
+// Unused stuff
 extension IndustryPlannerManager {
     /// Sum the input material for an array of `BlueprintInfo.`Returns a dictionary of itemId and count
     func sumInputs(
         for blueprintInfos: [BlueprintInfo2],
-        values: [Int64: Int]
-    ) async -> [Int64: Int] {
+        values: [Int64: Int64]
+    ) async -> [Int64: Int64] {
         print("sum inputs on blueprintInfos values:\(values)")
-        var inputSums: [Int64: Int] = [:]
+        var inputSums: [Int64: Int64] = [:]
         
         inputSums = await withTaskGroup(
-            of: [Int64: Int].self,
-            returning: [Int64: Int].self
+            of: [Int64: Int64].self,
+            returning: [Int64: Int64].self
         ) { taskGroup in
             blueprintInfos.forEach { blueprint in
                 taskGroup.addTask {
@@ -205,7 +206,7 @@ extension IndustryPlannerManager {
                 }
             }
             
-            var sums: [Int64: Int] = [:]
+            var sums: [Int64: Int64] = [:]
             
             for await result in taskGroup {
                 sums.merge(result, uniquingKeysWith: { $0 + $1 })
@@ -220,13 +221,13 @@ extension IndustryPlannerManager {
     // this should only sum the values in the provided array nothing else
     func sumValues(
         on inputMaterials: [QuantityTypeModel],
-        values: [Int64: Int]
-    ) async -> [Int64: Int] {
+        values: [Int64: Int64]
+    ) async -> [Int64: Int64] {
       print("sumInputsAsync")
-      var inputSums: [Int64: Int] = [:]
+      var inputSums: [Int64: Int64] = [:]
       
       inputMaterials.forEach({ value in
-        inputSums[value.typeId] = (inputSums[value.typeId] ?? 0) + Int(value.quantity)
+          inputSums[value.typeId] = inputSums[value.typeId, default: 0] + value.quantity
       })
 
       return inputSums
@@ -268,4 +269,69 @@ extension IndustryPlannerManager {
         
         return []
     }
+    
+    // this should sum all the inputs for an array of blueprints
+    func doThing2(for blueprintInfos: [BlueprintInfo2], values: [Int64: Int64]) -> [Int64: Int64] {
+      print("do thing \(blueprintInfos.map { $0.blueprintModel.blueprintTypeID})")
+      print("do thing values \(values)")
+      var inputSums: [Int64: Int64] = [:]
+      
+      blueprintInfos.forEach { blueprintInfo in
+        let results = sumInputs(on: blueprintInfo, values: values)
+        print("for \(blueprintInfo.productId) results \(results)")
+        inputSums.merge(results, uniquingKeysWith: { $0 + $1 })
+      }
+      
+      return inputSums
+    }
+    
+    func getJobs(for inputMaterials: [QuantityTypeModel]) -> [TestJob] {
+      let inputMaterialBlueprints: [BlueprintInfo2] = getBlueprintModels(for: inputMaterials)
+
+      var diction: [Int64: BlueprintInfo2] = [:]
+      
+      inputMaterialBlueprints.forEach { value in
+        guard BlueprintIds.FuelBlocks(rawValue: value.productId) == nil else {
+          //print("not making \(value.productId)")
+          return
+        }
+        diction[value.productId] = value
+      }
+      
+      let jobs: [TestJob] = inputMaterials.compactMap { material -> TestJob? in
+        guard let blueprintInfo = diction[material.typeId] else {
+          return nil
+        }
+        
+        let inputQuantity = material.quantity
+        let productsPerRun = blueprintInfo.productCount
+        let requiredRuns = Int(ceil(Double(inputQuantity) / Double(productsPerRun)))
+
+        return TestJob(
+          quantity: material.quantity,
+          productId: blueprintInfo.productId,
+          inputs: blueprintInfo.inputMaterials,
+          blueprintId: blueprintInfo.blueprintModel.blueprintTypeID,
+          productsPerRun: Int(productsPerRun),
+          requiredRuns: requiredRuns
+        )
+      }
+      
+      jobs.forEach { value in
+        print("id: \(value.blueprintId) productId: \(value.productId) quantity: \(value.quantity) numRuns: \(value.numRuns)")
+      }
+      
+      return jobs
+      //return inputSums
+    }
+    
+  func getInputMaterials(for blueprintModel: BlueprintModel) -> [QuantityTypeModel]  {
+    let manufacturing = blueprintModel.activities.manufacturing.materials
+    let reaction = blueprintModel.activities.reaction.materials
+    if manufacturing.count > 0 {
+      return manufacturing
+    } else  {
+      return reaction
+    }
+  }
 }

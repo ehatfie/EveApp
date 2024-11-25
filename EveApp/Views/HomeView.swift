@@ -123,8 +123,9 @@ struct HomeView: View {
       case .industryPlanner:
         IndustryPlannerView(viewModel: IndustryPlannerViewModel())
       case nil:
-        HomeInfoView(viewModel: HomeInfoViewModel(dbManager: db))
-          .environment(db)
+        AlgoHelperView(viewModel: AlgoHelperViewModel(dbManager: db))
+//        HomeInfoView(viewModel: HomeInfoViewModel(dbManager: db))
+//          .environment(db)
       default: EmptyView()
       }
     }

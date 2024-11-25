@@ -299,6 +299,13 @@ struct BlueprintInfo2 {
   let inputMaterials: [QuantityTypeModel]
 }
 
+struct BPInfo {
+  let productId: Int64
+  let productCount: Int64
+  let blueprintId: Int64
+  let inputMaterials: [IdentifiedQuantity]
+}
+
 struct BlueprintDisplayInfo: Hashable {
   let productId: Int64
   let productCount: Int64

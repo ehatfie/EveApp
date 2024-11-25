@@ -79,7 +79,6 @@ struct PotentialIndustryFiltersView: View {
             VStack(alignment: .leading) {
                 filterGroupsList()
             }
-            
         }
     }
     

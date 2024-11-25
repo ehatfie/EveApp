@@ -21,10 +21,27 @@ struct IPDetailInput: Identifiable {
   let quantity: Int64
 }
 
+struct IPDetailInput1: Identifiable {
+  let id: Int64
+  let name: String
+  let quantity: Int64
+  let haveQuantity: Int64
+}
+
+
 struct IPDetailInputGroup: Identifiable {
   var id: String { groupName }
   let groupName: String
   let content: [IPDetailInput]
+  let numHave: Int
+}
+
+struct IPDetailInputGroup2: Identifiable {
+  var id: String { groupName }
+  let groupName: String
+  let groupID: Int64
+  let content: [IPDetailInput1]
+  let numHave: Int
 }
 
 /*

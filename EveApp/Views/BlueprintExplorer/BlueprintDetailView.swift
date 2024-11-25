@@ -39,7 +39,6 @@ struct BlueprintDetailView: View {
     
     self.blueprint = blueprint
     self.industryPlanner = industryPlanner
-
     
     let foo = try! TypeModel.query(on: db)
       .filter(\.$typeId == blueprint.blueprintTypeID)
@@ -49,6 +48,7 @@ struct BlueprintDetailView: View {
     self.typeModel = foo
     self.viewModel = BlueprintDetailViewModel(industryPlanner: industryPlanner)
     self.viewModel.makePlan(blueprint: blueprint)
+    
   }
   
 
@@ -70,7 +70,7 @@ struct BlueprintDetailView: View {
 //        BlueprintComponentView(blueprintModel: blueprint)
 //          .border(.purple)
         
-        VStack(alignment: .leading) {
+        HStack(alignment: .center) {
           inputsView(for: viewModel.shipPlan.inputs)
           shipPlanView(for: viewModel.shipPlan)
           Spacer()
@@ -217,15 +217,17 @@ struct BlueprintDetailView: View {
       return (value.blueprintId, names[value.blueprintId] ?? "NA", value.requiredRuns)
     }.sorted(by: { $0.0 < $1.0})
     
-    
-    return //ScrollView {
-      HStack(alignment: .top) {
-        inputListView("First Level", values: zeroLevelValues)
-        inputListView("Second Level", values: firstLevelValues)
-        inputListView("Third Level", values: secondLevelValues)
-       // inputListView("Third Level", values: thirdLevelValues)
+    return VStack {
+      Text("Ship Plan View")
+      ScrollView {
+        VStack(alignment: .leading) {
+          inputListView("First Level", values: zeroLevelValues)
+          inputListView("Second Level", values: firstLevelValues)
+          inputListView("Third Level", values: secondLevelValues)
+          // inputListView("Third Level", values: thirdLevelValues)
+        }
       }
-   // }
+    }
   }
   
   func inputsView(for model: ShipPlanInputs) -> some View {
@@ -262,13 +264,16 @@ struct BlueprintDetailView: View {
     
     
     return VStack(alignment: .leading, spacing: 10) {
-      HStack(alignment: .top) {
-        inputListView("Zero Level", values: zeroLevelValues)
-        inputListView("First Level", values: firstLevelValues)
-        inputListView("Second Level", values: secondLevelValues)
-        inputListView("Third Level", values: thirdLevelValues)
+      Text("Inputs View")
+      ScrollView {
+        VStack(alignment: .leading) {
+          inputListView("Zero Level", values: zeroLevelValues)
+          inputListView("First Level", values: firstLevelValues)
+          inputListView("Second Level", values: secondLevelValues)
+          inputListView("Third Level", values: thirdLevelValues)
+          Spacer()
+        }
       }
-      Spacer()
     }.frame(maxHeight: .infinity)
     .border(.blue)
   }
@@ -278,7 +283,7 @@ struct BlueprintDetailView: View {
       VStack(alignment: .leading, spacing: 5) {
         Text(text).font(.title2)
         Divider()
-        List(values, id: \.0) { entry in
+        ForEach(values, id: \.0) { entry in
           HStack(alignment: .center) {
             Text("\(entry.1)")
             Spacer()

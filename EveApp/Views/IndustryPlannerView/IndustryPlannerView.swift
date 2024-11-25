@@ -9,9 +9,10 @@ import SwiftUI
 
 struct IndustryConfiguration {
     let costIndices: IndustryIndices
+    let enabledReactions: Set<Int64>
     
     static var mock: Self {
-        .init(costIndices: .empty)
+        .init(costIndices: .empty, enabledReactions: [])
     }
 }
 
@@ -103,13 +104,23 @@ struct IndustryIndices {
     }
     
     func generate() {
-        
+        print("Generate")
         Task {
             guard let testObject = industryJobs.first else { return }
             
+            let dbManager = await DataManager.shared.dbManager!
+            let ipm = IndustryPlannerManager(dbManager: dbManager)
+            let startDate = Date()
+            let inputSums = await ipm.breakdownInputs(
+                for: testObject.blueprintID,
+                quantity: Int64(testObject.runs)
+            )
+            let took = Date().timeIntervalSince(startDate)
+            
+            print("Input Sums \(inputSums) took \(took)")
             let blueprintId = testObject.blueprintID
             
-            let dbManager = await DataManager.shared.dbManager!
+            
             guard let blueprintModel = await dbManager.getBlueprintModel(for: blueprintId) else { return }
             var assets: [TypeQuantityDisplayable] = []
             var missingAssets: [TypeQuantityDisplayable] = []
@@ -137,12 +148,9 @@ struct IndustryIndices {
                     blueprintId: blueprintId
                 )
                 
-                
-                
                 for value in assets {
                     assetDict[value.id, default: 0] = Int64(value.quantity)
                 }
-                
                 
                 let assetKeys: Set<Int64> = Set(assetDict.keys)
                 
@@ -189,15 +197,17 @@ struct IndustryIndices {
             
             let relatedAssets = IPDetailInputGroup(
                 groupName: "Existing Assets",
-                content: relatedInputAssets
+                content: relatedInputAssets,
+                numHave: 0
             )
             
             let inputs = IPDetailInputGroup(
                 groupName: "Inputs",
-                content: inputModelContent
+                content: inputModelContent,
+                numHave: 0
             )
             
-            let ipm = IndustryPlannerManager(dbManager: dbManager)
+           
             let missingIDs = missingAssets.map { $0.id }
             var missingAssetDict: [Int64: Int64] = [:]
             
@@ -212,7 +222,7 @@ struct IndustryIndices {
                 inputs: [inputs],
                 relatedAssets: [relatedAssets],
                 missingAssets: [
-                    .init(groupName: "Missing Assets", content: fullyMissingAssets)
+                    .init(groupName: "Missing Assets", content: fullyMissingAssets, numHave: 0)
                 ],
                 jobs: jobs
             )
@@ -285,25 +295,46 @@ struct IndustryPlannerView: View {
 struct TextFieldDropdownView: View {
     @Binding var text: String
     @State private var isPresented: Bool = false
-    @Binding var searchResults: [String]
+    @Binding var searchResults: [IdentifiedString]
+    
+    var onTextChange: (String) -> Void = { _ in }
+    var onSubmit: () -> Void
+    var didSelect: (IdentifiedString) -> Void
     
     var body: some View {
+        
         VStack(alignment: .leading) {
-            TextField("Enter text", text: $text)
-                .onChange(of: text) {
-                    isPresented = !text.isEmpty
-                }
-            if isPresented {
-                VStack(alignment: .leading) {
-                    ForEach(searchResults, id: \.self) { result in
-                        Text(result)
-                            .onTapGesture {
-                                self.text = result
-                                self.isPresented = false
-                            }
+            HStack(alignment: .top) {
+                TextField("Enter text", text: $text)
+                    .frame(maxWidth: 200)
+                    .onChange(of: searchResults) {
+                        isPresented = !searchResults.isEmpty
+                        //onTextChange(text)
                     }
-                }.zIndex(1)
-                .padding()
+                Button(action: {
+                    onSubmit()
+                }, label: {
+                    Text("Enter")
+                })
+            }
+
+            if isPresented {
+                VStack {
+                    ScrollView {
+                        VStack(alignment: .leading) {
+                            ForEach(searchResults, id: \.id) { result in
+                                Text(result.value + " \(result.id)")
+                                    .onTapGesture {
+                                        self.text = result.value
+                                        self.isPresented = false
+                                        didSelect(result)
+                                    }
+                            }
+                        }.zIndex(1)
+                            .padding()
+                        
+                    }
+                }.frame(maxHeight: 200)
             }
         }
     }

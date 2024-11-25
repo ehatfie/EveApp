@@ -9,12 +9,6 @@ import SwiftUI
 import Fluent
 import ModelLibrary
 
-struct ItemInfoDisplayable: Identifiable {
-  let id: UUID = UUID()
-  let typeDogmaInfoModel: TypeDogmaInfoModel
-  let typeModel: TypeModel
-}
-
 @Observable class ItemDogmaExplorerViewModel {
   var data: [TypeDogmaInfoModel] = []
   var items: [ItemInfoDisplayable] = []

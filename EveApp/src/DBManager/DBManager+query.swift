@@ -444,6 +444,18 @@ extension DBManager {
     return foo
   }
   
+  func getReactionBlueprints1(groups: [IndustryGroup.ReactionFormulas]) -> [TypeModel] {
+    // all blueprints with a type id that matches a TypeModel that has a groupID that matches IndustryGroup.compositeReactionsFormula
+    let values = groups.map({ $0.rawValue })
+    let foo = try! TypeModel.query(on: database)
+      .filter(\.$groupID ~~ values)
+      //.join(BlueprintModel.self, on: \BlueprintModel.$blueprintTypeID == \TypeModel.$typeId)
+      .all()
+      .wait()
+    print("getReactionBlueprints1 got \(foo.count) things")
+    return foo
+  }
+  
   func getManufacturingBlueprint(for typeId: Int64) -> BlueprintModel? {
     let db = self.database
     guard let sql = db as? SQLDatabase else {
@@ -471,21 +483,65 @@ extension DBManager {
     return blueprintModel
   }
   
-  func getManufacturingBlueprintWithInput(of typeId: Int64) async -> BlueprintModel? {
+  func getManufacturingBlueprintWithInput(of typeId: Int64) async -> [BlueprintModel]? {
     let db = self.database
     guard let sql = db as? SQLDatabase else {
       return nil
     }
     let queryString =
+    """
+      select b.*, value, d.name
+      from blueprintModel b, TypeData d,
+              json_each(b.activities_manufacturing_materials)
+              where json_extract(value, '$.typeId') = \("\(typeId)")
+          AND b.blueprintTypeId=d.typeId
+          AND d.group_id NOT in (1197)
+    """
+    
+    return try? await sql.raw(SQLQueryString(queryString))
+      .all(decoding: BlueprintModel.self)
+      
+  }
+  
+  /// Returns the BlueprintModel that has the provided typeId as a product
+  func getManufacturingBlueprintAsync(making typeId: Int64) async -> BlueprintModel? {
+    let db = self.database
+    guard let sql = db as? SQLDatabase else {
+      return nil
+    }
+    //print("+++ \(typeId)")
+    let queryString =
       """
         select b.*, value from blueprintModel b,
-        json_each(b.activities_manufacturing_materials)
+        json_each(b.activities_manufacturing_products)
         where json_extract(value, '$.typeId') = \("\(typeId)")
       """
     
     return try? await sql.raw(SQLQueryString(queryString))
       .first(decoding: BlueprintModel.self)
       .get()
+  }
+  
+  func getManufacturingBlueprintsAsync(making typeIds: [Int64]) async -> [BlueprintModel] {
+    let db = self.database
+    guard let sql = db as? SQLDatabase else {
+      return []
+    }
+    
+    var values = typeIds
+    let startString = "\(values.removeFirst())"
+    let concatString = values.reduce(startString) { $0 + ",\($1)" }
+    //print("concatString: \(concatString)")
+    let queryString =
+      """
+        select b.*, value from blueprintModel b,
+        json_each(b.activities_manufacturing_products)
+        where json_extract(value, '$.typeId') IN \("(\(concatString))")
+      """
+    let result = try? await sql.raw(SQLQueryString(queryString))
+      .all(decoding: BlueprintModel.self)
+      .get()
+    return result ?? []
   }
   
   func getReactionBlueprint(for typeId: Int64) -> BlueprintModel? {
@@ -522,21 +578,49 @@ extension DBManager {
       .get()
   }
   
-  func getReactionBlueprintWithInput(of typeId: Int64) async -> BlueprintModel? {
+  func getReactionBlueprintsAsync(making typeIds: [Int64]) async -> [BlueprintModel] {
+    let db = self.database
+    guard let sql = db as? SQLDatabase else {
+      return []
+    }
+    var values = typeIds
+    let startString = "\(values.removeFirst())"
+    let concatString = values.reduce(startString) { $0 + ",\($1)" }
+
+    let queryString =
+      """
+      select b.*, d.name
+      value from blueprintModel b, TypeData d,
+      json_each(b.activities_reaction_products)
+      where json_extract(value, '$.typeId') in \("(\(concatString))")
+      AND b.blueprintTypeId=d.typeId
+      AND d.published=true
+      """
+    let result = try? await sql.raw(SQLQueryString(queryString))
+      .all(decoding: BlueprintModel.self)
+      .get()
+    return result ?? []
+  }
+  
+  func getReactionBlueprintWithInput(of typeId: Int64) async -> [BlueprintModel]? {
     let db = self.database
     guard let sql = db as? SQLDatabase else {
       return nil
     }
     let queryString =
-      """
-        select b.*, value from blueprintModel b,
-        json_each(b.activities_reaction_materials)
-        where json_extract(value, '$.typeId') = \("\(typeId)")
-      """
+    """
+      select b.*, value, d.name
+      from blueprintModel b, TypeData d,
+              json_each(b.activities_reaction_materials)
+              where json_extract(value, '$.typeId') = \("\(typeId)")
+          AND b.blueprintTypeId=d.typeId
+          AND d.group_id in (1888)
+          AND d.name NOT LIKE 'Unrefined%'
+          AND d.published=true
+    """
     
     return try? await sql.raw(SQLQueryString(queryString))
-      .first(decoding: BlueprintModel.self)
-      
+      .all(decoding: BlueprintModel.self)
   }
   
   func getAllESIKillMailModels() async -> [ESIKillmailModel] {
@@ -561,10 +645,12 @@ extension DBManager {
   }
   
   func getReactionBlueprintsWIthInputs(of typeIds: [Int64]) async -> [BlueprintModel] {
-    let results = await withTaskGroup(of: BlueprintModel?.self, returning: [BlueprintModel].self) { taskGroup in
+    let results = await withTaskGroup(of: [BlueprintModel]?.self, returning: [BlueprintModel].self) { taskGroup in
       for typeId in typeIds {
         taskGroup.addTask {
-          return await self.getReactionBlueprintWithInput(of: typeId)
+          let reactionBlueprint = await self.getReactionBlueprintWithInput(of: typeId)
+          print("++ reaction blueprint \(reactionBlueprint?.count ?? 0)")
+          return reactionBlueprint
         }
       }
       var values: [BlueprintModel] = []
@@ -573,7 +659,7 @@ extension DBManager {
           continue
         }
         
-        values.append(result)
+        values.append(contentsOf: result)
       }
       //let results = try await taskGroup.waitForAll()
       return values//results
@@ -583,7 +669,7 @@ extension DBManager {
   }
   //getManufacturingBlueprintWithInput
   func getManufacturingBlueprintsWithInputs(of typeIds: [Int64]) async -> [BlueprintModel] {
-    let results = await withTaskGroup(of: BlueprintModel?.self, returning: [BlueprintModel].self) { taskGroup in
+    let results = await withTaskGroup(of: [BlueprintModel]?.self, returning: [BlueprintModel].self) { taskGroup in
       for typeId in typeIds {
         taskGroup.addTask {
           return await self.getManufacturingBlueprintWithInput(of: typeId)
@@ -595,7 +681,7 @@ extension DBManager {
           continue
         }
         
-        values.append(result)
+        values.append(contentsOf: result)
       }
       //let results = try await taskGroup.waitForAll()
       return values//results
@@ -627,6 +713,18 @@ extension DBManager {
     }
   }
   
+  func getCharacters() -> [CharacterDataModel] {
+    do {
+      return try CharacterDataModel.query(on: self.database)
+        .with(\.$publicData)
+        .with(\.$assetsData)
+        .all()
+        .wait()
+    } catch let err {
+      print("DBManager.getCharacter() - error \(err)")
+      return []
+    }
+  }
   func getCharactersWithInfo() async -> [CharacterDataModel] {
     do {
       return try await CharacterDataModel.query(on: self.database)
@@ -648,6 +746,18 @@ extension DBManager {
         .filter(\.$characterId == characterId)
         .first()
         .get()
+    } catch let err {
+      print("DBManager.getCharacter() - error \(err)")
+      return nil
+    }
+  }
+  
+  func getCharacter(by characterId: String) -> CharacterDataModel? {
+    do {
+      return try CharacterDataModel.query(on: self.database)
+        .filter(\.$characterId == characterId)
+        .first()
+        .wait()
     } catch let err {
       print("DBManager.getCharacter() - error \(err)")
       return nil
@@ -1219,7 +1329,9 @@ extension DBManager {
     return result
   }
   
-  func getIndustryJobDisplayInfo(for jobModel: CharacterIndustryJobModel) async throws -> IndustryJobDisplayable {
+  func getIndustryJobDisplayInfo(
+    for jobModel: CharacterIndustryJobModel
+  ) async throws -> IndustryJobDisplayable {
     let blueprintId = jobModel.blueprintTypeId
     let locationId = jobModel.blueprintLocationId
     
@@ -1231,7 +1343,6 @@ extension DBManager {
     
     if let productTypeId {
       productName = await getType(for: productTypeId)?.name
-      
     }
     
     return IndustryJobDisplayable(
@@ -1449,6 +1560,28 @@ extension DBManager {
     return results
   }
   
+  func getCharacterAssetsWithTypeForValues(
+    characterID: String,
+    typeIds: [Int64]
+  ) -> [AssetInfoDisplayable] {
+    
+    guard let character = getCharacter(by: characterID) else { return [] }
+    
+    let assets = try! character.$assetsData.query(on: database)
+      .filter(\.$typeId ~~ typeIds)
+      .join(TypeModel.self, on: \CharacterAssetsDataModel.$typeId == \TypeModel.$typeId)
+      .all()
+      .wait()
+    
+    // not necessary
+    let results = assets.map { asset in
+      let typeModel = try! asset.joined(TypeModel.self)
+      return AssetInfoDisplayable(asset: asset, typeModel: typeModel)
+    }
+      
+    return results
+  }
+  
   func getCharacterAssetsForValues(
     characterID: String,
     typeIds: [Int64]
@@ -1461,6 +1594,23 @@ extension DBManager {
       .get()
 
     return assets.map { AssetQuantityInfo(typeId: $0.typeId, quantity: Int64($0.quantity)) }
+  }
+}
+
+// MARK: - TypeModel
+
+extension DBManager {
+  func searchTypeName(searchText: String) -> [IdentifiedString] {
+    do {
+      let results = try TypeModel.query(on: database)
+        .filter(\.$name ~~ searchText)
+        .all()
+        .wait()
+      return results.map { IdentifiedString(id: $0.typeId, value: $0.name) }
+    } catch let err {
+      print("search type name error \(err)")
+      return []
+    }
   }
 }
 

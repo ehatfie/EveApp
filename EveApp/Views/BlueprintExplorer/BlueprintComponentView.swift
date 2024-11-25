@@ -307,52 +307,6 @@ extension BlueprintComponentView {
   
 }
 
-struct BlueprintComponentDataDisplayable: Identifiable {
-  var id: Int
-  let typeModel: TypeModel
-  let quantityType: QuantityType
-  
-  init(typeModel: TypeModel, quantityTypeModel: QuantityTypeModel) {
-    self.id = Int(typeModel.typeId)
-    self.typeModel = typeModel
-    self.quantityType = QuantityType(quantityTypeModel)
-  }
-  
-  init(typeModel: TypeModel, quantityTypeModel: MaterialDataModel) {
-    self.id = Int(typeModel.typeId)
-    self.typeModel = typeModel
-    self.quantityType = QuantityType(quantityTypeModel)
-  }
-}
-
-struct ItemComponentDataDisplayable: Identifiable {
-  var id: Int
-  let typeModel: TypeModel
-  let quantity: Int64
-  // need to be able to tell how many this originally was
-  let materials: [BlueprintComponentDataDisplayable]
-  
-  init(typeModel: TypeModel, materials: [BlueprintComponentDataDisplayable]) {
-    self.id = Int(typeModel.typeId)
-    self.typeModel = typeModel
-    self.quantity = 0
-    self.materials = materials
-  }
-  
-  init(data: BlueprintComponentDataDisplayable, materials: [BlueprintComponentDataDisplayable]) {
-    self.id = Int(data.typeModel.typeId)
-    self.typeModel = data.typeModel
-    self.quantity = data.quantityType.quantity
-    self.materials = materials
-  }
-  
-  //  init(typeModel: TypeModel, quantityTypeModel: MaterialDataModel) {
-  //    self.id = Int(typeModel.typeId)
-  //    self.typeModel = typeModel
-  //    self.quantityType = QuantityType(quantityTypeModel)
-  //  }
-}
-
 #Preview {
   BlueprintComponentView(
     blueprintModel: BlueprintModel(

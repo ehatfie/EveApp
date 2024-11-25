@@ -84,32 +84,6 @@ struct TypeDogmaInfoView: View {
   }
 }
 
-struct EffectDisplayable: Identifiable {
-  var id: Int64
-  
-  let typeDogmaEffect: TypeDogmaEffect
-  let dogmaEffectModel: DogmaEffectModel
-  
-  init(typeDogmaEffect: TypeDogmaEffect, dogmaEffectModel: DogmaEffectModel) {
-    self.id = typeDogmaEffect.effectID
-    self.typeDogmaEffect = typeDogmaEffect
-    self.dogmaEffectModel = dogmaEffectModel
-  }
-}
-
-struct AttributeDisplayable: Identifiable {
-  var id: Int64
-  
-  let typeDogmaAttribute: TypeDogmaAttribute
-  let dogmaAttributeModel: DogmaAttributeModel
-  
-  init(typeDogmaAttribute: TypeDogmaAttribute, dogmaAttributeModel: DogmaAttributeModel) {
-    self.id = typeDogmaAttribute.attributeID
-    self.typeDogmaAttribute = typeDogmaAttribute
-    self.dogmaAttributeModel = dogmaAttributeModel
-  }
-}
-
 #Preview {
   TypeDogmaInfoView(dogmaInfoModel: TypeDogmaInfoModel(typeId: 0, data: TypeDogmaData(dogmaAttributes: [], dogmaEffects: [])))
 }

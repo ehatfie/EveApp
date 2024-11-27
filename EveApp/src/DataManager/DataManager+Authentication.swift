@@ -6,12 +6,8 @@
 //
 
 import Foundation
+import SwiftEveAuth
 
-struct ClientInfo: Codable {
-    let clientID: String
-    let secretKey: String
-    let callbackURL: String
-}
 
 extension DataManager {
     
@@ -31,7 +27,8 @@ extension DataManager {
             print("no client info")
             return
         }
-        AuthManager.shared.setClientInfo(clientInfo: clientInfo)
+        authManager.setClientInfo(clientInfo: clientInfo)
+        //AuthManager2.shared.setClientInfo(clientInfo: clientInfo)
         print("got client info \(clientInfo)")
         
     }

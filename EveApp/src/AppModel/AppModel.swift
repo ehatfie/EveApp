@@ -22,7 +22,7 @@ import Fluent
         self.dataManager = DataManager.shared
         
         self.dataManager.dbManager = dbManager
-        self.dataManager.authManager1.dbManager = dbManager
+        //self.dataManager.authManager.dbManager = dbManager
         print("++ AppModel init done \(Date().timeIntervalSince(start))")
 //        dbManager.$dbLoading
 //            .assign(to: &dataManager.$dataLoading)

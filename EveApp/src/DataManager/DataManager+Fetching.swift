@@ -8,6 +8,7 @@
 import Foundation
 import ModelLibrary
 import TestPackage3
+import SwiftEveAuth
 
 extension DataManager {
   func fetchCharacterInfo() {

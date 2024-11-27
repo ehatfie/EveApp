@@ -420,9 +420,11 @@ extension IndustryPlannerManager {
             
             let bpMakes = bpInfo.productCount
             let runsNeeded = Int64(ceil(Double(amountNeeded) / Double(bpMakes)))
+            
             if bpInfo.productId == 11539 || bpInfo.productId == 16672 {
                 print("\(bpInfo.blueprintId)/\(bpInfo.productId) - amountNeeded \(amountNeeded) productsPerRun \(bpInfo.productCount) runsToMake \(runsNeeded)")
             }
+            
             for input in bpInfo.inputMaterials {
                 if input.id == 16672 {
                     print("\(bpInfo.productId) input count \(input.quantity)")

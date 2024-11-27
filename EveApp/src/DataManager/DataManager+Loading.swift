@@ -8,6 +8,7 @@
 import Foundation
 import ModelLibrary
 import TestPackage3
+import SwiftEveAuth
 
 /// Loading stuff from user defaults
 

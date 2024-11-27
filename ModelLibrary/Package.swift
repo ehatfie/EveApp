@@ -16,7 +16,8 @@ let package = Package(
         .package(url: "https://github.com/vapor/fluent-sqlite-driver.git", from: .init(4, 5, 0)),
         .package(url: "https://github.com/vapor/fluent.git", .upToNextMajor(from: "4.0.0")),
         .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "4.0.0")),
-        .package(path: "../Packages/TestPackage3")
+        .package(path: "../Packages/TestPackage3"),
+        .package(path: "../SwiftEveAuth")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -27,7 +28,8 @@ let package = Package(
                 .product(name: "Fluent", package: "fluent"),
                 .product(name: "FluentSQLiteDriver", package: "fluent-sqlite-driver"),
                 .product(name: "Alamofire", package: "Alamofire"),
-                .product(name: "TestPackage3", package: "TestPackage3")
+                .product(name: "TestPackage3", package: "TestPackage3"),
+                .product(name: "SwiftEveAuth", package: "SwiftEveAuth")
             ]
         ),
         .testTarget(

@@ -17,7 +17,7 @@ class LoginViewModel: ObservableObject {
     }
     
     func login() {
-        DataManager.shared.authManager1.login()
+        DataManager.shared.authManager.login()
     }
     
     func refreshToken() {

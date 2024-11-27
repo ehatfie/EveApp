@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftEveAuth
 
 struct AuthSetupView: View {
     @State var clientID: String = ""

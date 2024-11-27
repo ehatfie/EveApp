@@ -6,12 +6,12 @@
 //
 import Foundation
 
-public struct AccessTokenResponse: Codable {
-    public let access_token: String
-    public let expires_in: Int
-    public let token_type: String
-    public let refresh_token: String
-}
+//public struct AccessTokenResponse: Codable {
+//    public let access_token: String
+//    public let expires_in: Int
+//    public let token_type: String
+//    public let refresh_token: String
+//}
 
 public struct ThingName: Codable {
     public let de: String?

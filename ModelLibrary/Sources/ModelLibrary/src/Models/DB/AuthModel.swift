@@ -7,7 +7,7 @@
 
 import Foundation
 import FluentSQLiteDriver
-
+import SwiftEveAuth
 
 /**
  struct AccessTokenResponse: Codable {

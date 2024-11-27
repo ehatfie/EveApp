@@ -89,6 +89,8 @@
 		BA738B1C2C9907CF001C0D6E /* CharacterIndustryJobRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA738B1B2C9907CF001C0D6E /* CharacterIndustryJobRow.swift */; };
 		BA7577732CF3F8CB00BE56A2 /* IndyTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7577722CF3F8C300BE56A2 /* IndyTool.swift */; };
 		BA7577752CF5358300BE56A2 /* KillboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7577742CF5358300BE56A2 /* KillboardView.swift */; };
+		BA7577792CF6A04B00BE56A2 /* SwiftEveAuth in Frameworks */ = {isa = PBXBuildFile; productRef = BA7577782CF6A04B00BE56A2 /* SwiftEveAuth */; };
+		BA75777A2CF6A74900BE56A2 /* SwiftEveAuth in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA7577772CF5451900BE56A2 /* SwiftEveAuth */; };
 		BA7718FF2C909DCE00227488 /* KillboardViewOLD.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7718FE2C909DCE00227488 /* KillboardViewOLD.swift */; };
 		BA7E4B382C068E9900B00158 /* DBManager+loading2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7E4B372C068E9900B00158 /* DBManager+loading2.swift */; };
 		BA982FB42C03D7CD00041EEB /* DBManager+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA982FB32C03D7CD00041EEB /* DBManager+Auth.swift */; };
@@ -225,6 +227,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				BA75777A2CF6A74900BE56A2 /* SwiftEveAuth in CopyFiles */,
 				BA56D9CB2C76DA7D00BD72CB /* TestPackage3 in CopyFiles */,
 				BA56D9C82C76D38B00BD72CB /* ModelLibrary in CopyFiles */,
 			);
@@ -326,6 +329,7 @@
 		BA738B1B2C9907CF001C0D6E /* CharacterIndustryJobRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterIndustryJobRow.swift; sourceTree = "<group>"; };
 		BA7577722CF3F8C300BE56A2 /* IndyTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndyTool.swift; sourceTree = "<group>"; };
 		BA7577742CF5358300BE56A2 /* KillboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillboardView.swift; sourceTree = "<group>"; };
+		BA7577772CF5451900BE56A2 /* SwiftEveAuth */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftEveAuth; sourceTree = "<group>"; };
 		BA7718FE2C909DCE00227488 /* KillboardViewOLD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillboardViewOLD.swift; sourceTree = "<group>"; };
 		BA7E4B372C068E9900B00158 /* DBManager+loading2.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+loading2.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BA982FB32C03D7CD00041EEB /* DBManager+Auth.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+Auth.swift"; sourceTree = "<group>"; tabWidth = 2; };
@@ -414,6 +418,7 @@
 				BAB271F72A686918004F01B7 /* Alamofire in Frameworks */,
 				BA0AFEEA2C744CC2003959D7 /* TestPackage1 in Frameworks */,
 				BA56D9BC2C76D2B600BD72CB /* TestPreviews.framework in Frameworks */,
+				BA7577792CF6A04B00BE56A2 /* SwiftEveAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,6 +498,7 @@
 		BA31498D2A1EF9660076E6DD = {
 			isa = PBXGroup;
 			children = (
+				BA7577772CF5451900BE56A2 /* SwiftEveAuth */,
 				BA56D9872C76CF1500BD72CB /* ModelLibrary */,
 				BAE0699A2ADA03B30054EFCF /* categoryIDs.yaml */,
 				BAE069982ADA03A80054EFCF /* groupIDs.yaml */,
@@ -1081,6 +1087,7 @@
 				BAE069632AC89CA80054EFCF /* Fluent */,
 				BA0AFEE92C744CC2003959D7 /* TestPackage1 */,
 				BA56D9892C76CFE000BD72CB /* ModelLibrary */,
+				BA7577782CF6A04B00BE56A2 /* SwiftEveAuth */,
 			);
 			productName = EveApp;
 			productReference = BA3149962A1EF9660076E6DD /* EveApp.app */;
@@ -2228,6 +2235,10 @@
 		BA56D98D2C76D1F600BD72CB /* ModelLibrary */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ModelLibrary;
+		};
+		BA7577782CF6A04B00BE56A2 /* SwiftEveAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftEveAuth;
 		};
 		BAB271F62A686918004F01B7 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

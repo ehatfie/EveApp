@@ -65,7 +65,7 @@ struct DevelopHelperView: View {
   func loginButton() -> some View {
     VStack {
       Button(action: {
-        AuthManager.shared.login()
+        DataManager.shared.authManager.login()
       }, label: {
         Text("Login")
       })

@@ -13,6 +13,7 @@ import NIO
 import Fluent
 
 import ModelLibrary
+import SwiftEveAuth
 
 
 // MARK: - Auth
@@ -45,6 +46,10 @@ extension DBManager {
   func getAuthModel(for characterId: String) async -> AuthModel? {
     return try? await AuthModel.query(on: database).filter(\.$characterId == characterId).first()
   }
+  
+  func getAllAuthModels() async -> [AuthModel] {
+    return (try? await AuthModel.query(on: database).all()) ?? []
+  }
 }
 
 // MARK: - CharacterData
@@ -53,7 +58,7 @@ extension DBManager {
   
   func createCharacterData(accessTokenData: AccessTokenData) async {
     do {
-      guard  try await CharacterDataModel
+      guard try await CharacterDataModel
         .query(on: self.database)
         .filter(\.$characterId == accessTokenData.characterID)
         .first() == nil else {

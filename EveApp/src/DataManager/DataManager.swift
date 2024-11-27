@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import ModelLibrary
 import TestPackage3
+import SwiftEveAuth
 
 struct AccessKeyKey: EnvironmentKey {
     static var defaultValue: String? {
@@ -32,7 +33,7 @@ class DataManager: ObservableObject {
     @ObservedObject static var shared = DataManager()
     
     var dbManager: DBManager?
-    var authManager1: AuthManager1
+    var authManager: AuthManager
     
     @Published var accessKey: String?
     @Published var accessTokenResponse: AccessTokenResponse? = nil
@@ -50,7 +51,7 @@ class DataManager: ObservableObject {
     @Environment(\.accessKey) var accessKey1: String?
     
     private init() {
-        authManager1 = AuthManager1()
+        authManager = AuthManager(delegate: nil)
         
         DispatchQueue.main.async { [self] in
             loadClientInfo()
@@ -66,8 +67,7 @@ class DataManager: ObservableObject {
     
     func useAccessKey(_ value: String) {
         self.accessKey = value
-        self.authManager1.oauthAuthorize(authCode: value)
-        //AuthManager.shared.outhAuthorize(authCode: value)
+        self.authManager.oauthAuthorize(authCode: value)
     }
     
     func loadAccessTokenResponse() {
@@ -80,13 +80,13 @@ class DataManager: ObservableObject {
         }
         
         self.accessTokenResponse = foo
-        AuthManager.shared.isLoggedIn = true
+        //AuthManager2.shared.isLoggedIn = true
     }
     
     func clearAccessTokenResponse() {
         UserDefaultsHelper.removeValue(for: .accessTokenResponse)
         self.accessTokenResponse = nil
-        AuthManager.shared.isLoggedIn = false
+        //AuthManager2.shared.isLoggedIn = false
         // will eventually delete from DB also
     }
     
@@ -95,8 +95,15 @@ class DataManager: ObservableObject {
     }
     
     
-    func refreshToken() {
-        AuthManager.shared.refresh()
+    func refreshToken() async {
+        do {
+            let authModels = await dbManager?.getAllAuthModels()
+            try await authManager.refreshTokens(authDatas: [])
+        } catch let err {
+            print("refresh token auth \(err)")
+        }
+       
+        //AuthManager2.shared.refresh()
     }
     
     func setCharacterPublicData(data: CharacterPublicDataResponse) {
@@ -106,3 +113,18 @@ class DataManager: ObservableObject {
 }
 
 
+
+extension DataManager: AuthManagerDelegate {
+    func authManager(didCompleteAuthWith authData: AuthDataResponse) {
+              Task {
+                // update/create characterModel
+                  await self.dbManager?.createCharacterData(accessTokenData: authData.accessTokenData)
+                  await self.dbManager?.updateAccessToken(
+                    response: authData.accessTokenResponse,
+                    accessTokenData: authData.accessTokenData
+                  )
+              }
+    }
+    
+    
+}

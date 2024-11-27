@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ModelLibrary
+import SwiftEveAuth
 
 class AuthViewModel: ObservableObject {
     @Published var accessTokenResponse: AccessTokenResponse?
@@ -25,11 +26,21 @@ class AuthViewModel: ObservableObject {
     
     func refreshAccessTokenData() {
         Task {
-            try? await DataManager.shared.authManager1.refreshTokens()
+            let authDatas = authModels.map {
+                AuthData(
+                    characterID: $0.characterId,
+                    refreshToken: $0.refreshToken,
+                    tokenType: $0.tokenType,
+                    accessToken: $0.accessToken,
+                    expiration: $0.expiration
+                )
+            }
+            try? await DataManager.shared.authManager.refreshTokens(authDatas: authDatas)
         }
         
     }
 }
+
 
 struct AuthView: View {
     @ObservedObject var authViewModel = AuthViewModel()
@@ -86,7 +97,7 @@ struct AuthView: View {
             Text("Auth Setup Needed")
             AuthSetupView(onSubmit: { clientInfo in
                 DataManager.shared.setClientInfo(clientInfo: clientInfo)
-                AuthManager.shared.setClientInfo(clientInfo: clientInfo)
+                //AuthManager2.shared.setClientInfo(clientInfo: clientInfo)
                 
             })
         }

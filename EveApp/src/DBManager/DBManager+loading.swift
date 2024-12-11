@@ -12,7 +12,7 @@ import ModelLibrary
 
 extension DBManager {
   func loadDogmaData() async  {
-    print("loadDogmaData()")
+    //print("loadDogmaData()")
     do {
       // there is no protection against inserting the same values
       async let loadDogmaAttributes:Void =  loadDogmaAttributeData()
@@ -106,10 +106,10 @@ extension DBManager {
     
     //print("async \(stop)")
     //let typeIds1 = try await readYamlAsync(for: .typeIDs, type: TypeData.self)
-    print("loadTypeData() -  got \(typeIds.count) types")
+    print("loadTypeData() - got \(typeIds.count) types")
     print("loadTypeData() - created \(typeModels.count) type models")
     
-    try await splitAndSaveAsync(splits: 5, models: typeModels)
+    try await splitAndSaveAsync(splits: 6, models: typeModels)
     
     print("loadTypeData() - Done, took: \(Date().timeIntervalSince(start))")
   }
@@ -119,37 +119,37 @@ extension DBManager {
     guard dogmaAttributeCount == 0 else {
       return
     }
-    
-    print("loadDogmaAttributeData() - Start")
+    let start = Date()
+    //print("loadDogmaAttributeData() - Start")
     let dogmaAttributes = try await readYamlAsync(for: .dogmaAttrbutes, type: DogmaAttributeData1.self)
     
     try await dogmaAttributes.map { key, value in
       DogmaAttributeModel(attributeId: key, data: value)
     }.create(on: database).get()
     
-    print("loadDogmaAttributeData() - Done")
+    print("loadDogmaAttributeData() - Done \(start.timeIntervalSinceNow * -1)")
   }
   
   func loadDogmaEffectsData() async throws  {
     let dogmaEffectCount = try await self.database.query(DogmaEffectModel.self).count().get()
     
     guard dogmaEffectCount == 0 else { return }
-    
-    print("loadDogmaEffectsData() - Start")
+    let start = Date()
+    //print("loadDogmaEffectsData() - Start")
     let dogmaEffects = try await readYamlAsync(for: .dogmaEffects, type: DogmaEffectData.self)
     
     try await dogmaEffects.map { key, value in
       DogmaEffectModel(dogmaEffectId: key, dogmaEffectData: value)
     }.create(on: database).get()
     
-    print("loadDogmaEffectsData() - Done")
+    print("loadDogmaEffectsData() - Done \(start.timeIntervalSinceNow * -1)")
   }
   
   func loadDogmaAttributeCategoryData() async throws {
     let dogmaAttributeCategoryCount = try await self.database.query(DogmaAttributeCategoryModel.self).count().get()
     guard dogmaAttributeCategoryCount == 0 else { return }
-    
-    print("loadDogmaAttributeCategoryData() - Start")
+    let start = Date()
+    //print("loadDogmaAttributeCategoryData() - Start")
     
     let dogmaAttributes = try readYaml(for: .dogmaAttributeCategories, type: TypeDogmaAttributeCategoryData.self)
     
@@ -157,7 +157,7 @@ extension DBManager {
       DogmaAttributeCategoryModel(categoryId: key, data: value)
     }.create(on: database).get()
     
-    print("loadDogmaAttributeCategoryData() - Done")
+    print("loadDogmaAttributeCategoryData() - Done \(start.timeIntervalSinceNow * -1)")
   }
   
   func loadCategoryID() throws -> [CategoryModel] {
@@ -170,7 +170,7 @@ extension DBManager {
   }
   
   func loadTypeDogmaInfoData() throws  {
-    print("loadTypeDogmaInfoData()")
+    //print("loadTypeDogmaInfoData()")
     
     let typeDogmaInfoCount = try self.database.query(TypeDogmaInfoModel.self).count().wait()
     guard typeDogmaInfoCount == 0 else { return }
@@ -213,7 +213,7 @@ extension DBManager {
     print("loadTypeDogmaInfoDataAsync()")
     let start = Date()
     
-    let info = try await readYamlAsync(for: .typeDogma, type: TypeDogmaData.self)
+    let info = try await readYamlAsync2(for: .typeDogma, type: TypeDogmaData.self)
     print("Read info - \(start.timeIntervalSinceNow * -1)")
     
     await saveDogmaInfoModel(data: info)
@@ -221,7 +221,7 @@ extension DBManager {
     return
   }
   
-  func saveDogmaInfoModel(data: [Int64: TypeDogmaData]) async {
+  func saveDogmaInfoModel(data: [(Int64, TypeDogmaData)]) async {
     var index = 0
     print("saving \(data.count) dogma values")
     let foo = data.map { key, value in
@@ -346,11 +346,11 @@ extension DBManager {
     async let two = decode2(splits: 0, some: Array(keyValuePair[1001...2000]), type: type)
     let start = Date()
     _ = await [one, two]
-    print("Both took \(Date().timeIntervalSince(start))")
+    //print("Both took \(Date().timeIntervalSince(start))")
     //let foo = await decode2(splits: 0, some: Array(keyValuePair[0...100]), type: type)
     let results = await splitAndSort(splits: 3, some: keyValuePair, type: type)
     
-    print("decodeNode() - splitAndSort done")
+    //print("decodeNode() - splitAndSort done")
     results.forEach { value in
       returnValues.merge(value, uniquingKeysWith: { one, _ in one })
     }

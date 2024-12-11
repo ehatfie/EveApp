@@ -17,7 +17,7 @@ import Vapor
         public let iconID: Int?
         public let marketGroupID: Int?
         public let mass: Double?
-        public let metaGroupID: Int?
+        public let metaGroupID: Float?
         public let name: ThingName?
         public let portionSize: Int?
         public let published: Bool
@@ -28,7 +28,7 @@ import Vapor
         public let soundID: Int?
         public let volume: Double?
     
-    public init(capacity: Double? = nil, description: ThingName? = nil, graphicID: Int? = nil, groupID: Int64?, iconID: Int? = nil, marketGroupID: Int? = nil, mass: Double? = nil, metaGroupID: Int? = nil, name: ThingName? = nil, portionSize: Int? = nil, published: Bool, variationParentTypeID: Int? = nil, radius: Double? = nil, raceID: Int? = nil, sofFactionName: String? = nil, soundID: Int? = nil, volume: Double? = nil)
+    public init(capacity: Double? = nil, description: ThingName? = nil, graphicID: Int? = nil, groupID: Int64?, iconID: Int? = nil, marketGroupID: Int? = nil, mass: Double? = nil, metaGroupID: Float? = nil, name: ThingName? = nil, portionSize: Int? = nil, published: Bool, variationParentTypeID: Int? = nil, radius: Double? = nil, raceID: Int? = nil, sofFactionName: String? = nil, soundID: Int? = nil, volume: Double? = nil)
     {
         self.capacity = capacity
         self.description = description
@@ -125,7 +125,7 @@ final public class TypeModel: Model, Content {
         self.iconID = data.iconID
         self.marketGroupID = data.marketGroupID
         self.mass = data.mass
-        self.metaGroupID = data.metaGroupID
+        self.metaGroupID = Int(data.metaGroupID ?? 0)
         self.name = data.name?.en ?? ""
         self.portionSize = data.portionSize
         self.published = data.published

@@ -12,11 +12,18 @@ let package = Package(
             name: "SwiftEveAuth",
             targets: ["SwiftEveAuth"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/OAuthSwift/OAuthSwift.git", .upToNextMajor(from: "2.2.0"))
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "SwiftEveAuth"),
+            name: "SwiftEveAuth",
+            dependencies: [
+                .product(name: "OAuthSwift", package: "OAuthSwift")
+            ]
+        ),
         .testTarget(
             name: "SwiftEveAuthTests",
             dependencies: ["SwiftEveAuth"]

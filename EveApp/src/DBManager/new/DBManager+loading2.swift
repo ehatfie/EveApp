@@ -12,7 +12,7 @@ import Fluent
 
 extension DBManager {
   
-  func readYamlAsync2<T: Decodable>(for fileName: YamlFiles, type: T.Type, splits: Int = 3) async throws -> [(Int64, T)] {
+  func readYamlAsync2<T: Decodable>(for fileName: YamlFiles, type: T.Type, splits: Int = 2) async throws -> [(Int64, T)] {
     guard let path = Bundle.main.path(forResource: fileName.rawValue, ofType: "yaml") else {
       throw NSError(domain: "", code: 0)
     }

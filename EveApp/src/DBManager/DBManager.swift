@@ -15,7 +15,7 @@ import ModelLibrary
 
 @Observable class DBManager {
   var databases: Databases
-  let dbName = "TestDB29"
+  let dbName = "TestDB21"
   
   let numThreads = 6
   
@@ -46,8 +46,8 @@ import ModelLibrary
     
       self.databases = Databases(threadPool: threadPool, on: eventLoopGroup)
 
-      databases.use(.sqlite(.file(self.dbName)), as: .sqlite)
-      //databases.use(.sqlite(.memory), as: .sqlite)
+      //databases.use(.sqlite(.file(self.dbName)), as: .sqlite)
+      databases.use(.sqlite(.memory), as: .sqlite)
       databases.default(to: .sqlite)
     
     setup()
@@ -128,9 +128,11 @@ import ModelLibrary
       //DispatchQueue.main.async {
       self.dbLoading = true
       //}
+      let loadStart = Date()
       await loadData()
       await loadIndustryData()
-      
+      let loadEnd = Date().timeIntervalSince(loadStart)
+      print("load data took \(loadEnd)")
       DispatchQueue.main.async {
         self.dbLoading = false
       }

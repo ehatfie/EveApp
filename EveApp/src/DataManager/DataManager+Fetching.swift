@@ -13,7 +13,7 @@ extension DataManager {
   func fetchCharacterInfo() {
     print("fetchCharacterInfo()")
     Task {
-      try? await fetchCharacterInfoAsync()
+      //try? await fetchCharacterInfoAsync()
     }
    
 //    makeApiCall1(dataEndpoint: "") { data, response, error in

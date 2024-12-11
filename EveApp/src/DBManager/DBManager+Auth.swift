@@ -20,6 +20,7 @@ import SwiftEveAuth
 
 extension DBManager {
   func updateAccessToken(response: AccessTokenResponse, accessTokenData: AccessTokenData) async {
+    print("updateAccessToken")
     do {
       if let existing = try? await AuthModel
         .query(on: self.database)

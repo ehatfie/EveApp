@@ -46,7 +46,7 @@ public class AuthManager: ObservableObject {
     
     var oauthSwift: OAuth2Swift?
     var handler: OAuthSwiftRequestHandle?
-    var delegate: AuthManagerDelegate?
+    public var delegate: AuthManagerDelegate?
     
     public init(delegate: AuthManagerDelegate?) {
         self.delegate = delegate
@@ -165,7 +165,6 @@ public class AuthManager: ObservableObject {
                 return
             }
 
-            
             delegate?.authManager(
                 didCompleteAuthWith: AuthDataResponse(
                     clientID: clientId,

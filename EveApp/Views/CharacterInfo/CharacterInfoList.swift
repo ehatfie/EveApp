@@ -40,6 +40,16 @@ struct CharacterInfoList: View {
     var viewModel: CharacterInfoListViewModel
     var body: some View {
         VStack {
+            HStack {
+                Button(action: {
+                    Task {
+                        try? await DataManager.shared.fetchAllCharacterInfoAsync()
+                    }
+                    
+                }, label: {
+                    Text("Fetch all character info")
+                })
+            }
             ForEach(viewModel.characterInfoDisplayables) { characterInfo in
                 characterInfoCard(characterInfo)
             }

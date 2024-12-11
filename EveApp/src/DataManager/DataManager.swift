@@ -55,6 +55,7 @@ class DataManager: ObservableObject {
             await loadClientInfo()
             await loadAccessTokenData()
         }
+        authManager.delegate = self
     }
     
     func useAccessKey(_ value: String) {
@@ -88,15 +89,17 @@ class DataManager: ObservableObject {
 
 extension DataManager: AuthManagerDelegate {
     func authManager(didCompleteAuthWith authData: AuthDataResponse) {
+        print("authManager didCompleteAuthWith")
               Task {
                 // update/create characterModel
                   await self.dbManager?.createCharacterData(accessTokenData: authData.accessTokenData)
+                  
+                  
                   await self.dbManager?.updateAccessToken(
                     response: authData.accessTokenResponse,
                     accessTokenData: authData.accessTokenData
                   )
               }
     }
-    
     
 }

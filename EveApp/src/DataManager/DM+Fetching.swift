@@ -110,10 +110,32 @@ extension DataManager {
 // MARK: - Public Data
 
 extension DataManager {
-  func fetchCharacterInfoAsync() async throws {
+  func fetchAllCharacterInfoAsync() async throws {
+    print("fetchALlCharacterInfoAsync()")
+    guard
+      let characters = await dbManager?.getCharacters(),
+      !characters.isEmpty
+    else {
+      print("no characters \(dbManager)")
+      return
+    }
+    
+    await withThrowingTaskGroup(of: Void.self) { taskGroup in
+      
+      for character in characters {
+        taskGroup.addTask {
+          try await self.fetchCharacterInfoAsync(characterDataModel: character)
+        }
+      }
+
+    }
+  }
+  
+  func fetchCharacterInfoAsync(characterDataModel: CharacterDataModel) async throws {
     print("fetchCharacterInfoAsync()")
-    let characters = await dbManager!.getCharacters()
-    try await fetchPublicData(for: characters[0])
+
+    try await fetchPublicData(for: characterDataModel)
+    await fetchCorporationInfoForCharacter(characterModel: characterDataModel)
   }
   
   func fetchPublicData(for character: CharacterDataModel) async throws {

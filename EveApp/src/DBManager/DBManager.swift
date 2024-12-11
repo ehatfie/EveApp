@@ -17,7 +17,7 @@ import ModelLibrary
   var databases: Databases
   let dbName = "TestDB21"
   
-  let numThreads = 6
+  let numThreads = 8
   
   var logger: Logger = {
     var logger = Logger(label: "database.logger")

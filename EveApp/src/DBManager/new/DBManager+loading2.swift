@@ -12,7 +12,7 @@ import Fluent
 
 extension DBManager {
   
-  func readYamlAsync2<T: Decodable>(for fileName: YamlFiles, type: T.Type, splits: Int = 2) async throws -> [(Int64, T)] {
+  func readYamlAsync2<T: Decodable>(for fileName: YamlFiles, type: T.Type, splits: Int = 3) async throws -> [(Int64, T)] {
     guard let path = Bundle.main.path(forResource: fileName.rawValue, ofType: "yaml") else {
       throw NSError(domain: "", code: 0)
     }
@@ -65,8 +65,13 @@ extension DBManager {
     let values = await withTaskGroup(of: [(Int64,T)].self, returning: [(Int64,T)].self) { taskGroup in
       var returnValues = [(Int64, T)]()
       
-      taskGroup.addTask { await self.splitAndSortAsync(splits: splits - 1, some: one, type: type) }
-      taskGroup.addTask { await self.splitAndSortAsync(splits: splits - 1, some: two, type: type) }
+      taskGroup.addTask {
+        await self.splitAndSortAsync(splits: splits - 1, some: one, type: type)
+      }
+      
+      taskGroup.addTask {
+        await self.splitAndSortAsync(splits: splits - 1, some: two, type: type)
+      }
       
       for await result in taskGroup {
         returnValues.append(contentsOf: result)

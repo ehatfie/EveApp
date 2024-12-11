@@ -102,12 +102,11 @@ extension DBManager {
     let typeModels = typeIds.map { value in
       return TypeModel(typeId: Int64(value.0), data: value.1)
     }
-    let stop = start.timeIntervalSinceNow * -1
     
     //print("async \(stop)")
     //let typeIds1 = try await readYamlAsync(for: .typeIDs, type: TypeData.self)
-    print("loadTypeData() - got \(typeIds.count) types")
-    print("loadTypeData() - created \(typeModels.count) type models")
+    //print("loadTypeData() - got \(typeIds.count) types")
+    //print("loadTypeData() - created \(typeModels.count) type models")
     
     try await splitAndSaveAsync(splits: 6, models: typeModels)
     
@@ -121,7 +120,7 @@ extension DBManager {
     }
     let start = Date()
     //print("loadDogmaAttributeData() - Start")
-    let dogmaAttributes = try await readYamlAsync(for: .dogmaAttrbutes, type: DogmaAttributeData1.self)
+    let dogmaAttributes = try await readYamlAsync2(for: .dogmaAttrbutes, type: DogmaAttributeData1.self)
     
     try await dogmaAttributes.map { key, value in
       DogmaAttributeModel(attributeId: key, data: value)

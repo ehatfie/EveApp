@@ -8,7 +8,6 @@
 import SwiftUI
 import FluentSQLiteDriver
 import ModelLibrary
-import TestPackage3
 
 struct AssetsViewItem: Identifiable, Hashable {
     var id: String {
@@ -145,22 +144,32 @@ struct AssetsViewer: View {
                     Text("delete assets")
                 })
             }
-
-            VStack(alignment: .leading) {
-                List(viewModel.viewItems , id: \.id) { value in
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text(value.name)
-                            Text("\(value.count)")
-                        }
-                        HStack {
-                            Text(value.locationFlag.rawValue)
-                            Text(value.locationType.rawValue)
-                        }
-                        
-                        Text("\(value.locationId)")
+            assetsList()
+        }
+    }
+    
+    func characterList() -> some View {
+        VStack {
+            
+        }
+    }
+    
+    func assetsList() -> some View {
+        VStack(alignment: .leading) {
+            List(viewModel.viewItems , id: \.id) { value in
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(value.name)
+                        Text("\(value.count)")
                     }
+                    HStack {
+                        Text(value.locationFlag.rawValue)
+                        Text(value.locationType.rawValue)
+                    }
+                    
+                    Text("\(value.locationId)")
                 }
+            }
 //                List(viewModel.assets, id: \.id ) { value in
 //                    VStack(alignment: .leading) {
 //                        Text("itemId: \(value.itemId)")
@@ -169,7 +178,6 @@ struct AssetsViewer: View {
 //                    }
 //
 //                }
-            }
         }
     }
 }

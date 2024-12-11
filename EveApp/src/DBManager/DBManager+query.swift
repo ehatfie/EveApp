@@ -725,7 +725,7 @@ extension DBManager {
       return []
     }
   }
-  func getCharactersWithInfo() async -> [CharacterDataModel] {
+  func  getCharactersWithInfo() async -> [CharacterDataModel] {
     do {
       return try await CharacterDataModel.query(on: self.database)
         .with(\.$publicData)
@@ -762,6 +762,45 @@ extension DBManager {
       print("DBManager.getCharacter() - error \(err)")
       return nil
     }
+  }
+  
+  func getCharacterInfoDisplayable() async -> [CharacterInfoDisplayable] {
+    let characters = await getCharactersWithInfo()
+    var returnValues: [CharacterInfoDisplayable] = []
+    
+    
+    do {
+      returnValues = try characters.compactMap { character -> CharacterInfoDisplayable? in
+        let corporation = try character.joined(CharacterCorporationModel.self)
+          
+        
+        //print("got corp \(corporation.corporation.$corporationId)")
+        guard let value = CharacterInfoDisplayable(
+          characterData: character,
+          corporationData: corporation.corporation
+        ) else {
+          print("couldnt make CharacterInfoDisplayable")
+          return nil
+        }
+        return value
+      }
+//      for character in characters {
+//        let corporation = try character.joined(CorporationInfoModel.self)
+//        print("got corp \(corporation.corporationId)")
+//        guard let value = CharacterInfoDisplayable(
+//          characterData: character,
+//          corporationData: corporation
+//        ) else {
+//          print("couldnt make CharacterInfoDisplayable")
+//          continue
+//        }
+//        returnValues.append(value)
+//      }
+    } catch let err {
+      print("make character displayable error \(err)")
+    }
+
+    return returnValues
   }
 }
 
@@ -1354,7 +1393,6 @@ extension DBManager {
   }
   
   func getBlueprintName(_ typeId: Int64) async throws -> String {
-    print("get blueprint name for \(typeId)")
     guard let blueprint = try await BlueprintModel.query(on: database)
       .filter(\.$blueprintTypeID == typeId)
       .join(TypeModel.self, on: \TypeModel.$typeId == \BlueprintModel.$blueprintTypeID)

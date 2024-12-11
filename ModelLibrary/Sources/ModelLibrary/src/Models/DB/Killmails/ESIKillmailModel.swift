@@ -7,7 +7,6 @@
 
 import Foundation
 import FluentSQLiteDriver
-import TestPackage3
 
 final public class ESIKillmailModel: Model {
     static public let schema = Schemas.Killmail.esi.rawValue

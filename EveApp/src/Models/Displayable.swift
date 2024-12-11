@@ -125,3 +125,42 @@ struct AttributeDisplayable: Identifiable {
     self.dogmaAttributeModel = dogmaAttributeModel
   }
 }
+
+struct CharacterInfoDisplayable: Identifiable {
+    let characterID: String
+    let name: String
+    
+    let allianceInfo: IdentifiedString?
+    let corporationInfo: IdentifiedString
+    let description: String?
+    let securityStatus: Float?
+    
+    var id: AnyHashable {
+        return characterID
+    }
+    
+    init?(
+        characterData: CharacterDataModel,
+        corporationData: CorporationInfoModel
+    ) {
+        guard let publicData = characterData.publicData else {
+            return nil
+        }
+        
+        self.characterID = characterData.characterId
+        self.name = publicData.name
+        self.description = publicData.description
+        self.securityStatus = publicData.securityStatus
+       
+        self.corporationInfo = IdentifiedString(
+            id: Int64(corporationData.corporationId),
+            value: corporationData.name
+        )
+        
+        self.allianceInfo = nil
+    }
+    
+
+}
+
+

@@ -28,7 +28,6 @@ struct IPDetailInput1: Identifiable {
   let haveQuantity: Int64
 }
 
-
 struct IPDetailInputGroup: Identifiable {
   var id: String { groupName }
   let groupName: String

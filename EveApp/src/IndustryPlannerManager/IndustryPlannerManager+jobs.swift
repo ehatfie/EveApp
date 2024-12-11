@@ -269,7 +269,7 @@ extension IndustryPlannerManager {
 class TestJob {
   let quantity: Int64
   let productId: Int64
-  let inputs: [QuantityTypeModel]
+  let inputs: [IdentifiedQuantity]
   let blueprintId: Int64
   let productsPerRun: Int
   let requiredRuns: Int
@@ -288,11 +288,28 @@ class TestJob {
   ) {
     self.quantity = quantity
     self.productId = productId
+    self.inputs = inputs.map { IdentifiedQuantity($0)}
+    self.blueprintId = blueprintId
+    self.productsPerRun = productsPerRun
+    self.requiredRuns = requiredRuns
+  }
+  
+  init(
+    quantity: Int64,
+    productId: Int64,
+    inputs: [IdentifiedQuantity],
+    blueprintId: Int64,
+    productsPerRun: Int,
+    requiredRuns: Int
+  ) {
+    self.quantity = quantity
+    self.productId = productId
     self.inputs = inputs
     self.blueprintId = blueprintId
     self.productsPerRun = productsPerRun
     self.requiredRuns = requiredRuns
   }
+  
 }
 
 struct DisplayableJob: Identifiable {
@@ -311,7 +328,7 @@ struct DisplayableJob: Identifiable {
     self.productId = data.productId
     self.productName = productName
     self.blueprintName = blueprintName
-    self.inputs = data.inputs.map { IdentifiedQuantity($0)}
+    self.inputs = data.inputs
     self.requiredRuns = data.requiredRuns
   }
 }

@@ -15,7 +15,7 @@ import ModelLibrary
 
 @Observable class DBManager {
   var databases: Databases
-  let dbName = "TestDB29"
+  let dbName = "TestDB2913"
   
   let numThreads = 6
   
@@ -46,13 +46,18 @@ import ModelLibrary
     
       self.databases = Databases(threadPool: threadPool, on: eventLoopGroup)
 
-      databases.use(.sqlite(.file(self.dbName)), as: .sqlite)
-      //databases.use(.sqlite(.memory), as: .sqlite)
+      //databases.use(.sqlite(.file(self.dbName)), as: .sqlite)
+      databases.use(.sqlite(.memory), as: .sqlite)
       databases.default(to: .sqlite)
     
     setup()
 
     loadStaticData()
+    
+    Task {
+      //try? await updateMissingRecords()
+    }
+    
   }
   
   func log(_ text: String) {
@@ -128,8 +133,11 @@ import ModelLibrary
       //DispatchQueue.main.async {
       self.dbLoading = true
       //}
+      let start = Date()
       await loadData()
       await loadIndustryData()
+      let end = Date().timeIntervalSince(start)
+      print("load took \(end)")
       
       DispatchQueue.main.async {
         self.dbLoading = false
@@ -322,6 +330,41 @@ extension DBManager {
       .get()
   }
   
+}
+
+extension DBManager {
+  func updateMissingRecords() async throws {
+    let characters = await getCharacters()
+//    
+//    let corporationIds = Set(
+//      characters.compactMap { character -> Int32? in
+//        return character.publicData?.corporationId
+//      }
+//    )
+//    
+//    let existingCorporations = await getCorporationModels(ids: Array(corporationIds))
+//    let existingCorporationIds = existingCorporations.map { $0.corporationId }
+//    
+//    let missingCorporationIds = corporationIds.subtracting(existingCorporationIds)
+//    print("missing corporationIds \(missingCorporationIds)")
+//    
+//    
+//    let charactersMissingCorporation = await CharacterDataModel.query(on: database)
+//      .filter(\.$corporationID ~~ missingCorporationIds)
+//      .all()
+    for character in characters {
+      await DataManager.shared.fetchCorporationInfoForCharacter(
+        characterModel: character
+      )
+    }
+    
+  }
+  
+  func getCorporationModels(ids: [Int32]) async -> [CorporationInfoModel] {
+    CorporationInfoModel.query(on: database)
+      .filter(\.$corporationId ~~ ids)
+    return []
+  }
 }
 
 

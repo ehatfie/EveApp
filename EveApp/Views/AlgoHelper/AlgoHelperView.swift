@@ -21,6 +21,9 @@ import SwiftUI
   var inputsDisplayable: [IdentifiedString] = []
   var inputGroups: [IPDetailInputGroup2] = []
   
+  var jobsDisplayable: [DisplayableJob] = []
+  var groupedJobs: [DisplayableJobsGroup] = []
+  
   let ipm: IndustryPlannerManager
   let tool: IndyTool
   
@@ -45,19 +48,15 @@ import SwiftUI
       
       self.inputs = [:]
       self.inputsDisplayable = []
-      let results = await tool.getMissingInputs(blueprintID: selectedString.id, quantity: 1)
-//      let start = Date()
-//      let results = await ipm.testThing(
-//        typeID: selectedString.id,
-//        quantity: 1
-//      )
-//      let took = Date().timeIntervalSince(start)
-//      print("took \(took)")
-      self.inputs = results
-      let inputsDisplayable: [IdentifiedString] = ipm.makeDisplayable(from: results)
+      let missingIputs = await tool.getMissingInputs(blueprintID: selectedString.id, quantity: 1)
+
+      self.inputs = missingIputs
+      let inputsDisplayable: [IdentifiedString] = ipm.makeDisplayable(from: missingIputs)
       self.inputsDisplayable = inputsDisplayable
       
-      self.inputGroups = ipm.makeInputGroups(from: results)
+      self.inputGroups = ipm.makeInputGroups(from: missingIputs)
+      self.jobsDisplayable = await tool.makeDisplayableJobsForInputSums(inputs: missingIputs)
+      self.groupedJobs = await tool.createGroupedJobs(jobs: self.jobsDisplayable)
     }
   }
   
@@ -97,32 +96,61 @@ struct AlgoHelperView: View {
             Text("Selected: \(selectedString.value)")
           }
           ScrollView {
-            VStack(alignment: .leading) {
-              Text("Inputs")
-              
-              ForEach(viewModel.inputsDisplayable, id: \.self) { input in
-                HStack {
-                  Text(input.value + " \(input.id)")
-                  Spacer()
-                  Text("\(viewModel.inputs[input.id, default: 0])")
-                }.frame(maxWidth: 300)
-                
-              }
-            }
+            inputs()
           }
           Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .padding()
-        
-        ScrollView {
-          listView(input: viewModel.inputGroups)
-        }
-       
+        VStack(alignment: .leading) {
+          ScrollView {
+            expandingListView(input: viewModel.inputGroups)
+              .border(.blue)
+            
+            expandingListView(input: viewModel.groupedJobs)
+              .border(.green)
+          }
+        }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
       }
       Spacer()
       
       buttons()
+    }
+  }
+  
+  func inputs() -> some View {
+    VStack(alignment: .leading) {
+      Text("Inputs")
+      
+      ForEach(viewModel.inputsDisplayable, id: \.self) { input in
+        HStack {
+          Text(input.value + " \(input.id)")
+          Spacer()
+          Text("\(viewModel.inputs[input.id, default: 0])")
+        }.frame(maxWidth: 300)
+        
+      }
+    }
+  }
+  
+  func jobs() -> some View {
+    VStack(alignment: .leading, spacing: 10) {
+      HStack {
+        Text("Jobs")
+          .font(.headline)
+        Spacer()
+      }
+      
+      VStack(alignment: .leading, spacing: 5  ) {
+        ForEach(viewModel.jobsDisplayable) { job in
+          HStack {
+            Text(job.blueprintName)
+            Spacer()
+            Text("\(job.requiredRuns)")
+          }
+          
+        }
+      }
     }
   }
   
@@ -136,7 +164,7 @@ struct AlgoHelperView: View {
     }
   }
   
-  func listView(input: [IPDetailInputGroup2]) -> some View {
+  func expandingListView(input: [DisplayableJobsGroup]) -> some View {
     VStack(alignment: .leading) {
       ForEach(input) { group in
         VStack(alignment: .leading, spacing: 5) {
@@ -152,37 +180,84 @@ struct AlgoHelperView: View {
           }
           
           if expanded.contains(group.groupName) {
-            VStack(alignment: .leading) {
-              ForEach(group.content) { value in
-                VStack(alignment: .leading) {
-                  HStack(alignment: .center) {
-                    Text(value.name)
-                    Spacer()
-                    VStack(alignment: .trailing) {
-                      
-                      HStack(alignment: .bottom, spacing: 3) {
-                        Text("\(value.quantity)")
-                        Text("required")
-                          .font(.caption)
-                      }
-                      HStack(alignment: .bottom, spacing: 3) {
-                        Text("\(value.haveQuantity)")
-                        Text("available")
-                          .font(.caption)
-                      }
-                     
-                    }
-                  }
-                  Divider().padding(.horizontal)
-                }
-                .padding(.horizontal)
-              }
-              //.frame(maxWidth: 300)
-            }
+            listView(content: group.content)
           }
           
         }
       }
+    }
+  }
+  
+  
+  func expandingListView(input: [IPDetailInputGroup2]) -> some View {
+    VStack(alignment: .leading) {
+      ForEach(input) { group in
+        VStack(alignment: .leading, spacing: 5) {
+          HStack {
+            Text(group.groupName)
+              .font(.headline)
+            Text("\(group.numHave) / \(group.content.count)")
+            Spacer()
+          }.onTapGesture {
+            if !expanded.insert(group.groupName).inserted {
+              expanded.remove(group.groupName)
+            }
+          }
+          
+          if expanded.contains(group.groupName) {
+            listView(content: group.content)
+          }
+          
+        }
+      }
+    }
+  }
+  
+  func listView(content: [DisplayableJob]) -> some View {
+    VStack(alignment: .leading) {
+      ForEach(content) { value in
+        VStack(alignment: .leading) {
+          HStack(alignment: .center) {
+            Text(value.blueprintName)
+            Spacer()
+            Text("\(value.requiredRuns)")
+          }
+          Divider().padding(.horizontal)
+        }
+        .padding(.horizontal)
+      }
+      //.frame(maxWidth: 300)
+    }
+    
+  }
+  
+  
+  func listView(content: [IPDetailInput1]) -> some View {
+    VStack(alignment: .leading) {
+      ForEach(content) { value in
+        VStack(alignment: .leading) {
+          HStack(alignment: .center) {
+            Text(value.name)
+            Spacer()
+            VStack(alignment: .trailing) {
+              HStack(alignment: .bottom, spacing: 3) {
+                Text("\(value.quantity)")
+                Text("required")
+                  .font(.caption)
+              }
+              HStack(alignment: .bottom, spacing: 3) {
+                Text("\(value.haveQuantity)")
+                Text("available")
+                  .font(.caption)
+              }
+             
+            }
+          }
+          Divider().padding(.horizontal)
+        }
+        .padding(.horizontal)
+      }
+      //.frame(maxWidth: 300)
     }
   }
 }

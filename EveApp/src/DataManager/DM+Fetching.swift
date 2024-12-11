@@ -10,7 +10,7 @@ import Fluent
 import FluentSQLiteDriver
 import ModelLibrary
 //import TestPackage1
-import TestPackage3
+
 
 
 // MARK: - Assets
@@ -477,7 +477,7 @@ extension DataManager {
         .query(on: dbManager!.database)
         .filter(\.$corporationId == publicData.corporationId)
         .first() {
-        
+        print("found existing corp \(existingCorp.name)")
         try await characterModel.$corp
           .attach(
             [existingCorp],

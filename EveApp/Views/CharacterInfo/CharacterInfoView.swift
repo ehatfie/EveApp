@@ -12,6 +12,7 @@ class CharacterInfoViewModel: ObservableObject {
   @Published var characterInfo: CharacterInfo?
   @Published var characterData: CharacterDataModel?
   @Published var characterPortraitUrl: URL?
+  @Published var characters: [CharacterDataModel] = []
   
   init() {
     DataManager.shared
@@ -26,6 +27,9 @@ class CharacterInfoViewModel: ObservableObject {
         .first()
         .wait()
       let foo = self.characterData?.skillsData?.skills ?? []
+      
+      self.characters = DataManager.shared.dbManager?.getCharacters() ?? []
+      
       print("got skills \(foo.count)")
     } catch let error {
       print("CharacterDataModel query error \(error)")
@@ -80,6 +84,7 @@ struct CharacterInfoView: View {
   
   var body: some View {
     VStack(alignment: .leading) {
+      CharacterInfoList(viewModel: CharacterInfoListViewModel(dbManager: DataManager.shared.dbManager!))
       HStack(alignment: .top, spacing: 10) {
         if let characterData = viewModel.characterData {
           VStack(alignment: .leading) {

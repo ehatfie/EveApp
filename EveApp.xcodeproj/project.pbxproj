@@ -151,6 +151,7 @@
 		BAE069A92ADA240A0054EFCF /* typeDogma.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BAE069A82ADA24090054EFCF /* typeDogma.yaml */; };
 		BAE069AB2ADB30140054EFCF /* DBManager+Industry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE069AA2ADB30140054EFCF /* DBManager+Industry.swift */; };
 		BAEBC02B2C0411C8009D8CC2 /* DM+Fetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEBC02A2C0411C8009D8CC2 /* DM+Fetching.swift */; };
+		BAEE97002D02A99C006D75B0 /* CharacterInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEE96FF2D02A997006D75B0 /* CharacterInfoList.swift */; };
 		BAEF4BC72C74465700F7E74A /* TestPackage1 in Resources */ = {isa = PBXBuildFile; fileRef = BAEF4BC62C74465700F7E74A /* TestPackage1 */; };
 /* End PBXBuildFile section */
 
@@ -327,7 +328,7 @@
 		BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintDetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA738B192C97BF2A001C0D6E /* CharacterIndustryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterIndustryView.swift; sourceTree = "<group>"; };
 		BA738B1B2C9907CF001C0D6E /* CharacterIndustryJobRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterIndustryJobRow.swift; sourceTree = "<group>"; };
-		BA7577722CF3F8C300BE56A2 /* IndyTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndyTool.swift; sourceTree = "<group>"; };
+		BA7577722CF3F8C300BE56A2 /* IndyTool.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = IndyTool.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA7577742CF5358300BE56A2 /* KillboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillboardView.swift; sourceTree = "<group>"; };
 		BA7577772CF5451900BE56A2 /* SwiftEveAuth */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftEveAuth; sourceTree = "<group>"; };
 		BA7718FE2C909DCE00227488 /* KillboardViewOLD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillboardViewOLD.swift; sourceTree = "<group>"; };
@@ -386,6 +387,7 @@
 		BAE069A82ADA24090054EFCF /* typeDogma.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = typeDogma.yaml; sourceTree = "<group>"; };
 		BAE069AA2ADB30140054EFCF /* DBManager+Industry.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+Industry.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BAEBC02A2C0411C8009D8CC2 /* DM+Fetching.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DM+Fetching.swift"; sourceTree = "<group>"; tabWidth = 2; };
+		BAEE96FF2D02A997006D75B0 /* CharacterInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterInfoList.swift; sourceTree = "<group>"; };
 		BAEF4BC62C74465700F7E74A /* TestPackage1 */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TestPackage1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -668,6 +670,7 @@
 		BA3149E52A4BCA5D0076E6DD /* CharacterInfo */ = {
 			isa = PBXGroup;
 			children = (
+				BAEE96FF2D02A997006D75B0 /* CharacterInfoList.swift */,
 				BA3C02D42C2A6B0500F32650 /* SkillGroupView */,
 				BA9D96082B117AB9006AC37E /* Industry */,
 				BA3149E62A4BCA790076E6DD /* CharacterInfoView.swift */,
@@ -1379,6 +1382,7 @@
 				BA7577732CF3F8CB00BE56A2 /* IndyTool.swift in Sources */,
 				BA9D96112B2A8B19006AC37E /* DevelopHelperView.swift in Sources */,
 				BA7577752CF5358300BE56A2 /* KillboardView.swift in Sources */,
+				BAEE97002D02A99C006D75B0 /* CharacterInfoList.swift in Sources */,
 				BAE02EF02AFB0E0100AB695F /* TypeInfoView.swift in Sources */,
 				BA7100A52AEA1969001CD301 /* BlueprintExplorerView.swift in Sources */,
 				BAA69B9A2C700E36007399D7 /* BlueprintProductionView.swift in Sources */,

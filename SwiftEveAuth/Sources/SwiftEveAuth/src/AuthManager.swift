@@ -267,7 +267,6 @@ extension AuthManager {
             "Host": "login.eveonline.com",
         ]
         
-        
         var requestBodyComponents = URLComponents()
         
         requestBodyComponents.queryItems = [
@@ -298,7 +297,6 @@ extension AuthManager {
             "Host": "login.eveonline.com",
             "Authorization": "Basic \(clientAuth)"
         ]
-        
         
         var requestBodyComponents = URLComponents()
         

@@ -7,41 +7,14 @@
 
 import Foundation
 import ModelLibrary
-import TestPackage3
 import SwiftEveAuth
 
 /// Loading stuff from user defaults
 
 extension DataManager {
     
-    func loadAccessTokenData() {
+    func loadAccessTokenData() async {
         print("loadAccessTokenData()")
-        
-        guard let accessToken = accessTokenResponse?.access_token else {
-            print("no access token")
-            return
-        }
-        
-        let response = decode(jwtToken: accessToken)
-        let decoder = JSONDecoder()
-        
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: response, options: .prettyPrinted)
-            
-            let result = try decoder.decode(AccessTokenData.self, from: jsonData)
-            self.accessTokenData = result
-            print("got characterID result \(result.characterID)")
-            let characterData = CharacterDataModel(characterID: result.characterID)
-            Task {
-                // TODO: only do if not there?
-                try? await self.dbManager?.save(characterData)
-            }
-            // TODO: MOVE
-            self.characterData = CharacterInfo(characterID: result.characterID)
-        } catch let err {
-            print("decode error \(err)")
-        }
-        
     }
     
     func getAccessTokenData1() -> [AuthModel] {

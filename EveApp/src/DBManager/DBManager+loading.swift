@@ -213,7 +213,7 @@ extension DBManager {
     print("loadTypeDogmaInfoDataAsync()")
     let start = Date()
     
-    let info = try await readYamlAsync(for: .typeDogma, type: TypeDogmaData.self)
+    let info = try await readYamlAsync2(for: .typeDogma, type: TypeDogmaData.self)
     print("Read info - \(start.timeIntervalSinceNow * -1)")
     
     await saveDogmaInfoModel(data: info)
@@ -221,9 +221,9 @@ extension DBManager {
     return
   }
   
-  func saveDogmaInfoModel(data: [Int64: TypeDogmaData]) async {
+  func saveDogmaInfoModel(data: [(Int64, TypeDogmaData)]) async {
     var index = 0
-    print("saving \(data.count) dogma values")
+    //print("saving \(data.count) dogma values")
     let foo = data.map { key, value in
       return TypeDogmaInfoModel(typeId: key, data: value)
     }
@@ -266,7 +266,7 @@ extension DBManager {
   
   
   func loadMiscDataAsync() async throws {
-    print("loadMiscDataAsync() - start")
+    //print("loadMiscDataAsync() - start")
     do {
       let races = try readYaml(for: .races, type: RaceData.self)
       let models = races.map { RaceModel(raceID: $0.key, raceData: $0.value)}
@@ -346,11 +346,11 @@ extension DBManager {
     async let two = decode2(splits: 0, some: Array(keyValuePair[1001...2000]), type: type)
     let start = Date()
     _ = await [one, two]
-    print("Both took \(Date().timeIntervalSince(start))")
+    //print("Both took \(Date().timeIntervalSince(start))")
     //let foo = await decode2(splits: 0, some: Array(keyValuePair[0...100]), type: type)
     let results = await splitAndSort(splits: 3, some: keyValuePair, type: type)
     
-    print("decodeNode() - splitAndSort done")
+    //print("decodeNode() - splitAndSort done")
     results.forEach { value in
       returnValues.merge(value, uniquingKeysWith: { one, _ in one })
     }

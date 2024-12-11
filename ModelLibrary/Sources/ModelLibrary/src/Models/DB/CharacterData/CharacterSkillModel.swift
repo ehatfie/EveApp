@@ -7,7 +7,6 @@
 
 import Foundation
 import FluentSQLiteDriver
-import TestPackage3
 
 final public class CharacterSkillModel: Fields {
     //static let schema = Schemas.characterSkillModel.rawValue

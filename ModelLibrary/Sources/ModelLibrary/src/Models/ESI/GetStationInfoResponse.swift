@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import TestPackage3
 
 
 /** 200 ok object */

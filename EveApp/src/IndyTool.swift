@@ -25,6 +25,7 @@ class IndyTool {
         guard let bpInfo = await makeBPInfo(for: blueprintID) else {
             return [:] //[blueprintID: quantity]
         }
+      
         let missingInputs = await findMissingInputs(
             bpInfos: [bpInfo],
             values: [bpInfo.productId: quantity],
@@ -93,6 +94,19 @@ class IndyTool {
             relatedAssets[asset.typeId] = asset.quantity
         }
     }
+  
+  func makeBPInfos(for blueprintIds: [Int64]) async -> [BPInfo] {
+    var returnValues = [BPInfo]()
+    
+    for blueprintId in blueprintIds {
+      guard let bpInfo = await makeBPInfo(for: blueprintId) else {
+        continue
+      }
+      returnValues.append(bpInfo)
+    }
+    
+    return returnValues
+  }
     
     func makeBPInfo(for blueprintId: Int64) async -> BPInfo? {
         let blueprintModel: BlueprintModel?
@@ -143,4 +157,107 @@ class IndyTool {
             inputMaterials: inputMaterials
         )
     }
+}
+
+// MARK: - Jobs
+
+extension IndyTool {
+    func makeDisplayableJobsForInputSums(inputs: [Int64: Int64]) async -> [DisplayableJob] {
+      let jobs = await makeJobsForInputSums(inputs: inputs)
+      
+      var jobsDict: [Int64: TestJob] = [:]
+      
+      for job in jobs {
+        jobsDict[job.blueprintId] = job
+      }
+      
+      let idSet: Set<Int64> = Set(jobsDict.keys)
+      //let names = await dbManager.getTypeNames(for: Array(idSet))
+      let names1: [(Int64, String)] = (try? await dbManager.getBlueprintNames(Array(idSet))) ?? []
+      
+      let displayableJobs: [DisplayableJob] = names1.compactMap { value -> DisplayableJob? in
+        guard let existingJob = jobsDict[value.0] else { return nil }
+        return DisplayableJob(existingJob, productName: "", blueprintName: value.1)
+      }
+      
+      return displayableJobs //jobs.map(\.init)
+    }
+    
+    func makeJobsForInputSums(inputs: [Int64: Int64]) async -> [TestJob] {
+      // get blueprints for input materials
+      let inputMaterialIds = inputs.keys.map { $0 }
+      
+      let inputMaterialBlueprints = await makeBPInfos(for: inputMaterialIds)
+      
+      var uniqueBPs: [Int64: BPInfo] = [:]
+      
+      inputMaterialBlueprints.forEach { value in
+        guard BlueprintIds.FuelBlocks(rawValue: value.productId) == nil else {
+          return
+        }
+        uniqueBPs[value.productId] = value
+      }
+      
+      let jobs: [TestJob] = inputs.compactMap { key, value -> TestJob? in
+        guard let blueprintInfo = uniqueBPs[key] else {
+          return nil
+        }
+        let inputQuantity = value
+        let productsPerRun = blueprintInfo.productCount
+        let requiredRuns = Int(ceil(Double(inputQuantity) / Double(productsPerRun)))
+        
+        return TestJob(
+          quantity: Int64(value),
+          productId: blueprintInfo.productId,
+          inputs: blueprintInfo.inputMaterials,
+          blueprintId: blueprintInfo.blueprintId,
+          productsPerRun: Int(blueprintInfo.productCount),
+          requiredRuns: requiredRuns
+        )
+      }
+      
+      return jobs
+    }
+  
+  func createGroupedJobs(jobs: [DisplayableJob]) async -> [DisplayableJobsGroup] {
+    var productGroupsDict: [Int64: Int64] = [:]
+    var groupedJobs: [Int64: [DisplayableJob]] = [:]
+    
+    var returnValues = [DisplayableJobsGroup]()
+   
+    let jobProductIds = jobs.map { $0.productId }
+    let jopProductTypeModels = dbManager.getTypes(for: jobProductIds)
+    // get groups for each job product
+    for jobProductTypeModel in jopProductTypeModels {
+      productGroupsDict[jobProductTypeModel.typeId] = jobProductTypeModel.groupID
+    }
+    
+    // group together `DisplayableJob` that have the same group
+    for job in jobs {
+      let group = productGroupsDict[job.productId, default: 0]
+      groupedJobs[group, default: []].append(job)
+    }
+    
+    for jobGroup in groupedJobs {
+      guard let groupName = await dbManager.getGroup(for: jobGroup.key)?.name else { continue }
+      let displayableJobsGroup = DisplayableJobsGroup(
+        groupName: groupName,
+        groupID: jobGroup.key,
+        content: jobGroup.value,
+        numHave: 0
+      )
+      
+      returnValues.append(displayableJobsGroup)
+    }
+    
+    return returnValues
+  }
+}
+
+struct DisplayableJobsGroup: Identifiable {
+  var id: String { groupName }
+  let groupName: String
+  let groupID: Int64
+  let content: [DisplayableJob]
+  let numHave: Int
 }

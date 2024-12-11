@@ -7,7 +7,6 @@
 
 
 import Foundation
-import TestPackage3
 import FluentSQLiteDriver
 
 final public class SolarSystemModel: Model {

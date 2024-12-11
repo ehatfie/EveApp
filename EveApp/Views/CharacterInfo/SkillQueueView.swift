@@ -11,13 +11,19 @@ class SkillQueueViewModel: ObservableObject {
     @Published var characterInfo: CharacterInfo?
     
     init() {
-        DataManager.shared
-            .$characterData
-            .assign(to: &$characterInfo)
+        Task {
+            await loadCharacterData()
+        }
+    }
+    
+    func loadCharacterData() async {
+        
     }
     
     func fetchSkillQueue() {
-        DataManager.shared.fetchSkillQueue()
+        Task {
+            await DataManager.shared.fetchSkillQueue()
+        }
     }
 }
 

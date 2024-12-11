@@ -100,7 +100,8 @@ struct HomeView: View {
         AuthView()
           .environment(homeViewModel)
       case .characterInfo:
-        CharacterInfoView()
+        CharacterInfoList(viewModel: CharacterInfoListViewModel(dbManager: db))
+        //CharacterInfoView()
       case .assets:
         AssetsViewer()
       case .reprocessingHelper:

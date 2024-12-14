@@ -731,6 +731,7 @@ extension DBManager {
         .with(\.$publicData)
         .with(\.$assetsData)
         .with(\.$corp)
+        .with(\.$walletData)
         .all()
         .get()
       
@@ -744,6 +745,22 @@ extension DBManager {
     do {
       return try await  CharacterDataModel.query(on: self.database)
         .filter(\.$characterId == characterId)
+        .first()
+        .get()
+    } catch let err {
+      print("DBManager.getCharacter() - error \(err)")
+      return nil
+    }
+  }
+  
+  func getCharacterWithInfo(by characterId: String) async -> CharacterDataModel? {
+    do {
+      return try await  CharacterDataModel.query(on: self.database)
+        .filter(\.$characterId == characterId)
+        .with(\.$publicData)
+        .with(\.$assetsData)
+        .with(\.$corp)
+        .with(\.$walletData)
         .first()
         .get()
     } catch let err {
@@ -771,13 +788,14 @@ extension DBManager {
     
     do {
       returnValues = try characters.compactMap { character -> CharacterInfoDisplayable? in
-        let corporation = try character.joined(CharacterCorporationModel.self)
-          
+       // let corporation = try character.joined(CorporationInfoModel.self)
+        let corporation = character.corp.first!
         
         //print("got corp \(corporation.corporation.$corporationId)")
         guard let value = CharacterInfoDisplayable(
           characterData: character,
-          corporationData: corporation.corporation
+          corporationData: corporation,
+          walletModel: character.$walletData.value ?? nil
         ) else {
           print("couldnt make CharacterInfoDisplayable")
           return nil

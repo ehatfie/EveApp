@@ -69,10 +69,11 @@ import ModelLibrary
 
       try setupCharacterDataModels()
       
+      
     } catch let error {
       print("AppModel error setup \(error)")
     }
-    
+    try? setupCharacterWalletModels()
     try? setupAuthModels()
     try? categoryDataStuff()
     try? setupDogmaEffectModel()
@@ -261,7 +262,21 @@ import ModelLibrary
       .prepare(on: database)
       .wait()
     
-
+    
+  }
+  
+  func setupCharacterWalletModels() throws {
+    try? CharacterWalletModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
+    try? CharacterWalletTransactionModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
+    try? CharacterWalletJournalEntryModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
   }
   
   func setupAuthModels() throws {

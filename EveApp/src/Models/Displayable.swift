@@ -134,6 +134,7 @@ struct CharacterInfoDisplayable: Identifiable {
     let corporationInfo: IdentifiedString
     let description: String?
     let securityStatus: Float?
+    let walletModel: CharacterWalletModel?
     
     var id: AnyHashable {
         return characterID
@@ -141,7 +142,8 @@ struct CharacterInfoDisplayable: Identifiable {
     
     init?(
         characterData: CharacterDataModel,
-        corporationData: CorporationInfoModel
+        corporationData: CorporationInfoModel,
+        walletModel: CharacterWalletModel?
     ) {
         guard let publicData = characterData.publicData else {
             return nil
@@ -158,6 +160,7 @@ struct CharacterInfoDisplayable: Identifiable {
         )
         
         self.allianceInfo = nil
+        self.walletModel = walletModel
     }
     
 

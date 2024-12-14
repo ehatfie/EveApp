@@ -30,9 +30,12 @@ public enum Schemas: String {
     case characterIndustryDataModel = "characterIndustryDataModel"
     case characterIndustryJobModel = "characterIndustryJobModel"
     
+    case characterWalletModel = "characterWalletModel"
+    case characterWalletJournalEntryModel = "characterWalletJournalEntryModel"
+    case characterWalletTransactionModel = "characterWalletTransactionModel"
+    
     case characterIdentifiersModel = "characterIdentifiersModel"
 
-    
     case corporationInfoModel = "corporationInfoModel"
     
     case characterCorporationModel = "characterCorporationModel"

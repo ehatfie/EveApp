@@ -45,6 +45,7 @@ extension DBManager {
   }
   
   func getAuthModel(for characterId: String) async -> AuthModel? {
+    print("getAuthModel for \(characterId)")
     return try? await AuthModel.query(on: database).filter(\.$characterId == characterId).first()
   }
   

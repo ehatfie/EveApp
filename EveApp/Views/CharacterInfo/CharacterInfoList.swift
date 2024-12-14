@@ -22,17 +22,21 @@ import ModelLibrary
     }
     
     func loadCharacters() async {
-        let start = Date()
-        _ = await dbManager.getCharacters()
-        let took1 = Date().timeIntervalSince(start)
-        print("getCharacters took \(took1)")
         let characterInfo = await dbManager.getCharactersWithInfo()
         characterModels = characterInfo
         self.characterInfoDisplayables = await dbManager.getCharacterInfoDisplayable()
-
-        
-        let took2 = Date().timeIntervalSince(start) - took1
-        print("getCharactersWithInfo took \(took2)")
+    }
+    
+    func updateCharacterWallet(characterId: String) {
+        Task {
+            await DataManager.shared.updateCharacterWallet(characterId: characterId)
+        }
+    }
+    
+    func updateCharacterAssets(characterId: String) {
+        Task {
+            await DataManager.shared.fetchAssetsAsync(characterId: characterId)
+        }
     }
 }
 
@@ -45,22 +49,59 @@ struct CharacterInfoList: View {
                     Task {
                         try? await DataManager.shared.fetchAllCharacterInfoAsync()
                     }
-                    
                 }, label: {
                     Text("Fetch all character info")
                 })
             }
-            ForEach(viewModel.characterInfoDisplayables) { characterInfo in
-                characterInfoCard(characterInfo)
-            }
+                LazyVGrid(columns: [
+                    GridItem(.adaptive(minimum: 400, maximum: 800)),
+                    GridItem(.adaptive(minimum: 400, maximum: 800)),
+                    GridItem(.adaptive(minimum: 400, maximum: 800))
+                ]) {
+                    ForEach(viewModel.characterInfoDisplayables) { characterInfo in
+                        characterInfoCard(characterInfo)
+                            .frame(alignment: .center)
+                    }
+                }.border(.blue)
         }
     }
     
     @ViewBuilder
     func characterInfoCard(_ characterInfo: CharacterInfoDisplayable) -> some View {
-        VStack {
-            Text(characterInfo.characterID)
+        GroupBox {
+            VStack {
+                Text(characterInfo.name)
+                if let walletModel = characterInfo.walletModel {
+                    Text(String(format: "%.2f",walletModel.$balance.wrappedValue ?? 0.00) + " isk")
+                }
+                Button(action: {
+                    self.viewModel.updateCharacterWallet(characterId: characterInfo.characterID)
+                }, label: {
+                    Text("Update Wallet")
+                })
+                
+                Button(action: {
+                    self.viewModel.updateCharacterAssets(characterId: characterInfo.characterID)
+                }, label: {
+                    Text("Update Assets")
+                })
+                
+                Button(action: {
+                    do {
+                        try CharacterWalletModel.query(on: DataManager.shared.dbManager!.database)
+                            .delete()
+                            .wait()
+                    } catch let error {
+                        print("delete wallet error \(error)")
+                    }
+
+
+                }, label: {
+                    Text("Delete")
+                })
+            }
         }
+
     }
     
     @ViewBuilder

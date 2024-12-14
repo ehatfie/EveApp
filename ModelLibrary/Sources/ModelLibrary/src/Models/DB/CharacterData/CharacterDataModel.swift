@@ -37,6 +37,9 @@ final public class CharacterDataModel: Model {
     @OptionalChild(for: \.$characterDataModel)
     public var skillsData: CharacterSkillsDataModel?
     
+    @OptionalChild(for: \.$characterDataModel)
+    public var walletData: CharacterWalletModel?
+    
     @Children(for: \.$characterDataModel)
     public var assetsData: [CharacterAssetsDataModel]
     

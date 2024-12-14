@@ -26,7 +26,7 @@ class AuthViewModel: ObservableObject {
     
     func refreshAccessTokenData() {
         Task {
-            let authDatas = authModels.map {
+            let authDatas = await DataManager.shared.getAccessTokenData1().map {
                 AuthData(
                     characterID: $0.characterId,
                     refreshToken: $0.refreshToken,

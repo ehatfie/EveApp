@@ -71,7 +71,16 @@ public class AuthManager: ObservableObject {
             state: state,
             codeVerifier: codeVerifier,
             codeChallenge: codeVerifier.sha256(),
-            scopes: .init([.assets, .skills, .skillQueue, .structureInfo, .characterIndustryJobs])
+            scopes: .init(
+                [
+                    .assets,
+                    .skills,
+                    .skillQueue,
+                    .structureInfo,
+                    .characterIndustryJobs,
+                    .wallet
+                ]
+            )
         )
         
         self.authConfig = authConfig
@@ -205,7 +214,7 @@ public class AuthManager: ObservableObject {
     
     public func refreshTokens(authDatas: [AuthData]) async throws {
         // /*
-        log("refreshTokens()")
+        log("refreshTokens() \(authDatas.count)")
         if authConfig == nil {
             setupAuthConfig()
         }

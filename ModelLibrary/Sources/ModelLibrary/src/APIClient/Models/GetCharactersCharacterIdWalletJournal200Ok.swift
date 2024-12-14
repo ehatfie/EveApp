@@ -26,7 +26,8 @@ public struct GetCharactersCharacterIdWalletJournal200Ok: Codable {
         case systemId = "system_id"
         case typeId = "type_id"
     }
-    public enum RefType: String, Codable { 
+    
+    public enum RefType: String, Codable {
         case accelerationGateFee = "acceleration_gate_fee"
         case advertisementListingFee = "advertisement_listing_fee"
         case agentDonation = "agent_donation"

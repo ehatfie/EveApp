@@ -37,6 +37,14 @@ extension DataManager {
     }
   }
   
+  func fetchAssetsAsync(characterId: String) async {
+    guard let characterModel = await dbManager?.getCharacter(by: characterId) else {
+      print("fetchAssetsAsync() - No character model for \(characterId)")
+      return
+    }
+    await fetchAssetsAsync(for: characterModel)
+  }
+  
   func fetchAssetsAsync(for character: CharacterDataModel) async {
     guard let authModel = await dbManager?.getAuthModel(for: character.characterId) else {
       return
@@ -113,7 +121,7 @@ extension DataManager {
   func fetchAllCharacterInfoAsync() async throws {
     print("fetchALlCharacterInfoAsync()")
     guard
-      let characters = await dbManager?.getCharacters(),
+      let characters = await dbManager?.getCharactersWithInfo(),
       !characters.isEmpty
     else {
       print("no characters \(dbManager)")
@@ -140,7 +148,14 @@ extension DataManager {
   
   func fetchPublicData(for character: CharacterDataModel) async throws {
     print("fetchPublicData()")
-    guard let authModel = await dbManager?.getAuthModel(for: character.characterId) else {
+    guard let authModel = await dbManager?.getAuthModel(for: character.characterId)
+    else {
+      print("no auth model for \(character.characterId)")
+      return
+    }
+    
+    guard character.$corp.value == nil else {
+      print("existing public data for \(character.characterId)")
       return
     }
     
@@ -474,7 +489,7 @@ extension DataManager {
   
   func fetchCorporationInfoForCharacters() async {
     print("fetcCorporationInfo()")
-    guard let characters = await dbManager?.getCharacters() else {
+    guard let characters = await dbManager?.getCharactersWithInfo() else {
       return
     }
     
@@ -498,13 +513,21 @@ extension DataManager {
       if let existingCorp = try await CorporationInfoModel
         .query(on: dbManager!.database)
         .filter(\.$corporationId == publicData.corporationId)
-        .first() {
+        .first()
+      {
         print("found existing corp \(existingCorp.name)")
-        try await characterModel.$corp
-          .attach(
-            [existingCorp],
-            on: dbManager!.database
+        if characterModel.$corp.value == nil {
+          print("setting character corp")
+          let characterCorpInfo = try CharacterCorporationModel(
+            character: characterModel,
+            corporation: existingCorp
           )
+          try await characterModel.$corp
+            .attach(
+              [existingCorp],
+              on: dbManager!.database
+            )
+        }
         return
       }
     } catch let err {
@@ -612,4 +635,150 @@ extension DataManager {
   }
 }
 
+// MARK: - Wallet
 
+extension DataManager {
+  
+  func updateAllCharacterWallets() async {
+    guard let characters = await dbManager?.getCharacters() else {
+      print("Got no characters")
+      return
+    }
+    await withTaskGroup(of: Void.self) { taskgroup in
+      for character in characters {
+        taskgroup.addTask {
+          await self.updateCharacterWallet(character)
+        }
+      }
+    }
+  }
+  
+  func updateCharacterWallet(characterId: String) async {
+    print("updateCharacterWallet(\(characterId))")
+    guard let characterModel = await dbManager?.getCharacterWithInfo(by: characterId) else {
+      print("no characterModel for \(characterId)")
+      return
+    }
+    
+    await updateCharacterWallet(characterModel)
+  }
+  
+  func updateCharacterWallet(_ character: CharacterDataModel) async {
+    print("updateCharacterWallet \(character.characterId)")
+    guard let authModel = await dbManager?.getAuthModel(for: character.characterId) else {
+      print("No authModel for \(character.characterId)")
+      return
+    }
+
+    let characterId = character.characterId
+    var walletModel = CharacterWalletModel()
+    let existingWalletModel = character.$walletData.value ?? nil
+    
+    if let existingWalletModel {
+      walletModel = existingWalletModel
+    } else {
+      do {
+        try await character.$walletData.create(walletModel, on: dbManager!.database)
+      } catch let err {
+        print("write object error \(err)")
+      }
+    }
+
+    if let characterWalletBalance = await getCharacterWalletBalance(characterID: characterId, authModel: authModel) {
+      print("characterWalletBalance \(characterWalletBalance)")
+      walletModel.balance = characterWalletBalance
+      do {
+        try await walletModel.update(on: dbManager!.database)
+        print("updated \(walletModel.id) to \(walletModel.balance)")
+      } catch let err {
+        print("write wallet model error \(err)")
+      }
+      
+    }
+    
+    if let characterWalletJournal = await getCharacterWalletJournal(characterID: characterId, authModel: authModel) {
+      print("CharacterWalletJournal \(characterWalletJournal.count)")
+      let walletEntries = characterWalletJournal.map { entry in
+        return CharacterWalletJournalEntryModel(data: entry)
+      }
+      do {
+        // this will need to be done better
+        try await walletModel.$journalEntries.create(walletEntries, on: dbManager!.database)
+      } catch let err {
+        print("write journal object error \(err)")
+      }
+    }
+    
+    if let characterWalletTransactions = await getCharacterWalletTransactions(characterID: characterId, authModel: authModel) {
+      print("CharacterWalletTransactions \(characterWalletTransactions.count)")
+      let walletTransactions = characterWalletTransactions.map { CharacterWalletTransactionModel(data: $0.value) }
+      do {
+        // this will need to be done better
+        try await walletModel.$transactions.create(walletTransactions, on: dbManager!.database)
+      } catch let err {
+        print("write transaction object error \(err)")
+      }
+    }
+    
+  }
+  
+  func getCharacterWalletBalance(characterID: String, authModel: AuthModel) async -> Double? {
+    let dataEndpoint = "/characters/\(characterID)/wallet/"
+    
+    guard let (data, _) = await makeApiCallAsync3(
+      dataEndpoint: dataEndpoint,
+      authModel: authModel
+    ) else {
+      return nil
+    }
+    do {
+      return try JSONDecoder().decode(Double.self, from: data)
+    } catch let err {
+      print("decode wallet balance error \(err)")
+      return nil
+    }
+    
+  }
+  
+  func getCharacterWalletJournal(
+    characterID: String,
+    authModel: AuthModel
+  ) async -> [GetCharactersCharacterIdWalletJournal]? {
+    let dataEndpoint = "/characters/\(characterID)/wallet/journal/"
+    
+    guard let (data, _) = await makeApiCallAsync3(
+      dataEndpoint: dataEndpoint,
+      authModel: authModel
+    ) else {
+      return nil
+    }
+    
+    do {
+      return try JSONDecoder().decode([GetCharactersCharacterIdWalletJournal].self, from: data)
+    } catch let error {
+      print("getCharacterWalletJournal error \(error)")
+      return nil
+    }
+  }
+  
+  func getCharacterWalletTransactions(
+    characterID: String,
+    authModel: AuthModel
+  ) async -> [Int64: GetCharactersCharacterIdWalletTransactions200Ok]? {
+    let dataEndpoint = "/characters/\(characterID)/wallet/transactions/"
+    
+    guard let (data, _) = await makeApiCallAsync3(
+      dataEndpoint: dataEndpoint,
+      authModel: authModel
+    ) else {
+      return nil
+    }
+    
+    do {
+      return try JSONDecoder().decode([Int64: GetCharactersCharacterIdWalletTransactions200Ok].self, from: data)
+    } catch let err {
+      print("getCharacterWalletTransactions - error \(err)")
+      return nil
+    }
+  }
+}

@@ -31,14 +31,14 @@ extension IndustryPlannerManager {
         values: [Int64: Int64] = [:],
         depth: Int
     ) {
-        print()
+        //print()
         //print("printNames values \(values)")
         if let root {
-            print("\(root.name) \(root.typeId) depth: \(depth)")
+            //print("\(root.name) \(root.typeId) depth: \(depth)")
         }
         for name in names {
             let count = values[name.typeId, default: 0]
-            print("\(String(repeating: "\t", count: depth)) (\(name.typeId)) \(name.name) \(count)")
+            //print("\(String(repeating: "\t", count: depth)) (\(name.typeId)) \(name.name) \(count)")
         }
     }
     
@@ -334,7 +334,7 @@ extension IndustryPlannerManager {
         for inputTypeModel in inputTypeModels {
             // get the group for each item and put it in the related group
             let groupID = inputTypeModel.groupID
-            print("for \(inputTypeModel.name) adding \(inputTypeModel.typeId)")
+            //print("for \(inputTypeModel.name) adding \(inputTypeModel.typeId)")
             let existingValues = groupedValues[groupID, default: []]
             groupedValues[groupID] = existingValues + [inputTypeModel.typeId]
             

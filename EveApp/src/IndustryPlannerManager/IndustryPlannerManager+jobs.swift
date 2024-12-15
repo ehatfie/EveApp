@@ -129,7 +129,7 @@ extension IndustryPlannerManager {
     
     let displayableJobs: [DisplayableJob] = names1.compactMap { value -> DisplayableJob? in
       guard let existingJob = jobsDict[value.0] else { return nil }
-      print("got name \(value.1)")
+      //print("got name \(value.1)")
       return DisplayableJob(existingJob, productName: "", blueprintName: value.1)
     }
     

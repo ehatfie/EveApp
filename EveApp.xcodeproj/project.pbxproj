@@ -76,6 +76,7 @@
 		BA5F7AC32CA25C89007DDA12 /* IPCategoryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5F7AC22CA25C89007DDA12 /* IPCategoryPicker.swift */; };
 		BA5F7AC62CA26773007DDA12 /* IPCharacterPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5F7AC52CA26773007DDA12 /* IPCharacterPickerView.swift */; };
 		BA6825C82C797AD300C103E9 /* ReactionHelperDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6825C72C797AD300C103E9 /* ReactionHelperDetailView.swift */; };
+		BA690CFE2D0E83BE0020FC8B /* CharacterPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA690CFD2D0E83BE0020FC8B /* CharacterPickerView.swift */; };
 		BA71008A2ADB3360001CD301 /* typeMaterials.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA7100892ADB3360001CD301 /* typeMaterials.yaml */; };
 		BA71008E2ADB453B001CD301 /* ItemDogmaExplorerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA71008D2ADB453B001CD301 /* ItemDogmaExplorerView.swift */; };
 		BA7100902ADF64F6001CD301 /* DBManager+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA71008F2ADF64F6001CD301 /* DBManager+Mocks.swift */; };
@@ -317,6 +318,7 @@
 		BA5F7AC22CA25C89007DDA12 /* IPCategoryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPCategoryPicker.swift; sourceTree = "<group>"; };
 		BA5F7AC52CA26773007DDA12 /* IPCharacterPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPCharacterPickerView.swift; sourceTree = "<group>"; };
 		BA6825C72C797AD300C103E9 /* ReactionHelperDetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ReactionHelperDetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA690CFD2D0E83BE0020FC8B /* CharacterPickerView.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = CharacterPickerView.swift; sourceTree = "<group>"; tabWidth = 3; };
 		BA7100892ADB3360001CD301 /* typeMaterials.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = typeMaterials.yaml; sourceTree = "<group>"; };
 		BA71008D2ADB453B001CD301 /* ItemDogmaExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemDogmaExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA71008F2ADF64F6001CD301 /* DBManager+Mocks.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+Mocks.swift"; sourceTree = "<group>"; tabWidth = 2; };
@@ -677,6 +679,7 @@
 				BA3149F42A5383990076E6DD /* SkillQueueView.swift */,
 				BA9D96062B1177D8006AC37E /* IndustryInfoView.swift */,
 				BA3C02D02C2517CA00F32650 /* CharacterSkillsView.swift */,
+				BA690CFD2D0E83BE0020FC8B /* CharacterPickerView.swift */,
 			);
 			path = CharacterInfo;
 			sourceTree = "<group>";
@@ -1348,6 +1351,7 @@
 				BA5F7ABD2C9F72D2007DDA12 /* NumPicker.swift in Sources */,
 				BAB271D52A6867B5004F01B7 /* DataFetcher.swift in Sources */,
 				BAE0696A2AC89E350054EFCF /* AppModel+loading.swift in Sources */,
+				BA690CFE2D0E83BE0020FC8B /* CharacterPickerView.swift in Sources */,
 				BA3149E02A47907F0076E6DD /* SomeData.swift in Sources */,
 				BA3149D62A477D900076E6DD /* UserDefaultsHelper.swift in Sources */,
 				BA9D96152B2FD4DC006AC37E /* IndustryHelperView.swift in Sources */,

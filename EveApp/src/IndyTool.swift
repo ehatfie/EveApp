@@ -22,11 +22,11 @@ class IndyTool {
   }
   
   func getMissingInputs(values: [Int64: Int64]) async -> [Int64: Int64] {
-    print("getMissingInputs bulk \(values.keys)")
+    
     guard !values.isEmpty else {
       return [:]
     }
-    
+    //print("getMissingInputs bulk \(values.keys)")
     let result = await withTaskGroup(
       of: [Int64: Int64].self,
       returning: [Int64: Int64].self
@@ -39,7 +39,7 @@ class IndyTool {
       var returnValues: [Int64: Int64] = [:]
       
       for await value in taskGroup {
-        print("merging \(value)")
+        //print("merging \(value)")
         returnValues.merge(value, uniquingKeysWith: +)
       }
       
@@ -52,12 +52,12 @@ class IndyTool {
     blueprintID: Int64,
     quantity: Int64
   ) async -> [Int64: Int64] {
-    if blueprintID == 33361 {
+    if blueprintID == 33361 || blueprintID == 40 {
       print("getMissingInputs \(blueprintID) \(quantity)")
     }
     
     guard let bpInfo = await makeBPInfo(for: blueprintID) else {
-      print("cant make BPInfo for \(blueprintID)")
+      //print("cant make BPInfo for \(blueprintID)")
       return [:]
     }
     if blueprintID == 33361 {
@@ -82,7 +82,9 @@ class IndyTool {
   ) async -> [Int64: Int64] {
     var returnValues: [Int64: Int64] = [:]
     let inputProducts = bpInfos.flatMap { $0.inputMaterials.map { $0.id }}
-    
+    if inputProducts.contains(where: { $0 == 40 }) {
+      print("got megacyte")
+    }
     await loadCharacterAssets(for: inputProducts)
     //let assets = dbManager.getCharacterAssetsForValues(characterID: 0, typeIds: inputProducts)
     for bpInfo in bpInfos {
@@ -97,9 +99,11 @@ class IndyTool {
           print("no runs for \(bpInfo.blueprintId)")
           continue
         }
-        if input.id == 16672 {
+
+        if input.id == 40 {
           print("\(bpInfo.productId) input count \(input.quantity)")
         }
+
         //returnValues[input.id, default: 0] += runsNeeded * input.quantity
         guard BlueprintIds.FuelBlocks(rawValue: input.id) == nil else {
           continue
@@ -108,9 +112,10 @@ class IndyTool {
         let amountMissing = max(0, amountNeeded - matchingAssetQuantity)
         
         guard amountMissing > 0 else {
-          print("not missing \(input.id)")
-          continue }
-        print("Adding missing input \(input.id) matching \(matchingAssetQuantity) needed \(amountNeeded) missing \(amountMissing)")
+          //print("not missing \(input.id)")
+          continue
+        }
+//        print("Adding missing input \(input.id) matching \(matchingAssetQuantity) needed \(amountNeeded) missing \(amountMissing)")
         returnValues[input.id] = amountMissing
       }
     }
@@ -130,7 +135,6 @@ class IndyTool {
     }
     let fetchedIds: Set<Int64> = Set(relatedAssets.map { $0.key })
     let missingIds: Set<Int64> = Set(typeIds).subtracting(fetchedIds)
-    print("provided \(typeIds.count) fetching \(missingIds.count)")
     let assets = await dbManager.getCharacterAssetsForValues(
       characterID: characterID,
       typeIds: Array(missingIds)
@@ -208,7 +212,7 @@ class IndyTool {
 
 extension IndyTool {
   func makeDisplayableJobsForInputSums(inputs: [Int64: Int64]) async -> [DisplayableJob] {
-    print("makeDisplayableJobsForInputSums \(self.relatedAssets)")
+    //print("makeDisplayableJobsForInputSums \(self.relatedAssets)")
     let jobs = await makeJobsForInputSums(inputs: inputs, assets: self.relatedAssets)
     
     var jobsDict: [Int64: TestJob] = [:]
@@ -246,9 +250,8 @@ extension IndyTool {
     
     let assetIds = Set(assets.keys.map { $0 })
     let inputSet = Set(inputMaterialIds)
-    print("inputSet pre \(inputSet)")
     let missingInputIds = inputSet.subtracting(assetIds)
-    print("inputSet post \(missingInputIds)")
+
     let jobs: [TestJob] = missingInputIds.compactMap { key -> TestJob? in
       guard let value = inputs[key] else {
         return nil

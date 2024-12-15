@@ -7,19 +7,23 @@
 
 import SwiftUI
 
+
 @Observable class AlgoHelperViewModel {
   var dbManager: DBManager
   var searchText: String = "Bifrost"
   var searchResults: [IdentifiedString] = []
   var selectedString: IdentifiedString? = IdentifiedString(
-    id: 37480,
-    value: "Bifrost"
+    id: 22442,
+    value: "Eos"
   )
   
   var inputs: [Int64: Int64]  = [:]
   
   var inputsDisplayable: [IdentifiedString] = []
   var inputGroups: [IPDetailInputGroup2] = []
+  
+  var missingInputsDisplayable: [IdentifiedString] = []
+  var missingInputGroups: [IPDetailInputGroup2] = []
   
   var jobsDisplayable: [DisplayableJob] = []
   var groupedJobs: [DisplayableJobsGroup] = []
@@ -29,6 +33,7 @@ import SwiftUI
   
   var selectedCharacterId: String? = nil
   
+  var selectedCharacterIdentifier: IdentifiedString? = nil
   var selectedCharacters: Set<IdentifiedString> = []
   var possibleCharacters: [IdentifiedString] = []
   
@@ -63,6 +68,8 @@ import SwiftUI
    
     if let selectedCharacter = selectedCharacters.first {
       tool.characterID = String(selectedCharacter.id)
+    } else if let selectedCharacterIdentifier {
+      tool.characterID = String(selectedCharacterIdentifier.id)
     } else {
       tool.characterID = nil
     }
@@ -77,35 +84,42 @@ import SwiftUI
 //        quantity: 1
 //      )
       
+      let start = Date()
       let missingInputs = await tool.getMissingInputs(values: [selectedString.id: 1])
-      
-      print("get missing inputs done \(missingInputs)")
+    
+      print("get missing inputs took \(Date().timeIntervalSince(start)) got \(missingInputs)")
       self.inputs = missingInputs
       let inputsDisplayable: [IdentifiedString] = ipm.makeDisplayable(from: missingInputs)
       self.inputsDisplayable = inputsDisplayable
       
       self.inputGroups = ipm.makeInputGroups(from: missingInputs)
+      let start2 = Date()
       self.jobsDisplayable = await tool.makeDisplayableJobsForInputSums(
         inputs: missingInputs
       )
+      
+      print("make jobs displayable took \(Date().timeIntervalSince(start2))")
       self.groupedJobs = await tool.createGroupedJobs(jobs: self.jobsDisplayable)
       var someValues: [Int64: Int64] = [:]
       
       for job in jobsDisplayable {
         someValues[job.id] = Int64(job.requiredRuns)
         if someValues[job.productId] != nil {
-          someValues[job.productId] = nil
+          
         }
       }
       
       print("getting missing job inputs")
-      print("jobs displayable \(jobsDisplayable.map { $0.blueprintName })")
+      
       let missingJobInputs = await tool.getMissingInputs(values: someValues)
+      
+      let nonMadeMissingJobInputs = missingJobInputs.filter({ missingJobInput in
+        return !jobsDisplayable.contains(where: { $0.productId == missingJobInput.key})
+      })
      
-      print("missingJobInputs \(missingJobInputs)")
-      //self.inputsDisplayable = ipm.makeDisplayable(from: missingJobInputs)
-      //self.jobsDisplayable = await ipm.makeDisplayableJobsForInputSums(inputs: missingJobInputs)
-      //let missingJobs = await tool.getMissingInputs
+      self.missingInputsDisplayable = ipm.makeDisplayable(from: nonMadeMissingJobInputs)
+      self.missingInputGroups = ipm.makeInputGroups(from: nonMadeMissingJobInputs)
+      print("total took \(Date().timeIntervalSince(start))")
     }
   }
   
@@ -127,6 +141,26 @@ import SwiftUI
   func setSelectedCharacter(characterId: String) {
     self.selectedCharacterId = characterId
   }
+  
+  func getMissingThingsString() -> String {
+    var returnValue: String = ""
+    let foo = missingInputGroups.flatMap { $0.content }
+   // let bar = String(swiftLintMultiline: foo.map { $0.name + " \($0.quantity)"})
+    returnValue = foo.reduce(into: "", { value, next in
+      if !value.isEmpty {
+        let nextValue = next.name + " \(next.quantity)"
+        value += "\n" + nextValue
+      } else {
+        let nextValue = next.name + " \(next.quantity)"
+        value += nextValue
+      }
+      
+      
+      return
+    })
+    
+    return returnValue
+  }
 }
 
 struct AlgoHelperView: View {
@@ -146,6 +180,11 @@ struct AlgoHelperView: View {
         )
         .border(.blue)
         
+//        CharacterPickerView(
+//          characterNames: $viewModel.possibleCharacters,
+//          selectedCharacter: $viewModel.selectedCharacterIdentifier
+//        )
+        
         IPCharacterPickerView(
             selectedCharacters: $viewModel.selectedCharacters,
             possibleCharacters: viewModel.possibleCharacters
@@ -161,6 +200,8 @@ struct AlgoHelperView: View {
           }
           ScrollView {
             inputs()
+              .padding(.bottom, 10)
+            missingInputs()
           }
           Spacer()
         }
@@ -168,8 +209,12 @@ struct AlgoHelperView: View {
         .padding()
         VStack(alignment: .leading) {
           ScrollView {
-            expandingListView(input: viewModel.inputGroups)
-              .border(.blue)
+//            expandingListView(input: viewModel.inputGroups)
+//              .border(.blue)
+//              .padding(.bottom, 10)
+            
+            expandingListView(input: viewModel.missingInputGroups)
+              .border(.red)
               .padding(.bottom, 10)
             
             expandingListView(input: viewModel.groupedJobs)
@@ -188,6 +233,21 @@ struct AlgoHelperView: View {
       Text("Inputs")
       
       ForEach(viewModel.inputsDisplayable, id: \.self) { input in
+        HStack {
+          Text(input.value + " \(input.id)")
+          Spacer()
+          Text("\(viewModel.inputs[input.id, default: 0])")
+        }.frame(maxWidth: 300)
+        
+      }
+    }
+  }
+  
+  func missingInputs() -> some View {
+    VStack(alignment: .leading) {
+      Text("Missing Inputs")
+      
+      ForEach(viewModel.missingInputsDisplayable, id: \.self) { input in
         HStack {
           Text(input.value + " \(input.id)")
           Spacer()
@@ -225,6 +285,17 @@ struct AlgoHelperView: View {
         viewModel.start()
       }, label: {
         Text("Start")
+      })
+      
+      Button(action: {
+        NSPasteboard.general.declareTypes([.string], owner: nil)
+
+            let pasteboard = NSPasteboard.general // <----- This is important! Do not convert to a one liner!
+        let string = viewModel.getMissingThingsString()
+            pasteboard.setString(string, forType: .string)
+        
+      }, label: {
+        Text("to clipboard")
       })
     }
   }
@@ -342,4 +413,11 @@ struct CharacterSelectorView: View {
       Text("Hello World")
     }
   }
+}
+
+extension String {
+
+    init(swiftLintMultiline strings: String...) {
+        self = strings.reduce("", +)
+    }
 }

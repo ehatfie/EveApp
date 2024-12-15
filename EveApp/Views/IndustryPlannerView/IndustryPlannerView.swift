@@ -226,6 +226,8 @@ struct IndustryIndices {
                 ],
                 jobs: jobs
             )
+            
+            print("other total took \(Date().timeIntervalSince(startDate))")
         }
     }
 }

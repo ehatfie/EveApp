@@ -318,6 +318,7 @@ struct DisplayableJob: Identifiable {
   }
   let quantity: Int64
   let productId: Int64
+  let blueprintId: Int64
   let productName: String
   let blueprintName: String
   let inputs: [IdentifiedQuantity]
@@ -330,6 +331,7 @@ struct DisplayableJob: Identifiable {
     self.blueprintName = blueprintName
     self.inputs = data.inputs
     self.requiredRuns = data.requiredRuns
+    self.blueprintId = data.blueprintId
   }
 }
 

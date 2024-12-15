@@ -13,6 +13,9 @@ import ModelLibrary
     var characterModels: [CharacterDataModel] = []
     var characterInfoDisplayables: [CharacterInfoDisplayable]  = []
     
+    var selectedCharacters: Set<IdentifiedString> = []
+    var possibleCharacters: [IdentifiedString] = []
+    
     init(dbManager: DBManager) {
         self.dbManager = dbManager
 
@@ -22,9 +25,21 @@ import ModelLibrary
     }
     
     func loadCharacters() async {
+        print("loadCharacters")
         let characterInfo = await dbManager.getCharactersWithInfo()
+        print("loadedCharacters")
         characterModels = characterInfo
         self.characterInfoDisplayables = await dbManager.getCharacterInfoDisplayable()
+        self.possibleCharacters = characterInfo
+            .compactMap { characterData -> IdentifiedString? in
+                guard
+                    let characterId = Int64(characterData.characterId),
+                    let publicData = characterData.publicData else {
+                    return nil
+                }
+                
+                return IdentifiedString(id: characterId, value: publicData.name)
+            }
     }
     
     func updateCharacterWallet(characterId: String) {
@@ -41,10 +56,11 @@ import ModelLibrary
 }
 
 struct CharacterInfoList: View {
-    var viewModel: CharacterInfoListViewModel
+    @State var viewModel: CharacterInfoListViewModel
+    
     var body: some View {
         VStack {
-            HStack {
+            HStack(alignment: .top) {
                 Button(action: {
                     Task {
                         try? await DataManager.shared.fetchAllCharacterInfoAsync()
@@ -53,16 +69,16 @@ struct CharacterInfoList: View {
                     Text("Fetch all character info")
                 })
             }
-                LazyVGrid(columns: [
-                    GridItem(.adaptive(minimum: 400, maximum: 800)),
-                    GridItem(.adaptive(minimum: 400, maximum: 800)),
-                    GridItem(.adaptive(minimum: 400, maximum: 800))
-                ]) {
-                    ForEach(viewModel.characterInfoDisplayables) { characterInfo in
-                        characterInfoCard(characterInfo)
-                            .frame(alignment: .center)
-                    }
-                }.border(.blue)
+            LazyVGrid(columns: [
+                GridItem(.adaptive(minimum: 400, maximum: 800)),
+                GridItem(.adaptive(minimum: 400, maximum: 800)),
+                GridItem(.adaptive(minimum: 400, maximum: 800))
+            ]) {
+                ForEach(viewModel.characterInfoDisplayables) { characterInfo in
+                    characterInfoCard(characterInfo)
+                        .frame(alignment: .center)
+                }
+            }.border(.blue)
         }
     }
     
@@ -72,7 +88,7 @@ struct CharacterInfoList: View {
             VStack {
                 Text(characterInfo.name)
                 if let walletModel = characterInfo.walletModel {
-                    Text(String(format: "%.2f",walletModel.$balance.wrappedValue ?? 0.00) + " isk")
+                    Text(df2so(walletModel.$balance.wrappedValue ?? 0.00) + " ISK")
                 }
                 Button(action: {
                     self.viewModel.updateCharacterWallet(characterId: characterInfo.characterID)
@@ -94,8 +110,6 @@ struct CharacterInfoList: View {
                     } catch let error {
                         print("delete wallet error \(error)")
                     }
-
-
                 }, label: {
                     Text("Delete")
                 })
@@ -110,4 +124,15 @@ struct CharacterInfoList: View {
             
         }
     }
+    
+    func df2so(_ price: Double) -> String{
+            let numberFormatter = NumberFormatter()
+            numberFormatter.groupingSeparator = ","
+            numberFormatter.groupingSize = 3
+            numberFormatter.usesGroupingSeparator = true
+            numberFormatter.decimalSeparator = "."
+            numberFormatter.numberStyle = .decimal
+            numberFormatter.maximumFractionDigits = 2
+            return numberFormatter.string(from: price as NSNumber)!
+        }
 }

@@ -142,7 +142,7 @@ struct CharacterInfoDisplayable: Identifiable {
     
     init?(
         characterData: CharacterDataModel,
-        corporationData: CorporationInfoModel,
+        corporationData: CorporationInfoModel?,
         walletModel: CharacterWalletModel?
     ) {
         guard let publicData = characterData.publicData else {
@@ -153,11 +153,15 @@ struct CharacterInfoDisplayable: Identifiable {
         self.name = publicData.name
         self.description = publicData.description
         self.securityStatus = publicData.securityStatus
-       
-        self.corporationInfo = IdentifiedString(
-            id: Int64(corporationData.corporationId),
-            value: corporationData.name
-        )
+        
+        if let corporationData {
+            self.corporationInfo = IdentifiedString(
+                id: Int64(corporationData.corporationId),
+                value: corporationData.name
+            )
+        } else {
+            self.corporationInfo = IdentifiedString(id: -1, value: "MISSING CORP")
+        }
         
         self.allianceInfo = nil
         self.walletModel = walletModel

@@ -154,8 +154,10 @@ extension DataManager {
       return
     }
     
-    guard character.$corp.value == nil else {
-      print("existing public data for \(character.characterId)")
+    let existingPublicData = character.$publicData.wrappedValue
+    
+    guard existingPublicData == nil else {
+      print("existing public data for \(character.characterId) \(existingPublicData)")
       return
     }
     
@@ -163,6 +165,7 @@ extension DataManager {
       dataEndpoint: "",
       authModel: authModel
     ) else {
+      print("response")
       return
     }
     do {
@@ -503,9 +506,15 @@ extension DataManager {
   }
   
   func fetchCorporationInfoForCharacter(characterModel: CharacterDataModel) async {
-    guard let authModel = await dbManager?.getAuthModel(for: characterModel.characterId),
-          let publicData = characterModel.publicData
+    guard let authModel = await dbManager?.getAuthModel(for: characterModel.characterId)
     else {
+      print("\(#function) missing auth model")
+      return
+    }
+    
+    guard let publicData = characterModel.publicData
+    else {
+      print("\(#function) missing public data")
       return
     }
     

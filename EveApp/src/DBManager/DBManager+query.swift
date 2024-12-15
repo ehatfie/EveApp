@@ -785,13 +785,10 @@ extension DBManager {
     let characters = await getCharactersWithInfo()
     var returnValues: [CharacterInfoDisplayable] = []
     
-    
     do {
-      returnValues = try characters.compactMap { character -> CharacterInfoDisplayable? in
-       // let corporation = try character.joined(CorporationInfoModel.self)
-        let corporation = character.corp.first!
+      returnValues = characters.compactMap { character -> CharacterInfoDisplayable? in
+        let corporation = character.corp.first
         
-        //print("got corp \(corporation.corporation.$corporationId)")
         guard let value = CharacterInfoDisplayable(
           characterData: character,
           corporationData: corporation,

@@ -9,11 +9,11 @@ import SwiftUI
 
 @Observable class AlgoHelperViewModel {
   var dbManager: DBManager
-  var searchText: String = "Arazu"
+  var searchText: String = "Bifrost"
   var searchResults: [IdentifiedString] = []
   var selectedString: IdentifiedString? = IdentifiedString(
-    id: 11969,
-    value: "Arazu"
+    id: 37480,
+    value: "Bifrost"
   )
   
   var inputs: [Int64: Int64]  = [:]
@@ -27,40 +27,92 @@ import SwiftUI
   let ipm: IndustryPlannerManager
   let tool: IndyTool
   
+  var selectedCharacterId: String? = nil
+  
+  var selectedCharacters: Set<IdentifiedString> = []
+  var possibleCharacters: [IdentifiedString] = []
+  
   init(dbManager: DBManager) {
     self.dbManager = dbManager
     self.ipm = IndustryPlannerManager(dbManager: dbManager)
     self.tool = IndyTool(dbManager: dbManager)
+    
+    Task {
+      await loadCharacters()
+    }
+  }
+  
+  func loadCharacters() async {
+      print("loadCharacters")
+      let characterInfo = await dbManager.getCharactersWithInfo()
+      print("loadedCharacters")
+      self.possibleCharacters = characterInfo
+          .compactMap { characterData -> IdentifiedString? in
+              guard
+                  let characterId = Int64(characterData.characterId),
+                  let publicData = characterData.publicData else {
+                  return nil
+              }
+              
+              return IdentifiedString(id: characterId, value: publicData.name)
+          }
   }
   
   func start() {
     guard let selectedString else { return }
-    print("Start with \(selectedString.value)")
+   
+    if let selectedCharacter = selectedCharacters.first {
+      tool.characterID = String(selectedCharacter.id)
+    } else {
+      tool.characterID = nil
+    }
+    print("Start with \(selectedString.value) \(tool.characterID)")
+    // tool.characterID = selectedCharacters.first?.id
     
     Task {
-//      guard let results = await ipm.breakdownInputs(
-//        for: selectedString.id,
-//        quantity: 1
-//      ) else {
-//        print("got no results")
-//        return
-//      }
-      
       self.inputs = [:]
       self.inputsDisplayable = []
-      let missingIputs = await tool.getMissingInputs(blueprintID: selectedString.id, quantity: 1)
-
-      self.inputs = missingIputs
-      let inputsDisplayable: [IdentifiedString] = ipm.makeDisplayable(from: missingIputs)
+//      let missingInputs = await tool.getMissingInputs(
+//        blueprintID: selectedString.id,
+//        quantity: 1
+//      )
+      
+      let missingInputs = await tool.getMissingInputs(values: [selectedString.id: 1])
+      
+      print("get missing inputs done \(missingInputs)")
+      self.inputs = missingInputs
+      let inputsDisplayable: [IdentifiedString] = ipm.makeDisplayable(from: missingInputs)
       self.inputsDisplayable = inputsDisplayable
       
-      self.inputGroups = ipm.makeInputGroups(from: missingIputs)
-      self.jobsDisplayable = await tool.makeDisplayableJobsForInputSums(inputs: missingIputs)
+      self.inputGroups = ipm.makeInputGroups(from: missingInputs)
+      self.jobsDisplayable = await tool.makeDisplayableJobsForInputSums(
+        inputs: missingInputs
+      )
       self.groupedJobs = await tool.createGroupedJobs(jobs: self.jobsDisplayable)
+      var someValues: [Int64: Int64] = [:]
+      
+      for job in jobsDisplayable {
+        someValues[job.id] = Int64(job.requiredRuns)
+        if someValues[job.productId] != nil {
+          someValues[job.productId] = nil
+        }
+      }
+      
+      print("getting missing job inputs")
+      print("jobs displayable \(jobsDisplayable.map { $0.blueprintName })")
+      let missingJobInputs = await tool.getMissingInputs(values: someValues)
+     
+      print("missingJobInputs \(missingJobInputs)")
+      //self.inputsDisplayable = ipm.makeDisplayable(from: missingJobInputs)
+      //self.jobsDisplayable = await ipm.makeDisplayableJobsForInputSums(inputs: missingJobInputs)
+      //let missingJobs = await tool.getMissingInputs
     }
   }
   
   func search() {
+    guard !searchText.isEmpty else {
+      return
+    }
     print("search for \(searchText)")
     let results = dbManager.searchTypeName(searchText: searchText)
     print("got \(results.count)")
@@ -71,23 +123,35 @@ import SwiftUI
     print("did select \(value.value)")
     self.selectedString = value
   }
+  
+  func setSelectedCharacter(characterId: String) {
+    self.selectedCharacterId = characterId
+  }
 }
 
 struct AlgoHelperView: View {
   @State var viewModel: AlgoHelperViewModel
   @State var expanded: Set<String> = []
+  @State var expandedJobs: Set<String> = []
   
   var body: some View {
     VStack {
       Text("AlgoHelperView")
-      
-      TextFieldDropdownView(
-        text: $viewModel.searchText,
-        searchResults: $viewModel.searchResults,
-        onSubmit: viewModel.search,
-        didSelect: viewModel.didSelect
-      )
-      .border(.blue)
+      HStack(alignment: .bottom) {
+        TextFieldDropdownView(
+          text: $viewModel.searchText,
+          searchResults: $viewModel.searchResults,
+          onSubmit: viewModel.search,
+          didSelect: viewModel.didSelect
+        )
+        .border(.blue)
+        
+        IPCharacterPickerView(
+            selectedCharacters: $viewModel.selectedCharacters,
+            possibleCharacters: viewModel.possibleCharacters
+        )
+        .frame(width: 300, height: 75)
+      }
       
       Divider()
       HStack {
@@ -106,6 +170,7 @@ struct AlgoHelperView: View {
           ScrollView {
             expandingListView(input: viewModel.inputGroups)
               .border(.blue)
+              .padding(.bottom, 10)
             
             expandingListView(input: viewModel.groupedJobs)
               .border(.green)
@@ -174,15 +239,14 @@ struct AlgoHelperView: View {
             Text("\(group.numHave) / \(group.content.count)")
             Spacer()
           }.onTapGesture {
-            if !expanded.insert(group.groupName).inserted {
-              expanded.remove(group.groupName)
+            if !expandedJobs.insert(group.groupName).inserted {
+              expandedJobs.remove(group.groupName)
             }
           }
           
-          if expanded.contains(group.groupName) {
+          if expandedJobs.contains(group.groupName) {
             listView(content: group.content)
           }
-          
         }
       }
     }
@@ -264,4 +328,18 @@ struct AlgoHelperView: View {
 
 #Preview {
   AlgoHelperView(viewModel: AlgoHelperViewModel(dbManager: DBManager()))
+}
+
+@Observable class CharacterSelectorViewModel {
+  
+}
+
+struct CharacterSelectorView: View {
+  let viewModel = CharacterSelectorViewModel()
+  
+  var body: some View {
+    VStack {
+      Text("Hello World")
+    }
+  }
 }

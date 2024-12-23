@@ -117,7 +117,7 @@ struct IndustryIndices {
             )
             let took = Date().timeIntervalSince(startDate)
             
-            print("Input Sums \(inputSums) took \(took)")
+            print("Input Sums took \(took)")
             let blueprintId = testObject.blueprintID
             
             

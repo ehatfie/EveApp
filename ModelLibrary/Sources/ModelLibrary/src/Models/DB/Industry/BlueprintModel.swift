@@ -96,7 +96,8 @@ public struct Product {
     }
 }
 
-final public class BlueprintModel: Model {
+@preconcurrency
+final public class BlueprintModel: Model, @unchecked Sendable {
     static public let schema = Schemas.blueprintModel.rawValue
 
     @ID(key: .id) public var id: UUID?

@@ -87,18 +87,21 @@ import SwiftUI
       let start = Date()
       let missingInputs = await tool.getMissingInputs(values: [selectedString.id: 1])
     
-      print("get missing inputs took \(Date().timeIntervalSince(start)) got \(missingInputs)")
+      print("get missing inputs took \(Date().timeIntervalSince(start))")
       self.inputs = missingInputs
+      
       let inputsDisplayable: [IdentifiedString] = ipm.makeDisplayable(from: missingInputs)
       self.inputsDisplayable = inputsDisplayable
-      
-      self.inputGroups = ipm.makeInputGroups(from: missingInputs)
+      //makeInputGroups took 0.29674792289733887 for 14
+      //self.inputGroups = ipm.makeInputGroups(from: missingInputs)
+      //makeInputGroups took 0.2926030158996582 for 14
+      self.inputGroups = await tool.makeInputGroups(from: missingInputs)
       let start2 = Date()
       self.jobsDisplayable = await tool.makeDisplayableJobsForInputSums(
         inputs: missingInputs
       )
       
-      print("make jobs displayable took \(Date().timeIntervalSince(start2))")
+      print("makeJobsDisplayableTook \(Date().timeIntervalSince(start2))")
       self.groupedJobs = await tool.createGroupedJobs(jobs: self.jobsDisplayable)
       var someValues: [Int64: Int64] = [:]
       
@@ -109,7 +112,7 @@ import SwiftUI
         }
       }
       
-      print("getting missing job inputs")
+      //print("getting missing job inputs")
       
       let missingJobInputs = await tool.getMissingInputs(values: someValues)
       

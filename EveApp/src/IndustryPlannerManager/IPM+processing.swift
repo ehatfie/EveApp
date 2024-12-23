@@ -52,7 +52,7 @@ extension IndustryPlannerManager {
             inputsDict[input.id] = input.quantity * Int64(runsNeeded)
         }
         //let startName = await dbManager.getType(for: [])
-        let bpNames = await dbManager.getTypeNames(for: [bpInfo.productId])
+        //let bpNames = await dbManager.getTypeNames(for: [bpInfo.productId])
         
         // this means we are at a bottom level item/input
         guard !inputsDict.isEmpty else {
@@ -65,8 +65,8 @@ extension IndustryPlannerManager {
         
         let bpInfos: [BPInfo] = await makeBPInfo(for: uniqueInputs)
         
-        let inputBpNames = await dbManager.getTypeNames(for: bpInfos.map { $0.blueprintId})
-        printNames(root: bpNames.first!, inputBpNames, depth: depth)
+        //let inputBpNames = await dbManager.getTypeNames(for: bpInfos.map { $0.blueprintId})
+        //printNames(root: bpNames.first!, inputBpNames, depth: depth)
         
         guard !bpInfos.isEmpty else {
             print("empty bpInfos \(inputsDict)")
@@ -130,10 +130,15 @@ extension IndustryPlannerManager {
     }
     
     func makeBPInfo(for blueprintIds: Set<Int64>) async -> [BPInfo] {
+        let start = Date()
         let manufacturingValues = await dbManager.getManufacturingBlueprintsAsync(making: Array(blueprintIds))
+        print("manufacturingTook \(Date().timeIntervalSince(start))")
+        let rs = Date()
         let reactionValues = await dbManager.getReactionBlueprintsAsync(making: Array(blueprintIds))
-        
-        return await makeBPInfo(for: manufacturingValues + reactionValues)
+        print("reactionTook \(Date().timeIntervalSince(rs))")
+        let returnValues = await makeBPInfo(for: manufacturingValues + reactionValues)
+        print("makeBPInfo for \(blueprintIds.count) took \(Date().timeIntervalSince(start))")
+        return returnValues
     }
     
     func makeBPInfo(for blueprintModels: [BlueprintModel]) async -> [BPInfo] {
@@ -301,14 +306,16 @@ extension IndustryPlannerManager {
     }
     
     func makeDisplayable(from values: [Int64: Int64]) -> [IdentifiedString] {
+        let start = Date()
         let typeIds = values.map { $0.key }
         let foo = dbManager.getTypeNames(for: typeIds)
         let results = foo.map { IdentifiedString(id: $0.typeId, value: $0.name) }
-        
+        print("makeDisplayable took \(Date().timeIntervalSince(start))")
         return results
     }
     
     func makeInputGroups(from values: [Int64: Int64]) -> [IPDetailInputGroup2] {
+        let start = Date()
         var returnValues: [IPDetailInputGroup2] = []
         var groupedValues: [Int64: [Int64]] = [:]
         let blueprintIds: [Int64] = values.map { $0.key }
@@ -346,7 +353,7 @@ extension IndustryPlannerManager {
                 existingCountDict[groupID, default: 0] += 1
             }
         }
-        
+
         for group in groupedValues {
             guard let groupName = dbManager.getGroup(for: group.key)?.name else { continue }
             var createdValues: [IPDetailInput1] = []
@@ -379,6 +386,7 @@ extension IndustryPlannerManager {
             )
         }
         returnValues.sort(by: { $0.groupID > $1.groupID })
+        print("makeInputGroups took \(Date().timeIntervalSince(start)) for \(values.count)")
         return returnValues
     }
 }

@@ -148,7 +148,7 @@ struct CharacterInfoDisplayable: Identifiable {
         guard let publicData = characterData.publicData else {
             return nil
         }
-        
+        print("got \(characterData.industryJobsData.count) industryJobs")
         self.characterID = characterData.characterId
         self.name = publicData.name
         self.description = publicData.description
@@ -165,9 +165,12 @@ struct CharacterInfoDisplayable: Identifiable {
         
         self.allianceInfo = nil
         self.walletModel = walletModel
+        
+        let industryJobsData = characterData.industryJobsData
+        
     }
-    
-
 }
 
-
+struct CharacterIndustryJobDisplayable {
+    
+}

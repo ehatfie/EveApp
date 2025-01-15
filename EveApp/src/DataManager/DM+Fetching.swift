@@ -592,6 +592,14 @@ extension DataManager {
     }
   }
   
+  func fetchIndustryJobsForCharacters(characterId: String) async {
+    guard let characterData = await dbManager?.getCharacter(by: characterId) else {
+      return
+    }
+    
+    await fetchIndustryJobs(for: characterData)
+  }
+  
   func fetchIndustryJobs(
     for characterModel: CharacterDataModel
   ) async {

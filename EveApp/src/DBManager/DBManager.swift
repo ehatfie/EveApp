@@ -377,9 +377,16 @@ extension DBManager {
   }
   
   func getCorporationModels(ids: [Int32]) async -> [CorporationInfoModel] {
-    CorporationInfoModel.query(on: database)
+    return (try? await CorporationInfoModel.query(on: database)
       .filter(\.$corporationId ~~ ids)
-    return []
+      .all()) ?? []
+  }
+  
+  func getCorporationModels() async -> [CorporationInfoModel] {
+    
+      
+    return (try? await CorporationInfoModel.query(on: database)
+      .all()) ?? []
   }
 }
 

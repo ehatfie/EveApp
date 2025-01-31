@@ -16,11 +16,14 @@ import ModelLibrary
     var selectedCharacters: Set<IdentifiedString> = []
     var possibleCharacters: [IdentifiedString] = []
     
+    var corpInfos: [IdentifiedString] = []
+    
     init(dbManager: DBManager) {
         self.dbManager = dbManager
 
         Task {
             await loadCharacters()
+            await getCorps()
         }
     }
     
@@ -53,6 +56,19 @@ import ModelLibrary
             await DataManager.shared.fetchAssetsAsync(characterId: characterId)
         }
     }
+    
+    func updateCharacterIndustry(characterId: String) {
+        Task {
+            await DataManager.shared.fetchIndustryJobsForCharacters(characterId: characterId)
+        }
+    }
+    
+    func getCorps() async {
+        let corps = await dbManager.getCorporationModels()
+        self.corpInfos = corps.map {
+            IdentifiedString(id: Int64($0.corporationId), value: $0.name)
+        }
+    }
 }
 
 struct CharacterInfoList: View {
@@ -68,6 +84,14 @@ struct CharacterInfoList: View {
                 }, label: {
                     Text("Fetch all character info")
                 })
+                
+                Button(action: {
+                    Task {
+                        try? await DataManager.shared.fetchAllCharacterInfoAsync()
+                    }
+                }, label: {
+                    Text("Fetch all character corps")
+                })
             }
             LazyVGrid(columns: [
                 GridItem(.adaptive(minimum: 400, maximum: 800)),
@@ -79,6 +103,15 @@ struct CharacterInfoList: View {
                         .frame(alignment: .center)
                 }
             }.border(.blue)
+            
+            VStack(alignment: .leading) {
+                Text("Corps")
+                    .font(.headline)
+                ForEach(viewModel.corpInfos) { info in
+                    Text(info.value)
+                }
+            }
+
         }
     }
     
@@ -87,9 +120,12 @@ struct CharacterInfoList: View {
         GroupBox {
             VStack {
                 Text(characterInfo.name)
+                Text(characterInfo.corporationInfo.value)
                 if let walletModel = characterInfo.walletModel {
                     Text(df2so(walletModel.$balance.wrappedValue ?? 0.00) + " ISK")
                 }
+                
+                
                 Button(action: {
                     self.viewModel.updateCharacterWallet(characterId: characterInfo.characterID)
                 }, label: {
@@ -100,6 +136,12 @@ struct CharacterInfoList: View {
                     self.viewModel.updateCharacterAssets(characterId: characterInfo.characterID)
                 }, label: {
                     Text("Update Assets")
+                })
+                
+                Button(action: {
+                    self.viewModel.updateCharacterIndustry(characterId: characterInfo.characterID)
+                }, label: {
+                    Text("Update Indy")
                 })
                 
                 Button(action: {

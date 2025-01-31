@@ -731,6 +731,7 @@ extension DBManager {
         .with(\.$assetsData)
         .with(\.$corp)
         .with(\.$walletData)
+        .with(\.$industryJobsData)
         .all()
         .get()
       
@@ -814,6 +815,7 @@ extension DBManager {
     do {
       returnValues = characters.compactMap { character -> CharacterInfoDisplayable? in
         let corporation = character.corp.first
+        let industryJobsData = character.industryJobsData
         
         guard let value = CharacterInfoDisplayable(
           characterData: character,

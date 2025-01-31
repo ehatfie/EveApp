@@ -46,7 +46,7 @@ public struct GroupData: Codable {
     }
 }
 
-final public class GroupModel: Model {
+final public class GroupModel: Model, @unchecked Sendable {
     public static let schema = Schemas.groups.rawValue
     @ID(key: .id) public var id: UUID?
     

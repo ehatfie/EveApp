@@ -767,6 +767,33 @@ extension DBManager {
       return nil
     }
   }
+  func getCharacterWithInfoSync(by characterId: String) -> CharacterDataModel? {
+    do {
+      return try  CharacterDataModel.query(on: self.database)
+        .filter(\.$characterId == characterId)
+        .with(\.$publicData)
+        .with(\.$assetsData)
+        .with(\.$corp)
+        .with(\.$walletData)
+        .first()
+        .wait()
+    } catch let err {
+      print("DBManager.getCharacter() - error \(err)")
+      return nil
+    }
+  }
+  
+  func getCharacterPublicDataSync(by characterId: Int64) -> CharacterPublicDataModel? {
+    do {
+      return try CharacterPublicDataModel.query(on: self.database)
+        .filter(\.$characterId == characterId)
+        .first()
+        .wait()
+    } catch let err {
+      print("DBManager.getCharacter() - error \(err)")
+      return nil
+    }
+  }
   
   func getCharacter(by characterId: String) -> CharacterDataModel? {
     do {
@@ -793,7 +820,7 @@ extension DBManager {
           corporationData: corporation,
           walletModel: character.$walletData.value ?? nil
         ) else {
-          print("couldnt make CharacterInfoDisplayable")
+          print("couldnt make CharacterInfoDisplayable for \(character.characterId)")
           return nil
         }
         return value

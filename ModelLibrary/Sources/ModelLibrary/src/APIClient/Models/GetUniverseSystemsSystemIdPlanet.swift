@@ -10,7 +10,7 @@ import Foundation
 
 /** planet object */
 
-public struct GetUniverseSystemsSystemIdPlanet: Codable {
+public struct GetUniverseSystemsSystemIdPlanet: Codable, Sendable {
 
     /** asteroid_belts array */
     public var asteroidBelts: [Int]?

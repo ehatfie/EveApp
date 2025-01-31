@@ -8,7 +8,7 @@
 import Foundation
 import FluentSQLiteDriver
 
-final public class ESIKillmailModel: Model {
+final public class ESIKillmailModel: Model, @unchecked Sendable {
     static public let schema = Schemas.Killmail.esi.rawValue
     //@Field(key: "skills") public var skills: [CharacterSkillModel]
     @ID(key: .id) public var id: UUID?
@@ -81,7 +81,7 @@ final public class ESIKillmailModel: Model {
 
 
 
-final public class ESIKmAttacker: Fields {
+final public class ESIKmAttacker: Fields, @unchecked Sendable {
     @Field(key: "alliance_id") public var allianceId: Int64?
     @Field(key: "character_id") public var characterId: Int64?
     @Field(key: "corporation_id") public var corporationId: Int64?
@@ -131,7 +131,7 @@ final public class ESIKmAttacker: Fields {
     }
 }
 
-final public class ESIKmVictim: Fields {
+final public class ESIKmVictim: Fields, @unchecked Sendable {
     @Field(key: "alliance_id_v") public var allianceId1: Int64
     @Field(key: "character_id_v") public var characterId: Int64?
     @Field(key: "corporation_id_v") public var corporationId: Int64?
@@ -173,7 +173,7 @@ final public class ESIKmVictim: Fields {
     }
 }
 
-final public class ESIKmVictimItems: Fields {
+final public class ESIKmVictimItems: Fields, @unchecked Sendable {
     @Field(key: "item_flag") public var itemFlag: Int64
     @Field(key: "item_type_id") public var itemTypeId: Int64
     @Field(key: "items") public var items: [ESIKmVictimItems]

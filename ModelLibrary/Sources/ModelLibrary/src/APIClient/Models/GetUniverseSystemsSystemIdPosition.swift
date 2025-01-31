@@ -10,7 +10,7 @@ import Foundation
 
 /** position object */
 
-public struct GetUniverseSystemsSystemIdPosition: Codable {
+public struct GetUniverseSystemsSystemIdPosition: Codable, Sendable {
 
     /** x number */
     public var x: Double

@@ -150,7 +150,7 @@ struct CharacterInfoView: View {
   func getPublicCharacterDataView(characterPublicData data: CharacterPublicDataResponse) -> VStack<some View> {
     return VStack(alignment:.leading, spacing: 10) {
       Text(data.name)
-      Text(data.birthday)
+      Text(data.birthday ?? "NO_BIRTHDAY")
       Text(data.description ?? "")
       Text("\(data.security_status ?? 0.0)")
       Text(data.title ?? "")

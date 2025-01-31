@@ -18,7 +18,7 @@ import FluentSQLiteDriver
  }
 
  */
-final public class AuthModel: Model {
+final public class AuthModel: Model, @unchecked Sendable {
     static public let schema = Schemas.auth.rawValue
     
     @ID(key: .id) public var id: UUID?

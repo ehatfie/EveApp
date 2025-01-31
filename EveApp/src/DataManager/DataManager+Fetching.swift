@@ -270,6 +270,7 @@ extension DataManager {
     return nil
   }
   
+  // This one currently defaults to /characters/characterId
   func makeApiCallAsync(dataEndpoint: String, authModel: AuthModel, page: Int? = nil) async -> (Data, URLResponse)?  {
     let urlRequest = requestBuilder(dataEndpoint: dataEndpoint, authModel: authModel, page: page)
     print("makeApiCallAsync1() - urlRequest \(urlRequest?.url?.string)")
@@ -279,27 +280,6 @@ extension DataManager {
       print("async api call error \(err)")
     }
     return nil
-  }
-  
-  func processCharacterPublicData(response: CharacterPublicDataResponse) {
-    let characterData = self.characterData
-    characterData?.publicData = response
-    self.characterData = characterData
-    let characterPublicData = CharacterPublicDataModel(response: response)
-    
-    let foo = try!
-    self.dbManager!
-      .database
-      .query(CharacterDataModel.self)
-      .first()
-      .wait()
-    do {
-      try foo?.$publicData.create(characterPublicData, on: dbManager!.database).wait()
-    } catch let err {
-      print("save item error \(err)")
-    }
-    
-    print("processCharacterPublicData \(response)")
   }
   
   func processSkillQueue(response: [CharacterSkillQueueDataResponse]) {

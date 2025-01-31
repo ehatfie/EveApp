@@ -122,6 +122,11 @@
 		BAB271F72A686918004F01B7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BAB271F62A686918004F01B7 /* Alamofire */; };
 		BACB52DB2A68B9700044CDA0 /* ItemGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB52DA2A68B9700044CDA0 /* ItemGroupView.swift */; };
 		BACB52DD2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB52DC2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift */; };
+		BAD35B7D2D3B07590097FA4C /* WalletRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD35B7C2D3B07590097FA4C /* WalletRootView.swift */; };
+		BAD35B7F2D3B092F0097FA4C /* DBManager+Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD35B7E2D3B092A0097FA4C /* DBManager+Wallet.swift */; };
+		BAD35B812D3B83110097FA4C /* WalletTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD35B802D3B83110097FA4C /* WalletTransactionView.swift */; };
+		BAD35B842D40696F0097FA4C /* DM+Processing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD35B832D40696B0097FA4C /* DM+Processing.swift */; };
+		BAD35B862D4069840097FA4C /* DM+WalletFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD35B852D40697E0097FA4C /* DM+WalletFetching.swift */; };
 		BADE5CE02C9F47DC00E78357 /* IndustryPlannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADE5CDF2C9F47DC00E78357 /* IndustryPlannerView.swift */; };
 		BAE02EE72AF34F4000AB695F /* BlueprintComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EE62AF34F4000AB695F /* BlueprintComponentView.swift */; };
 		BAE02EEA2AF9CEE600AB695F /* ReprocessingHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EE92AF9CEE600AB695F /* ReprocessingHelperView.swift */; };
@@ -362,6 +367,11 @@
 		BAB271D42A6867B4004F01B7 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
 		BACB52DA2A68B9700044CDA0 /* ItemGroupView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemGroupView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BACB52DC2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemCategoryGroupsListView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BAD35B7C2D3B07590097FA4C /* WalletRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletRootView.swift; sourceTree = "<group>"; };
+		BAD35B7E2D3B092A0097FA4C /* DBManager+Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBManager+Wallet.swift"; sourceTree = "<group>"; };
+		BAD35B802D3B83110097FA4C /* WalletTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTransactionView.swift; sourceTree = "<group>"; };
+		BAD35B832D40696B0097FA4C /* DM+Processing.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DM+Processing.swift"; sourceTree = "<group>"; tabWidth = 2; };
+		BAD35B852D40697E0097FA4C /* DM+WalletFetching.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DM+WalletFetching.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BADE5CDF2C9F47DC00E78357 /* IndustryPlannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndustryPlannerView.swift; sourceTree = "<group>"; };
 		BAE02EE62AF34F4000AB695F /* BlueprintComponentView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintComponentView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAE02EE92AF9CEE600AB695F /* ReprocessingHelperView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ReprocessingHelperView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -485,6 +495,7 @@
 		BA1A940A2C0C376A0005B931 /* Fetching */ = {
 			isa = PBXGroup;
 			children = (
+				BAD35B852D40697E0097FA4C /* DM+WalletFetching.swift */,
 				BA1A940B2C0C378B0005B931 /* DM+KillmailFetching.swift */,
 			);
 			path = Fetching;
@@ -585,6 +596,7 @@
 		BA3149C42A1EF98C0076E6DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BAD35B792D3B070F0097FA4C /* WalletView */,
 				BAA5CCB62CD5C948005590AE /* AlgoHelper */,
 				BA5F7ABB2C9F72B8007DDA12 /* Common */,
 				BADE5CDE2C9F47BF00E78357 /* IndustryPlannerView */,
@@ -637,6 +649,7 @@
 		BA3149D22A315A530076E6DD /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
+				BAD35B822D4069670097FA4C /* Processing */,
 				BA1A940A2C0C376A0005B931 /* Fetching */,
 				BA3149D32A315A650076E6DD /* DataManager.swift */,
 				BA3149E82A4BCAF80076E6DD /* DataManager+Fetching.swift */,
@@ -950,6 +963,23 @@
 			path = DataFetcher;
 			sourceTree = "<group>";
 		};
+		BAD35B792D3B070F0097FA4C /* WalletView */ = {
+			isa = PBXGroup;
+			children = (
+				BAD35B7C2D3B07590097FA4C /* WalletRootView.swift */,
+				BAD35B802D3B83110097FA4C /* WalletTransactionView.swift */,
+			);
+			path = WalletView;
+			sourceTree = "<group>";
+		};
+		BAD35B822D4069670097FA4C /* Processing */ = {
+			isa = PBXGroup;
+			children = (
+				BAD35B832D40696B0097FA4C /* DM+Processing.swift */,
+			);
+			path = Processing;
+			sourceTree = "<group>";
+		};
 		BADE5CDE2C9F47BF00E78357 /* IndustryPlannerView */ = {
 			isa = PBXGroup;
 			children = (
@@ -983,6 +1013,7 @@
 		BAE069722AC8A1370054EFCF /* DBManager */ = {
 			isa = PBXGroup;
 			children = (
+				BAD35B7E2D3B092A0097FA4C /* DBManager+Wallet.swift */,
 				BA7E4B362C068E8500B00158 /* new */,
 				BAE069732AC8A1420054EFCF /* DBManager.swift */,
 				BAE069752AC8A2900054EFCF /* DBManager+loading.swift */,
@@ -1346,6 +1377,7 @@
 				BAA88E442C586DCF0001BF42 /* PotentialIndustryFiltersView.swift in Sources */,
 				BAE02EF22AFB11D200AB695F /* TypeDogmaInfoView.swift in Sources */,
 				BA04CA8B2AEDCAEB008D66B8 /* MaterialDetailView.swift in Sources */,
+				BAD35B842D40696F0097FA4C /* DM+Processing.swift in Sources */,
 				BA5991002BF46020003108CF /* AssetsViewer.swift in Sources */,
 				BAE02EE72AF34F4000AB695F /* BlueprintComponentView.swift in Sources */,
 				BA5F7ABD2C9F72D2007DDA12 /* NumPicker.swift in Sources */,
@@ -1370,6 +1402,7 @@
 				BA20ADB92C0D821400095B4E /* Constants.swift in Sources */,
 				BA7100902ADF64F6001CD301 /* DBManager+Mocks.swift in Sources */,
 				BAA5CCB22CD32257005590AE /* Displayable.swift in Sources */,
+				BAD35B862D4069840097FA4C /* DM+WalletFetching.swift in Sources */,
 				BAE069AB2ADB30140054EFCF /* DBManager+Industry.swift in Sources */,
 				BA314A102A5CF8B10076E6DD /* ItemCategory.swift in Sources */,
 				BAE02EEC2AF9EA7100AB695F /* CategoryInfoView.swift in Sources */,
@@ -1387,11 +1420,13 @@
 				BA9D96112B2A8B19006AC37E /* DevelopHelperView.swift in Sources */,
 				BA7577752CF5358300BE56A2 /* KillboardView.swift in Sources */,
 				BAEE97002D02A99C006D75B0 /* CharacterInfoList.swift in Sources */,
+				BAD35B7D2D3B07590097FA4C /* WalletRootView.swift in Sources */,
 				BAE02EF02AFB0E0100AB695F /* TypeInfoView.swift in Sources */,
 				BA7100A52AEA1969001CD301 /* BlueprintExplorerView.swift in Sources */,
 				BAA69B9A2C700E36007399D7 /* BlueprintProductionView.swift in Sources */,
 				BA314A062A5CDCDB0076E6DD /* DataManager+Loading.swift in Sources */,
 				BA7100992AE36799001CD301 /* ItemMaterialExplorerView.swift in Sources */,
+				BAD35B7F2D3B092F0097FA4C /* DBManager+Wallet.swift in Sources */,
 				BA3C02C92C1A9EF200F32650 /* IPM+InputProcessing.swift in Sources */,
 				BA9D96052B05CC0E006AC37E /* BlueprintIndustryView.swift in Sources */,
 				BAE069972AD903440054EFCF /* DogmaAttributeView.swift in Sources */,
@@ -1424,6 +1459,7 @@
 				BACB52DB2A68B9700044CDA0 /* ItemGroupView.swift in Sources */,
 				BAA88E462C61C8AB0001BF42 /* Theme.swift in Sources */,
 				BA9D960A2B117ACC006AC37E /* IndustryListView.swift in Sources */,
+				BAD35B812D3B83110097FA4C /* WalletTransactionView.swift in Sources */,
 				BA6825C82C797AD300C103E9 /* ReactionHelperDetailView.swift in Sources */,
 				BA3C02D62C2A6B4700F32650 /* SkillGroupEntryView.swift in Sources */,
 				BA3149D12A31528E0076E6DD /* DeepLinker.swift in Sources */,
@@ -2213,7 +2249,7 @@
 			repositoryURL = "https://github.com/vapor/fluent-sqlite-driver.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.5.0;
+				minimumVersion = 4.8.0;
 			};
 		};
 		BAE069622AC89CA80054EFCF /* XCRemoteSwiftPackageReference "fluent" */ = {
@@ -2221,7 +2257,7 @@
 			repositoryURL = "https://github.com/vapor/fluent.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.8.0;
+				minimumVersion = 4.12.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

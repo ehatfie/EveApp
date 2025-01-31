@@ -49,8 +49,15 @@ extension DBManager {
     let result = try? await AuthModel.query(on: database).filter(\.$characterId == characterId).first()
     return result
   }
+  
   func getAllAuthModels() async -> [AuthModel] {
     return (try? await AuthModel.query(on: database).all()) ?? []
+  }
+  
+  // returns the first auth model, probably not a great idea
+  func getAnyAuthModel() async -> AuthModel? {
+    //let result = try? await AuthModel.query(on: database).first()
+    return try? await AuthModel.query(on: database).first()
   }
 }
 

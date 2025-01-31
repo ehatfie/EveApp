@@ -38,7 +38,7 @@ public struct DogmaEffectInfo: Codable {
     }
 }
 
-final public class TypeDogmaAttribute: Fields {
+final public class TypeDogmaAttribute: Fields, @unchecked Sendable {
     @Field(key: "attributeId") public var attributeID: Int64
     @Field(key: "value") public var value: Double
     
@@ -53,7 +53,7 @@ final public class TypeDogmaAttribute: Fields {
     }
 }
 
-final public class TypeDogmaEffect: Fields {
+final public class TypeDogmaEffect: Fields, @unchecked Sendable {
     @Field(key: "effectID") public var effectID: Int64
     @Field(key: "isDefault") public var isDefault: Bool
     
@@ -68,7 +68,7 @@ final public class TypeDogmaEffect: Fields {
     }
 }
 
-final public class TypeDogmaInfoModel: Model {
+final public class TypeDogmaInfoModel: Model, @unchecked Sendable {
     static public let schema = Schemas.typeDogmaInfo.rawValue
     
     @ID(key: .id) public var id: UUID?
@@ -140,7 +140,7 @@ final public class TypeDogmaInfoModel: Model {
 //  }
 //}
 
-final public class TypeDogmaAttributeInfoModel: Model {
+final public class TypeDogmaAttributeInfoModel: Model, @unchecked Sendable {
     static public let schema = Schemas.typeDogmaAttributeInfo.rawValue
     
     @ID(key: .id) public var id: UUID?
@@ -180,7 +180,7 @@ public struct CreateTypeDogmaAttributeInfoModel: Migration {
     }
 }
 
-final public class TypeDogmaEffectInfoModel: Model {
+final public class TypeDogmaEffectInfoModel: Model, @unchecked Sendable {
     static public let schema = Schemas.typeDogmaEffectInfo.rawValue
     
     @ID(key: .id) public var id: UUID?

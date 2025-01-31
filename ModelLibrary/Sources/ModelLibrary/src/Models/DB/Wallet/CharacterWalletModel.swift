@@ -8,7 +8,7 @@ import Foundation
 import Fluent
 
 
-final public class CharacterWalletModel: Model {
+final public class CharacterWalletModel: Model, @unchecked Sendable {
   static public let schema = Schemas.characterWalletModel.rawValue
   
   @ID(key: .id) public var id: UUID?
@@ -51,10 +51,11 @@ final public class CharacterWalletModel: Model {
   
 }
 
-final public class CharacterWalletJournalEntryModel: Model {
+final public class CharacterWalletJournalEntryModel: Model, @unchecked Sendable {
   static public let schema = Schemas.characterWalletJournalEntryModel.rawValue
   
-  @ID(key: .id) public var id: UUID?
+  @ID(custom: "character_wallet_journal_entry_id", generatedBy: .user)
+  public var id: Int64?
   
   @Parent(key: "walletId")
   var walletModel: CharacterWalletModel
@@ -101,7 +102,7 @@ final public class CharacterWalletJournalEntryModel: Model {
   public init() {}
   
   public init(
-    id: UUID = UUID(),
+    id: Int64,
     amount: Double? = nil,
     balance: Double? = nil,
     contextId: Int64? = nil, contextIdType: String? = nil, date: Date, _description: String, firstPartyId: Int? = nil, _id: Int64, reason: String? = nil, refType: String, secondPartyId: Int? = nil, tax: Double? = nil, taxReceiverId: Int? = nil) {
@@ -126,7 +127,7 @@ final public class CharacterWalletJournalEntryModel: Model {
     self.balance = data.balance
     self.contextId = data.contextId
     self.contextIdType = data.contextIdType?.rawValue ?? ""
-    self.date = Date(rfc1123: data.date) ?? Date()
+    self.date = ISO8601DateFormatter().date(from:data.date) ?? Date()//Date(rfc1123: data.date) ?? Date()
     self.entryDescription = data._description
     self.firstPartyId = data.firstPartyId
     self.journalId = data._id
@@ -135,7 +136,7 @@ final public class CharacterWalletJournalEntryModel: Model {
     self.secondPartyId = data.secondPartyId
     self.tax = data.tax
     self.taxReceiverId = data.taxReceiverId
-    self.id = UUID()
+    self.id = data._id
   }
   
   public struct ModelMigration: AsyncMigration {
@@ -143,6 +144,7 @@ final public class CharacterWalletJournalEntryModel: Model {
     public func prepare(on database: FluentKit.Database) async throws {
       try await database.schema(CharacterWalletJournalEntryModel.schema)
         .id()
+        .field("character_wallet_journal_entry_id",.int64)
         .field(
           "walletId",
           .uuid,
@@ -162,6 +164,7 @@ final public class CharacterWalletJournalEntryModel: Model {
         .field("secondPartyId", .int)
         .field("tax", .double)
         .field("taxReceiverId", .int)
+        .unique(on: "character_wallet_journal_entry_id")
         .create()
     }
     
@@ -172,10 +175,11 @@ final public class CharacterWalletJournalEntryModel: Model {
   }
 }
 
-final public class CharacterWalletTransactionModel: Model {
+final public class CharacterWalletTransactionModel: Model, @unchecked Sendable {
   static public let schema = Schemas.characterWalletTransactionModel.rawValue
   
-  @ID(key: .id) public var id: UUID?
+  @ID(custom: "character_wallet_transaction_id", generatedBy: .user)
+  public var id: Int64?
   
   @Parent(key: "walletId")
   var walletModel: CharacterWalletModel
@@ -184,7 +188,7 @@ final public class CharacterWalletTransactionModel: Model {
   public var clientId: Int
   
   @Field(key: "date")
-  public var date: Date
+  public var date: String
   
   @Field(key: "isBuy")
   public var isBuy: Bool
@@ -210,7 +214,7 @@ final public class CharacterWalletTransactionModel: Model {
   @Field(key: "unitPrice")
   public var unitPrice: Double
   
-  public init(id: UUID = UUID(), clientId: Int, date: Date, isBuy: Bool, isPersonal: Bool, journalRefId: Int64, locationId: Int64, quantity: Int, transactionId: Int64, typeId: Int, unitPrice: Double) {
+  public init(id: Int64, clientId: Int, date: String, isBuy: Bool, isPersonal: Bool, journalRefId: Int64, locationId: Int64, quantity: Int, transactionId: Int64, typeId: Int, unitPrice: Double) {
     self.id = id
     self.clientId = clientId
     self.date = date
@@ -225,7 +229,7 @@ final public class CharacterWalletTransactionModel: Model {
   }
   
   public init(data: GetCharactersCharacterIdWalletTransactions200Ok) {
-    self.id = UUID()
+    self.id = data.transactionId
     self.clientId = data.clientId
     self.date = data.date
     self.isBuy = data.isBuy
@@ -245,6 +249,7 @@ final public class CharacterWalletTransactionModel: Model {
     public func prepare(on database: FluentKit.Database) async throws {
       try await database.schema(CharacterWalletTransactionModel.schema)
         .id()
+        .field("character_wallet_transaction_id", .int64)
         .field(
           "walletId",
           .uuid,
@@ -252,7 +257,7 @@ final public class CharacterWalletTransactionModel: Model {
           .references(Schemas.characterWalletModel.rawValue, "id")
         )
         .field("clientId", .int, .required)
-        .field("date", .date, .required)
+        .field("date", .string, .required)
         .field("isBuy", .bool, .required)
         .field("isPersonal", .bool, .required)
         .field("journalRefId", .int64, .required)
@@ -260,7 +265,8 @@ final public class CharacterWalletTransactionModel: Model {
         .field("quantity", .int, .required)
         .field("transactionId", .int64, .required)
         .field("typeId", .int, .required)
-        .field("unitPrice", .string, .required)
+        .field("unitPrice", .double, .required)
+        .unique(on: "character_wallet_transaction_id")
         .create()
     }
     

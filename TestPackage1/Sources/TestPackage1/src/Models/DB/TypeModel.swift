@@ -50,7 +50,7 @@ public struct TypeData: Codable {
     }
 }
 
-final public class TypeModel: Model, Content {
+final public class TypeModel: Model, Content, @unchecked Sendable {
     public static let schema = "TypeData"
 
     @ID(key: .id)

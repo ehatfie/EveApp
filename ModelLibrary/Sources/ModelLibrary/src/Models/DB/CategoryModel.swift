@@ -18,7 +18,7 @@ public struct CategoryData: Codable {
     }
 }
 
-public final class CategoryModel: Model {
+public final class CategoryModel: Model, @unchecked Sendable {
     public static let schema = Schemas.categories.rawValue
 
     @ID(key: .id) public var id: UUID?

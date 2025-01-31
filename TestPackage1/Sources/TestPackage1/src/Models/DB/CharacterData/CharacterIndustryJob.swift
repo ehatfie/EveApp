@@ -8,10 +8,10 @@
 import FluentSQLiteDriver
 import Foundation
 
-final public class CharacterIndustryJobModel: Model {
+final public class CharacterIndustryJobModel: Model, @unchecked Sendable {
     static public let schema = Schemas.characterIndustryJobModel.rawValue
 
-    public enum Status: String, Codable {
+    public enum Status: String, Codable, Sendable {
         case active = "active"
         case cancelled = "cancelled"
         case delivered = "delivered"

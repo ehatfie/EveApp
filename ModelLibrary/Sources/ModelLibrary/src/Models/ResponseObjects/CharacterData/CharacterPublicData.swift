@@ -7,9 +7,9 @@
 
 import Foundation
 
-public struct CharacterPublicDataResponse: Decodable {
+public struct CharacterPublicDataResponse: Decodable, Sendable {
     public let alliance_id: Int32?
-    public let birthday: String // date-time
+    public let birthday: String? // date-time
     public let bloodline_id: Int32
     public let corporation_id: Int32
     public let description: String?

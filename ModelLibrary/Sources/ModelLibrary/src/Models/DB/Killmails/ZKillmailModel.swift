@@ -8,7 +8,7 @@
 import Foundation
 import FluentSQLiteDriver
 
-final public class ZKillmailModel: Model {
+final public class ZKillmailModel: Model, @unchecked Sendable {
     static public let schema = Schemas.Killmail.zkill.rawValue
     
     @ID(key: .id) public var id: UUID?

@@ -82,7 +82,7 @@ public class AuthManager: ObservableObject {
                 ]
             )
         )
-        
+        print("setupAuthConfig \(authConfig.clientInfo.callbackURL)")
         self.authConfig = authConfig
     }
     
@@ -105,7 +105,7 @@ public class AuthManager: ObservableObject {
         let scope = authConfig.scopes.reduce("", { last, next in
             return last + "\(next.rawValue) "
         })
-        
+        print("using callback url \(authConfig.clientInfo.callbackURL)")
         oauthswift.authorize(
             withCallbackURL: URL(string: authConfig.clientInfo.callbackURL)!,
             scope: scope,
@@ -187,6 +187,7 @@ public class AuthManager: ObservableObject {
     }
     
     func validate(accessToken: String) {
+        print("validate")
         let response = decode(jwtToken: accessToken)
         let decoder = JSONDecoder()
         
@@ -201,6 +202,7 @@ public class AuthManager: ObservableObject {
     }
     
     func decodeAccessToken(data: String) -> AccessTokenData? {
+        print("decode access token")
         let decoder = JSONDecoder()
         let response = decode(jwtToken: data)
         do {
@@ -224,31 +226,34 @@ public class AuthManager: ObservableObject {
         
         let refreshTokens = authDatas.map { $0.refreshToken }
         // eventually we need to call for each synced character
-        let requestConfig = refreshRequestBuilder(refreshToken: refreshTokens[0], authConfig: authConfig)
-        
-        let oauthSwift = OAuth2Swift(
-            consumerKey: authConfig.clientInfo.clientID,
-            consumerSecret: authConfig.clientInfo.secretKey,
-            authorizeUrl: authConfig.authorizationCodeURL,
-            responseType: "code"
-        )
-        self.oauthSwift = oauthSwift
-        
-        oauthSwift.startAuthorizedRequest(
-            requestConfig.url,
-            method: .POST,
-            parameters: requestConfig.params,
-            headers: requestConfig.requestHeaders,
-            body: requestConfig.requestBodyComponents.query?.data(using: .utf8)
-        ) { result in
-            switch result {
-            case .success(let response):
-                self.process(data: response.data, clientId: authConfig.clientInfo.clientID)
-            case .failure(let error):
-                print("error response \(error)")
-                print("localized error \(error.localizedDescription)")
+        for refreshToken in refreshTokens {
+            let requestConfig = refreshRequestBuilder(refreshToken: refreshToken, authConfig: authConfig)
+            
+            let oauthSwift = OAuth2Swift(
+                consumerKey: authConfig.clientInfo.clientID,
+                consumerSecret: authConfig.clientInfo.secretKey,
+                authorizeUrl: authConfig.authorizationCodeURL,
+                responseType: "code"
+            )
+            self.oauthSwift = oauthSwift
+            
+            oauthSwift.startAuthorizedRequest(
+                requestConfig.url,
+                method: .POST,
+                parameters: requestConfig.params,
+                headers: requestConfig.requestHeaders,
+                body: requestConfig.requestBodyComponents.query?.data(using: .utf8)
+            ) { result in
+                switch result {
+                case .success(let response):
+                    self.process(data: response.data, clientId: authConfig.clientInfo.clientID)
+                case .failure(let error):
+                    print("error response \(error)")
+                    print("localized error \(error.localizedDescription)")
+                }
             }
         }
+ 
         // */
     }
 }
@@ -336,7 +341,7 @@ extension AuthManager {
         }
         
         self.clientInfo = clientInfo
-        log("Client info loaded")
+        log("Client info loaded \(clientInfo.callbackURL)")
     }
     
     public func setClientInfo(clientInfo: ClientInfo) {

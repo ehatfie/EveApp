@@ -8,7 +8,7 @@
 import Fluent
 import Vapor
 
-final public class DogmaEffectModel: Model, Content {
+final public class DogmaEffectModel: Model, Content, @unchecked Sendable {
     static public let schema = Schemas.dogmaEffect.rawValue
 
     @ID(key: .id)
@@ -129,7 +129,7 @@ public struct CreateDogmaEffectModelMigration: Migration {
     }
 }
 
-final public class ModifierInfo: Fields {
+final public class ModifierInfo: Fields, @unchecked Sendable {
     @Field(key: "domain")
     public var domain: String
     

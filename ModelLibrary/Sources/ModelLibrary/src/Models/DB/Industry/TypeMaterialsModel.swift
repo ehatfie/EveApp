@@ -27,7 +27,7 @@ public struct MaterialData: Codable {
 }
 
 
-final public class MaterialDataModel1: Model {
+final public class MaterialDataModel1: Model, @unchecked Sendable {
   static public let schema = Schemas.materialDataModel.rawValue
   
   @ID(key: .id) public var id: UUID?
@@ -63,7 +63,7 @@ final public class MaterialDataModel1: Model {
   }
 }
 
-final public class MaterialDataModel: Fields {
+final public class MaterialDataModel: Fields, @unchecked Sendable {
   @Field(key: "materialTypeID") public var materialTypeID: Int64
   @Field(key: "quantity") public var quantity: Int64
   
@@ -75,7 +75,7 @@ final public class MaterialDataModel: Fields {
   }
 }
 
-final public class TypeMaterialsModel: Model {
+final public class TypeMaterialsModel: Model, @unchecked Sendable {
   static public let schema = Schemas.typeMaterialsModel.rawValue
   
   @ID(key: .id) public var id: UUID?
@@ -110,7 +110,7 @@ final public class TypeMaterialsModel: Model {
 }
 
 // can be for the names
-final public class Pet: Fields {
+final public class Pet: Fields, @unchecked Sendable {
   @Field(key: "materialTypeID") public var materialTypeID: Int64
   @Field(key: "quantity") public var quantity: Int64
     

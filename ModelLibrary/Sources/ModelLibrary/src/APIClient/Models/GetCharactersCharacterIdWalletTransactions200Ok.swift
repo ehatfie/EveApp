@@ -15,7 +15,7 @@ public struct GetCharactersCharacterIdWalletTransactions200Ok: Codable {
     /** client_id integer */
     public var clientId: Int
     /** Date and time of transaction */
-    public var date: Date
+    public var date: String
     /** is_buy boolean */
     public var isBuy: Bool
     /** is_personal boolean */
@@ -33,7 +33,7 @@ public struct GetCharactersCharacterIdWalletTransactions200Ok: Codable {
     /** Amount paid per unit */
     public var unitPrice: Double
 
-    public init(clientId: Int, date: Date, isBuy: Bool, isPersonal: Bool, journalRefId: Int64, locationId: Int64, quantity: Int, transactionId: Int64, typeId: Int, unitPrice: Double) {
+    public init(clientId: Int, date: String, isBuy: Bool, isPersonal: Bool, journalRefId: Int64, locationId: Int64, quantity: Int, transactionId: Int64, typeId: Int, unitPrice: Double) {
         self.clientId = clientId
         self.date = date
         self.isBuy = isBuy

@@ -15,7 +15,7 @@ import ModelLibrary
 
 @Observable class DBManager {
   var databases: Databases
-  let dbName = "TestDB29"
+  let dbName = "TestDB31"
   
   let numThreads = 6
   
@@ -243,15 +243,15 @@ import ModelLibrary
   }
   
   func setupCharacterDataModels() throws {
+    try CharacterPublicDataModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
     try CharacterIndustryJobModel.ModelMigration()
       .prepare(on: database)
       .wait()
     
     try CharacterDataModel.ModelMigration()
-      .prepare(on: database)
-      .wait()
-    
-    try CharacterPublicDataModel.ModelMigration()
       .prepare(on: database)
       .wait()
     
@@ -262,20 +262,18 @@ import ModelLibrary
     try CharacterSkillsDataModel.ModelMigration()
       .prepare(on: database)
       .wait()
-    
-    
   }
   
   func setupCharacterWalletModels() throws {
-    try? CharacterWalletModel.ModelMigration()
+    try? CharacterWalletJournalEntryModel.ModelMigration()
       .prepare(on: database)
       .wait()
     
     try? CharacterWalletTransactionModel.ModelMigration()
       .prepare(on: database)
       .wait()
-    
-    try? CharacterWalletJournalEntryModel.ModelMigration()
+
+    try? CharacterWalletModel.ModelMigration()
       .prepare(on: database)
       .wait()
   }

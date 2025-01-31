@@ -159,7 +159,7 @@ final public class BlueprintModel: Model, @unchecked Sendable {
     }
 }
 
-final public class QuantityTypeModel: Fields {
+final public class QuantityTypeModel: Fields, @unchecked Sendable {
 
     @Field(key: "quantity")
     public var quantity: Int64
@@ -175,7 +175,7 @@ final public class QuantityTypeModel: Fields {
     }
 }
 
-final public class BlueprintManufacturingModel: Fields {
+final public class BlueprintManufacturingModel: Fields, @unchecked Sendable {
 
     @Field(key: "materials")
     public var materials: [QuantityTypeModel]
@@ -193,7 +193,7 @@ final public class BlueprintManufacturingModel: Fields {
     }
 }
 
-final public class BlueprintActivityModel: Fields {
+final public class BlueprintActivityModel: Fields, @unchecked Sendable {
 
     @Group(key: "copying")
     public var copying: TimeAmount
@@ -262,7 +262,7 @@ extension BlueprintManufacturingModel {
     }
 }
 
-final public class TimeAmount: Fields {
+final public class TimeAmount: Fields, @unchecked Sendable {
     @Field(key: "time")
     public var time: Int64
 

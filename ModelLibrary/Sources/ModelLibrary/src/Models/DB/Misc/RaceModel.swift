@@ -15,7 +15,7 @@ public struct RaceData: Codable {
     public let shipTypeID: Int64?
 }
 
-final public class RaceModel: Model {
+final public class RaceModel: Model, @unchecked Sendable {
     static public let schema = Schemas.raceModel.rawValue
     @ID(key: .id) public var id: UUID?
 

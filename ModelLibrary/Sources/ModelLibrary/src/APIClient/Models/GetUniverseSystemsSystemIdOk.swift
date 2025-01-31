@@ -10,7 +10,7 @@ import Foundation
 
 /** 200 ok object */
 
-public struct GetUniverseSystemsSystemIdOk: Codable {
+public struct GetUniverseSystemsSystemIdOk: Codable, Sendable {
 
     /** The constellation this solar system is in */
     public var constellationId: Int

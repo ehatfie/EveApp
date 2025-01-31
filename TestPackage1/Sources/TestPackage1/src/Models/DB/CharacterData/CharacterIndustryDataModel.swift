@@ -8,7 +8,7 @@
 import Foundation
 import FluentSQLiteDriver
 
-final public class CharacterIndustryDataModel: Model {
+final public class CharacterIndustryDataModel: Model, @unchecked Sendable {
     static public let schema = Schemas.characterIndustryDataModel.rawValue
     
     @ID(key: .id) public var id: UUID?

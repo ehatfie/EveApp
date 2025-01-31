@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import TestPackage3
 
 public class ItemType: Identifiable {
     public var groupId: Int

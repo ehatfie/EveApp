@@ -125,3 +125,52 @@ struct AttributeDisplayable: Identifiable {
     self.dogmaAttributeModel = dogmaAttributeModel
   }
 }
+
+struct CharacterInfoDisplayable: Identifiable {
+    let characterID: String
+    let name: String
+    
+    let allianceInfo: IdentifiedString?
+    let corporationInfo: IdentifiedString
+    let description: String?
+    let securityStatus: Float?
+    let walletModel: CharacterWalletModel?
+    
+    var id: AnyHashable {
+        return characterID
+    }
+    
+    init?(
+        characterData: CharacterDataModel,
+        corporationData: CorporationInfoModel?,
+        walletModel: CharacterWalletModel?
+    ) {
+        guard let publicData = characterData.publicData else {
+            return nil
+        }
+        print("got \(characterData.industryJobsData.count) industryJobs")
+        self.characterID = characterData.characterId
+        self.name = publicData.name
+        self.description = publicData.description
+        self.securityStatus = publicData.securityStatus
+        
+        if let corporationData {
+            self.corporationInfo = IdentifiedString(
+                id: Int64(corporationData.corporationId),
+                value: corporationData.name
+            )
+        } else {
+            self.corporationInfo = IdentifiedString(id: -1, value: "MISSING CORP")
+        }
+        
+        self.allianceInfo = nil
+        self.walletModel = walletModel
+        
+        let industryJobsData = characterData.industryJobsData
+        
+    }
+}
+
+struct CharacterIndustryJobDisplayable {
+    
+}

@@ -25,7 +25,7 @@ import FluentSQLiteDriver
 
  */
 
-final public class CharacterDataModel: Model {
+final public class CharacterDataModel: Model, @unchecked Sendable {
     static public let schema = Schemas.characterDataModel.rawValue
     
     @ID(key: .id) public var id: UUID?
@@ -69,7 +69,7 @@ final public class CharacterDataModel: Model {
     }
 }
 
-final public class CharacterPublicDataModel: Model {
+final public class CharacterPublicDataModel: Model, @unchecked Sendable {
     static public let schema = Schemas.characterPublicDataModel.rawValue
     @ID(key: .id) public var id: UUID?
     

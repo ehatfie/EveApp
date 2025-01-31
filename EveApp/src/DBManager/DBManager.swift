@@ -15,7 +15,7 @@ import ModelLibrary
 
 @Observable class DBManager {
   var databases: Databases
-  let dbName = "TestDB29"
+  let dbName = "TestDB31"
   
   let numThreads = 6
   
@@ -45,6 +45,7 @@ import ModelLibrary
       //}
     
       self.databases = Databases(threadPool: threadPool, on: eventLoopGroup)
+      
 
       databases.use(.sqlite(.file(self.dbName)), as: .sqlite)
       //databases.use(.sqlite(.memory), as: .sqlite)
@@ -53,6 +54,11 @@ import ModelLibrary
     setup()
 
     loadStaticData()
+    
+    Task {
+      //try? await updateMissingRecords()
+    }
+    
   }
   
   func log(_ text: String) {
@@ -64,10 +70,11 @@ import ModelLibrary
 
       try setupCharacterDataModels()
       
+      
     } catch let error {
       print("AppModel error setup \(error)")
     }
-    
+    try? setupCharacterWalletModels()
     try? setupAuthModels()
     try? categoryDataStuff()
     try? setupDogmaEffectModel()
@@ -128,8 +135,11 @@ import ModelLibrary
       //DispatchQueue.main.async {
       self.dbLoading = true
       //}
+      let start = Date()
       await loadData()
       await loadIndustryData()
+      let end = Date().timeIntervalSince(start)
+      print("load took \(end)")
       
       DispatchQueue.main.async {
         self.dbLoading = false
@@ -233,15 +243,15 @@ import ModelLibrary
   }
   
   func setupCharacterDataModels() throws {
+    try CharacterPublicDataModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
     try CharacterIndustryJobModel.ModelMigration()
       .prepare(on: database)
       .wait()
     
     try CharacterDataModel.ModelMigration()
-      .prepare(on: database)
-      .wait()
-    
-    try CharacterPublicDataModel.ModelMigration()
       .prepare(on: database)
       .wait()
     
@@ -252,8 +262,20 @@ import ModelLibrary
     try CharacterSkillsDataModel.ModelMigration()
       .prepare(on: database)
       .wait()
+  }
+  
+  func setupCharacterWalletModels() throws {
+    try? CharacterWalletJournalEntryModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
     
+    try? CharacterWalletTransactionModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
 
+    try? CharacterWalletModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
   }
   
   func setupAuthModels() throws {
@@ -322,6 +344,48 @@ extension DBManager {
       .get()
   }
   
+}
+
+extension DBManager {
+  func updateMissingRecords() async throws {
+    let characters = await getCharacters()
+//    
+//    let corporationIds = Set(
+//      characters.compactMap { character -> Int32? in
+//        return character.publicData?.corporationId
+//      }
+//    )
+//    
+//    let existingCorporations = await getCorporationModels(ids: Array(corporationIds))
+//    let existingCorporationIds = existingCorporations.map { $0.corporationId }
+//    
+//    let missingCorporationIds = corporationIds.subtracting(existingCorporationIds)
+//    print("missing corporationIds \(missingCorporationIds)")
+//    
+//    
+//    let charactersMissingCorporation = await CharacterDataModel.query(on: database)
+//      .filter(\.$corporationID ~~ missingCorporationIds)
+//      .all()
+    for character in characters {
+      await DataManager.shared.fetchCorporationInfoForCharacter(
+        characterModel: character
+      )
+    }
+    
+  }
+  
+  func getCorporationModels(ids: [Int32]) async -> [CorporationInfoModel] {
+    return (try? await CorporationInfoModel.query(on: database)
+      .filter(\.$corporationId ~~ ids)
+      .all()) ?? []
+  }
+  
+  func getCorporationModels() async -> [CorporationInfoModel] {
+    
+      
+    return (try? await CorporationInfoModel.query(on: database)
+      .all()) ?? []
+  }
 }
 
 

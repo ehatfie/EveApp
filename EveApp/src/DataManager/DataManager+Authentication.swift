@@ -19,7 +19,7 @@ extension DataManager {
         )
     }
     
-    func loadClientInfo() {
+    func loadClientInfo() async {
         guard let clientInfo = UserDefaultsHelper.loadFromUserDefaults(
             type: ClientInfo.self,
             key: UserDefaultKeys.clientInfo.rawValue

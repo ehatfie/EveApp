@@ -76,6 +76,7 @@
 		BA5F7AC32CA25C89007DDA12 /* IPCategoryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5F7AC22CA25C89007DDA12 /* IPCategoryPicker.swift */; };
 		BA5F7AC62CA26773007DDA12 /* IPCharacterPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5F7AC52CA26773007DDA12 /* IPCharacterPickerView.swift */; };
 		BA6825C82C797AD300C103E9 /* ReactionHelperDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6825C72C797AD300C103E9 /* ReactionHelperDetailView.swift */; };
+		BA690CFE2D0E83BE0020FC8B /* CharacterPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA690CFD2D0E83BE0020FC8B /* CharacterPickerView.swift */; };
 		BA71008A2ADB3360001CD301 /* typeMaterials.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA7100892ADB3360001CD301 /* typeMaterials.yaml */; };
 		BA71008E2ADB453B001CD301 /* ItemDogmaExplorerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA71008D2ADB453B001CD301 /* ItemDogmaExplorerView.swift */; };
 		BA7100902ADF64F6001CD301 /* DBManager+Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA71008F2ADF64F6001CD301 /* DBManager+Mocks.swift */; };
@@ -121,6 +122,11 @@
 		BAB271F72A686918004F01B7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BAB271F62A686918004F01B7 /* Alamofire */; };
 		BACB52DB2A68B9700044CDA0 /* ItemGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB52DA2A68B9700044CDA0 /* ItemGroupView.swift */; };
 		BACB52DD2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BACB52DC2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift */; };
+		BAD35B7D2D3B07590097FA4C /* WalletRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD35B7C2D3B07590097FA4C /* WalletRootView.swift */; };
+		BAD35B7F2D3B092F0097FA4C /* DBManager+Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD35B7E2D3B092A0097FA4C /* DBManager+Wallet.swift */; };
+		BAD35B812D3B83110097FA4C /* WalletTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD35B802D3B83110097FA4C /* WalletTransactionView.swift */; };
+		BAD35B842D40696F0097FA4C /* DM+Processing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD35B832D40696B0097FA4C /* DM+Processing.swift */; };
+		BAD35B862D4069840097FA4C /* DM+WalletFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD35B852D40697E0097FA4C /* DM+WalletFetching.swift */; };
 		BADE5CE02C9F47DC00E78357 /* IndustryPlannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADE5CDF2C9F47DC00E78357 /* IndustryPlannerView.swift */; };
 		BAE02EE72AF34F4000AB695F /* BlueprintComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EE62AF34F4000AB695F /* BlueprintComponentView.swift */; };
 		BAE02EEA2AF9CEE600AB695F /* ReprocessingHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EE92AF9CEE600AB695F /* ReprocessingHelperView.swift */; };
@@ -151,6 +157,7 @@
 		BAE069A92ADA240A0054EFCF /* typeDogma.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BAE069A82ADA24090054EFCF /* typeDogma.yaml */; };
 		BAE069AB2ADB30140054EFCF /* DBManager+Industry.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE069AA2ADB30140054EFCF /* DBManager+Industry.swift */; };
 		BAEBC02B2C0411C8009D8CC2 /* DM+Fetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEBC02A2C0411C8009D8CC2 /* DM+Fetching.swift */; };
+		BAEE97002D02A99C006D75B0 /* CharacterInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEE96FF2D02A997006D75B0 /* CharacterInfoList.swift */; };
 		BAEF4BC72C74465700F7E74A /* TestPackage1 in Resources */ = {isa = PBXBuildFile; fileRef = BAEF4BC62C74465700F7E74A /* TestPackage1 */; };
 /* End PBXBuildFile section */
 
@@ -316,6 +323,7 @@
 		BA5F7AC22CA25C89007DDA12 /* IPCategoryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPCategoryPicker.swift; sourceTree = "<group>"; };
 		BA5F7AC52CA26773007DDA12 /* IPCharacterPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPCharacterPickerView.swift; sourceTree = "<group>"; };
 		BA6825C72C797AD300C103E9 /* ReactionHelperDetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ReactionHelperDetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA690CFD2D0E83BE0020FC8B /* CharacterPickerView.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = CharacterPickerView.swift; sourceTree = "<group>"; tabWidth = 3; };
 		BA7100892ADB3360001CD301 /* typeMaterials.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = typeMaterials.yaml; sourceTree = "<group>"; };
 		BA71008D2ADB453B001CD301 /* ItemDogmaExplorerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemDogmaExplorerView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA71008F2ADF64F6001CD301 /* DBManager+Mocks.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+Mocks.swift"; sourceTree = "<group>"; tabWidth = 2; };
@@ -327,7 +335,7 @@
 		BA7100A62AEB2D05001CD301 /* BlueprintDetailView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintDetailView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA738B192C97BF2A001C0D6E /* CharacterIndustryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterIndustryView.swift; sourceTree = "<group>"; };
 		BA738B1B2C9907CF001C0D6E /* CharacterIndustryJobRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterIndustryJobRow.swift; sourceTree = "<group>"; };
-		BA7577722CF3F8C300BE56A2 /* IndyTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndyTool.swift; sourceTree = "<group>"; };
+		BA7577722CF3F8C300BE56A2 /* IndyTool.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = IndyTool.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA7577742CF5358300BE56A2 /* KillboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillboardView.swift; sourceTree = "<group>"; };
 		BA7577772CF5451900BE56A2 /* SwiftEveAuth */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftEveAuth; sourceTree = "<group>"; };
 		BA7718FE2C909DCE00227488 /* KillboardViewOLD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillboardViewOLD.swift; sourceTree = "<group>"; };
@@ -359,6 +367,11 @@
 		BAB271D42A6867B4004F01B7 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
 		BACB52DA2A68B9700044CDA0 /* ItemGroupView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemGroupView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BACB52DC2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemCategoryGroupsListView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BAD35B7C2D3B07590097FA4C /* WalletRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletRootView.swift; sourceTree = "<group>"; };
+		BAD35B7E2D3B092A0097FA4C /* DBManager+Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBManager+Wallet.swift"; sourceTree = "<group>"; };
+		BAD35B802D3B83110097FA4C /* WalletTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTransactionView.swift; sourceTree = "<group>"; };
+		BAD35B832D40696B0097FA4C /* DM+Processing.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DM+Processing.swift"; sourceTree = "<group>"; tabWidth = 2; };
+		BAD35B852D40697E0097FA4C /* DM+WalletFetching.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DM+WalletFetching.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BADE5CDF2C9F47DC00E78357 /* IndustryPlannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndustryPlannerView.swift; sourceTree = "<group>"; };
 		BAE02EE62AF34F4000AB695F /* BlueprintComponentView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BlueprintComponentView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAE02EE92AF9CEE600AB695F /* ReprocessingHelperView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ReprocessingHelperView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -386,6 +399,7 @@
 		BAE069A82ADA24090054EFCF /* typeDogma.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = typeDogma.yaml; sourceTree = "<group>"; };
 		BAE069AA2ADB30140054EFCF /* DBManager+Industry.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+Industry.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BAEBC02A2C0411C8009D8CC2 /* DM+Fetching.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DM+Fetching.swift"; sourceTree = "<group>"; tabWidth = 2; };
+		BAEE96FF2D02A997006D75B0 /* CharacterInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterInfoList.swift; sourceTree = "<group>"; };
 		BAEF4BC62C74465700F7E74A /* TestPackage1 */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TestPackage1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -481,6 +495,7 @@
 		BA1A940A2C0C376A0005B931 /* Fetching */ = {
 			isa = PBXGroup;
 			children = (
+				BAD35B852D40697E0097FA4C /* DM+WalletFetching.swift */,
 				BA1A940B2C0C378B0005B931 /* DM+KillmailFetching.swift */,
 			);
 			path = Fetching;
@@ -581,6 +596,7 @@
 		BA3149C42A1EF98C0076E6DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BAD35B792D3B070F0097FA4C /* WalletView */,
 				BAA5CCB62CD5C948005590AE /* AlgoHelper */,
 				BA5F7ABB2C9F72B8007DDA12 /* Common */,
 				BADE5CDE2C9F47BF00E78357 /* IndustryPlannerView */,
@@ -633,6 +649,7 @@
 		BA3149D22A315A530076E6DD /* DataManager */ = {
 			isa = PBXGroup;
 			children = (
+				BAD35B822D4069670097FA4C /* Processing */,
 				BA1A940A2C0C376A0005B931 /* Fetching */,
 				BA3149D32A315A650076E6DD /* DataManager.swift */,
 				BA3149E82A4BCAF80076E6DD /* DataManager+Fetching.swift */,
@@ -668,12 +685,14 @@
 		BA3149E52A4BCA5D0076E6DD /* CharacterInfo */ = {
 			isa = PBXGroup;
 			children = (
+				BAEE96FF2D02A997006D75B0 /* CharacterInfoList.swift */,
 				BA3C02D42C2A6B0500F32650 /* SkillGroupView */,
 				BA9D96082B117AB9006AC37E /* Industry */,
 				BA3149E62A4BCA790076E6DD /* CharacterInfoView.swift */,
 				BA3149F42A5383990076E6DD /* SkillQueueView.swift */,
 				BA9D96062B1177D8006AC37E /* IndustryInfoView.swift */,
 				BA3C02D02C2517CA00F32650 /* CharacterSkillsView.swift */,
+				BA690CFD2D0E83BE0020FC8B /* CharacterPickerView.swift */,
 			);
 			path = CharacterInfo;
 			sourceTree = "<group>";
@@ -944,6 +963,23 @@
 			path = DataFetcher;
 			sourceTree = "<group>";
 		};
+		BAD35B792D3B070F0097FA4C /* WalletView */ = {
+			isa = PBXGroup;
+			children = (
+				BAD35B7C2D3B07590097FA4C /* WalletRootView.swift */,
+				BAD35B802D3B83110097FA4C /* WalletTransactionView.swift */,
+			);
+			path = WalletView;
+			sourceTree = "<group>";
+		};
+		BAD35B822D4069670097FA4C /* Processing */ = {
+			isa = PBXGroup;
+			children = (
+				BAD35B832D40696B0097FA4C /* DM+Processing.swift */,
+			);
+			path = Processing;
+			sourceTree = "<group>";
+		};
 		BADE5CDE2C9F47BF00E78357 /* IndustryPlannerView */ = {
 			isa = PBXGroup;
 			children = (
@@ -977,6 +1013,7 @@
 		BAE069722AC8A1370054EFCF /* DBManager */ = {
 			isa = PBXGroup;
 			children = (
+				BAD35B7E2D3B092A0097FA4C /* DBManager+Wallet.swift */,
 				BA7E4B362C068E8500B00158 /* new */,
 				BAE069732AC8A1420054EFCF /* DBManager.swift */,
 				BAE069752AC8A2900054EFCF /* DBManager+loading.swift */,
@@ -1340,11 +1377,13 @@
 				BAA88E442C586DCF0001BF42 /* PotentialIndustryFiltersView.swift in Sources */,
 				BAE02EF22AFB11D200AB695F /* TypeDogmaInfoView.swift in Sources */,
 				BA04CA8B2AEDCAEB008D66B8 /* MaterialDetailView.swift in Sources */,
+				BAD35B842D40696F0097FA4C /* DM+Processing.swift in Sources */,
 				BA5991002BF46020003108CF /* AssetsViewer.swift in Sources */,
 				BAE02EE72AF34F4000AB695F /* BlueprintComponentView.swift in Sources */,
 				BA5F7ABD2C9F72D2007DDA12 /* NumPicker.swift in Sources */,
 				BAB271D52A6867B5004F01B7 /* DataFetcher.swift in Sources */,
 				BAE0696A2AC89E350054EFCF /* AppModel+loading.swift in Sources */,
+				BA690CFE2D0E83BE0020FC8B /* CharacterPickerView.swift in Sources */,
 				BA3149E02A47907F0076E6DD /* SomeData.swift in Sources */,
 				BA3149D62A477D900076E6DD /* UserDefaultsHelper.swift in Sources */,
 				BA9D96152B2FD4DC006AC37E /* IndustryHelperView.swift in Sources */,
@@ -1363,6 +1402,7 @@
 				BA20ADB92C0D821400095B4E /* Constants.swift in Sources */,
 				BA7100902ADF64F6001CD301 /* DBManager+Mocks.swift in Sources */,
 				BAA5CCB22CD32257005590AE /* Displayable.swift in Sources */,
+				BAD35B862D4069840097FA4C /* DM+WalletFetching.swift in Sources */,
 				BAE069AB2ADB30140054EFCF /* DBManager+Industry.swift in Sources */,
 				BA314A102A5CF8B10076E6DD /* ItemCategory.swift in Sources */,
 				BAE02EEC2AF9EA7100AB695F /* CategoryInfoView.swift in Sources */,
@@ -1379,11 +1419,14 @@
 				BA7577732CF3F8CB00BE56A2 /* IndyTool.swift in Sources */,
 				BA9D96112B2A8B19006AC37E /* DevelopHelperView.swift in Sources */,
 				BA7577752CF5358300BE56A2 /* KillboardView.swift in Sources */,
+				BAEE97002D02A99C006D75B0 /* CharacterInfoList.swift in Sources */,
+				BAD35B7D2D3B07590097FA4C /* WalletRootView.swift in Sources */,
 				BAE02EF02AFB0E0100AB695F /* TypeInfoView.swift in Sources */,
 				BA7100A52AEA1969001CD301 /* BlueprintExplorerView.swift in Sources */,
 				BAA69B9A2C700E36007399D7 /* BlueprintProductionView.swift in Sources */,
 				BA314A062A5CDCDB0076E6DD /* DataManager+Loading.swift in Sources */,
 				BA7100992AE36799001CD301 /* ItemMaterialExplorerView.swift in Sources */,
+				BAD35B7F2D3B092F0097FA4C /* DBManager+Wallet.swift in Sources */,
 				BA3C02C92C1A9EF200F32650 /* IPM+InputProcessing.swift in Sources */,
 				BA9D96052B05CC0E006AC37E /* BlueprintIndustryView.swift in Sources */,
 				BAE069972AD903440054EFCF /* DogmaAttributeView.swift in Sources */,
@@ -1416,6 +1459,7 @@
 				BACB52DB2A68B9700044CDA0 /* ItemGroupView.swift in Sources */,
 				BAA88E462C61C8AB0001BF42 /* Theme.swift in Sources */,
 				BA9D960A2B117ACC006AC37E /* IndustryListView.swift in Sources */,
+				BAD35B812D3B83110097FA4C /* WalletTransactionView.swift in Sources */,
 				BA6825C82C797AD300C103E9 /* ReactionHelperDetailView.swift in Sources */,
 				BA3C02D62C2A6B4700F32650 /* SkillGroupEntryView.swift in Sources */,
 				BA3149D12A31528E0076E6DD /* DeepLinker.swift in Sources */,
@@ -2205,7 +2249,7 @@
 			repositoryURL = "https://github.com/vapor/fluent-sqlite-driver.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.5.0;
+				minimumVersion = 4.8.0;
 			};
 		};
 		BAE069622AC89CA80054EFCF /* XCRemoteSwiftPackageReference "fluent" */ = {
@@ -2213,7 +2257,7 @@
 			repositoryURL = "https://github.com/vapor/fluent.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.8.0;
+				minimumVersion = 4.12.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

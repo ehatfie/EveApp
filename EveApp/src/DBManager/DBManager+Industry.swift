@@ -23,7 +23,7 @@ extension DBManager {
   }
   
   func loadTypeMaterialData() async throws {
-    print("loadTypeMaterialData() - Start")
+    //print("loadTypeMaterialData() - Start")
     let start = Date()
     
     let typeMaterialsCount = try await self.database.query(TypeMaterialsModel.self).count().get()
@@ -38,12 +38,12 @@ extension DBManager {
     
     try await splitAndSave(splits: 2, models: typeMaterialModels)
 
-    print("got \(typeMaterials.count)")
+    //print("got \(typeMaterials.count)")
     print("loadTypeMaterialData() - End; Took - \(start.timeIntervalSinceNow * -1)")
   }
   
   func loadBlueprintData() async throws {
-    print("loadBlueprintData() - Start")
+    //print("loadBlueprintData() - Start")
     
     guard try await self.database.query(BlueprintModel.self).count().get() == 0 else {
       return

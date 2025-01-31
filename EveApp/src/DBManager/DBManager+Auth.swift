@@ -20,6 +20,7 @@ import SwiftEveAuth
 
 extension DBManager {
   func updateAccessToken(response: AccessTokenResponse, accessTokenData: AccessTokenData) async {
+    print("updateAccessToken")
     do {
       if let existing = try? await AuthModel
         .query(on: self.database)
@@ -44,11 +45,19 @@ extension DBManager {
   }
   
   func getAuthModel(for characterId: String) async -> AuthModel? {
-    return try? await AuthModel.query(on: database).filter(\.$characterId == characterId).first()
+    print("getAuthModel for \(characterId)")
+    let result = try? await AuthModel.query(on: database).filter(\.$characterId == characterId).first()
+    return result
   }
   
   func getAllAuthModels() async -> [AuthModel] {
     return (try? await AuthModel.query(on: database).all()) ?? []
+  }
+  
+  // returns the first auth model, probably not a great idea
+  func getAnyAuthModel() async -> AuthModel? {
+    //let result = try? await AuthModel.query(on: database).first()
+    return try? await AuthModel.query(on: database).first()
   }
 }
 

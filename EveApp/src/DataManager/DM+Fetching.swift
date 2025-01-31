@@ -10,7 +10,7 @@ import Fluent
 import FluentSQLiteDriver
 import ModelLibrary
 //import TestPackage1
-import TestPackage3
+
 
 
 // MARK: - Assets
@@ -35,6 +35,14 @@ extension DataManager {
         }
       }
     }
+  }
+  
+  func fetchAssetsAsync(characterId: String) async {
+    guard let characterModel = await dbManager?.getCharacter(by: characterId) else {
+      print("fetchAssetsAsync() - No character model for \(characterId)")
+      return
+    }
+    await fetchAssetsAsync(for: characterModel)
   }
   
   func fetchAssetsAsync(for character: CharacterDataModel) async {
@@ -110,15 +118,46 @@ extension DataManager {
 // MARK: - Public Data
 
 extension DataManager {
-  func fetchCharacterInfoAsync() async throws {
+  func fetchAllCharacterInfoAsync() async throws {
+    print("fetchALlCharacterInfoAsync()")
+    guard
+      let characters = await dbManager?.getCharactersWithInfo(),
+      !characters.isEmpty
+    else {
+      print("no characters \(dbManager)")
+      return
+    }
+    
+    await withThrowingTaskGroup(of: Void.self) { taskGroup in
+      
+      for character in characters {
+        taskGroup.addTask {
+          try await self.fetchCharacterInfoAsync(characterDataModel: character)
+        }
+      }
+
+    }
+  }
+  
+  func fetchCharacterInfoAsync(characterDataModel: CharacterDataModel) async throws {
     print("fetchCharacterInfoAsync()")
-    let characters = await dbManager!.getCharacters()
-    try await fetchPublicData(for: characters[0])
+
+    try await fetchPublicData(for: characterDataModel)
+    await fetchCorporationInfoForCharacter(characterModel: characterDataModel)
   }
   
   func fetchPublicData(for character: CharacterDataModel) async throws {
     print("fetchPublicData()")
-    guard let authModel = await dbManager?.getAuthModel(for: character.characterId) else {
+    guard let authModel = await dbManager?.getAuthModel(for: character.characterId)
+    else {
+      print("no auth model for \(character.characterId)")
+      return
+    }
+    
+    let existingPublicData = character.$publicData.wrappedValue
+    
+    guard existingPublicData == nil else {
+      print("existing public data for \(character.characterId)")
       return
     }
     
@@ -126,17 +165,69 @@ extension DataManager {
       dataEndpoint: "",
       authModel: authModel
     ) else {
+      print("response")
       return
     }
     do {
       let characterPublicDataResponse = try JSONDecoder()
         .decode(CharacterPublicDataResponse.self, from: data)
-      let publicDataModel = CharacterPublicDataModel(response: characterPublicDataResponse)
+      guard let characterId = Int64(character.characterId) else {
+        return
+      }
+      let publicDataModel = CharacterPublicDataModel(response: characterPublicDataResponse, characterId: characterId)
       
       try await character.$publicData.create(publicDataModel, on: dbManager!.database)
       print("got character public data \(characterPublicDataResponse)")
     } catch let err {
       print("error \(err)")
+    }
+  }
+  
+  func fetchPublicData(characterId: String, authModel: AuthModel) async throws -> CharacterPublicDataResponse? {
+    guard let (data, _) = await makeApiCallAsync3(
+      dataEndpoint: "/characters/\(characterId)/",
+      authModel: authModel
+    ) else {
+      print("response")
+      return nil
+    }
+
+    do {
+      let foo = String(data: data, encoding: .utf8)!
+      
+      print("string?? \(foo)")
+      let characterPublicDataResponse = try JSONDecoder()
+        .decode(CharacterPublicDataResponse.self, from: data)
+      return characterPublicDataResponse
+    } catch let err {
+      print("error \(err)")
+      return nil
+    }
+  }
+  
+  func updateCharacterPublicData(for characterId: Int64) async throws {
+    print("updateCharacterPublicData \(characterId)")
+    guard let authModel = await dbManager?.getAnyAuthModel()
+    else {
+      print("no auth model found")
+      return
+    }
+    
+    guard let characterPublicDataResponse = try await fetchPublicData(
+      characterId: String(characterId),
+      authModel: authModel
+    ) else {
+      print("didnt get public data response object for \(characterId)")
+      return
+    }
+    
+    let publicData = CharacterPublicDataModel(response: characterPublicDataResponse, characterId: characterId)
+    do {
+      try await publicData.create(on: dbManager!.database)
+      //try await publicData.update(on: dbManager!.database)
+      print("added public data for \(characterId)")
+    } catch let err {
+      print("public data write error \(err)")
     }
   }
   
@@ -248,7 +339,7 @@ extension DataManager {
 // MARK: - Locations
 
 extension DataManager {
-  
+  // Currently returns the first found character, hardcoded to 0
   func getAuthModel() async -> AuthModel? {
     let characters = await dbManager!.getCharacters()
     
@@ -452,7 +543,7 @@ extension DataManager {
   
   func fetchCorporationInfoForCharacters() async {
     print("fetcCorporationInfo()")
-    guard let characters = await dbManager?.getCharacters() else {
+    guard let characters = await dbManager?.getCharactersWithInfo() else {
       return
     }
     
@@ -466,9 +557,15 @@ extension DataManager {
   }
   
   func fetchCorporationInfoForCharacter(characterModel: CharacterDataModel) async {
-    guard let authModel = await dbManager?.getAuthModel(for: characterModel.characterId),
-          let publicData = characterModel.publicData
+    guard let authModel = await dbManager?.getAuthModel(for: characterModel.characterId)
     else {
+      print("\(#function) missing auth model")
+      return
+    }
+    
+    guard let publicData = characterModel.publicData
+    else {
+      print("\(#function) missing public data")
       return
     }
     
@@ -476,13 +573,21 @@ extension DataManager {
       if let existingCorp = try await CorporationInfoModel
         .query(on: dbManager!.database)
         .filter(\.$corporationId == publicData.corporationId)
-        .first() {
-        
-        try await characterModel.$corp
-          .attach(
-            [existingCorp],
-            on: dbManager!.database
+        .first()
+      {
+        print("found existing corp \(existingCorp.name)")
+        if characterModel.$corp.value == nil {
+          print("setting character corp")
+          let characterCorpInfo = try CharacterCorporationModel(
+            character: characterModel,
+            corporation: existingCorp
           )
+          try await characterModel.$corp
+            .attach(
+              [existingCorp],
+              on: dbManager!.database
+            )
+        }
         return
       }
     } catch let err {
@@ -538,6 +643,14 @@ extension DataManager {
     }
   }
   
+  func fetchIndustryJobsForCharacters(characterId: String) async {
+    guard let characterData = await dbManager?.getCharacter(by: characterId) else {
+      return
+    }
+    
+    await fetchIndustryJobs(for: characterData)
+  }
+  
   func fetchIndustryJobs(
     for characterModel: CharacterDataModel
   ) async {
@@ -589,5 +702,4 @@ extension DataManager {
     }
   }
 }
-
 

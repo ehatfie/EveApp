@@ -8,7 +8,7 @@
 import Foundation
 import Fluent
 
-final public class CharacterCorporationModel: Model {
+final public class CharacterCorporationModel: Model, @unchecked Sendable {
     static public let schema = Schemas.characterCorporationModel.rawValue
     
     @ID(key: .id) public var id: UUID?

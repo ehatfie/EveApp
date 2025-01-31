@@ -8,7 +8,7 @@
 import Foundation
 import FluentSQLiteDriver
 
-final public class LocationModel: Model {
+final public class LocationModel: Model, @unchecked Sendable {
   static public let schema = Schemas.locationModel.rawValue
   
   @ID(key: .id) public var id: UUID?

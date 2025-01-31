@@ -25,7 +25,7 @@ import FluentSQLiteDriver
 
  */
 @preconcurrency
-final public class CharacterDataModel: Model {
+final public class CharacterDataModel: Model, @unchecked Sendable {
     static public let schema = Schemas.characterDataModel.rawValue
     
     @ID(key: .id) public var id: UUID?
@@ -36,6 +36,9 @@ final public class CharacterDataModel: Model {
     
     @OptionalChild(for: \.$characterDataModel)
     public var skillsData: CharacterSkillsDataModel?
+    
+    @OptionalChild(for: \.$characterDataModel)
+    public var walletData: CharacterWalletModel?
     
     @Children(for: \.$characterDataModel)
     public var assetsData: [CharacterAssetsDataModel]
@@ -69,13 +72,14 @@ final public class CharacterDataModel: Model {
     }
 }
 
-final public class CharacterPublicDataModel: Model {
+final public class CharacterPublicDataModel: Model, @unchecked Sendable {
     static public let schema = Schemas.characterPublicDataModel.rawValue
     @ID(key: .id) public var id: UUID?
     
-    @Parent(key: "publicData_id")
-    public var characterDataModel: CharacterDataModel
+    @OptionalParent(key: "publicData_id")
+    public var characterDataModel: CharacterDataModel?
     
+    @Field(key: "characterId") public var characterId: Int64
     @Field(key: "allianceId") public var allianceId: Int32?
     @Field(key: "birthday") public var birthday: String
     @Field(key: "bloodlineId") public var bloodlineId: Int32
@@ -92,6 +96,7 @@ final public class CharacterPublicDataModel: Model {
     
     public init(
         id: UUID? = nil,
+        characterId: Int64,
         allianceId: Int32? = nil,
         birthday: String,
         bloodlineId: Int32,
@@ -105,6 +110,7 @@ final public class CharacterPublicDataModel: Model {
         title: String? = nil
     ) {
         self.id = id
+        self.characterId = characterId
         self.allianceId = allianceId
         self.birthday = birthday
         self.bloodlineId = bloodlineId
@@ -118,11 +124,12 @@ final public class CharacterPublicDataModel: Model {
         self.title = title
     }
     
-    public convenience init(response: CharacterPublicDataResponse) {
+    public convenience init(response: CharacterPublicDataResponse, characterId: Int64) {
         self.init(
             id: UUID(),
+            characterId: characterId,
             allianceId: response.alliance_id,
-            birthday: response.birthday,
+            birthday: response.birthday ?? "NO_BIRTHDAY",
             bloodlineId: response.bloodline_id,
             corporationId: response.corporation_id,
             description: response.description,
@@ -143,9 +150,9 @@ final public class CharacterPublicDataModel: Model {
                 .field(
                     "publicData_id", 
                     .uuid,
-                    .required,
                     .references(Schemas.characterDataModel.rawValue, "id")
                 )
+                .field("characterId", .int64, .required)
                 .field("allianceId", .int32)
                 .field("birthday", .string, .required)
                 .field("bloodlineId", .int32)
@@ -157,6 +164,7 @@ final public class CharacterPublicDataModel: Model {
                 .field("raceId", .int32)
                 .field("securityStatus", .float)
                 .field("title", .string)
+                .unique(on: "characterId")
                 .create()
         }
             

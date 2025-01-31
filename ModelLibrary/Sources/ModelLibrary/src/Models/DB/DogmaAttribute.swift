@@ -9,7 +9,7 @@ import Foundation
 import Fluent
 import Vapor
 
-final public class DogmaAttributeModel: Model, Content {
+final public class DogmaAttributeModel: Model, Content, @unchecked Sendable {
     static public let schema = Schemas.dogmaAttribute.rawValue
 
     @ID(key: .id)

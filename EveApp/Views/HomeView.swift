@@ -13,6 +13,7 @@ enum SideBarItem: String, Identifiable, CaseIterable {
   var id: String { rawValue }
   
   case auth
+  case algoHelper
   case industryPlanner
   case characterInfo
   case industryHelper
@@ -24,6 +25,7 @@ enum SideBarItem: String, Identifiable, CaseIterable {
   case reactionHelper
   case killboard
   case characterIndustryView
+  case wallet
 }
 
 @Observable class HomeViewModel {
@@ -99,8 +101,11 @@ struct HomeView: View {
       case .auth:
         AuthView()
           .environment(homeViewModel)
+      case .algoHelper:
+        AlgoHelperView(viewModel: AlgoHelperViewModel(dbManager: db))
       case .characterInfo:
-        CharacterInfoView()
+        CharacterInfoList(viewModel: CharacterInfoListViewModel(dbManager: db))
+        //CharacterInfoView()
       case .assets:
         AssetsViewer()
       case .reprocessingHelper:
@@ -123,8 +128,10 @@ struct HomeView: View {
         CharacterIndustryView(viewModel: CharacterIndustryViewModel())
       case .industryPlanner:
         IndustryPlannerView(viewModel: IndustryPlannerViewModel())
-      case nil:
-        AlgoHelperView(viewModel: AlgoHelperViewModel(dbManager: db))
+      case .wallet:
+        WalletRootView(dbManager: db)
+//      case nil:
+//        AlgoHelperView(viewModel: AlgoHelperViewModel(dbManager: db))
 //        HomeInfoView(viewModel: HomeInfoViewModel(dbManager: db))
 //          .environment(db)
       default: EmptyView()

@@ -7,10 +7,9 @@
 
 
 import Foundation
-import TestPackage3
 import FluentSQLiteDriver
 
-final public class SolarSystemModel: Model {
+final public class SolarSystemModel: Model, @unchecked Sendable {
     static public let schema = Schemas.Universe.solarSystems.rawValue
     
     @ID(key: .id) public var id: UUID?

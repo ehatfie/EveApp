@@ -8,7 +8,7 @@
 import Fluent
 import Vapor
 
-final public class DogmaAttributeCategoryModel: Model, Content {
+final public class DogmaAttributeCategoryModel: Model, Content, @unchecked Sendable {
     static public let schema = "DogmaAttributeCategoryModel"
     
     @ID(key: .id)

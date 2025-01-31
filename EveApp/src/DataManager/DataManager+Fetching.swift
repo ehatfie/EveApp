@@ -7,14 +7,13 @@
 
 import Foundation
 import ModelLibrary
-import TestPackage3
 import SwiftEveAuth
 
 extension DataManager {
   func fetchCharacterInfo() {
     print("fetchCharacterInfo()")
     Task {
-      try? await fetchCharacterInfoAsync()
+      //try? await fetchCharacterInfoAsync()
     }
    
 //    makeApiCall1(dataEndpoint: "") { data, response, error in
@@ -34,10 +33,10 @@ extension DataManager {
 //    }
   }
   
-  func fetchSkillQueue() {
+  func fetchSkillQueue() async {
     print("FetchSkillQueue()")
     
-    makeApiCall1(dataEndpoint: "skillqueue/") { data, response, error in
+    await makeApiCall1(dataEndpoint: "skillqueue/") { data, response, error in
       if let response = response {
         //print("got response \(response)")
       }
@@ -104,25 +103,25 @@ extension DataManager {
       return
     }
     let endpoint = "universe/categories/\(categoryIds[4])"
-    makeApiCall(dataEndpoint: endpoint, completion: { data, response, error in
-      
-      if let data = data {
-        do {
-          let decoder = JSONDecoder()
-          let categoryInfoResponse = try decoder.decode(CategoryInfoResponseData.self, from: data)
-          
-          categoryInfoByID[categoryInfoResponse.category_id] = categoryInfoResponse
-          
-          UserDefaultsHelper.saveToUserDefaults(data: categoryInfoByID, key: .categoriesByIdResponse)
-          
-          self.categoryInfoByID = categoryInfoByID
-          print("categoryInfoResponse \(categoryInfoResponse)")
-        } catch let err {
-          print(err)
-        }
-        
-      }
-    })
+//    makeApiCall(dataEndpoint: endpoint, completion: { data, response, error in
+//
+//      if let data = data {
+//        do {
+//          let decoder = JSONDecoder()
+//          let categoryInfoResponse = try decoder.decode(CategoryInfoResponseData.self, from: data)
+//          
+//          categoryInfoByID[categoryInfoResponse.category_id] = categoryInfoResponse
+//          
+//          UserDefaultsHelper.saveToUserDefaults(data: categoryInfoByID, key: .categoriesByIdResponse)
+//          
+//          self.categoryInfoByID = categoryInfoByID
+//          print("categoryInfoResponse \(categoryInfoResponse)")
+//        } catch let err {
+//          print(err)
+//        }
+//        
+//      }
+//    })
   }
   
   @MainActor func fetchCategoryInfoFor(categoryID: Int32) {
@@ -195,34 +194,10 @@ extension DataManager {
   
   
   
-  func makeApiCall(dataEndpoint: String, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
-    loadAccessTokenData()
-    
-    guard let accessToken = accessTokenResponse?.access_token else {
-      print("ERROR - no acess token")
-      return
-    }
-    
-    let endpoint = "https://esi.evetech.net/latest/"
-    
-    let url = URL(string: endpoint + dataEndpoint)!
-    print("url \(url)")
-    var urlRequest = URLRequest(url: url)
-    
-    let headers: [String:String] = [
-      "Authorization": "Bearer \(accessToken)"
-    ]
-    
-    urlRequest.allHTTPHeaderFields = headers
-    
-    let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: completion)
-    
-    task.resume()
-  }
   
-  func makeApiCall1(dataEndpoint: String, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
+  func makeApiCall1(dataEndpoint: String, completion: @escaping (Data?, URLResponse?, Error?) -> Void) async {
     print("makeApiCall1()")
-    loadAccessTokenData()
+    await loadAccessTokenData()
     
     guard let accessToken = accessTokenResponse?.access_token else {
       print("ERROR - no acess token")
@@ -254,7 +229,7 @@ extension DataManager {
   }
   
   func makeApiCallAsync1(dataEndpoint: String) async -> (Data, URLResponse)? {
-    loadAccessTokenData()
+    await loadAccessTokenData()
     
     guard let accessToken = accessTokenResponse?.access_token else {
       print("ERROR - no acess token")
@@ -295,6 +270,7 @@ extension DataManager {
     return nil
   }
   
+  // This one currently defaults to /characters/characterId
   func makeApiCallAsync(dataEndpoint: String, authModel: AuthModel, page: Int? = nil) async -> (Data, URLResponse)?  {
     let urlRequest = requestBuilder(dataEndpoint: dataEndpoint, authModel: authModel, page: page)
     print("makeApiCallAsync1() - urlRequest \(urlRequest?.url?.string)")
@@ -304,27 +280,6 @@ extension DataManager {
       print("async api call error \(err)")
     }
     return nil
-  }
-  
-  func processCharacterPublicData(response: CharacterPublicDataResponse) {
-    let characterData = self.characterData
-    characterData?.publicData = response
-    self.characterData = characterData
-    let characterPublicData = CharacterPublicDataModel(response: response)
-    
-    let foo = try!
-    self.dbManager!
-      .database
-      .query(CharacterDataModel.self)
-      .first()
-      .wait()
-    do {
-      try foo?.$publicData.create(characterPublicData, on: dbManager!.database).wait()
-    } catch let err {
-      print("save item error \(err)")
-    }
-    
-    print("processCharacterPublicData \(response)")
   }
   
   func processSkillQueue(response: [CharacterSkillQueueDataResponse]) {
@@ -385,28 +340,6 @@ extension DataManager {
     
     let endpoint = "universe/groups/\(groupId)/"
     //DispatchQueue.main.async {
-    self.makeApiCall(dataEndpoint: endpoint, completion: { data, response, error in
-      if let data = data {
-        do {
-          let decoder = JSONDecoder()
-          let groupInfoResponse = try decoder.decode(GroupInfoResponseData.self, from: data)
-          
-          var groupInfoById = self.groupInfoByID
-          
-          groupInfoById[groupInfoResponse.group_id] = groupInfoResponse
-          
-          UserDefaultsHelper.saveToUserDefaults(
-            data: groupInfoById,
-            key: .groupInfoByIdResponse
-          )
-          
-          self.groupInfoByID = groupInfoById
-          print("groupInfoResponse \(groupInfoResponse)")
-        } catch let err {
-          print(err)
-        }
-      }
-    })
     //}
     
   }
@@ -421,18 +354,6 @@ extension DataManager {
   func fetchTypeInfoFor(typeId: Int32) {
     print("fetchTypeInfoFor()")
     let endpoint = "universe/types/\(typeId)/"
-    
-    makeApiCall(dataEndpoint: endpoint, completion: { data, response, error in
-      if let data = data {
-        do {
-          let decoder = JSONDecoder()
-          let typeInfoResponse = try decoder.decode(GetUniverseTypesTypeIdOk.self, from: data)
-          print("got type info response \(typeInfoResponse)")
-        } catch let err {
-          print("item type fetch error \(err)")
-        }
-      }
-    })
   }
 }
 

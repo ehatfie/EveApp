@@ -699,7 +699,6 @@ extension DBManager {
 // MARK: - Character
 
 extension DBManager {
-  @MainActor
   func getCharacters() async -> [CharacterDataModel] {
     do {
       return try await CharacterDataModel.query(on: self.database)
@@ -725,12 +724,14 @@ extension DBManager {
       return []
     }
   }
-  func getCharactersWithInfo() async -> [CharacterDataModel] {
+  func  getCharactersWithInfo() async -> [CharacterDataModel] {
     do {
       return try await CharacterDataModel.query(on: self.database)
         .with(\.$publicData)
         .with(\.$assetsData)
         .with(\.$corp)
+        .with(\.$walletData)
+        .with(\.$industryJobsData)
         .all()
         .get()
       
@@ -752,6 +753,49 @@ extension DBManager {
     }
   }
   
+  func getCharacterWithInfo(by characterId: String) async -> CharacterDataModel? {
+    do {
+      return try await  CharacterDataModel.query(on: self.database)
+        .filter(\.$characterId == characterId)
+        .with(\.$publicData)
+        .with(\.$assetsData)
+        .with(\.$corp)
+        .with(\.$walletData)
+        .first()
+        .get()
+    } catch let err {
+      print("DBManager.getCharacter() - error \(err)")
+      return nil
+    }
+  }
+  func getCharacterWithInfoSync(by characterId: String) -> CharacterDataModel? {
+    do {
+      return try  CharacterDataModel.query(on: self.database)
+        .filter(\.$characterId == characterId)
+        .with(\.$publicData)
+        .with(\.$assetsData)
+        .with(\.$corp)
+        .with(\.$walletData)
+        .first()
+        .wait()
+    } catch let err {
+      print("DBManager.getCharacter() - error \(err)")
+      return nil
+    }
+  }
+  
+  func getCharacterPublicDataSync(by characterId: Int64) -> CharacterPublicDataModel? {
+    do {
+      return try CharacterPublicDataModel.query(on: self.database)
+        .filter(\.$characterId == characterId)
+        .first()
+        .wait()
+    } catch let err {
+      print("DBManager.getCharacter() - error \(err)")
+      return nil
+    }
+  }
+  
   func getCharacter(by characterId: String) -> CharacterDataModel? {
     do {
       return try CharacterDataModel.query(on: self.database)
@@ -762,6 +806,44 @@ extension DBManager {
       print("DBManager.getCharacter() - error \(err)")
       return nil
     }
+  }
+  
+  func getCharacterInfoDisplayable() async -> [CharacterInfoDisplayable] {
+    let characters = await getCharactersWithInfo()
+    var returnValues: [CharacterInfoDisplayable] = []
+    
+    do {
+      returnValues = characters.compactMap { character -> CharacterInfoDisplayable? in
+        let corporation = character.corp.first
+        let industryJobsData = character.industryJobsData
+        
+        guard let value = CharacterInfoDisplayable(
+          characterData: character,
+          corporationData: corporation,
+          walletModel: character.$walletData.value ?? nil
+        ) else {
+          print("couldnt make CharacterInfoDisplayable for \(character.characterId)")
+          return nil
+        }
+        return value
+      }
+//      for character in characters {
+//        let corporation = try character.joined(CorporationInfoModel.self)
+//        print("got corp \(corporation.corporationId)")
+//        guard let value = CharacterInfoDisplayable(
+//          characterData: character,
+//          corporationData: corporation
+//        ) else {
+//          print("couldnt make CharacterInfoDisplayable")
+//          continue
+//        }
+//        returnValues.append(value)
+//      }
+    } catch let err {
+      print("make character displayable error \(err)")
+    }
+
+    return returnValues
   }
 }
 
@@ -1354,7 +1436,6 @@ extension DBManager {
   }
   
   func getBlueprintName(_ typeId: Int64) async throws -> String {
-    print("get blueprint name for \(typeId)")
     guard let blueprint = try await BlueprintModel.query(on: database)
       .filter(\.$blueprintTypeID == typeId)
       .join(TypeModel.self, on: \TypeModel.$typeId == \BlueprintModel.$blueprintTypeID)
@@ -1370,28 +1451,41 @@ extension DBManager {
   }
   
   func getBlueprintNames(_ typeIds: [Int64]) async throws -> [(Int64, String)] {
-//    let manufacturing = await getManufacturingBlueprintsWithInputs(of: typeIds)
-//    let reactions = await getReactionBlueprintsWIthInputs(of: typeIds)
-//    let blueprintIds = (manufacturing + reactions).map { $0.blueprintTypeID }
-    let result = await withTaskGroup(
-      of: (Int64, String?).self,
-      returning: [(Int64, String)].self
-    ) { taskGroup in
-      for typeId in typeIds {
-        taskGroup.addTask {
-          let name = try? await self.getBlueprintName(typeId)
-          return (typeId, name)
-        }
+    let blueprints = try await BlueprintModel.query(on: database)
+      .filter(\.$blueprintTypeID ~~ typeIds)
+      .join(TypeModel.self, on: \TypeModel.$typeId == \BlueprintModel.$blueprintTypeID)
+      .all()
+      .get()
+ 
+    let foo = blueprints.compactMap { blueprint -> (Int64, String)? in
+      guard let typeModel = try? blueprint.joined(TypeModel.self) else {
+        return nil
       }
-      
-      var returnValues: [(Int64, String)] = []
-      for await result in taskGroup {
-        guard let name = result.1 else { continue }
-        returnValues.append((result.0, name))
-      }
-      return returnValues
+      return (blueprint.blueprintTypeID, typeModel.name)
     }
-    return result
+    return foo
+   // let typeModel = try blueprint.joined(TypeModel.self)
+    
+    //return typeModel.name
+//    let result = await withTaskGroup(
+//      of: (Int64, String?).self,
+//      returning: [(Int64, String)].self
+//    ) { taskGroup in
+//      for typeId in typeIds {
+//        taskGroup.addTask {
+//          let name = try? await self.getBlueprintName(typeId)
+//          return (typeId, name)
+//        }
+//      }
+//      
+//      var returnValues: [(Int64, String)] = []
+//      for await result in taskGroup {
+//        guard let name = result.1 else { continue }
+//        returnValues.append((result.0, name))
+//      }
+//      return returnValues
+//    }
+//    return result
   }
   
   func getBlueprintId(named name: String) async -> Int64? {
@@ -1542,21 +1636,21 @@ extension DBManager {
     characterID: String,
     typeIds: [Int64]
   ) async -> [AssetInfoDisplayable] {
-    
+    let start = Date()
     guard let character = await getCharacter(by: characterID) else { return [] }
-    
+    print("character fetched \(Date().timeIntervalSince(start))")
     let assets = try! await character.$assetsData.query(on: database)
       .filter(\.$typeId ~~ typeIds)
       .join(TypeModel.self, on: \CharacterAssetsDataModel.$typeId == \TypeModel.$typeId)
       .all()
       .get()
-    
+    print("character assets fetched \(Date().timeIntervalSince(start))")
     // not necessary
     let results = assets.map { asset in
       let typeModel = try! asset.joined(TypeModel.self)
       return AssetInfoDisplayable(asset: asset, typeModel: typeModel)
     }
-      
+    print("made assets info displayable \(Date().timeIntervalSince(start))")
     return results
   }
   

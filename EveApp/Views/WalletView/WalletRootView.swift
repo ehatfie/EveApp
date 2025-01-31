@@ -252,14 +252,12 @@ extension WalletRootViewModel {
                 if let publicData = dbManager.getCharacterPublicDataSync(by: Int64(firstPartyId)) {
                     firstParty = publicData.name
                 } else {
-                    print("didnt get character for \(firstPartyId)")
                     firstParty = String(firstPartyId)
                 }
                 
                 if let publicData = dbManager.getCharacterPublicDataSync(by: Int64(secondPartyId)) {
                     secondParty = publicData.name
                 } else {
-                    print("didnt get character for \(secondPartyId)")
                     secondParty = String(secondPartyId)
                 }
             case .insurance:
@@ -274,7 +272,6 @@ extension WalletRootViewModel {
                 secondParty = String(secondPartyId)
             }
             
-            print("journal entry amount \(entry.amount)")
             let balance = String(format: "%.2f", entry.balance ?? -1.0).toCurrencyFormat()
             return WalletJournalInfoDisplayable(
                 id: entry.journalId,

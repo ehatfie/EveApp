@@ -256,6 +256,22 @@ extension DBManager {
       .get()
   }
   
+  func loadMarketGroupData() async throws {
+    print("loadMarketGroupdata()")
+    let marketGroupModelCount = try await self.database
+      .query(MarketGroupModel.self)
+      .count()
+      .get()
+    guard marketGroupModelCount == 0 else { return }
+    let info = try await readYamlAsync2(
+      for: .marketGroups,
+      type: MarketGroupIdOk.self
+    )
+    let models = info.map { MarketGroupModel(from: $0.1, marketGroupId: Int($0.0))}
+   
+    try await models.create(on: database)
+  }
+  
   //  func saveModel(models: [any Model]) async {
   //    await models.create(on: database).get()
   //  }
@@ -427,6 +443,7 @@ extension DBManager {
     //print("decode2() -  took \(Date().timeIntervalSince(start))")
     return returnValue
   }
+  
   func sortThing<T: Decodable>(some: [Node.Mapping.Element], type: T.Type) async -> [Int64: T] {
     var returnValue: [Int64: T] = [:]
     //print("sortThing() - start for \(some.count)")

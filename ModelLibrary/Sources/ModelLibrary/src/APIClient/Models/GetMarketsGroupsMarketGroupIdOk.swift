@@ -23,8 +23,8 @@ public struct GetMarketsGroupsMarketGroupIdOk: Codable {
     /** types array */
     public var types: [Int]
 
-    public init(_description: String, marketGroupId: Int, name: String, parentGroupId: Int? = nil, types: [Int]) {
-        self._description = _description
+    public init(description: String, marketGroupId: Int, name: String, parentGroupId: Int? = nil, types: [Int]) {
+        self._description = description
         self.marketGroupId = marketGroupId
         self.name = name
         self.parentGroupId = parentGroupId

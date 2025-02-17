@@ -21,6 +21,7 @@ enum YamlFiles: String {
   case typeMaterials = "typeMaterials"
   case blueprints = "blueprints"
   case races = "races"
+  case marketGroups = "marketGroups"
 }
 
 

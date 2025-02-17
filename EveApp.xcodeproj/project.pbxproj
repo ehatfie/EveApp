@@ -15,6 +15,7 @@
 		BA0AFEFC2C75937E003959D7 /* SwiftUIPreviews.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0AFEF22C75937E003959D7 /* SwiftUIPreviews.framework */; };
 		BA0AFF012C75937E003959D7 /* SwiftUIPreviewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0AFF002C75937E003959D7 /* SwiftUIPreviewsTests.swift */; };
 		BA0AFF022C75937E003959D7 /* SwiftUIPreviews.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0AFEF42C75937E003959D7 /* SwiftUIPreviews.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA1444612D544F81008473EB /* ItemViewerRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1444602D544F81008473EB /* ItemViewerRootView.swift */; };
 		BA1A940C2C0C378B0005B931 /* DM+KillmailFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A940B2C0C378B0005B931 /* DM+KillmailFetching.swift */; };
 		BA1A94142C0D72040005B931 /* ItemInputInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A94132C0D72040005B931 /* ItemInputInfoView.swift */; };
 		BA1E16362CC896C3005851A4 /* ReactionFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1E16352CC896C3005851A4 /* ReactionFilterView.swift */; };
@@ -94,6 +95,7 @@
 		BA75777A2CF6A74900BE56A2 /* SwiftEveAuth in CopyFiles */ = {isa = PBXBuildFile; fileRef = BA7577772CF5451900BE56A2 /* SwiftEveAuth */; };
 		BA7718FF2C909DCE00227488 /* KillboardViewOLD.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7718FE2C909DCE00227488 /* KillboardViewOLD.swift */; };
 		BA7E4B382C068E9900B00158 /* DBManager+loading2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7E4B372C068E9900B00158 /* DBManager+loading2.swift */; };
+		BA81E75E2D602607002FFA38 /* marketGroups.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA81E75D2D602607002FFA38 /* marketGroups.yaml */; };
 		BA982FB42C03D7CD00041EEB /* DBManager+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA982FB32C03D7CD00041EEB /* DBManager+Auth.swift */; };
 		BA9C8FE82B44C5F900F4DBAF /* IndustryPlannerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FE72B44C5F900F4DBAF /* IndustryPlannerManager.swift */; };
 		BA9C8FEA2B44D18C00F4DBAF /* ReactionsHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FE92B44D18C00F4DBAF /* ReactionsHelperView.swift */; };
@@ -261,6 +263,7 @@
 		BA0AFEF52C75937E003959D7 /* SwiftUIPreviews.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = SwiftUIPreviews.docc; sourceTree = "<group>"; };
 		BA0AFEFB2C75937E003959D7 /* SwiftUIPreviewsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUIPreviewsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA0AFF002C75937E003959D7 /* SwiftUIPreviewsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPreviewsTests.swift; sourceTree = "<group>"; };
+		BA1444602D544F81008473EB /* ItemViewerRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewerRootView.swift; sourceTree = "<group>"; };
 		BA1A940B2C0C378B0005B931 /* DM+KillmailFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DM+KillmailFetching.swift"; sourceTree = "<group>"; };
 		BA1A94132C0D72040005B931 /* ItemInputInfoView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemInputInfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA1E16352CC896C3005851A4 /* ReactionFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilterView.swift; sourceTree = "<group>"; };
@@ -340,6 +343,7 @@
 		BA7577772CF5451900BE56A2 /* SwiftEveAuth */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftEveAuth; sourceTree = "<group>"; };
 		BA7718FE2C909DCE00227488 /* KillboardViewOLD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillboardViewOLD.swift; sourceTree = "<group>"; };
 		BA7E4B372C068E9900B00158 /* DBManager+loading2.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+loading2.swift"; sourceTree = "<group>"; tabWidth = 2; };
+		BA81E75D2D602607002FFA38 /* marketGroups.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = marketGroups.yaml; sourceTree = "<group>"; };
 		BA982FB32C03D7CD00041EEB /* DBManager+Auth.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+Auth.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BA9C8FE72B44C5F900F4DBAF /* IndustryPlannerManager.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = IndustryPlannerManager.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA9C8FE92B44D18C00F4DBAF /* ReactionsHelperView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ReactionsHelperView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -492,6 +496,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BA14445F2D544F71008473EB /* ItemViewer */ = {
+			isa = PBXGroup;
+			children = (
+				BA1444602D544F81008473EB /* ItemViewerRootView.swift */,
+			);
+			path = ItemViewer;
+			sourceTree = "<group>";
+		};
 		BA1A940A2C0C376A0005B931 /* Fetching */ = {
 			isa = PBXGroup;
 			children = (
@@ -517,6 +529,7 @@
 				BA56D9872C76CF1500BD72CB /* ModelLibrary */,
 				BAE0699A2ADA03B30054EFCF /* categoryIDs.yaml */,
 				BAE069982ADA03A80054EFCF /* groupIDs.yaml */,
+				BA81E75D2D602607002FFA38 /* marketGroups.yaml */,
 				BAE0699C2ADA03C00054EFCF /* typeIDs.yaml */,
 				BAE0699E2ADA03CA0054EFCF /* dogmaEffects.yaml */,
 				BAE069A02ADA03D10054EFCF /* dogmaAttributes.yaml */,
@@ -596,6 +609,7 @@
 		BA3149C42A1EF98C0076E6DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BA14445F2D544F71008473EB /* ItemViewer */,
 				BAD35B792D3B070F0097FA4C /* WalletView */,
 				BAA5CCB62CD5C948005590AE /* AlgoHelper */,
 				BA5F7ABB2C9F72B8007DDA12 /* Common */,
@@ -1299,6 +1313,7 @@
 				BA71008A2ADB3360001CD301 /* typeMaterials.yaml in Resources */,
 				BA3149A22A1EF9680076E6DD /* Preview Assets.xcassets in Resources */,
 				BA31499E2A1EF9680076E6DD /* Assets.xcassets in Resources */,
+				BA81E75E2D602607002FFA38 /* marketGroups.yaml in Resources */,
 				BAE0699F2ADA03CB0054EFCF /* dogmaEffects.yaml in Resources */,
 				BAE0699D2ADA03C10054EFCF /* typeIDs.yaml in Resources */,
 				BAE069A92ADA240A0054EFCF /* typeDogma.yaml in Resources */,
@@ -1413,6 +1428,7 @@
 				BAA5CCB42CD4616A005590AE /* IPM+processing.swift in Sources */,
 				BAE069742AC8A1420054EFCF /* DBManager.swift in Sources */,
 				BADE5CE02C9F47DC00E78357 /* IndustryPlannerView.swift in Sources */,
+				BA1444612D544F81008473EB /* ItemViewerRootView.swift in Sources */,
 				BAE0697E2AC8CBE10054EFCF /* ItemTypeDetailView.swift in Sources */,
 				BA3149D42A315A650076E6DD /* DataManager.swift in Sources */,
 				BA5F7ABF2C9F7ABB007DDA12 /* IPProductPickerView.swift in Sources */,
@@ -1817,7 +1833,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_ENTITLEMENTS = EveApp/EveApp.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EveApp/Preview Content\"";
@@ -1856,7 +1874,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_ENTITLEMENTS = EveApp/EveApp.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EveApp/Preview Content\"";
@@ -1984,6 +2004,7 @@
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_USE_OPTIMIZATION_PROFILE = NO;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2035,6 +2056,7 @@
 				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_USE_OPTIMIZATION_PROFILE = NO;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

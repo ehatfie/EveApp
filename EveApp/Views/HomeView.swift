@@ -117,7 +117,7 @@ struct HomeView: View {
         DevelopHelperView()
           .environment(homeViewModel)
       case .blueprintExplorer:
-        BlueprintExplorerView()
+        ItemViewerRootView()
       case .potentialIndustry:
         PotentialIIndustryView(viewModel: PotentialIndustryViewModel())
       case .reactionHelper:

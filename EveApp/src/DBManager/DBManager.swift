@@ -45,9 +45,9 @@ import ModelLibrary
       //}
     
       self.databases = Databases(threadPool: threadPool, on: eventLoopGroup)
-      
 
       databases.use(.sqlite(.file(self.dbName)), as: .sqlite)
+    //databases.use()
       //databases.use(.sqlite(.memory), as: .sqlite)
       databases.default(to: .sqlite)
     
@@ -93,6 +93,7 @@ import ModelLibrary
     try? setupBlueprintModel()
     try? setupMiscModels()
     try? setupKillboardModels()
+    try? setupMarketModels()
 //    Task {
 //      try? await CharacterAssetsDataModel
 //        .ModelMigration()
@@ -136,7 +137,9 @@ import ModelLibrary
       self.dbLoading = true
       //}
       let start = Date()
+      await loadMarketData()
       await loadData()
+     
       await loadIndustryData()
       let end = Date().timeIntervalSince(start)
       print("load took \(end)")
@@ -165,6 +168,15 @@ import ModelLibrary
     } catch let error {
       self.dbLoading = false
       print("Load data error \(error)")
+    }
+  }
+  
+  func loadMarketData() async {
+    print("loadMarketData()")
+    do {
+      try await loadMarketGroupData()
+    } catch let err {
+      print("load market err \(err)")
     }
   }
   
@@ -238,6 +250,12 @@ import ModelLibrary
   
   func setupBlueprintModel() throws {
     try BlueprintModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+  }
+  
+  func setupMarketModels() throws {
+    try MarketGroupModel.ModelMigration()
       .prepare(on: database)
       .wait()
   }

@@ -40,6 +40,8 @@ public enum Schemas: String {
     
     case characterCorporationModel = "characterCorporationModel"
     
+    case marketGroupModel = "marketGroupModel"
+    
     case auth = "authModel"
     
     public enum Killmail: String {

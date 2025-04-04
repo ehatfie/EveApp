@@ -244,8 +244,8 @@ import FluentKit
             let systemIds = models.map { $0.solarSystemId }
             
             
-        } catch let err {
-            print("save esi models error \(err)")
+        } catch let error {
+            print("save esi models error \(String(reflecting: error))")
         }
     }
     

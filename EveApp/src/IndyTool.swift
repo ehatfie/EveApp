@@ -22,13 +22,16 @@ class IndyTool {
   }
   
   func getMissingInputs(values: [Int64: Int64], depth: Int = 0) async -> [Int64: Int64] {
-    
+    print("getMissingInputs for \(values.count)")
     guard !values.isEmpty else {
       return [:]
     }
     let start = Date()
     
     let bpInfos = await makeBPInfos(for: Array(values.keys))
+    let results = bpInfos.map { ($0.blueprintId, $0.productId) }
+    
+    print("++ missingInput bpInfos \(bpInfos.count) \(results)")
     //print("++ makeBPInfos took \(Date().timeIntervalSince(start))")
     //let dictionary = Dictionary(uniqueKeysWithValues: bpInfos.map{ ($0.productId, $0) })
     let missingInputs = await findMissingInputs(
@@ -36,7 +39,7 @@ class IndyTool {
       values: values,
       depth: depth
     )
-    print("got missing inputs \(depth) took \(Date().timeIntervalSince(start))")
+    print("got \(missingInputs.count) missing inputs \(depth) took \(Date().timeIntervalSince(start))")
     //print("getMissingInputs bulk \(values.keys)")
 //    let result = await withTaskGroup(
 //      of: [Int64: Int64].self,
@@ -95,19 +98,27 @@ class IndyTool {
   ) async -> [Int64: Int64] {
     let start = Date()
     var returnValues: [Int64: Int64] = [:]
+    
     let inputProducts = bpInfos.flatMap { $0.inputMaterials.map { $0.id }}
+    print("find missing inputs for \(inputProducts.count) input products")
     await loadCharacterAssets(for: inputProducts)
+    print("related assets count \(relatedAssets.count)")
     //let assets = dbManager.getCharacterAssetsForValues(characterID: 0, typeIds: inputProducts)
+    print("need values \(values)")
+    print("from bpInfos \(bpInfos.map { ($0.blueprintId, $0.productId) })")
     for bpInfo in bpInfos {
+      print("checking bpInfo \(bpInfo.blueprintId) \(bpInfo.productId)")
       let parentAmountNeeded = values[bpInfo.productId, default: 0]
       let productsPerRun = bpInfo.productCount
       let runsNeeded = Int64(ceil(Double(parentAmountNeeded) / Double(productsPerRun)))
-      
+      print("for \(bpInfo.blueprintId) need \(parentAmountNeeded) runs \(runsNeeded)")
+      let inputMaterials = bpInfo.inputMaterials.map { ($0.id, $0.quantity)}
+      print("checking inputMaterials \(inputMaterials)")
       for input in bpInfo.inputMaterials {
         let amountNeeded = input.quantity * runsNeeded
         
         guard amountNeeded > 0 else {
-          print("no runs for \(bpInfo.blueprintId)")
+          print("no runs for \(bpInfo.blueprintId) \(parentAmountNeeded) \(amountNeeded)")
           continue
         }
 
@@ -119,15 +130,15 @@ class IndyTool {
         let amountMissing = max(0, amountNeeded - matchingAssetQuantity)
         
         guard amountMissing > 0 else {
-          //print("not missing \(input.id)")
+          print("not missing \(input.id)")
           continue
         }
 //        print("Adding missing input \(input.id) matching \(matchingAssetQuantity) needed \(amountNeeded) missing \(amountMissing)")
         returnValues[input.id] = amountMissing
       }
     }
-    let returnValue = await
-    getMissingInputs(values: returnValues, depth: depth + 1).merging(returnValues, uniquingKeysWith: +)
+    print("got return value \(returnValues)")
+    let returnValue = await getMissingInputs(values: returnValues, depth: depth + 1).merging(returnValues, uniquingKeysWith: +)
     print("findMissingInputs \(depth) took \(Date().timeIntervalSince(start))")
     return returnValue
   }
@@ -147,6 +158,7 @@ class IndyTool {
       characterID: characterID,
       typeIds: Array(missingIds)
     )
+    print("++ got character assets \(assets.count)")
     for asset in assets {
       relatedAssets[asset.typeId] = asset.quantity
     }
@@ -157,10 +169,12 @@ class IndyTool {
     let start = Date()
     for blueprintId in blueprintIds {
       guard let bpInfo = await makeBPInfo(for: blueprintId) else {
+        print("no bpInfo made for \(blueprintId)")
         continue
       }
       returnValues.append(bpInfo)
     }
+    print("made bpInfos \(returnValues.count)")
     //print("makeBPInfos took for \(blueprintIds.count) took \(Date().timeIntervalSince(start))")
     return returnValues
   }
@@ -239,11 +253,11 @@ class IndyTool {
           let existing = relatedDict[asset.asset.typeId, default: 0]
           relatedDict[asset.asset.typeId] = existing + asset.asset.quantity
       }
-      
-      for name in await dbManager.getTypeNames(for: blueprintIds) {
+      let typeNames = await dbManager.getTypeNames(for: blueprintIds)
+      for name in typeNames {
           names[name.typeId] = name.name
       }
-    print("got type names \(Date().timeIntervalSince(start))")
+    print("got \(typeNames.count) type names \(Date().timeIntervalSince(start))")
       // existing count by groupID
       var existingCountDict: [Int64: Int] = [:]
       
@@ -264,7 +278,7 @@ class IndyTool {
       }
       let groupIds = Set(groupedValues.keys)
       let groupModels = await dbManager.getGroups(with: Array(groupIds))
-    print("got groups \(Date().timeIntervalSince(start))")
+    print("got groups \(groupModels.count) \(Date().timeIntervalSince(start))")
       let groupNames: [Int64: String] = groupModels.reduce(into: [:]) { $0[$1.groupId] = $1.name }
       for group in groupedValues {
         guard let groupName = groupNames[group.key] else { continue } //dbManager.getGroup(for: group.key)?.name else { continue }
@@ -307,6 +321,7 @@ class IndyTool {
 
 extension IndyTool {
   func makeDisplayableJobsForInputSums(inputs: [Int64: Int64]) async -> [DisplayableJob] {
+    print("makeDisplayableJobsForInputSums \(inputs)")
     //print("makeDisplayableJobsForInputSums \(self.relatedAssets)")
     let jobs = await makeJobsForInputSums(inputs: inputs, assets: self.relatedAssets)
     
@@ -322,13 +337,18 @@ extension IndyTool {
     
     let displayableJobs: [DisplayableJob] = names1.compactMap { value -> DisplayableJob? in
       guard let existingJob = jobsDict[value.0] else { return nil }
-      return DisplayableJob(existingJob, productName: "", blueprintName: value.1)
+      return DisplayableJob(
+        existingJob,
+        productName: "",
+        blueprintName: value.1
+      )
     }
     
     return displayableJobs //jobs.map(\.init)
   }
   
   func makeJobsForInputSums(inputs: [Int64: Int64], assets: [Int64: Int64]) async -> [TestJob] {
+    print("makeJobsForInputSums \(inputs)")
     // get blueprints for input materials
     let inputMaterialIds = inputs.keys.map { $0 }
     
@@ -372,6 +392,9 @@ extension IndyTool {
   }
   
   func createGroupedJobs(jobs: [DisplayableJob]) async -> [DisplayableJobsGroup] {
+    let names = jobs.map { $0.blueprintName}
+    print("createGroupedJobs \(names)")
+    
     var productGroupsDict: [Int64: Int64] = [:]
     var groupedJobs: [Int64: [DisplayableJob]] = [:]
     

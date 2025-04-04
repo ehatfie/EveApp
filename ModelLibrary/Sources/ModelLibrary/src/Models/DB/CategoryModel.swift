@@ -23,7 +23,7 @@ public final class CategoryModel: Model, @unchecked Sendable {
 
     @ID(key: .id) public var id: UUID?
 
-    @Field(key: "categoryId") public var categoryId: Int64
+    @Field(key: "category_id") public var categoryId: Int64
     @Field(key: "name") public var name: String
     @Field(key: "published") public var published: Bool
 
@@ -45,7 +45,7 @@ public struct CreateCategoryModelMigration: Migration {
     public func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(CategoryModel.schema)
             .id()
-            .field("categoryId", .int64, .required)
+            .field("category_id", .int64, .required)
             .field("name", .string, .required)
             .field("published", .bool, .required)
             .create()

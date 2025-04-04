@@ -29,7 +29,7 @@ final public class CharacterDataModel: Model, @unchecked Sendable {
     static public let schema = Schemas.characterDataModel.rawValue
     
     @ID(key: .id) public var id: UUID?
-    @Field(key: "characterId") public var characterId: String
+    @Field(key: "character_id") public var characterId: String
     
     @OptionalChild(for: \.$characterDataModel)
     public var publicData: CharacterPublicDataModel?
@@ -60,8 +60,8 @@ final public class CharacterDataModel: Model, @unchecked Sendable {
         public func prepare(on database: FluentKit.Database) async throws {
             try await database.schema(CharacterDataModel.schema)
                 .id()
-                .field("characterId", .string)
-                .unique(on: "characterId")
+                .field("character_id", .string)
+                .unique(on: "character_id")
                 .create()
         }
         
@@ -79,17 +79,17 @@ final public class CharacterPublicDataModel: Model, @unchecked Sendable {
     @OptionalParent(key: "publicData_id")
     public var characterDataModel: CharacterDataModel?
     
-    @Field(key: "characterId") public var characterId: Int64
-    @Field(key: "allianceId") public var allianceId: Int32?
+    @Field(key: "character_id") public var characterId: Int64
+    @Field(key: "alliance_id") public var allianceId: Int32?
     @Field(key: "birthday") public var birthday: String
-    @Field(key: "bloodlineId") public var bloodlineId: Int32
-    @Field(key: "corporationId") public var corporationId: Int32
+    @Field(key: "bloodline_id") public var bloodlineId: Int32
+    @Field(key: "corporation_id") public var corporationId: Int32
     @Field(key: "description") public var description: String?
-    @Field(key: "factionId") public var factionId: Int32?
+    @Field(key: "faction_id") public var factionId: Int32?
     @Field(key: "gender") public var gender: String
     @Field(key: "name") public var name: String
-    @Field(key: "raceId") public var raceId: Int32
-    @Field(key: "securityStatus") public var securityStatus: Float?
+    @Field(key: "race_id") public var raceId: Int32
+    @Field(key: "security_status") public var securityStatus: Float?
     @Field(key: "title") public var title: String?
     
     public init() { }
@@ -152,19 +152,19 @@ final public class CharacterPublicDataModel: Model, @unchecked Sendable {
                     .uuid,
                     .references(Schemas.characterDataModel.rawValue, "id")
                 )
-                .field("characterId", .int64, .required)
-                .field("allianceId", .int32)
+                .field("character_id", .int64, .required)
+                .field("alliance_id", .int32)
                 .field("birthday", .string, .required)
-                .field("bloodlineId", .int32)
-                .field("corporationId", .int32)
+                .field("bloodline_id", .int32)
+                .field("corporation_id", .int32)
                 .field("description", .string)
-                .field("factionId", .int32)
+                .field("faction_id", .int32)
                 .field("gender", .string, .required)
                 .field("name", .string, .required)
-                .field("raceId", .int32)
-                .field("securityStatus", .float)
+                .field("race_id", .int32)
+                .field("security_status", .float)
                 .field("title", .string)
-                .unique(on: "characterId")
+                .unique(on: "character_id")
                 .create()
         }
             

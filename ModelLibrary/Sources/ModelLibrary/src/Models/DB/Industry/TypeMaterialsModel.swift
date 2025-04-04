@@ -32,9 +32,9 @@ final public class MaterialDataModel1: Model, @unchecked Sendable {
   
   @ID(key: .id) public var id: UUID?
   
-  @Parent(key: "typeMaterialsModel") public var typeMaterialsModel: TypeMaterialsModel
+  @Parent(key: "type_materials_model") public var typeMaterialsModel: TypeMaterialsModel
   
-  @Field(key: "materialTypeID") public var materialTypeID: Int64
+  @Field(key: "material_type_id") public var materialTypeID: Int64
   @Field(key: "quantity") public var quantity: Int64
   
     public init() { }
@@ -50,8 +50,8 @@ final public class MaterialDataModel1: Model, @unchecked Sendable {
         public func prepare(on database: FluentKit.Database) -> NIOCore.EventLoopFuture<Void> {
       database.schema(MaterialDataModel1.schema)
         .id()
-        .field("typeMaterialsModel", .uuid, .required, .references("typeMaterialsModel", "id"))
-        .field("materialTypeID", .int64, .required)
+        .field("type_materials_model", .uuid, .required, .references("typeMaterialsModel", "id"))
+        .field("materialType_id", .int64, .required)
         .field("quantity", .int64, .required)
         .create()
     }
@@ -64,7 +64,7 @@ final public class MaterialDataModel1: Model, @unchecked Sendable {
 }
 
 final public class MaterialDataModel: Fields, @unchecked Sendable {
-  @Field(key: "materialTypeID") public var materialTypeID: Int64
+  @Field(key: "materialType_id") public var materialTypeID: Int64
   @Field(key: "quantity") public var quantity: Int64
   
     public init() { }
@@ -80,9 +80,9 @@ final public class TypeMaterialsModel: Model, @unchecked Sendable {
   
   @ID(key: .id) public var id: UUID?
   
-  @Field(key: "typeID") public var typeID: Int64
+  @Field(key: "type_id") public var typeID: Int64
   
-  @Field(key: "materialData") public var materialData: [MaterialDataModel]
+  @Field(key: "material_data") public var materialData: [MaterialDataModel]
   
     public init() { }
   
@@ -97,8 +97,9 @@ final public class TypeMaterialsModel: Model, @unchecked Sendable {
         public func prepare(on database: FluentKit.Database) -> NIOCore.EventLoopFuture<Void> {
       database.schema(TypeMaterialsModel.schema)
         .id()
-        .field("typeID", .int64, .required)
-        .field("materialData", .array(of: .custom(MaterialDataModel.self)))
+        .field("type_id", .int64, .required)
+        .field("material_data", .array(of: .json))
+//        .field("materialData", .array(of: .custom(MaterialDataModel.self)))
         .create()
     }
     

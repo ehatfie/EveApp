@@ -166,7 +166,7 @@ extension ItemViewerRootViewModel {
         guard !marketGroupModel.hasTypes else {
             let start = Date()
             let results = await makeItemContentAsync(for: marketGroupModel, dbManager)
-            print("getting items took \(Date().timeIntervalSince(start))")
+            //print("getting items took \(Date().timeIntervalSince(start))")
             return results
         }
         let children = await self.getChildrenAsync(for: Int(marketGroupModel.marketGroupId))

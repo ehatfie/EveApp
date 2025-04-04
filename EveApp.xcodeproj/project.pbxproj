@@ -129,6 +129,7 @@
 		BAD35B812D3B83110097FA4C /* WalletTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD35B802D3B83110097FA4C /* WalletTransactionView.swift */; };
 		BAD35B842D40696F0097FA4C /* DM+Processing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD35B832D40696B0097FA4C /* DM+Processing.swift */; };
 		BAD35B862D4069840097FA4C /* DM+WalletFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD35B852D40697E0097FA4C /* DM+WalletFetching.swift */; };
+		BADAA2AB2D62DA4600D1F2D6 /* FluentPostgresDriver in Frameworks */ = {isa = PBXBuildFile; productRef = BADAA2AA2D62DA4600D1F2D6 /* FluentPostgresDriver */; };
 		BADE5CE02C9F47DC00E78357 /* IndustryPlannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADE5CDF2C9F47DC00E78357 /* IndustryPlannerView.swift */; };
 		BAE02EE72AF34F4000AB695F /* BlueprintComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EE62AF34F4000AB695F /* BlueprintComponentView.swift */; };
 		BAE02EEA2AF9CEE600AB695F /* ReprocessingHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAE02EE92AF9CEE600AB695F /* ReprocessingHelperView.swift */; };
@@ -435,6 +436,7 @@
 				BAE069612AC89C860054EFCF /* FluentSQLiteDriver in Frameworks */,
 				BAB271F72A686918004F01B7 /* Alamofire in Frameworks */,
 				BA0AFEEA2C744CC2003959D7 /* TestPackage1 in Frameworks */,
+				BADAA2AB2D62DA4600D1F2D6 /* FluentPostgresDriver in Frameworks */,
 				BA56D9BC2C76D2B600BD72CB /* TestPreviews.framework in Frameworks */,
 				BA7577792CF6A04B00BE56A2 /* SwiftEveAuth in Frameworks */,
 			);
@@ -1139,6 +1141,7 @@
 				BA0AFEE92C744CC2003959D7 /* TestPackage1 */,
 				BA56D9892C76CFE000BD72CB /* ModelLibrary */,
 				BA7577782CF6A04B00BE56A2 /* SwiftEveAuth */,
+				BADAA2AA2D62DA4600D1F2D6 /* FluentPostgresDriver */,
 			);
 			productName = EveApp;
 			productReference = BA3149962A1EF9660076E6DD /* EveApp.app */;
@@ -1272,6 +1275,7 @@
 				BAE0695F2AC89C860054EFCF /* XCRemoteSwiftPackageReference "fluent-sqlite-driver" */,
 				BAE069622AC89CA80054EFCF /* XCRemoteSwiftPackageReference "fluent" */,
 				BA8D0EDB2C75A3D800F374CA /* XCRemoteSwiftPackageReference "swift-atomics" */,
+				BADAA2A92D62DA4600D1F2D6 /* XCRemoteSwiftPackageReference "fluent-postgres-driver" */,
 			);
 			productRefGroup = BA3149972A1EF9660076E6DD /* Products */;
 			projectDirPath = "";
@@ -2258,6 +2262,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		BADAA2A92D62DA4600D1F2D6 /* XCRemoteSwiftPackageReference "fluent-postgres-driver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vapor/fluent-postgres-driver.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.0;
+			};
+		};
 		BAE0695C2AC89C6B0054EFCF /* XCRemoteSwiftPackageReference "Yams" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jpsim/Yams.git";
@@ -2310,6 +2322,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BAB271F52A686918004F01B7 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		BADAA2AA2D62DA4600D1F2D6 /* FluentPostgresDriver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BADAA2A92D62DA4600D1F2D6 /* XCRemoteSwiftPackageReference "fluent-postgres-driver" */;
+			productName = FluentPostgresDriver;
 		};
 		BAE0695D2AC89C6B0054EFCF /* Yams */ = {
 			isa = XCSwiftPackageProductDependency;

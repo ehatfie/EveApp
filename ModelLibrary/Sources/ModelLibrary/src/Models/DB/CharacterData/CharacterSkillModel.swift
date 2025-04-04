@@ -13,10 +13,10 @@ final public class CharacterSkillModel: Fields, @unchecked Sendable {
     
     //@ID(key: .id) var id: UUID?
     
-    @Field(key: "activeSkillLevel") public var activeSkillLevel: Int
-    @Field(key: "skillId") public var skillId: Int
-    @Field(key: "skillPointsInSkill") public var skillpointsInSkill: Int64
-    @Field(key: "trainedSkillLevel") public var trainedSkillLevel: Int
+    @Field(key: "active_skill_level") public var activeSkillLevel: Int
+    @Field(key: "skill_id") public var skillId: Int
+    @Field(key: "skill_points_in_skill") public var skillpointsInSkill: Int64
+    @Field(key: "trained_skill_level") public var trainedSkillLevel: Int
     
     public init() { }
     

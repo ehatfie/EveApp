@@ -13,17 +13,17 @@ final public class CharacterAssetsDataModel: Model, @unchecked Sendable {
     
     @ID(key: .id) public var id: UUID?
     
-    @Parent(key: "characterId")
+    @Parent(key: "character_id")
     var characterDataModel: CharacterDataModel
     
-    @Field(key: "isBlueprintCopy") public var isBlueprintCopy: Bool?
-    @Field(key: "isSingleton") public var isSingleton: Bool
-    @Field(key: "itemId") public var itemId: Int64
-    @Field(key: "locationFlag") public var locationFlag: String
-    @Field(key: "locationId") public var locationId: Int64
-    @Field(key: "locationType") public var locationType: String
+    @Field(key: "is_blueprint_copy") public var isBlueprintCopy: Bool?
+    @Field(key: "is_singleton") public var isSingleton: Bool
+    @Field(key: "item_id") public var itemId: Int64
+    @Field(key: "location_flag") public var locationFlag: String
+    @Field(key: "location_id") public var locationId: Int64
+    @Field(key: "location_type") public var locationType: String
     @Field(key: "quantity") public var quantity: Int64
-    @Field(key: "typeId") public var typeId: Int64
+    @Field(key: "type_id") public var typeId: Int64
     
      public init() { }
     
@@ -69,19 +69,19 @@ final public class CharacterAssetsDataModel: Model, @unchecked Sendable {
             try await database.schema(CharacterAssetsDataModel.schema)
                 .id()
                 .field(
-                    "characterId",
+                    "character_id",
                     .uuid,
                     .required,
                     .references(Schemas.characterDataModel.rawValue, "id")
                 )
-                .field("isBlueprintCopy", .bool)
-                .field("isSingleton", .bool, .required)
-                .field("itemId", .int64, .required)
-                .field("locationFlag", .string, .required)
-                .field("locationId", .int64, .required)
-                .field("locationType", .string, .required)
+                .field("is_blueprint_copy", .bool)
+                .field("is_singleton", .bool, .required)
+                .field("item_id", .int64, .required)
+                .field("location_flag", .string, .required)
+                .field("location_id", .int64, .required)
+                .field("location_type", .string, .required)
                 .field("quantity", .int64, .required)
-                .field("typeId", .int64, .required)
+                .field("type_id", .int64, .required)
                 .create()
         }
             

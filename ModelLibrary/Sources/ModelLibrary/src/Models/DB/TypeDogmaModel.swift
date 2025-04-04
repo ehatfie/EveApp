@@ -39,7 +39,7 @@ public struct DogmaEffectInfo: Codable {
 }
 
 final public class TypeDogmaAttribute: Fields, @unchecked Sendable {
-    @Field(key: "attributeId") public var attributeID: Int64
+    @Field(key: "attribute_id") public var attributeID: Int64
     @Field(key: "value") public var value: Double
     
     public init() {
@@ -54,8 +54,8 @@ final public class TypeDogmaAttribute: Fields, @unchecked Sendable {
 }
 
 final public class TypeDogmaEffect: Fields, @unchecked Sendable {
-    @Field(key: "effectID") public var effectID: Int64
-    @Field(key: "isDefault") public var isDefault: Bool
+    @Field(key: "effect_id") public var effectID: Int64
+    @Field(key: "is_default") public var isDefault: Bool
     
     public init() {
         self.effectID = 0
@@ -73,7 +73,7 @@ final public class TypeDogmaInfoModel: Model, @unchecked Sendable {
     
     @ID(key: .id) public var id: UUID?
     
-    @Field(key: "typeId") public var typeId: Int64
+    @Field(key: "type_id") public var typeId: Int64
     
     //  @Children(for: \.$typeDogmaInfoModel) var attributes: [TypeDogmaAttributeInfoModel]
     @Field(key: "attributes") public var attributes: [TypeDogmaAttribute]
@@ -113,9 +113,11 @@ final public class TypeDogmaInfoModel: Model, @unchecked Sendable {
         public func prepare(on database: Database) -> EventLoopFuture<Void> {
             database.schema(TypeDogmaInfoModel.schema)
                 .id()
-                .field("typeId", .int64, .required)
-                .field("attributes", .array(of: .custom(TypeDogmaAttribute.self)))
-                .field("effects", .array(of: .custom(TypeDogmaEffect.self)))
+                .field("type_id", .int64, .required)
+//                .field("attributes", .array(of: .custom(TypeDogmaAttribute.self)))
+//                .field("effects", .array(of: .custom(TypeDogmaEffect.self)))
+                .field("attributes", .array(of: .json))
+                .field("effects", .array(of: .json))
                 .create()
         }
         
@@ -145,10 +147,10 @@ final public class TypeDogmaAttributeInfoModel: Model, @unchecked Sendable {
     
     @ID(key: .id) public var id: UUID?
     
-    @Parent(key: "typeDogmaInfoModel")
+    @Parent(key: "type_dogma_info_model")
     public var typeDogmaInfoModel: TypeDogmaInfoModel
-    @Field(key: "typeId") public var typeID: Int64
-    @Field(key: "attributeId") public var attributeID: Int64
+    @Field(key: "type_id") public var typeID: Int64
+    @Field(key: "attribute_id") public var attributeID: Int64
     @Field(key: "value") public var value: Double
     
     public init() { }
@@ -167,9 +169,9 @@ public struct CreateTypeDogmaAttributeInfoModel: Migration {
     public func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(TypeDogmaAttributeInfoModel.schema)
             .id()
-            .field("typeDogmaInfoModel", .uuid, .required, .references(Schemas.typeDogmaInfo.rawValue, "id"))
-            .field("typeId", .int64, .required)
-            .field("attributeId", .int64, .required)
+            .field("type_dogma_info_model", .uuid, .required, .references(Schemas.typeDogmaInfo.rawValue, "id"))
+            .field("type_id", .int64, .required)
+            .field("attribute_id", .int64, .required)
             .field("value", .double, .required)
             .create()
     }
@@ -185,11 +187,11 @@ final public class TypeDogmaEffectInfoModel: Model, @unchecked Sendable {
     
     @ID(key: .id) public var id: UUID?
     
-    @Parent(key: "typeDogmaInfoModel")
+    @Parent(key: "type_dogma_info_model")
     public var typeDogmaInfoModel: TypeDogmaInfoModel
     
-    @Field(key: "effectID") public var effectID: Int64
-    @Field(key: "isDefault") public var isDefault: Bool
+    @Field(key: "effect_id") public var effectID: Int64
+    @Field(key: "is_default") public var isDefault: Bool
     
     public init() { }
     
@@ -205,9 +207,9 @@ public struct CreateTypeDogmaEffectInfoModel: Migration {
     public func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(TypeDogmaEffectInfoModel.schema)
             .id()
-            .field("typeDogmaInfoModel", .uuid, .required, .references(Schemas.typeDogmaInfo.rawValue, "id"))
-            .field("effectID", .int64, .required)
-            .field("isDefault", .bool, .required)
+            .field("type_dogma_info_model", .uuid, .required, .references(Schemas.typeDogmaInfo.rawValue, "id"))
+            .field("effect_id", .int64, .required)
+            .field("is_default", .bool, .required)
             .create()
     }
     

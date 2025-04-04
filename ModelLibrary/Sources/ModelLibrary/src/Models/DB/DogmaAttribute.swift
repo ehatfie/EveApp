@@ -15,28 +15,28 @@ final public class DogmaAttributeModel: Model, Content, @unchecked Sendable {
     @ID(key: .id)
     public var id: UUID?
 
-    @Field(key: "attributeId")
+    @Field(key: "attribute_id")
     public var attributeID: Int64
 
-    @Field(key: "categoryId")
+    @Field(key: "category_id")
     public var categoryID: Int64?
 
-    @Field(key: "dataType")
+    @Field(key: "data_type")
     public var dataType: Int
 
-    @Field(key: "defaultValue")
+    @Field(key: "default_value")
     public var defaultValue: Double
 
     @Field(key: "description")
     public var attributeDescription: String?
     
-    @Field(key: "displayNameID")
+    @Field(key: "display_name_id")
     public var displayNameID: String?
     
-    @Field(key: "highIsGood")
+    @Field(key: "high_is_good")
     public var highIsGood: Bool
 
-    @Field(key: "iconId")
+    @Field(key: "icon_id")
     public var iconID: Int?
 
     @Field(key: "name")
@@ -48,13 +48,13 @@ final public class DogmaAttributeModel: Model, Content, @unchecked Sendable {
     @Field(key: "stackable")
     public var stackable: Bool
 
-    @Field(key: "tooltipDescriptionId")
+    @Field(key: "tooltip_description_id")
     public var tooltipDescriptionID: String?
 
-    @Field(key: "tooltipTitleId")
+    @Field(key: "tooltip_title_id")
     public var tooltipTitleID: String?
 
-    @Field(key: "unitId")
+    @Field(key: "unit_id")
     public var unitID: Int?
 
     public init() {}
@@ -101,20 +101,20 @@ public struct CreateDogmaAttributeModelMigration: Migration {
     public func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(DogmaAttributeModel.schema)
             .id()
-            .field("attributeId", .int, .required)
-            .field("categoryId", .int)
-            .field("dataType", .int, .required)
-            .field("defaultValue", .double, .required)
+            .field("attribute_id", .int, .required)
+            .field("category_id", .int)
+            .field("data_type", .int, .required)
+            .field("default_value", .double, .required)
             .field("description", .string)
-            .field("displayNameID", .string)
-            .field("highIsGood", .bool, .required)
-            .field("iconId", .int)
+            .field("display_name_id", .string)
+            .field("high_is_good", .bool, .required)
+            .field("icon_id", .int)
             .field("name", .string, .required)
             .field("published", .bool, .required)
             .field("stackable", .bool, .required)
-            .field("tooltipDescriptionId", .string)
-            .field("tooltipTitleId", .string)
-            .field("unitId", .int)
+            .field("tooltip_description_id", .string)
+            .field("tooltip_title_id", .string)
+            .field("unit_id", .int)
             .create()
     }
 

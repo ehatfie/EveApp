@@ -105,10 +105,10 @@ final public class BlueprintModel: Model, @unchecked Sendable {
     @Group(key: "activities")
     public var activities: BlueprintActivityModel
     
-    @Field(key: "blueprintTypeID")
+    @Field(key: "blueprint_type_id")
     public var blueprintTypeID: Int64
     
-    @Field(key: "maxProductionLimit")
+    @Field(key: "max_production_limit")
     public var maxProductionLimit: Int64
 
     public init() {}
@@ -126,29 +126,45 @@ final public class BlueprintModel: Model, @unchecked Sendable {
             try await database.schema(BlueprintModel.schema)
                 .id()
                 .field("activities_copying_time", .int64)
+//                .field(
+//                    "activities_manufacturing_materials",
+//                    .array(of: .custom(QuantityTypeModel.self))
+//                )
+//                .field(
+//                    "activities_manufacturing_products",
+//                    .array(of: .custom(QuantityTypeModel.self))
+//                )
+//                .field("activities_manufacturing_time", .int64)
+//                .field(
+//                    "activities_reaction_materials",
+//                    .array(of: .custom(QuantityTypeModel.self))
+//                )
+//                .field(
+//                    "activities_reaction_products",
+//                    .array(of: .custom(QuantityTypeModel.self))
+//                )
                 .field(
                     "activities_manufacturing_materials",
-                    .array(of: .custom(QuantityTypeModel.self))
+                    .array(of: .json)
                 )
                 .field(
                     "activities_manufacturing_products",
-                    .array(of: .custom(QuantityTypeModel.self))
+                    .array(of: .json)
                 )
                 .field("activities_manufacturing_time", .int64)
                 .field(
                     "activities_reaction_materials",
-                    .array(of: .custom(QuantityTypeModel.self))
+                    .array(of: .json)
                 )
                 .field(
                     "activities_reaction_products",
-                    .array(of: .custom(QuantityTypeModel.self))
+                    .array(of: .json)
                 )
                 .field("activities_reaction_time", .int64)
-                .field("activities_researching_time", .int64)
-                .field("activities_researchMaterial_time", .int64)
-                .field("activities_researchTime_time", .int64)
-                .field("blueprintTypeID", .int64, .required)
-                .field("maxProductionLimit", .int64, .required)
+                .field("activities_research_material_time", .int64)
+                .field("activities_research_time_time", .int64)
+                .field("blueprint_type_id", .int64, .required)
+                .field("max_production_limit", .int64, .required)
                 .create()
         }
 
@@ -164,7 +180,7 @@ final public class QuantityTypeModel: Fields, @unchecked Sendable {
     @Field(key: "quantity")
     public var quantity: Int64
 
-    @Field(key: "typeId")
+    @Field(key: "type_id")
     public var typeId: Int64
 
     public init() {}
@@ -204,10 +220,10 @@ final public class BlueprintActivityModel: Fields, @unchecked Sendable {
     @Group(key: "reaction")
     public var reaction: BlueprintManufacturingModel
 
-    @Group(key: "researchMaterial")
+    @Group(key: "research_material")
     public var researchMaterial: TimeAmount
 
-    @Group(key: "researchTime")
+    @Group(key: "research_time")
     public var researchTime: TimeAmount
 
     public init() {}

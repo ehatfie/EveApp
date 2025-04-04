@@ -14,13 +14,13 @@ final public class CharacterSkillsDataModel: Model, @unchecked Sendable {
     
     @ID(key: .id) public var id: UUID?
     
-    @Parent(key: "characterId")
+    @Parent(key: "character_id")
     var characterDataModel: CharacterDataModel
     
     @Field(key: "skills") public var skills: [CharacterSkillModel]
     //@Field(key: "characterId") var characterId: String
-    @Field(key: "totalSp") public var totalSp: Int64
-    @Field(key: "unallocatedSp") public var unallocatedSp: Int?
+    @Field(key: "total_sp") public var totalSp: Int64
+    @Field(key: "unallocated_sp") public var unallocatedSp: Int?
     
     public init() { }
     
@@ -55,15 +55,15 @@ final public class CharacterSkillsDataModel: Model, @unchecked Sendable {
             try await database.schema(CharacterSkillsDataModel.schema)
                 .id()
                 .field(
-                    "characterId",
+                    "character_id",
                     .uuid,
                     .required,
                     .references(Schemas.characterDataModel.rawValue, "id")
                 )
                 .field("skills", .array(of: .custom(CharacterSkillModel.self)))
                 //.field("characterId", .string)
-                .field("totalSp", .int64, .required)
-                .field("unallocatedSp", .int)
+                .field("total_sp", .int64, .required)
+                .field("unallocated_sp", .int)
                 .create()
         }
         

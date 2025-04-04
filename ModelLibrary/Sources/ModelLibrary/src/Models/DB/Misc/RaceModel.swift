@@ -19,11 +19,11 @@ final public class RaceModel: Model, @unchecked Sendable {
     static public let schema = Schemas.raceModel.rawValue
     @ID(key: .id) public var id: UUID?
 
-    @Field(key: "raceID") public var raceID: Int64
-    @Field(key: "descriptionID") public var descriptionID: String
-    @Field(key: "iconID") public var iconID: Int64?
-    @Field(key: "nameID") public var nameID: String
-    @Field(key: "shipTypeID") public var shipTypeID: Int64?
+    @Field(key: "race_id") public var raceID: Int64
+    @Field(key: "description_id") public var descriptionID: String
+    @Field(key: "icon_id") public var iconID: Int64?
+    @Field(key: "name_id") public var nameID: String
+    @Field(key: "shipType_id") public var shipTypeID: Int64?
 
     public init() {}
 
@@ -41,11 +41,11 @@ final public class RaceModel: Model, @unchecked Sendable {
         public func prepare(on database: Database) async throws {
             try await database.schema(RaceModel.schema)
                 .id()
-                .field("raceID", .int64, .required)
-                .field("descriptionID", .string, .required)
-                .field("iconID", .int64)
-                .field("nameID", .string, .required)
-                .field("shipTypeID", .int64)
+                .field("race_id", .int64, .required)
+                .field("description_id", .string, .required)
+                .field("icon_id", .int64)
+                .field("name_id", .string, .required)
+                .field("shipType_id", .int64)
                 .create()
         }
 

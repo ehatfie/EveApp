@@ -115,7 +115,7 @@ import SwiftUI
       //print("getting missing job inputs")
       
       let missingJobInputs = await tool.getMissingInputs(values: someValues)
-      
+      print("missingJobInputs \(missingJobInputs.count)")
       let nonMadeMissingJobInputs = missingJobInputs.filter({ missingJobInput in
         return !jobsDisplayable.contains(where: { $0.productId == missingJobInput.key})
       })
@@ -123,6 +123,7 @@ import SwiftUI
       self.missingInputsDisplayable = ipm.makeDisplayable(from: nonMadeMissingJobInputs)
       self.missingInputGroups = ipm.makeInputGroups(from: nonMadeMissingJobInputs)
       print("total took \(Date().timeIntervalSince(start))")
+      print("missingInputsDisplayable \(missingInputsDisplayable)")
     }
   }
   
@@ -248,7 +249,7 @@ struct AlgoHelperView: View {
   
   func missingInputs() -> some View {
     VStack(alignment: .leading) {
-      Text("Missing Inputs")
+      Text("Missing Inputs \(viewModel.missingInputsDisplayable.count)")
       
       ForEach(viewModel.missingInputsDisplayable, id: \.self) { input in
         HStack {
@@ -269,7 +270,7 @@ struct AlgoHelperView: View {
         Spacer()
       }
       
-      VStack(alignment: .leading, spacing: 5  ) {
+      VStack(alignment: .leading, spacing: 5) {
         ForEach(viewModel.jobsDisplayable) { job in
           HStack {
             Text(job.blueprintName)

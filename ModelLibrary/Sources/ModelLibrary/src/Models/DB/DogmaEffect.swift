@@ -14,61 +14,61 @@ final public class DogmaEffectModel: Model, Content, @unchecked Sendable {
     @ID(key: .id)
     public var id: UUID?
 
-    @Field(key: "descriptionId")
+    @Field(key: "description_id")
     public var descriptionID: String?
 
-    @Field(key: "disallowAutoRepeat")
+    @Field(key: "disallow_auto_repeat")
     public var disallowAutoRepeat: Bool
 
-    @Field(key: "displayNameId")
+    @Field(key: "display_name_id")
     public var displayNameID: String?
 
-    @Field(key: "dischargeAttributeId")
+    @Field(key: "discharge_attribute_id")
     public var dischargeAttributeID: Int64?
 
     @Field(key: "distribution")
     public var distribution: Int64?
 
-    @Field(key: "durationAttributeId")
+    @Field(key: "duration_attribute_id")
     public var durationAttributeID: Int64?
 
-    @Field(key: "effectCategory")
+    @Field(key: "effect_category")
     public var effectCategory: Int64
 
-    @Field(key: "effectId")
+    @Field(key: "effect_id")
     public var effectID: Int64
 
-    @Field(key: "effectName")
+    @Field(key: "effect_name")
     public var effectName: String
 
-    @Field(key: "electronicChance")
+    @Field(key: "electronic_chance")
     public var electronicChance: Bool
 
     @Field(key: "guid")
     public var guid: String?
 
-    @Field(key: "iconId")
+    @Field(key: "icon_id")
     public var iconID: Int?
 
-    @Field(key: "isAssistance")
+    @Field(key: "is_assistance")
     public var isAssistance: Bool
 
-    @Field(key: "isOffensive")
+    @Field(key: "is_offensive")
     public var isOffensive: Bool
 
-    @Field(key: "isWarpSafe")
+    @Field(key: "is_warp_safe")
     public var isWarpSafe: Bool
     
-    @Field(key: "modifierInfo")
+    @Field(key: "modifier_info")
     public var modifierInfo: [ModifierInfo]
 
-    @Field(key: "propulsionChance")
+    @Field(key: "propulsion_chance")
     public var propulsionChance: Bool
 
     @Field(key: "published")
     public var published: Bool
 
-    @Field(key: "rangeChance")
+    @Field(key: "range_chance")
     public var rangeChance: Bool
 
     public init() {}
@@ -102,25 +102,25 @@ public struct CreateDogmaEffectModelMigration: Migration {
     public func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(DogmaEffectModel.schema)
             .id()
-            .field("descriptionId", .string)
-            .field("disallowAutoRepeat", .bool)
-            .field("displayNameId", .string)
-            .field("dischargeAttributeId", .int)
+            .field("description_id", .string)
+            .field("disallow_auto_repeat", .bool)
+            .field("display_name_id", .string)
+            .field("discharge_attribute_id", .int)
             .field("distribution", .int)
-            .field("durationAttributeId", .int)
-            .field("effectCategory", .int)
-            .field("effectId", .int)
-            .field("effectName", .string)
-            .field("electronicChance", .bool)
+            .field("duration_attribute_id", .int)
+            .field("effect_category", .int)
+            .field("effect_id", .int)
+            .field("effect_name", .string)
+            .field("electronic_chance", .bool)
             .field("guid", .string)
-            .field("iconId", .int)
-            .field("isAssistance", .bool)
-            .field("isOffensive", .bool)
-            .field("isWarpSafe", .bool)
-            .field("modifierInfo", .array(of: .custom(ModifierInfo.self)))
-            .field("propulsionChance", .bool)
+            .field("icon_id", .int)
+            .field("is_assistance", .bool)
+            .field("is_offensive", .bool)
+            .field("is_warp_safe", .bool)
+            .field("modifier_info", .array(of: .json))
+            .field("propulsion_chance", .bool)
             .field("published", .bool)
-            .field("rangeChance", .bool)
+            .field("range_chance", .bool)
             .create()
     }
 
@@ -136,16 +136,16 @@ final public class ModifierInfo: Fields, @unchecked Sendable {
     @Field(key: "function")
     public var function: String
     
-    @Field(key: "modifiedAttributeID")
+    @Field(key: "modified_attribute_id")
     public var modifiedAttributeID: Int64
     
-    @Field(key: "modifyingAttributeID")
+    @Field(key: "modifying_attribute_id")
     public var modifiyingAttributeID: Int64
     
     @Field(key: "operation")
     public var operation: Int64
     
-    @Field(key: "skillTypeID")
+    @Field(key: "skill_type_id")
     public var skillTypeID: Int64
     
     public init() {

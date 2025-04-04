@@ -92,6 +92,14 @@ struct CharacterInfoList: View {
                 }, label: {
                     Text("Fetch all character corps")
                 })
+                
+                Button(action: {
+                    Task {
+                        try? await DataManager.shared.attachCharacterCorpAsync()
+                    }
+                }, label: {
+                    Text("Attach character corps")
+                })
             }
             LazyVGrid(columns: [
                 GridItem(.adaptive(minimum: 400, maximum: 800)),

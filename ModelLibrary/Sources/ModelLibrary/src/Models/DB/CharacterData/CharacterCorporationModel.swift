@@ -13,8 +13,8 @@ final public class CharacterCorporationModel: Model, @unchecked Sendable {
     
     @ID(key: .id) public var id: UUID?
     
-    @Parent(key: "characterId") public var character: CharacterDataModel
-    @Parent(key: "corporationId") public var corporation: CorporationInfoModel
+    @Parent(key: "character_id") public var character: CharacterDataModel
+    @Parent(key: "corporation_id") public var corporation: CorporationInfoModel
     
     public init() { }
     
@@ -33,18 +33,18 @@ final public class CharacterCorporationModel: Model, @unchecked Sendable {
             try await database.schema(CharacterCorporationModel.schema)
                 .id()
                 .field(
-                    "characterId",
+                    "character_id",
                     .uuid,
                     .required,
                     .references(Schemas.characterDataModel.rawValue, "id")
                 )
                 .field(
-                    "corporationId",
+                    "corporation_id",
                     .uuid,
                     .required,
                     .references(Schemas.corporationInfoModel.rawValue, "id")
                 )
-                .unique(on: "characterId", "corporationId")
+                .unique(on: "character_id", "corporation_id")
                 .create()
         }
         

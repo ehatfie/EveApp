@@ -139,6 +139,35 @@ extension DataManager {
     }
   }
   
+  func attachCharacterCorpAsync() async throws {
+    print("attachCharacterCorpAsync()")
+    guard
+      let characters = await dbManager?.getCharactersWithInfo(),
+      !characters.isEmpty
+    else {
+      print("no characters \(dbManager)")
+      return
+    }
+    
+    await withThrowingTaskGroup(of: Void.self) { taskGroup in
+      let dbManager = self.dbManager!
+      for character in characters {
+        taskGroup.addTask {
+          guard let publicData = character.publicData else { return }
+          guard let existingCorp = dbManager.getCorporationModel(for: publicData.corporationId) else { return }
+          
+          do {
+            try await character.$corp.attach(existingCorp, on: dbManager.database)
+            //try await character.save(on: dbManager.database)
+          } catch let error {
+            print("attach character corp error \(String(reflecting: error))")
+          }
+        }
+      }
+
+    }
+  }
+  
   func fetchCharacterInfoAsync(characterDataModel: CharacterDataModel) async throws {
     print("fetchCharacterInfoAsync()")
 

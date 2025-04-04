@@ -14,10 +14,10 @@ final public class DogmaAttributeCategoryModel: Model, Content, @unchecked Senda
     @ID(key: .id)
     public var id: UUID?
     
-    @Field(key: "categoryId")
+    @Field(key: "category_id")
     public var categoryId: Int64
     
-    @Field(key: "categoryDescription")
+    @Field(key: "category_description")
     public var categoryDescription: String
     
     @Field(key: "name")
@@ -38,8 +38,8 @@ public struct CreateDogmaAttributeCategoryModelMigration: Migration {
     public func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(DogmaAttributeCategoryModel.schema)
             .id()
-            .field("categoryId", .int64)
-            .field("categoryDescription", .string)
+            .field("category_id", .int64)
+            .field("category_description", .string)
             .field("name", .string)
             .create()
     }

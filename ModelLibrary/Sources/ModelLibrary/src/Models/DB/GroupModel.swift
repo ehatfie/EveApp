@@ -52,14 +52,14 @@ final public class GroupModel: Model, @unchecked Sendable {
     
     //@Parent(key: "categoryModel")var categoryModel: CategoryModel
     
-    @Field(key: "groupId") public var groupId: Int64
+    @Field(key: "group_id") public var groupId: Int64
     @Field(key: "anchorable") public var anchorable: Bool
     @Field(key: "anchored") public var anchored: Bool
-    @Field(key: "categoryId") public var categoryID: Int64
-    @Field(key: "fittableNonSingleton") public var fittableNonSingleton: Bool
+    @Field(key: "category_id") public var categoryID: Int64
+    @Field(key: "fittable_non_singleton") public var fittableNonSingleton: Bool
     @Field(key: "name") public var name: String
     @Field(key: "published") public var published: Bool
-    @Field(key: "useBasePrice") public var useBasePrice: Bool
+    @Field(key: "use_base_price") public var useBasePrice: Bool
     
     
     //var category: ThingCategory?
@@ -86,14 +86,14 @@ public struct CreateGroupModelMigration: Migration {
     public func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(GroupModel.schema)
             .id()
-            .field("groupId", .bool)
+            .field("group_id", .int64)
             .field("anchorable", .bool)
             .field("anchored", .bool)
-            .field("categoryId", .int64)
-            .field("fittableNonSingleton", .bool)
+            .field("category_id", .int64)
+            .field("fittable_non_singleton", .bool)
             .field("name", .string)
             .field("published", .bool)
-            .field("useBasePrice", .bool)
+            .field("use_base_price", .bool)
             .create()
             //.field("categoryModel", .uuid, .required, .references(Schemas.categories.rawValue, "id"))
     }

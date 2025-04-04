@@ -23,10 +23,10 @@ final public class AuthModel: Model, @unchecked Sendable {
     
     @ID(key: .id) public var id: UUID?
     
-    @Field(key: "characterId") public var characterId: String
-    @Field(key: "refreshToken") public var refreshToken: String
-    @Field(key: "tokenType") public var tokenType: String
-    @Field(key: "accessToken") public var accessToken: String
+    @Field(key: "character_id") public var characterId: String
+    @Field(key: "refresh_token") public var refreshToken: String
+    @Field(key: "token_type") public var tokenType: String
+    @Field(key: "access_token") public var accessToken: String
     @Field(key: "expiration") public var expiration: Int64
     
     public init() { }
@@ -56,10 +56,10 @@ final public class AuthModel: Model, @unchecked Sendable {
         public func prepare(on database: FluentKit.Database) async throws {
             try await database.schema(AuthModel.schema)
                 .id()
-                .field("characterId", .string, .required)
-                .field("refreshToken", .string, .required)
-                .field("tokenType", .string, .required)
-                .field("accessToken", .string, .required)
+                .field("character_id", .string, .required)
+                .field("refresh_token", .string, .required)
+                .field("token_type", .string, .required)
+                .field("access_token", .string, .required)
                 .field("expiration", .int64, .required)
                 .create()
         }

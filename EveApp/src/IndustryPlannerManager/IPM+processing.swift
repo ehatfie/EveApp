@@ -315,6 +315,7 @@ extension IndustryPlannerManager {
     }
     
     func makeInputGroups(from values: [Int64: Int64]) -> [IPDetailInputGroup2] {
+        print("make Input groups")
         let start = Date()
         var returnValues: [IPDetailInputGroup2] = []
         var groupedValues: [Int64: [Int64]] = [:]

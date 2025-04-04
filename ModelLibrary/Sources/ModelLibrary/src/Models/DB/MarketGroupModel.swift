@@ -50,7 +50,7 @@ public struct MarketGroupIdOk: Codable {
     /** description string */
     public var descriptionID: ThingName?
     public var hasTypes: Bool
-    public var iconID: Int
+    public var iconID: Int?
     /** name string */
     public var nameID: ThingName
     /** parent_group_id integer */
@@ -60,7 +60,7 @@ public struct MarketGroupIdOk: Codable {
     public init(
         descriptionID: ThingName?,
         hasTypes: Bool,
-        iconID: Int,
+        iconID: Int?,
         nameID: ThingName,
         parentGroupID: Int? = nil
     ) {
@@ -87,12 +87,12 @@ final public class MarketGroupModel: Model, @unchecked Sendable {
     
     @ID(key: .id) public var id: UUID?
     
-    @Field(key: "groupDescription") public var groupDescription: String
-    @Field(key: "hasTypes") public var hasTypes: Bool
-    @Field(key: "iconID") public var iconID: Int
-    @Field(key: "marketGroupId") public var marketGroupId: Int
+    @Field(key: "group_description") public var groupDescription: String
+    @Field(key: "has_types") public var hasTypes: Bool
+    @Field(key: "icon_id") public var iconID: Int?
+    @Field(key: "market_group_id") public var marketGroupId: Int
     @Field(key: "name") public var name: String
-    @Field(key: "parentGroupId") public var parentGroupId: Int?
+    @Field(key: "parent_group_id") public var parentGroupId: Int?
 
     
     public init() { }
@@ -100,7 +100,7 @@ final public class MarketGroupModel: Model, @unchecked Sendable {
     public init(
         groupDescription: String,
         hasTypes: Bool,
-        iconID: Int,
+        iconID: Int?,
         marketGroupId: Int,
         name: String,
         parentGroupId: Int? = nil
@@ -130,12 +130,12 @@ final public class MarketGroupModel: Model, @unchecked Sendable {
         public func prepare(on database: FluentKit.Database) async throws {
             try await database.schema(MarketGroupModel.schema)
                 .id()
-                .field("groupDescription", .string, .required)
-                .field("hasTypes", .bool, .required)
-                .field("iconID", .int, .required)
-                .field("marketGroupId", .int, .required)
+                .field("group_description", .string, .required)
+                .field("has_types", .bool, .required)
+                .field("icon_id", .int)
+                .field("market_group_id", .int, .required)
                 .field("name", .string, .required)
-                .field("parentGroupId", .int)
+                .field("parent_group_id", .int)
                 .create()
         }
         

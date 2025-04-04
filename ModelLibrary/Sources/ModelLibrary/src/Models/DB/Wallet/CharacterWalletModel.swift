@@ -13,7 +13,7 @@ final public class CharacterWalletModel: Model, @unchecked Sendable {
   
   @ID(key: .id) public var id: UUID?
   
-  @Parent(key: "characterId")
+  @Parent(key: "character_id")
   public var characterDataModel: CharacterDataModel
   
   @Field(key: "balance")
@@ -33,13 +33,13 @@ final public class CharacterWalletModel: Model, @unchecked Sendable {
       try await database.schema(CharacterWalletModel.schema)
         .id()
         .field(
-          "characterId",
+          "character_id",
           .uuid,
           .required,
           .references(Schemas.characterDataModel.rawValue, "id")
         )
         .field("balance", .double)
-        .unique(on: "characterId")
+        .unique(on: "character_id")
         .create()
     }
     
@@ -144,7 +144,7 @@ final public class CharacterWalletJournalEntryModel: Model, @unchecked Sendable 
     public func prepare(on database: FluentKit.Database) async throws {
       try await database.schema(CharacterWalletJournalEntryModel.schema)
         .id()
-        .field("character_wallet_journal_entry_id",.int64)
+        .field("character_wallet_journal_entry_id", .int64)
         .field(
           "walletId",
           .uuid,

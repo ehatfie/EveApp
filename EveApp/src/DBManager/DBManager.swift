@@ -10,6 +10,7 @@ import SwiftUI
 
 import NIO
 import Fluent
+import FluentPostgresDriver
 
 import ModelLibrary
 
@@ -46,10 +47,26 @@ import ModelLibrary
     
       self.databases = Databases(threadPool: threadPool, on: eventLoopGroup)
 
-      databases.use(.sqlite(.file(self.dbName)), as: .sqlite)
+      //databases.use(.sqlite(.file(self.dbName)), as: .sqlite)
+    databases.use(
+      .postgres(
+          configuration: .init(
+              hostname: "localhost",
+              port: 5433,
+              username: "postgres",
+              password: "",
+              database: "postgres",
+              tls: .disable
+          ),
+          maxConnectionsPerEventLoop: 3
+      ),
+      as: .psql
+    )
+    //databases.use(.postgres()
     //databases.use()
-      //databases.use(.sqlite(.memory), as: .sqlite)
-      databases.default(to: .sqlite)
+    //databases.use(.sqlite(.memory), as: .psql)
+      //databases.default(to: .sqlite)
+    databases.default(to: .psql)
     
     setup()
 
@@ -72,7 +89,7 @@ import ModelLibrary
       
       
     } catch let error {
-      print("AppModel error setup \(error)")
+      print("AppModel error setup \(String(reflecting: error))")
     }
     try? setupCharacterWalletModels()
     try? setupAuthModels()
@@ -167,7 +184,7 @@ import ModelLibrary
       print("Load data took \(start.timeIntervalSinceNow * -1)")
     } catch let error {
       self.dbLoading = false
-      print("Load data error \(error)")
+      print("Load data error \(String(reflecting: error))")
     }
   }
   
@@ -261,15 +278,15 @@ import ModelLibrary
   }
   
   func setupCharacterDataModels() throws {
+    try CharacterDataModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
     try CharacterPublicDataModel.ModelMigration()
       .prepare(on: database)
       .wait()
     
     try CharacterIndustryJobModel.ModelMigration()
-      .prepare(on: database)
-      .wait()
-    
-    try CharacterDataModel.ModelMigration()
       .prepare(on: database)
       .wait()
     
@@ -303,33 +320,41 @@ import ModelLibrary
   }
   
   func setupMiscModels() throws {
-    try CharacterIdentifiersModel.ModelMigration()
+    try? CorporationInfoModel.ModelMigration()
       .prepare(on: database)
       .wait()
     
-    try SolarSystemModel.ModelMigration()
+    try? RaceModel.ModelMigration()
       .prepare(on: database)
       .wait()
     
-    try RaceModel.ModelMigration()
+    try? CharacterCorporationModel.ModelMigration()
       .prepare(on: database)
       .wait()
     
-    try CorporationInfoModel.ModelMigration()
+    try? CharacterIdentifiersModel.ModelMigration()
       .prepare(on: database)
       .wait()
     
-    try CharacterCorporationModel.ModelMigration()
+//    try SolarSystemModel.ModelMigration()
+//      .prepare(on: database)
+//      .wait()
+//    
+    try? RaceModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
+    try? CorporationInfoModel.ModelMigration()
       .prepare(on: database)
       .wait()
   }
   
   func setupKillboardModels() throws {
-    try ESIKillmailModel.ModelMigration()
+    try? ESIKillmailModel.ModelMigration()
       .prepare(on: database)
       .wait()
     
-    try ZKillmailModel.ModelMigration()
+    try? ZKillmailModel.ModelMigration()
       .prepare(on: database)
       .wait()
     
@@ -399,10 +424,15 @@ extension DBManager {
   }
   
   func getCorporationModels() async -> [CorporationInfoModel] {
-    
-      
     return (try? await CorporationInfoModel.query(on: database)
       .all()) ?? []
+  }
+  
+  func getCorporationModel(for id: Int32) -> CorporationInfoModel? {
+    return try? CorporationInfoModel.query(on: database)
+      .filter(\.$corporationId == id)
+      .first()
+      .wait()
   }
 }
 

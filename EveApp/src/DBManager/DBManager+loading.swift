@@ -29,7 +29,7 @@ extension DBManager {
       //async let loadTypeDogmaInfo: Void =  loadTypeDogmaInfoDataAsync()
       // loadTypeDogmaInfo
     } catch let error {
-      print("loadDogmaDataError \(error)")
+      print("loadDogmaDataError \(String(reflecting: error))")
     }
   }
   
@@ -213,7 +213,7 @@ extension DBManager {
     print("loadTypeDogmaInfoDataAsync()")
     let start = Date()
     
-    let info = try await readYamlAsync2(for: .typeDogma, type: TypeDogmaData.self)
+    let info = try await readYamlAsync2(for: .typeDogma, type: TypeDogmaData.self, splits: 3)
     print("Read info - \(start.timeIntervalSinceNow * -1)")
     
     await saveDogmaInfoModel(data: info)
@@ -232,9 +232,10 @@ extension DBManager {
     
     let top = Array(foo[0 ..< modelCount / 2])
     let bottom = Array(foo[modelCount / 2 ..< modelCount])
-    
-    try! await splitAndSave(splits: 4, models: top)
-    try! await splitAndSave(splits: 4, models: bottom)
+    let _ = [
+      try! await splitAndSave(splits: 3, models: top),
+      try! await splitAndSave(splits: 3, models: bottom)
+    ]
     
   }
   
@@ -288,7 +289,7 @@ extension DBManager {
       let models = races.map { RaceModel(raceID: $0.key, raceData: $0.value)}
       try await models.create(on: database).get()
     } catch let error {
-      print("loadMiscDataAsync - error: \(error)")
+      print("loadMiscDataAsync - error: \(String(reflecting: error))")
     }
     
     
@@ -343,7 +344,7 @@ extension DBManager {
         )
         returnValues[Int64(keyValue)] = decrypted
       } catch let err {
-        print("Decode error \(err)")
+        print("Decode error \(err) for \(type) decodeNode")
       }
     }
     
@@ -437,7 +438,7 @@ extension DBManager {
         
         returnValue.append((Int64(keyValue),result))
       } catch let err {
-        print("Decode error \(err)")
+        print("Decode error \(err) for \(type) decode2")
       }
     }
     //print("decode2() -  took \(Date().timeIntervalSince(start))")
@@ -457,7 +458,7 @@ extension DBManager {
         )
         returnValue[Int64(keyValue)] = decrypted
       } catch let err {
-        print("Decode error \(err)")
+        print("Decode error \(err) for \(type) sortThing")
       }
     }
    // print("sortThing() -  took \(start.timeIntervalSince(Date()))")

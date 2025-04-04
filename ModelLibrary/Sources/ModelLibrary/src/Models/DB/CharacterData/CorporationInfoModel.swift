@@ -12,21 +12,21 @@ final public class CorporationInfoModel: Model, @unchecked Sendable {
     static public let schema = Schemas.corporationInfoModel.rawValue
 
     @ID(key: .id) public var id: UUID?
-    @Field(key: "corporationId") public var corporationId: Int32
-    @Field(key: "allianceId") public var allianceId: Int?
-    @Field(key: "ceoId") public var ceoId: Int
-    @Field(key: "creatorId") public var creatorId: Int
-    @Field(key: "dateFounded") public var dateFounded: String?
+    @Field(key: "corporation_id") public var corporationId: Int32
+    @Field(key: "alliance_id") public var allianceId: Int?
+    @Field(key: "ceo_id") public var ceoId: Int
+    @Field(key: "creator_id") public var creatorId: Int
+    @Field(key: "date_founded") public var dateFounded: String?
     @Field(key: "description") public var description: String?
-    @Field(key: "factionId") public var factionId: Int?
-    @Field(key: "homeStationId") public var homeStationId: Int?
-    @Field(key: "memberCount") public var memberCount: Int
+    @Field(key: "faction_id") public var factionId: Int?
+    @Field(key: "home_station_id") public var homeStationId: Int?
+    @Field(key: "member_count") public var memberCount: Int
     @Field(key: "name") public var name: String
     @Field(key: "shares") public var shares: Int64?
-    @Field(key: "taxRate") public var taxRate: Float
+    @Field(key: "tax_rate") public var taxRate: Float
     @Field(key: "ticker") public var ticker: String
     @Field(key: "url") public var url: String?
-    @Field(key: "warEligible") public var warEligible: Bool?
+    @Field(key: "war_eligible") public var warEligible: Bool?
 
     public init() {}
 
@@ -53,22 +53,22 @@ final public class CorporationInfoModel: Model, @unchecked Sendable {
         public func prepare(on database: FluentKit.Database) async throws {
             try await database.schema(CorporationInfoModel.schema)
                 .id()
-                .field("corporationId", .int32, .required)
-                .field("allianceId", .int)
-                .field("ceoId", .int, .required)
-                .field("creatorId", .int, .required)
-                .field("dateFounded", .string)
+                .field("corporation_id", .int32, .required)
+                .field("alliance_id", .int)
+                .field("ceo_id", .int, .required)
+                .field("creator_id", .int, .required)
+                .field("date_founded", .string)
                 .field("description", .string)
-                .field("factionId", .int)
-                .field("homeStationId", .int)
-                .field("memberCount", .int, .required)
+                .field("faction_id", .int)
+                .field("home_station_id", .int)
+                .field("member_count", .int, .required)
                 .field("name", .string, .required)
                 .field("shares", .int64)
-                .field("taxRate", .float, .required)
+                .field("tax_rate", .float, .required)
                 .field("ticker", .string, .required)
                 .field("url", .string)
-                .field("warEligible", .bool)
-                .unique(on: "corporationId")
+                .field("war_eligible", .bool)
+                .unique(on: "corporation_id")
                 .create()
         }
 

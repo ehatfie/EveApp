@@ -56,7 +56,7 @@ final public class TypeModel: Model, Content, @unchecked Sendable {
     @ID(key: .id)
     public var id: UUID?
     
-    @Field(key: "typeId")
+    @Field(key: "type_id")
     public var typeId: Int64
 
     @Field(key: "capacity")
@@ -144,7 +144,7 @@ public struct CreateTypeModelMigration: Migration {
     public func prepare(on database: Database) -> EventLoopFuture<Void> {
         database.schema(TypeModel.schema)
             .id()
-            .field("typeId", .int64)
+            .field("type_id", .int64)
             .field("capacity", .double)
             .field("description", .string)
             .field("graphic_id", .int)

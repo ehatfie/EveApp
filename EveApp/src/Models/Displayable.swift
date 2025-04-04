@@ -160,7 +160,7 @@ struct CharacterInfoDisplayable: Identifiable {
                 value: corporationData.name
             )
         } else {
-            self.corporationInfo = IdentifiedString(id: -1, value: "MISSING CORP")
+            self.corporationInfo = IdentifiedString(id: -1, value: "\(publicData.corporationId)")
         }
         
         self.allianceInfo = nil

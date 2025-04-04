@@ -15,8 +15,8 @@ final public  class BlueprintModel1: Model, @unchecked Sendable {
   @ID(key: .id) public var id: UUID?
   
   @Group(key: "activities") public var activities: BlueprintActivityModel
-  @Field(key: "blueprintTypeID") public var blueprintTypeID: Int64
-  @Field(key: "maxProductionLimit") public var maxProductionLimit: Int64
+  @Field(key: "blueprintType_id") public var blueprintTypeID: Int64
+  @Field(key: "max_production_limit") public var maxProductionLimit: Int64
   
     public init() { }
   
@@ -35,11 +35,13 @@ final public  class BlueprintModel1: Model, @unchecked Sendable {
         .field("activities_manufacturing_materials", .array(of: .custom(QuantityTypeModel.self)))
         .field("activities_manufacturing_products", .array(of: .custom(QuantityTypeModel.self)))
         .field("activities_manufacturing_time", .int64)
-        .field("activities_researching_time", .int64)
-        .field("activities_researchMaterial_time", .int64)
-        .field("activities_researchTime_time", .int64)
-        .field("blueprintTypeID", .int64, .required)
-        .field("maxProductionLimit", .int64, .required)
+        .field("activities_reaction_materials", .array(of: .custom(QuantityTypeModel.self)))
+        .field("activities_reaction_products", .array(of: .custom(QuantityTypeModel.self)))
+        .field("activities_reaction_time", .int64)
+        .field("activities_research_material", .int64)
+        .field("activities_research_time", .int64)
+        .field("blueprintType_id", .int64, .required)
+        .field("max_production_limit", .int64, .required)
         .create()
     }
     
@@ -56,7 +58,7 @@ final public  class QuantityTypeModel1: Fields, @unchecked Sendable {
     @Field(key: "quantity")
     public var quantity: Int64
 
-    @Field(key: "typeId")
+    @Field(key: "type_id")
     public var typeId: Int64
 
     
@@ -89,10 +91,10 @@ final public class BlueprintActivityModel1: Fields, @unchecked Sendable {
   @Group(key: "manufacturing")
     public var manufacturing: BlueprintManufacturingModel
   
-  @Group(key: "researchMaterial")
+  @Group(key: "research_material")
     public var researchMaterial: TimeAmount
   
-  @Group(key: "researchTime")
+  @Group(key: "research_time")
     public var researchTime: TimeAmount
     
     public init() {

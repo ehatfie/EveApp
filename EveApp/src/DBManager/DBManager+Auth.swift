@@ -78,7 +78,7 @@ extension DBManager {
       try await CharacterDataModel(characterID: accessTokenData.characterID)
         .create(on: self.database)
     } catch let error {
-      log("createCharacterData(): error \(error)")
+      log("createCharacterData(): error \(String(reflecting: error))")
     }
   }
   

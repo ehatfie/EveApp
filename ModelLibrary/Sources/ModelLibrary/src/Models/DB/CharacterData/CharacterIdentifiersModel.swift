@@ -55,6 +55,7 @@ final public class CharacterIdentifiersModel: Model, @unchecked Sendable {
                 .field("name", .string, .required)
                 .field("corporation_id", .int64, .required)
                 .field("alliance_id", .int64)
+                .unique(on: "character_id")
                 .create()
         }
         

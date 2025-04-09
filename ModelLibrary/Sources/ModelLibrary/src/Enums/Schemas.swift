@@ -47,6 +47,7 @@ public enum Schemas: String {
     public enum Killmail: String {
         case zkill = "zkill"
         case esi = "esi"
+        case mer = "merKillmail"
     }
     
     public enum Universe: String {

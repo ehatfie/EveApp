@@ -829,6 +829,42 @@ extension DBManager {
     }
   }
   
+  func getPublicDataModel(named name: String) async -> CharacterPublicDataModel? {
+    do {
+      let publicData = try await CharacterPublicDataModel.query(on: self.database)
+        .filter(\.$name == name)
+        .first()
+      return publicData
+    } catch let error {
+      print("DBManager.getPublicDataModel() - error \(String(reflecting: error))")
+      return nil
+    }
+  }
+  
+  func getCharacterIdentifiersModel(named name: String) async -> CharacterIdentifiersModel? {
+    do {
+      let model = try await CharacterIdentifiersModel.query(on: self.database)
+        .filter(\.$name == name)
+        .first()
+      return model
+    } catch let error {
+      print("DBManager.geCharacterIdentifiersModel() - error \(String(reflecting: error))")
+      return nil
+    }
+  }
+  
+  func getCharacterIdentifiersModels() async -> [CharacterIdentifiersModel] {
+    do {
+      let models = try await CharacterIdentifiersModel
+        .query(on: self.database)
+        .all()
+      return models
+    } catch let error {
+      print("DBManager.geCharacterIdentifiersModels() - error \(String(reflecting: error))")
+      return []
+    }
+  }
+  
   func getCharacterWithInfo(by characterId: String) async -> CharacterDataModel? {
     do {
       return try await  CharacterDataModel.query(on: self.database)

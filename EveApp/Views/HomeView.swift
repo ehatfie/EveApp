@@ -123,8 +123,8 @@ struct HomeView: View {
       case .reactionHelper:
         ReactionHelperView()
       case .killboard:
-//        KillboardView()
-        KillboardViewOLD()
+        KillboardView()
+//        KillboardViewOLD()
       case .characterIndustryView:
         CharacterIndustryView(viewModel: CharacterIndustryViewModel())
       case .industryPlanner:

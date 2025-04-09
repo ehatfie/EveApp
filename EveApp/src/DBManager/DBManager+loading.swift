@@ -506,16 +506,16 @@ extension DBManager {
       taskGroup.addTask {
         do {
           try await self.splitAndSaveAsync(splits: splits - 1, models: top)
-        } catch let err {
-          print("eee \(err)")
+        } catch let error {
+          //print("eee \(String(reflecting: error))")
         }
       }
       
       taskGroup.addTask {
         do {
           try await self.splitAndSaveAsync(splits: splits - 1, models: bottom)
-        } catch let err {
-          print("eee \(err)")
+        } catch let error {
+          //print("eee \(String(reflecting: error))")
         }
       }
     })

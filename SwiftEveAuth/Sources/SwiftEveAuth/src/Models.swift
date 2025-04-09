@@ -15,6 +15,7 @@ public enum ESIScopes: String {
     case structureInfo = "esi-universe.read_structures.v1" //esi-universe.read_structures.v1
     case characterIndustryJobs = "esi-industry.read_character_jobs.v1"
     case wallet = "esi-wallet.read_character_wallet.v1"
+    case searchStructures = "esi-search.search_structures.v1"
 }
 
 public struct AuthConfig {

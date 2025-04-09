@@ -452,13 +452,18 @@ struct KillboardViewOLD: View {
                 HStack {
                     textEditorView()
                     //esiDataView()
-                    killmailDataView()
-                    if let selectedKillmailInfo = viewModel.selectedKillmailInfo {
-                        VStack {
-                            Text("\(selectedKillmailInfo.killmail_time)")
-                            Text("num attackers: \(selectedKillmailInfo.attackers.count)")
+                    VStack {
+                        RequestBuilderView()
+                        killmailDataView()
+                        if let selectedKillmailInfo = viewModel.selectedKillmailInfo {
+                            VStack {
+                                Text("\(selectedKillmailInfo.killmail_time)")
+                                Text("num attackers: \(selectedKillmailInfo.attackers.count)")
+                            }
                         }
+                        Spacer()
                     }
+
                     Spacer()
                 }
                 

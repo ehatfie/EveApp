@@ -320,6 +320,10 @@ import ModelLibrary
   }
   
   func setupMiscModels() throws {
+    try? CharacterIdentifiersModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+
     try? CorporationInfoModel.ModelMigration()
       .prepare(on: database)
       .wait()
@@ -329,10 +333,6 @@ import ModelLibrary
       .wait()
     
     try? CharacterCorporationModel.ModelMigration()
-      .prepare(on: database)
-      .wait()
-    
-    try? CharacterIdentifiersModel.ModelMigration()
       .prepare(on: database)
       .wait()
     
@@ -350,6 +350,15 @@ import ModelLibrary
   }
   
   func setupKillboardModels() throws {
+    do {
+      try MERKillmailModel.ModelMigration()
+        .prepare(on: database)
+        .wait()
+    } catch let error {
+      print("setup mer km error \(String(reflecting: error))")
+    }
+    
+    
     try? ESIKillmailModel.ModelMigration()
       .prepare(on: database)
       .wait()

@@ -78,7 +78,8 @@ public class AuthManager: ObservableObject {
                     .skillQueue,
                     .structureInfo,
                     .characterIndustryJobs,
-                    .wallet
+                    .wallet,
+                    .searchStructures
                 ]
             )
         )

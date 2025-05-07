@@ -100,6 +100,9 @@
 		BA7718FF2C909DCE00227488 /* KillboardViewOLD.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7718FE2C909DCE00227488 /* KillboardViewOLD.swift */; };
 		BA7E4B382C068E9900B00158 /* DBManager+loading2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7E4B372C068E9900B00158 /* DBManager+loading2.swift */; };
 		BA81E75E2D602607002FFA38 /* marketGroups.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA81E75D2D602607002FFA38 /* marketGroups.yaml */; };
+		BA95F8CB2DC045230052E245 /* SkillsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95F8CA2DC045230052E245 /* SkillsRootView.swift */; };
+		BA95F8CD2DC064FA0052E245 /* DBManager+Skills.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95F8CC2DC064F50052E245 /* DBManager+Skills.swift */; };
+		BA95F8CF2DC07CBF0052E245 /* AttributeAllocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95F8CE2DC07CBF0052E245 /* AttributeAllocator.swift */; };
 		BA982FB42C03D7CD00041EEB /* DBManager+Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA982FB32C03D7CD00041EEB /* DBManager+Auth.swift */; };
 		BA9C8FE82B44C5F900F4DBAF /* IndustryPlannerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FE72B44C5F900F4DBAF /* IndustryPlannerManager.swift */; };
 		BA9C8FEA2B44D18C00F4DBAF /* ReactionsHelperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9C8FE92B44D18C00F4DBAF /* ReactionsHelperView.swift */; };
@@ -353,6 +356,9 @@
 		BA7718FE2C909DCE00227488 /* KillboardViewOLD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillboardViewOLD.swift; sourceTree = "<group>"; };
 		BA7E4B372C068E9900B00158 /* DBManager+loading2.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+loading2.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BA81E75D2D602607002FFA38 /* marketGroups.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = marketGroups.yaml; sourceTree = "<group>"; };
+		BA95F8CA2DC045230052E245 /* SkillsRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillsRootView.swift; sourceTree = "<group>"; };
+		BA95F8CC2DC064F50052E245 /* DBManager+Skills.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBManager+Skills.swift"; sourceTree = "<group>"; };
+		BA95F8CE2DC07CBF0052E245 /* AttributeAllocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeAllocator.swift; sourceTree = "<group>"; };
 		BA982FB32C03D7CD00041EEB /* DBManager+Auth.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+Auth.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BA9C8FE72B44C5F900F4DBAF /* IndustryPlannerManager.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = IndustryPlannerManager.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA9C8FE92B44D18C00F4DBAF /* ReactionsHelperView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ReactionsHelperView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -621,6 +627,7 @@
 		BA3149C42A1EF98C0076E6DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BA95F8C72DC045080052E245 /* Skills */,
 				BA14445F2D544F71008473EB /* ItemViewer */,
 				BAD35B792D3B070F0097FA4C /* WalletView */,
 				BAA5CCB62CD5C948005590AE /* AlgoHelper */,
@@ -892,6 +899,15 @@
 			path = new;
 			sourceTree = "<group>";
 		};
+		BA95F8C72DC045080052E245 /* Skills */ = {
+			isa = PBXGroup;
+			children = (
+				BA95F8CA2DC045230052E245 /* SkillsRootView.swift */,
+				BA95F8CE2DC07CBF0052E245 /* AttributeAllocator.swift */,
+			);
+			path = Skills;
+			sourceTree = "<group>";
+		};
 		BA9C8FE62B44C52D00F4DBAF /* IndustryPlannerManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1041,6 +1057,7 @@
 		BAE069722AC8A1370054EFCF /* DBManager */ = {
 			isa = PBXGroup;
 			children = (
+				BA95F8CC2DC064F50052E245 /* DBManager+Skills.swift */,
 				BAD35B7E2D3B092A0097FA4C /* DBManager+Wallet.swift */,
 				BA7E4B362C068E8500B00158 /* new */,
 				BAE069732AC8A1420054EFCF /* DBManager.swift */,
@@ -1394,6 +1411,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA95F8CF2DC07CBF0052E245 /* AttributeAllocator.swift in Sources */,
 				BA37AFE22DA0964400CA887E /* RequestBuilderview.swift in Sources */,
 				BA5991072BF99B97003108CF /* DataManager+Helpers.swift in Sources */,
 				BA1E16362CC896C3005851A4 /* ReactionFilterView.swift in Sources */,
@@ -1482,6 +1500,7 @@
 				BA3149D92A4783800076E6DD /* UserDefaultsKeys.swift in Sources */,
 				BA5106942C09852900E9B344 /* DBManager+Fetching.swift in Sources */,
 				BA5F7AC32CA25C89007DDA12 /* IPCategoryPicker.swift in Sources */,
+				BA95F8CB2DC045230052E245 /* SkillsRootView.swift in Sources */,
 				BA9C8FE82B44C5F900F4DBAF /* IndustryPlannerManager.swift in Sources */,
 				BAA69B9F2C74398E007399D7 /* ReactionHelperView.swift in Sources */,
 				BA9C8FEC2B44DF8D00F4DBAF /* BlueprintComponentListView.swift in Sources */,
@@ -1504,6 +1523,7 @@
 				BAE02EEE2AF9F5CC00AB695F /* GroupInfoView.swift in Sources */,
 				BAABF0E12CE583D7006CF198 /* GroupedStrings.swift in Sources */,
 				BAE069952AD901050054EFCF /* DogmaEffectView.swift in Sources */,
+				BA95F8CD2DC064FA0052E245 /* DBManager+Skills.swift in Sources */,
 				BA3149F82A5384B00076E6DD /* AuthSetupView.swift in Sources */,
 				BA3149E72A4BCA790076E6DD /* CharacterInfoView.swift in Sources */,
 				BAE069762AC8A2900054EFCF /* DBManager+loading.swift in Sources */,

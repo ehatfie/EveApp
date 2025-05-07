@@ -10,7 +10,7 @@ import ModelLibrary
 
 // Could use a better name
 struct SkillGroupEntryView: View {
-    let skill: SkillInfo
+    let skill: CharacterSkillInfo
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             GroupBox(content: {
@@ -49,7 +49,7 @@ struct SkillGroupEntryView: View {
 
 #Preview {
     SkillGroupEntryView(
-        skill: SkillInfo(
+        skill: CharacterSkillInfo(
             skillModel: CharacterSkillModel(
                 activeSkillLevel: 5,
                 skillId: 100,

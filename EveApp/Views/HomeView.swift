@@ -13,6 +13,7 @@ enum SideBarItem: String, Identifiable, CaseIterable {
   var id: String { rawValue }
   
   case auth
+  case skills
   case algoHelper
   case industryPlanner
   case characterInfo
@@ -26,6 +27,7 @@ enum SideBarItem: String, Identifiable, CaseIterable {
   case killboard
   case characterIndustryView
   case wallet
+  
 }
 
 @Observable class HomeViewModel {
@@ -106,6 +108,8 @@ struct HomeView: View {
       case .characterInfo:
         CharacterInfoList(viewModel: CharacterInfoListViewModel(dbManager: db))
         //CharacterInfoView()
+      case .skills:
+        SkillsRootView()
       case .assets:
         AssetsViewer()
       case .reprocessingHelper:

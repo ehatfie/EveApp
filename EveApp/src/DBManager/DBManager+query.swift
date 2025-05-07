@@ -147,13 +147,18 @@ extension DBManager {
       .first()
   }
   
+  func getType(named name: String) async -> TypeModel? {
+    try? await TypeModel.query(on: self.database)
+      .filter(\.$name == name)
+      .first()
+  }
+  
   func getType1(for typeId: Int64) -> TypeModel {
     try! TypeModel.query(on: self.database)
       .field(\.$id).field(\.$typeId).field(\.$name)
       .filter(\.$typeId == typeId)
       .all()
       .wait()[0]
-    
   }
   
   func getTypes(for typeIds: [Int64]) -> [TypeModel] {
@@ -998,31 +1003,25 @@ extension DBManager {
       return (skillModel, typeModel)
     }
     let start = Date()
-    var skillsByGroup: [Int64: [SkillInfo]] = await processStuff(data: results)
+    var skillsByGroup: [Int64: [CharacterSkillInfo]] = await processStuff(data: results)
     print("creating skills by group took \(Date().timeIntervalSince(start))")
     
     let skillGroups = await makeSkillGroups(skillsByGroup: skillsByGroup)
-    //    skillsByGroup.compactMap { key, value -> SkillGroup? in
-    //      guard let group = getGroup(for: key) else {
-    //        return nil
-    //      }
-    //      return SkillGroup(group: group, skills: value)
-    //    }
     
     return skillGroups
   }
   
-  func processStuff(data: [(CharacterSkillModel, TypeModel)]) async -> [Int64: [SkillInfo]] {
+  func processStuff(data: [(CharacterSkillModel, TypeModel)]) async -> [Int64: [CharacterSkillInfo]] {
     return await withTaskGroup(
-      of: SkillInfo?.self,
-      returning: [Int64: [SkillInfo]].self
+      of: CharacterSkillInfo?.self,
+      returning: [Int64: [CharacterSkillInfo]].self
     ) { taskGroup in
       for (skillModel, typeModel) in data {
         taskGroup.addTask {
-          return await self.makeSkillInfo(characterSkillModel: skillModel, typeModel: typeModel)
+          return await self.makeCharacterSkillInfo(characterSkillModel: skillModel, typeModel: typeModel)
         }
       }
-      var skillsByGroup: [Int64: [SkillInfo]] = [:]
+      var skillsByGroup: [Int64: [CharacterSkillInfo]] = [:]
       
       for await skillInfo in taskGroup {
         guard let skillInfo = skillInfo else {
@@ -1036,10 +1035,10 @@ extension DBManager {
     }
   }
   
-  func makeSkillInfo(
+  func makeCharacterSkillInfo(
     characterSkillModel: CharacterSkillModel,
     typeModel: TypeModel
-  ) async -> SkillInfo? {
+  ) async -> CharacterSkillInfo? {
     guard let dogmaInfo = try? typeModel.joined(TypeDogmaInfoModel.self) else {
       return nil
     }
@@ -1061,7 +1060,7 @@ extension DBManager {
     
     //let skillEffectInfo = await self.getSkillEffectInfo(for: dogmaInfo)
     
-    let skillInfo = SkillInfo(
+    let skillInfo = CharacterSkillInfo(
       skillModel: characterSkillModel,
       typeModel: typeModel,
       dogma: dogmaInfo,
@@ -1074,7 +1073,7 @@ extension DBManager {
   }
   
   func makeSkillGroups (
-    skillsByGroup: [Int64: [SkillInfo]]
+    skillsByGroup: [Int64: [CharacterSkillInfo]]
   ) async -> [SkillGroup] {
     let skillGroups = await withTaskGroup(
       of: SkillGroup?.self,

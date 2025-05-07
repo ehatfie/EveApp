@@ -14,10 +14,10 @@ struct SkillsDataRepresentable {
 
 struct SkillGroup {
     let group: GroupModel
-    let skills: [SkillInfo]
+    let skills: [CharacterSkillInfo]
 }
 
-struct SkillInfo: Identifiable {
+struct CharacterSkillInfo: Identifiable {
     var id: Int64 {
         typeModel.typeId
     }

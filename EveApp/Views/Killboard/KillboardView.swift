@@ -10,6 +10,14 @@ import ModelLibrary
 import Fluent
 import Charts
 
+struct DisplayableString: Identifiable, Hashable {
+    var id: String {
+        self.value
+    }
+    
+    let value: String
+}
+
 struct ChartItem: Identifiable, Hashable {
     var id: UUID
     let value: String
@@ -30,9 +38,16 @@ struct ChartItem: Identifiable, Hashable {
     var someData: [ChartItem] = []
     
     var dictionary: [String: Int64] = [:]
+    var selectedShips: Set<IdentifiedString> = []
+    var possibleShips: [IdentifiedString] = []
+    
+    var selectedShips2: Set<DisplayableString> = []
+    var possibleShips2: [DisplayableString] = []
     
     init() {
-        loadKillmails()
+        print("viewModel init")
+        //loadKillmails()
+        loadShipFilter()
     }
     
     func loadKillmails() {
@@ -98,7 +113,7 @@ struct ChartItem: Identifiable, Hashable {
                 regionDict[systemClass, default: 0] += value.value
                 
             }
-            
+            guard !regionDict.isEmpty else { return }
             var items = regionDict.sorted(by: { $0.key < $1.key }).map { ChartItem(id: UUID(), value: $0.key, count: $0.value) }
             items.move(fromOffsets: IndexSet(0...0), toOffset: regionDict.count - 1)
             print("created items \(Date().timeIntervalSince(time))")
@@ -113,6 +128,41 @@ struct ChartItem: Identifiable, Hashable {
             //self.killmails = (killmails ?? []).map { MERKillmailDisplayable(model: $0 )}
         }
         
+    }
+    
+    func loadShipFilter() {
+        print("loadShipFilter")
+        let dbManager = DataManager.shared.dbManager!
+        let items1 = (
+            try? MERKillmailModel.query(on: dbManager.database)
+            .unique()
+            .all(\.$victimShipGroupName)
+            .wait()
+        ) ?? []
+        self.possibleShips2 = items1.map { DisplayableString(value: $0)}
+        var counter: Int64 = 0
+        var otherValues: [IdentifiedString] = []
+        for item in items1 {
+            otherValues.append(IdentifiedString(id: counter, value: item))
+            counter += 1
+        }
+        possibleShips = otherValues
+        print("got items1 \(items1)")
+//        let items = (
+//            try? MERKillmailModel.query(on: dbManager.database)
+//                .field(\.$id).field(\.$victimShipTypeName).field(\.$victimShipTypeId).field(\.$victimShipGroupName)
+//                .all()
+//                .wait()
+//            ) ?? []
+//        print("got \(items.count) valkues")
+//        var shipIds: Set<Int64> = []
+//        
+//        let identifiedShipNames = items.compactMap { entry -> IdentifiedString? in
+//            guard shipIds.insert(entry.victimShipTypeId).inserted else { return nil }
+//            
+//            return IdentifiedString(id: entry.victimShipTypeId, value: entry.victimShipTypeName )
+//        }
+//        self.possibleShips = identifiedShipNames
     }
     
     func increment(regionName: String, value: Int64) {
@@ -159,6 +209,27 @@ struct KillboardView: View {
                 Button("Load") {
                     viewModel.loadData()
                 }
+//                DisplayableStringPicker(
+//                    selectedStrings: $viewModel.selectedShips2,
+//                    possibleStrings: viewModel.possibleShips2
+//                )
+                IdentifiedStringPicker(
+                    selectedStrings: $viewModel.selectedShips,
+                    possibleStrings: viewModel.possibleShips)
+                VStack(alignment: .leading) {
+                    Text("Displayable String picker title")
+                    HStack(alignment: .top, spacing: 10) {
+                        List(viewModel.possibleShips2, id: \.id, selection: $viewModel.selectedShips2) { value in
+                            Text(value.value)
+                                .id(value.id)
+                                .background(viewModel.selectedShips2.contains(value) ? .yellow : Color.clear)
+                        }.listStyle(.bordered)
+                            
+                        
+                        Text("\(viewModel.selectedShips2.count) selected")
+                    }
+                }
+                selectedShipsThing()
             }
             Text("Loaded Killmails: \(viewModel.killmailCount)")
             VStack(alignment: .leading) {
@@ -172,6 +243,15 @@ struct KillboardView: View {
                         )
                     }
                 }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func selectedShipsThing() -> some View {
+        VStack {
+            ForEach(viewModel.selectedShips2.sorted(by: {$0.value < $1.value}), id: \.self) { ship in
+                Text(ship.value)
             }
         }
     }

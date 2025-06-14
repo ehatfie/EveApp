@@ -22,6 +22,10 @@
 		BA20ADB92C0D821400095B4E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA20ADB82C0D821400095B4E /* Constants.swift */; };
 		BA20ADBC2C114F3000095B4E /* HomeInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA20ADBB2C114F3000095B4E /* HomeInfoView.swift */; };
 		BA20ADBE2C1152B400095B4E /* CharacterInfoView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA20ADBD2C1152B400095B4E /* CharacterInfoView1.swift */; };
+		BA273E712DA72C840037A176 /* marketGroups.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA273E702DA72C840037A176 /* marketGroups.yaml */; };
+		BA2C28772DA85A980017D1E5 /* StringPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2C28762DA85A950017D1E5 /* StringPicker.swift */; };
+		BA2C28792DA85B500017D1E5 /* IdentifiedStringPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2C28782DA85B4D0017D1E5 /* IdentifiedStringPicker.swift */; };
+		BA2C287B2DA860B40017D1E5 /* DisplayableStringPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2C287A2DA860AF0017D1E5 /* DisplayableStringPicker.swift */; };
 		BA31499A2A1EF9660076E6DD /* EveAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3149992A1EF9660076E6DD /* EveAppApp.swift */; };
 		BA31499C2A1EF9660076E6DD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA31499B2A1EF9660076E6DD /* ContentView.swift */; };
 		BA31499E2A1EF9680076E6DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA31499D2A1EF9680076E6DD /* Assets.xcassets */; };
@@ -275,6 +279,10 @@
 		BA20ADB82C0D821400095B4E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BA20ADBB2C114F3000095B4E /* HomeInfoView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = HomeInfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA20ADBD2C1152B400095B4E /* CharacterInfoView1.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CharacterInfoView1.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA273E702DA72C840037A176 /* marketGroups.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = marketGroups.yaml; sourceTree = "<group>"; };
+		BA2C28762DA85A950017D1E5 /* StringPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringPicker.swift; sourceTree = "<group>"; };
+		BA2C28782DA85B4D0017D1E5 /* IdentifiedStringPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiedStringPicker.swift; sourceTree = "<group>"; };
+		BA2C287A2DA860AF0017D1E5 /* DisplayableStringPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayableStringPicker.swift; sourceTree = "<group>"; };
 		BA3149962A1EF9660076E6DD /* EveApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EveApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA3149992A1EF9660076E6DD /* EveAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EveAppApp.swift; sourceTree = "<group>"; };
 		BA31499B2A1EF9660076E6DD /* ContentView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -561,6 +569,7 @@
 				BA56D9B62C76D2B600BD72CB /* TestPreviewsTests */,
 				BA3149972A1EF9660076E6DD /* Products */,
 				BA0AFF092C759398003959D7 /* Frameworks */,
+				BA273E702DA72C840037A176 /* marketGroups.yaml */,
 			);
 			sourceTree = "<group>";
 		};
@@ -812,6 +821,9 @@
 		BA5F7ABB2C9F72B8007DDA12 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				BA2C287A2DA860AF0017D1E5 /* DisplayableStringPicker.swift */,
+				BA2C28782DA85B4D0017D1E5 /* IdentifiedStringPicker.swift */,
+				BA2C28762DA85A950017D1E5 /* StringPicker.swift */,
 				BA5F7ABC2C9F72C0007DDA12 /* NumPicker.swift */,
 			);
 			path = Common;
@@ -1331,6 +1343,7 @@
 				BA31499E2A1EF9680076E6DD /* Assets.xcassets in Resources */,
 				BA81E75E2D602607002FFA38 /* marketGroups.yaml in Resources */,
 				BAE0699F2ADA03CB0054EFCF /* dogmaEffects.yaml in Resources */,
+				BA273E712DA72C840037A176 /* marketGroups.yaml in Resources */,
 				BAE0699D2ADA03C10054EFCF /* typeIDs.yaml in Resources */,
 				BAE069A92ADA240A0054EFCF /* typeDogma.yaml in Resources */,
 				BA0AFEEC2C757F7C003959D7 /* TestPackage3 in Resources */,
@@ -1449,6 +1462,7 @@
 				BADE5CE02C9F47DC00E78357 /* IndustryPlannerView.swift in Sources */,
 				BA1444612D544F81008473EB /* ItemViewerRootView.swift in Sources */,
 				BAE0697E2AC8CBE10054EFCF /* ItemTypeDetailView.swift in Sources */,
+				BA2C287B2DA860B40017D1E5 /* DisplayableStringPicker.swift in Sources */,
 				BA3149D42A315A650076E6DD /* DataManager.swift in Sources */,
 				BA5F7ABF2C9F7ABB007DDA12 /* IPProductPickerView.swift in Sources */,
 				BA7577732CF3F8CB00BE56A2 /* IndyTool.swift in Sources */,
@@ -1460,6 +1474,7 @@
 				BA37AFE62DA0B07900CA887E /* DM+CharacterFetching.swift in Sources */,
 				BA7100A52AEA1969001CD301 /* BlueprintExplorerView.swift in Sources */,
 				BAA69B9A2C700E36007399D7 /* BlueprintProductionView.swift in Sources */,
+				BA2C28772DA85A980017D1E5 /* StringPicker.swift in Sources */,
 				BA314A062A5CDCDB0076E6DD /* DataManager+Loading.swift in Sources */,
 				BA7100992AE36799001CD301 /* ItemMaterialExplorerView.swift in Sources */,
 				BAD35B7F2D3B092F0097FA4C /* DBManager+Wallet.swift in Sources */,
@@ -1504,6 +1519,7 @@
 				BAE02EEE2AF9F5CC00AB695F /* GroupInfoView.swift in Sources */,
 				BAABF0E12CE583D7006CF198 /* GroupedStrings.swift in Sources */,
 				BAE069952AD901050054EFCF /* DogmaEffectView.swift in Sources */,
+				BA2C28792DA85B500017D1E5 /* IdentifiedStringPicker.swift in Sources */,
 				BA3149F82A5384B00076E6DD /* AuthSetupView.swift in Sources */,
 				BA3149E72A4BCA790076E6DD /* CharacterInfoView.swift in Sources */,
 				BAE069762AC8A2900054EFCF /* DBManager+loading.swift in Sources */,

@@ -10,7 +10,7 @@ import Foundation
 
 /** 200 ok object */
 
-public struct GetUniverseStructuresStructureIdOk: Codable {
+public struct GetUniverseStructuresStructureIdOk: Codable, Sendable {
 
     /** The full name of the structure */
     public var name: String

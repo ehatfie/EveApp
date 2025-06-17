@@ -208,7 +208,7 @@ struct ItemViewerRootView: View {
                     children: \.content
                 ) { value in
                     Text(value.value).font(.subheadline)
-                            
+                    
                 }.listStyle(SidebarListStyle())
             }
         }) {

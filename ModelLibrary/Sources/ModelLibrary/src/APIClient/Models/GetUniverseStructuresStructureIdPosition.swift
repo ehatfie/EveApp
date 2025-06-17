@@ -10,7 +10,7 @@ import Foundation
 
 /** Coordinates of the structure in Cartesian space relative to the Sun, in metres.  */
 
-public struct GetUniverseStructuresStructureIdPosition: Codable {
+public struct GetUniverseStructuresStructureIdPosition: Codable, Sendable {
 
     /** x number */
     public var x: Double

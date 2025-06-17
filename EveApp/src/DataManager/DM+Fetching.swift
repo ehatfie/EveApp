@@ -427,40 +427,112 @@ extension DataManager {
   }
   
   func fetchLocations(assets: [CharacterAssetsDataModel]) async {
+    guard let dbManager = dbManager else { return }
+    guard let authModel = await dbManager.getAnyAuthModel() else { return }
+    
+    let existingLocationIds = (try? await StationInfoModel.query(on: dbManager.database)
+      .all()
+      .map{ Int64($0.stationId) }) ?? []
+    //get_universe_structures_structure_id_ok
+    let uniqueExisting = Set<Int64>(existingLocationIds)
     var uniqueLocations = Set<Int64>()
     guard let valid = assets.first else {//(where: { $0.locationId > 100000000}) else {
       print("no valid station ID in \(assets.map{$0.locationId})")
       return
     }
-    [assets[1]].forEach { uniqueLocations.insert($0.locationId)}
     
+    assets.forEach { uniqueLocations.insert($0.locationId)}
+    uniqueLocations = uniqueLocations.subtracting(uniqueExisting)
+    print("++ fetching \(uniqueLocations.count) unique locations")
     await withTaskGroup(of: Void.self) { taskGroup in
       uniqueLocations.forEach { value in
         taskGroup.addTask {
-          await self.fetchStructureId(structureId: value)
+          await self.fetchStructureId(structureId: value, authModel: authModel)
         }
       }
     }
-
   }
   
   func fetchLocation(asset: CharacterAssetsDataModel) async {
-    let characters = await dbManager!.getCharacters()
+    //let characters = await dbManager!.getCharacters()
     
   }
   
-  func fetchStructureId(structureId: Int64) async {
-    let characters = await dbManager!.getCharacters()
-    guard characters.count > 0 else {
-      print("no characters got")
-      return
+  func fetchLocations(locationIds: [Int64]) async {
+    guard let dbManager = dbManager else { return }
+    guard let authModel = await dbManager.getAnyAuthModel() else { return }
+    
+    let existingLocationIds = (try? await StationInfoModel.query(on: dbManager.database)
+      .all()
+      .map{ Int64($0.stationId) }) ?? []
+    //get_universe_structures_structure_id_ok
+    let uniqueExisting = Set<Int64>(existingLocationIds)
+    let uniqueLocations = Set<Int64>(locationIds).subtracting(uniqueExisting)
+    print("have locations \(uniqueExisting)")
+    print("checking against \(locationIds)")
+    print("unique locations to fetch \(uniqueLocations)")
+    
+    // the id for a structure will be a large number
+    let structureIds = uniqueLocations.filter { $0 > 1000000000 }
+    
+    let results = await withTaskGroup(
+      of: GetStructureInfoResponse?.self,
+      returning: [GetStructureInfoResponse].self,
+    ) { taskGroup in
+      for locationId in structureIds {
+        taskGroup.addTask {
+          return await self.fetchStructure(for: locationId)
+        }
+      }
+      var returnValues: [GetStructureInfoResponse] = []
+      
+      for await result in taskGroup {
+        guard let result else {
+          continue
+        }
+        returnValues.append(result)
+      }
+      
+      return returnValues
     }
     
-    guard let authModel = await dbManager!.getAuthModel(for: characters[0].characterId) else {
-      print("fetchStructureId() - no auth model")
-      return
+    do {
+      let stationInfoModels = results.map {
+        StationInfoModel(
+          from2: $0.response,
+          stationId: $0.stationId
+        )
+      }
+      try await stationInfoModels.create(on: dbManager.database)
+      print("++ created \(stationInfoModels.count) StationInfoModels")
+    } catch let error {
+      print("Create StationInfoModel error \(String(reflecting: error))")
     }
-    
+  }
+  
+  func fetchStructure(for structureId: Int64) async -> GetStructureInfoResponse? {
+    guard let authModel = await self.dbManager?.getAnyAuthModel() else { return nil }
+    guard let (data, response) = await makeApiCallAsync3(
+      dataEndpoint: "/universe/structures/\(structureId)/",
+      authModel: authModel
+    ) else {
+      return nil
+    }
+    do {
+      let string1 = String(data: data, encoding: .utf8)
+      print("fetch Structure getStationIdResponse got \(string1)")
+      
+      let structureIdResponse = try JSONDecoder()
+        .decode(GetUniverseStructuresStructureIdOk.self, from: data)
+      print("got stationIdResponse \(structureIdResponse.name)")
+      return GetStructureInfoResponse(stationId: structureId, response: structureIdResponse)
+    } catch let err {
+      print("fetchStructureId error \(err)")
+      return nil
+    }
+  }
+  
+  func fetchStructureId(structureId: Int64, authModel: AuthModel) async {
     guard let (data, response) = await makeApiCallAsync3(
       dataEndpoint: "/universe/stations/\(structureId)/",
       authModel: authModel
@@ -472,8 +544,11 @@ extension DataManager {
       print("getStationIdResponse got \(string1)")
       
       let stationIdResponse = try JSONDecoder()
-        .decode(GetStationInfoResponse.self, from: data)
-      print("got stationIdResponse \(stationIdResponse.name)")
+        .decode(GetStructureInfoResponse.self, from: data)
+      print("got stationIdResponse \(stationIdResponse.response.name)")
+      let stationInfoModel = StationInfoModel(from3: stationIdResponse)
+      try await stationInfoModel.save(on: dbManager!.database)
+      print("++ saved stationInfoModel for \(stationInfoModel.name)")
     } catch let err {
       print("fetchStructureId error \(err)")
       print("")

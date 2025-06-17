@@ -822,6 +822,25 @@ extension DBManager {
     }
   }
   
+  /// Returns the CharacterDataModel matching the provided characterId with all related models loaded
+  func getCharacterWithInfo(characterId: String) async -> CharacterDataModel? {
+    do {
+      return try await  CharacterDataModel.query(on: self.database)
+        .with(\.$publicData)
+        .with(\.$assetsData)
+        .with(\.$corp)
+        .with(\.$walletData)
+        .with(\.$industryJobsData)
+        .filter(\.$characterId == characterId)
+        .first()
+        .get()
+    } catch let error {
+      print("DBManager.getCharacter() - error \(String(reflecting: error))")
+      return nil
+    }
+  }
+  
+  /// Returns the CharacterDataModel matching the provided characterId
   func getCharacter(by characterId: String) async -> CharacterDataModel? {
     do {
       return try await  CharacterDataModel.query(on: self.database)

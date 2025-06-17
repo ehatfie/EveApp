@@ -15,6 +15,8 @@
 		BA0AFEFC2C75937E003959D7 /* SwiftUIPreviews.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0AFEF22C75937E003959D7 /* SwiftUIPreviews.framework */; };
 		BA0AFF012C75937E003959D7 /* SwiftUIPreviewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0AFF002C75937E003959D7 /* SwiftUIPreviewsTests.swift */; };
 		BA0AFF022C75937E003959D7 /* SwiftUIPreviews.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0AFEF42C75937E003959D7 /* SwiftUIPreviews.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BA0FF6312DFE2022004DF086 /* marketGroups.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA0FF6302DFE2022004DF086 /* marketGroups.yaml */; };
+		BA0FF6332DFE2D58004DF086 /* DBManager+Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0FF6322DFE2D53004DF086 /* DBManager+Assets.swift */; };
 		BA1444612D544F81008473EB /* ItemViewerRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1444602D544F81008473EB /* ItemViewerRootView.swift */; };
 		BA1A940C2C0C378B0005B931 /* DM+KillmailFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A940B2C0C378B0005B931 /* DM+KillmailFetching.swift */; };
 		BA1A94142C0D72040005B931 /* ItemInputInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A94132C0D72040005B931 /* ItemInputInfoView.swift */; };
@@ -100,6 +102,7 @@
 		BA7718FF2C909DCE00227488 /* KillboardViewOLD.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7718FE2C909DCE00227488 /* KillboardViewOLD.swift */; };
 		BA7E4B382C068E9900B00158 /* DBManager+loading2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7E4B372C068E9900B00158 /* DBManager+loading2.swift */; };
 		BA81E75E2D602607002FFA38 /* marketGroups.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA81E75D2D602607002FFA38 /* marketGroups.yaml */; };
+		BA9216E12DFE4E120080B844 /* SearchRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9216E02DFE4E120080B844 /* SearchRootView.swift */; };
 		BA95F8CB2DC045230052E245 /* SkillsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95F8CA2DC045230052E245 /* SkillsRootView.swift */; };
 		BA95F8CD2DC064FA0052E245 /* DBManager+Skills.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95F8CC2DC064F50052E245 /* DBManager+Skills.swift */; };
 		BA95F8CF2DC07CBF0052E245 /* AttributeAllocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA95F8CE2DC07CBF0052E245 /* AttributeAllocator.swift */; };
@@ -271,6 +274,8 @@
 		BA0AFEF52C75937E003959D7 /* SwiftUIPreviews.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = SwiftUIPreviews.docc; sourceTree = "<group>"; };
 		BA0AFEFB2C75937E003959D7 /* SwiftUIPreviewsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUIPreviewsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA0AFF002C75937E003959D7 /* SwiftUIPreviewsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPreviewsTests.swift; sourceTree = "<group>"; };
+		BA0FF6302DFE2022004DF086 /* marketGroups.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = marketGroups.yaml; sourceTree = "<group>"; };
+		BA0FF6322DFE2D53004DF086 /* DBManager+Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBManager+Assets.swift"; sourceTree = "<group>"; };
 		BA1444602D544F81008473EB /* ItemViewerRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewerRootView.swift; sourceTree = "<group>"; };
 		BA1A940B2C0C378B0005B931 /* DM+KillmailFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DM+KillmailFetching.swift"; sourceTree = "<group>"; };
 		BA1A94132C0D72040005B931 /* ItemInputInfoView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemInputInfoView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -356,6 +361,7 @@
 		BA7718FE2C909DCE00227488 /* KillboardViewOLD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillboardViewOLD.swift; sourceTree = "<group>"; };
 		BA7E4B372C068E9900B00158 /* DBManager+loading2.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DBManager+loading2.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BA81E75D2D602607002FFA38 /* marketGroups.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = marketGroups.yaml; sourceTree = "<group>"; };
+		BA9216E02DFE4E120080B844 /* SearchRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRootView.swift; sourceTree = "<group>"; };
 		BA95F8CA2DC045230052E245 /* SkillsRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillsRootView.swift; sourceTree = "<group>"; };
 		BA95F8CC2DC064F50052E245 /* DBManager+Skills.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBManager+Skills.swift"; sourceTree = "<group>"; };
 		BA95F8CE2DC07CBF0052E245 /* AttributeAllocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributeAllocator.swift; sourceTree = "<group>"; };
@@ -547,6 +553,7 @@
 				BA56D9872C76CF1500BD72CB /* ModelLibrary */,
 				BAE0699A2ADA03B30054EFCF /* categoryIDs.yaml */,
 				BAE069982ADA03A80054EFCF /* groupIDs.yaml */,
+				BA0FF6302DFE2022004DF086 /* marketGroups.yaml */,
 				BA81E75D2D602607002FFA38 /* marketGroups.yaml */,
 				BAE0699C2ADA03C00054EFCF /* typeIDs.yaml */,
 				BAE0699E2ADA03CA0054EFCF /* dogmaEffects.yaml */,
@@ -650,6 +657,7 @@
 				BA3149DC2A47852A0076E6DD /* HomeView.swift */,
 				BA3149E32A4BC3210076E6DD /* AuthView.swift */,
 				BA5990FF2BF46020003108CF /* AssetsViewer.swift */,
+				BA9216E02DFE4E120080B844 /* SearchRootView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1057,6 +1065,7 @@
 		BAE069722AC8A1370054EFCF /* DBManager */ = {
 			isa = PBXGroup;
 			children = (
+				BA0FF6322DFE2D53004DF086 /* DBManager+Assets.swift */,
 				BA95F8CC2DC064F50052E245 /* DBManager+Skills.swift */,
 				BAD35B7E2D3B092A0097FA4C /* DBManager+Wallet.swift */,
 				BA7E4B362C068E8500B00158 /* new */,
@@ -1348,6 +1357,7 @@
 				BA31499E2A1EF9680076E6DD /* Assets.xcassets in Resources */,
 				BA81E75E2D602607002FFA38 /* marketGroups.yaml in Resources */,
 				BAE0699F2ADA03CB0054EFCF /* dogmaEffects.yaml in Resources */,
+				BA0FF6312DFE2022004DF086 /* marketGroups.yaml in Resources */,
 				BAE0699D2ADA03C10054EFCF /* typeIDs.yaml in Resources */,
 				BAE069A92ADA240A0054EFCF /* typeDogma.yaml in Resources */,
 				BA0AFEEC2C757F7C003959D7 /* TestPackage3 in Resources */,
@@ -1455,6 +1465,7 @@
 				BAA5CCB22CD32257005590AE /* Displayable.swift in Sources */,
 				BAD35B862D4069840097FA4C /* DM+WalletFetching.swift in Sources */,
 				BAE069AB2ADB30140054EFCF /* DBManager+Industry.swift in Sources */,
+				BA9216E12DFE4E120080B844 /* SearchRootView.swift in Sources */,
 				BA314A102A5CF8B10076E6DD /* ItemCategory.swift in Sources */,
 				BAE02EEC2AF9EA7100AB695F /* CategoryInfoView.swift in Sources */,
 				BAE069A72ADA1D110054EFCF /* DogmaAttributeDetailView.swift in Sources */,
@@ -1517,6 +1528,7 @@
 				BAD35B812D3B83110097FA4C /* WalletTransactionView.swift in Sources */,
 				BA6825C82C797AD300C103E9 /* ReactionHelperDetailView.swift in Sources */,
 				BA3C02D62C2A6B4700F32650 /* SkillGroupEntryView.swift in Sources */,
+				BA0FF6332DFE2D58004DF086 /* DBManager+Assets.swift in Sources */,
 				BA3149D12A31528E0076E6DD /* DeepLinker.swift in Sources */,
 				BA3149E42A4BC3210076E6DD /* AuthView.swift in Sources */,
 				BACB52DD2A68BB610044CDA0 /* ItemCategoryGroupsListView.swift in Sources */,

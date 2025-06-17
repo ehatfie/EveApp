@@ -21,6 +21,7 @@ public enum Schemas: String {
     case raceModel = "raceModel"
     case locationModel = "locationModel"
     case stationOperation = "stationOperation"
+    case stationInfo = "stationInfo"
     
     case characterDataModel = "characterDataModel"
     case characterPublicDataModel = "characterPublicDataModel"

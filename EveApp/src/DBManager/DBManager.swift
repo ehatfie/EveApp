@@ -320,6 +320,10 @@ import ModelLibrary
   }
   
   func setupMiscModels() throws {
+    try? StationInfoModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
     try? CharacterIdentifiersModel.ModelMigration()
       .prepare(on: database)
       .wait()

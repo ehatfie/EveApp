@@ -21,6 +21,25 @@ struct IdentifiedString: Identifiable, Hashable {
   }
 }
 
+struct IdentifiedStringQuantity: Identifiable, Hashable, Equatable {
+  var id: Int64
+  let value: String
+  let quantity: Int64
+  let content: [IdentifiedStringQuantity]?
+
+  init(
+    id: Int64,
+    value: String,
+    quantity: Int64,
+    content: [IdentifiedStringQuantity]? = nil
+  ) {
+    self.id = id
+    self.value = value
+    self.quantity = quantity
+    self.content = content
+  }
+}
+
 struct ListSection {
   let sectionName: String
   let content: [IdentifiedString]
@@ -31,27 +50,27 @@ private let mockFilters: [IdentifiedString] = [
     id: 1,
     value: "First",
     content: [
-      .init(id: 0, value: "Zero"),
-      .init(id: 1, value: "One"),
-      .init(id: 2, value: "Two"),
+      IdentifiedString(id: 0, value: "Zero"),
+      IdentifiedString(id: 1, value: "One"),
+      IdentifiedString(id: 2, value: "Two"),
     ]
   ),
   .init(
     id: 2,
     value: "Second",
     content: [
-      .init(id: 3, value: "Three"),
-      .init(id: 4, value: "Four"),
-      .init(id: 5, value: "Five"),
+      IdentifiedString(id: 3, value: "Three"),
+      IdentifiedString(id: 4, value: "Four"),
+      IdentifiedString(id: 5, value: "Five"),
     ]
   ),
   .init(
     id: 3,
     value: "Third",
     content: [
-      .init(id: 6, value: "Six"),
-      .init(id: 7, value: "Seven"),
-      .init(id: 8, value: "Eight"),
+      IdentifiedString(id: 6, value: "Six"),
+      IdentifiedString(id: 7, value: "Seven"),
+      IdentifiedString(id: 8, value: "Eight"),
     ]
   ),
 ]

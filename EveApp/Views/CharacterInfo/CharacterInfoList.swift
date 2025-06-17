@@ -128,6 +128,7 @@ struct CharacterInfoList: View {
         GroupBox {
             VStack {
                 Text(characterInfo.name)
+                Text(characterInfo.characterID)
                 Text(characterInfo.corporationInfo.value)
                 if let walletModel = characterInfo.walletModel {
                     Text(df2so(walletModel.$balance.wrappedValue ?? 0.00) + " ISK")

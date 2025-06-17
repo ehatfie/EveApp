@@ -27,7 +27,7 @@ enum SideBarItem: String, Identifiable, CaseIterable {
   case killboard
   case characterIndustryView
   case wallet
-  
+  case search
 }
 
 @Observable class HomeViewModel {
@@ -135,6 +135,8 @@ struct HomeView: View {
         IndustryPlannerView(viewModel: IndustryPlannerViewModel())
       case .wallet:
         WalletRootView(dbManager: db)
+      case .search:
+        SearchRootView()
 //      case nil:
 //        AlgoHelperView(viewModel: AlgoHelperViewModel(dbManager: db))
 //        HomeInfoView(viewModel: HomeInfoViewModel(dbManager: db))

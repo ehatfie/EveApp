@@ -59,13 +59,13 @@ public struct GetStationInfoResponse: Codable {
     /** services array */
     public var services: [Services]
     /** station_id integer */
-    public var stationId: Int
+    public var stationId: Int64
     /** The solar system this station is in */
     public var systemId: Int
     /** type_id integer */
     public var typeId: Int
 
-    public init(maxDockableShipVolume: Float, name: String, officeRentalCost: Float, owner: Int? = nil, position: GetUniverseStationsStationIdPosition, raceId: Int? = nil, reprocessingEfficiency: Float, reprocessingStationsTake: Float, services: [Services], stationId: Int, systemId: Int, typeId: Int) {
+    public init(maxDockableShipVolume: Float, name: String, officeRentalCost: Float, owner: Int? = nil, position: GetUniverseStationsStationIdPosition, raceId: Int? = nil, reprocessingEfficiency: Float, reprocessingStationsTake: Float, services: [Services], stationId: Int64, systemId: Int, typeId: Int) {
         self.maxDockableShipVolume = maxDockableShipVolume
         self.name = name
         self.officeRentalCost = officeRentalCost

@@ -80,12 +80,58 @@ class IndyTool {
     //print("++ missingInput bpInfos \(bpInfos.count) \(results)")
     //print("++ makeBPInfos took \(Date().timeIntervalSince(start))")
     //let dictionary = Dictionary(uniqueKeysWithValues: bpInfos.map{ ($0.productId, $0) })
-    let missingInputs = await findSummedInputs(
+    let summedInputs = await findSummedInputs(
       bpInfos: bpInfos,
       values: values,
       depth: depth
     )
+    let missingInputs = await actuallyFindMissing(inputMaterials: summedInputs)
     //print("got \(missingInputs.count) missing inputs \(depth) took \(Date().timeIntervalSince(start))")
+    return missingInputs
+  }
+  
+  func actuallyFindMissing(inputMaterials: [Int64: Int64]) async -> [Int64: Int64] {
+    guard let characterID else {
+      print("++ no selected character")
+      return inputMaterials
+    }
+    let start = Date()
+    let inputMaterialIds = inputMaterials.map { $0.key }
+    let inputIdSet = Set<Int64>(inputMaterialIds)
+    let characterAssets = await dbManager.getCharacterAssetsForValues(
+      characterID: characterID,
+      typeIds: inputMaterialIds
+    )
+    
+    var characterAssetDict: [Int64: Int64] = [:]
+    var missingAssetDict: [Int64: Int64] = [:]
+    var matchingAssetSet = Set<Int64>()
+    
+    var missingInputs: [Int64: Int64] = [:]
+    
+    for asset in characterAssets {
+      characterAssetDict[asset.typeId] = asset.quantity
+    }
+    
+    for input in inputMaterials {
+      let inputId = input.key
+      let quantity = input.value
+      
+      // if there is a matching character asset use the existing quantity
+      if let matchingAssetQuantity = characterAssetDict[inputId] {
+        //matchingAssetSet.insert(inputId)
+        // Diff is negative if we dont have enough
+        let diff = min(matchingAssetQuantity - quantity, 0)
+        // ignore any amount that isnt negative
+        guard diff >= 0 else { continue }
+        // insert a non-negative number
+        missingInputs[inputId] = abs(diff)
+      } else {
+        missingInputs[inputId] = quantity
+      }
+    }
+    
+    print("++ actuallyFindMissing took \(Date().timeIntervalSince(start))")
     return missingInputs
   }
   
@@ -132,7 +178,7 @@ class IndyTool {
       let productsPerRun = bpInfo.productCount
       let runsNeeded = Int64(ceil(Double(parentAmountNeeded) / Double(productsPerRun)))
       
-      let inputMaterials = bpInfo.inputMaterials.map { ($0.id, $0.quantity)}
+      //let inputMaterials = bpInfo.inputMaterials.map { ($0.id, $0.quantity)}
       
       // Calculate how much of the inputs will be needed based on how many runs we need
       for input in bpInfo.inputMaterials {
@@ -199,7 +245,7 @@ class IndyTool {
       }
       returnValues.append(bpInfo)
     }
-    
+    print("++ makeBPInfos took \(Date().timeIntervalSince(start))")
     return returnValues
   }
   
@@ -464,7 +510,6 @@ extension IndyTool {
 
     
     //let assets = dbManager.getCharacterAssetsForValues(characterID: 0, typeIds: inputProducts)
-    
 
     
     // we are determining what inputs for these bpInfos we are missing
@@ -619,4 +664,9 @@ struct DisplayableJobsGroup: Identifiable {
   let groupID: Int64
   let content: [DisplayableJob]
   let numHave: Int
+}
+
+
+extension IndyTool {
+  
 }

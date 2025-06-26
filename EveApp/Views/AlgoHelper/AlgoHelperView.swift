@@ -85,10 +85,14 @@ import SwiftUI
 //      )
       let start2 = Date()
       var start = Date()
-      let missingInputs = await tool.getMissingInputs(values: [selectedString.id: 1])
-    
+      //let missingInputs = await tool.getMissingInputs(values: [selectedString.id: 1])
+      let missingInputs = await tool.testFindMissingInputs(
+        values: [selectedString.id: 1]
+      )
+      print("++ missing inputs \(missingInputs)")
       print("first get missing inputs took \(Date().timeIntervalSince(start))")
       self.inputs = missingInputs
+      
       start = Date()
       let inputsDisplayable: [IdentifiedStringQuantity] = tool.makeGroupedDisplayable(from: missingInputs)
       
@@ -108,6 +112,8 @@ import SwiftUI
       start = Date()
       self.groupedJobs = await tool.createGroupedJobs(jobs: self.jobsDisplayable)
       print("-- createGroupedJobs took \(Date().timeIntervalSince(start))")
+      return
+      
       var someValues: [Int64: Int64] = [:]
       
       for job in jobsDisplayable {
@@ -215,9 +221,9 @@ struct AlgoHelperView: View {
             Text("Selected: \(selectedString.value)")
           }
           
-            groupedInputsList()
+            makeList(viewModel.inputsDisplayable)
               .padding(.bottom, 10)
-          makeList(viewModel.missingInputsDisplayable)
+          //makeList(viewModel.missingInputsDisplayable)
 //          ScrollView {
 //            missingInputs()
 //          }

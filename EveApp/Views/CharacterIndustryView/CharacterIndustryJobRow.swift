@@ -14,15 +14,12 @@ struct CharacterIndustryJobRow: View {
         HStack {
             VStack(alignment: .leading, spacing: 5) {
                 HStack {
-                    
                     Text(industryJobDisplayable.blueprintName)
                     if let productName = industryJobDisplayable.productName {
                         Text(productName)
                     }
                     //Spacer()
                 }
-
-                
             }//.frame(maxWidth: .infinity)
             Spacer()
         }

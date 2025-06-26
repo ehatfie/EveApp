@@ -202,7 +202,6 @@ extension CharacterIndustryJobModel {
         public init() { }
         public func prepare(on database: any FluentKit.Database) async throws {
             try await database.schema(CharacterIndustryJobModel.schema)
-                .id()
                 .field("character_industry_job_id", .int)
                 .field(
                     "character_id",

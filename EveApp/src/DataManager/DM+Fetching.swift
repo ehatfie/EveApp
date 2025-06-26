@@ -801,8 +801,9 @@ extension DataManager {
           industryJobsModels,
           on: database
         )
+      print("created\(industryJobsModels.count)")
     } catch let err {
-      print("fetch industry jobs err \(err)")
+      print("fetch industry jobs err \(String(reflecting: err))")
     }
   }
 }

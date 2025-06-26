@@ -23,7 +23,7 @@ struct BlueprintIndustryView: View {
     let dbManager = DataManager.shared.dbManager!
     let blueprint = dbManager.getRandomBlueprint()!
     self.blueprint = blueprint
-    self.typeModel = dbManager.getType(for: blueprint.blueprintTypeID)
+    self.typeModel = dbManager.getType(for: blueprint.blueprintTypeID)!
     
     self.industryPlanner = IndustryPlannerManager(dbManager: dbManager)
     

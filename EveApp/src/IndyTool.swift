@@ -16,13 +16,59 @@ class IndyTool {
   var characterID: String? = nil
   var relatedAssets: [Int64: Int64] = [:]
   
+  var fetchedTypeModels: [Int64: TypeModel] = [:]
+  
   init(dbManager: DBManager) {
     self.dbManager = dbManager
     characterID = dbManager.getCharacters().first?.characterId
   }
   
+  func sumInputs(on bpInfos: [BPInfo], values: [Int64: Int64]) async -> [Int64: Int64] {
+      var inputsDict: [Int64: Int64] = [:]
+      
+      for bpInfo in bpInfos {
+          let bpInputs = await sumAdjustedInputs(bpInfo: bpInfo, values: values)
+          
+          inputsDict.merge(bpInputs, uniquingKeysWith: +)
+      }
+      
+      return inputsDict
+  }
+  
+  func sumAdjustedInputs(bpInfo: BPInfo, values: [Int64: Int64]) async -> [Int64: Int64] {
+      let typeID = bpInfo.productId
+      // Dont want to make fuel blocks
+      guard BlueprintIds.FuelBlocks(rawValue: typeID) == nil else {
+          return [bpInfo.productId: values[bpInfo.productId, default: 0]]
+      }
+      guard let numToMake = values[bpInfo.productId],
+              numToMake > 0
+      else {
+          print("no count for \(bpInfo.productId)")
+          return [:]
+      }
+      if bpInfo.productId == 11539 {
+           
+      }
+      // how many runs we need to do to make the amount of items the `BPInfo` makes that we need
+      let runsToMake = Int64(ceil(Double(numToMake) / Double(bpInfo.productCount)))
+      var inputSums: [Int64: Int64] = [:]
+      
+      bpInfo.inputMaterials.forEach { input in
+          // add the number of input materials to do x runs
+          inputSums[input.id] = inputSums[input.id, default: 0] + (runsToMake * input.quantity)
+      }
+      
+      if bpInfo.productId == 11539 {
+          print("need \(numToMake) productsPerRun \(bpInfo.productCount) runsToMake \(runsToMake)")
+      }
+      
+      return inputSums
+  }
+  
   func getMissingInputs(values: [Int64: Int64], depth: Int = 0) async -> [Int64: Int64] {
-    print("getMissingInputs for \(values.count)")
+    //print("getMissingInputs for \(values.count) values \(values)")
+    //guard depth < 2 else { return [:]}
     guard !values.isEmpty else {
       return [:]
     }
@@ -31,35 +77,15 @@ class IndyTool {
     let bpInfos = await makeBPInfos(for: Array(values.keys))
     let results = bpInfos.map { ($0.blueprintId, $0.productId) }
     
-    print("++ missingInput bpInfos \(bpInfos.count) \(results)")
+    //print("++ missingInput bpInfos \(bpInfos.count) \(results)")
     //print("++ makeBPInfos took \(Date().timeIntervalSince(start))")
     //let dictionary = Dictionary(uniqueKeysWithValues: bpInfos.map{ ($0.productId, $0) })
-    let missingInputs = await findMissingInputs(
+    let missingInputs = await findSummedInputs(
       bpInfos: bpInfos,
       values: values,
       depth: depth
     )
-    print("got \(missingInputs.count) missing inputs \(depth) took \(Date().timeIntervalSince(start))")
-    //print("getMissingInputs bulk \(values.keys)")
-//    let result = await withTaskGroup(
-//      of: [Int64: Int64].self,
-//      returning: [Int64: Int64].self
-//    ) { taskGroup in
-//      for value in values {
-//        taskGroup.addTask {
-//          return await self.getMissingInputs(blueprintID: value.key, quantity: value.value, bpInfos: dictionary)
-//        }
-//      }
-//      var returnValues: [Int64: Int64] = [:]
-//      
-//      for await value in taskGroup {
-//        //print("merging \(value)")
-//        returnValues.merge(value, uniquingKeysWith: +)
-//      }
-//      
-//      return returnValues
-//    }
-    //print("getMissingInputs bulk took \(Date().timeIntervalSince(start))")
+    //print("got \(missingInputs.count) missing inputs \(depth) took \(Date().timeIntervalSince(start))")
     return missingInputs
   }
   
@@ -75,19 +101,13 @@ class IndyTool {
       //print("cant make BPInfo for \(blueprintID)")
       return [:]
     }
-    if blueprintID == 33361 {
-      print("found \(bpInfo.blueprintId) making \(bpInfo.productId)")
-    }
-   
+    
     let missingInputs = await findMissingInputs(
       bpInfos: [bpInfo],
       values: [bpInfo.productId: quantity],
       depth: 0
     )
-    if blueprintID == 33361, missingInputs[blueprintID] != nil {
-      print("Shouldnt be missing this?")
-    }
-    //print("getMissingInputs took \(Date().timeIntervalSince(start))")
+
     return missingInputs
   }
   
@@ -98,48 +118,53 @@ class IndyTool {
   ) async -> [Int64: Int64] {
     let start = Date()
     var returnValues: [Int64: Int64] = [:]
-    
+    let sums = await sumInputs1(on: bpInfos, values: values)
     let inputProducts = bpInfos.flatMap { $0.inputMaterials.map { $0.id }}
-    print("find missing inputs for \(inputProducts.count) input products")
+    
     await loadCharacterAssets(for: inputProducts)
-    print("related assets count \(relatedAssets.count)")
+    
     //let assets = dbManager.getCharacterAssetsForValues(characterID: 0, typeIds: inputProducts)
-    print("need values \(values)")
-    print("from bpInfos \(bpInfos.map { ($0.blueprintId, $0.productId) })")
+
+    // we are determining what inputs for these bpInfos we are missing
     for bpInfo in bpInfos {
-      print("checking bpInfo \(bpInfo.blueprintId) \(bpInfo.productId)")
+      // determine how many runs of the blueprint we need to satisfy requirements
       let parentAmountNeeded = values[bpInfo.productId, default: 0]
       let productsPerRun = bpInfo.productCount
       let runsNeeded = Int64(ceil(Double(parentAmountNeeded) / Double(productsPerRun)))
-      print("for \(bpInfo.blueprintId) need \(parentAmountNeeded) runs \(runsNeeded)")
+      
       let inputMaterials = bpInfo.inputMaterials.map { ($0.id, $0.quantity)}
-      print("checking inputMaterials \(inputMaterials)")
+      
+      // Calculate how much of the inputs will be needed based on how many runs we need
       for input in bpInfo.inputMaterials {
         let amountNeeded = input.quantity * runsNeeded
         
         guard amountNeeded > 0 else {
-          print("no runs for \(bpInfo.blueprintId) \(parentAmountNeeded) \(amountNeeded)")
           continue
         }
 
         //returnValues[input.id, default: 0] += runsNeeded * input.quantity
+        
+        // Dont include fuel blocks
         guard BlueprintIds.FuelBlocks(rawValue: input.id) == nil else {
           continue
         }
+        
+        // Determine how many of this item we already have and how much remains
         let matchingAssetQuantity = relatedAssets[input.id, default: 0]
         let amountMissing = max(0, amountNeeded - matchingAssetQuantity)
         
+        // only include values we are missing
         guard amountMissing > 0 else {
-          print("not missing \(input.id)")
+          //print("not missing \(input.id)")
           continue
         }
-//        print("Adding missing input \(input.id) matching \(matchingAssetQuantity) needed \(amountNeeded) missing \(amountMissing)")
-        returnValues[input.id] = amountMissing
+
+        // set how many we need of this item
+        returnValues[input.id, default: 0] += amountMissing
       }
     }
-    print("got return value \(returnValues)")
-    let returnValue = await getMissingInputs(values: returnValues, depth: depth + 1).merging(returnValues, uniquingKeysWith: +)
-    print("findMissingInputs \(depth) took \(Date().timeIntervalSince(start))")
+
+    let returnValue = await getMissingInputs(values: returnValues, depth: depth + 1).merging(sums, uniquingKeysWith: +)
     return returnValue
   }
   
@@ -149,7 +174,7 @@ class IndyTool {
   
   func loadCharacterAssets(for typeIds: [Int64]) async {
     guard let characterID else {
-      //print("no character ID")
+
       return
     }
     let fetchedIds: Set<Int64> = Set(relatedAssets.map { $0.key })
@@ -158,7 +183,7 @@ class IndyTool {
       characterID: characterID,
       typeIds: Array(missingIds)
     )
-    print("++ got character assets \(assets.count)")
+
     for asset in assets {
       relatedAssets[asset.typeId] = asset.quantity
     }
@@ -167,15 +192,14 @@ class IndyTool {
   func makeBPInfos(for blueprintIds: [Int64]) async -> [BPInfo] {
     var returnValues = [BPInfo]()
     let start = Date()
+    
     for blueprintId in blueprintIds {
       guard let bpInfo = await makeBPInfo(for: blueprintId) else {
-        print("no bpInfo made for \(blueprintId)")
         continue
       }
       returnValues.append(bpInfo)
     }
-    print("made bpInfos \(returnValues.count)")
-    //print("makeBPInfos took for \(blueprintIds.count) took \(Date().timeIntervalSince(start))")
+    
     return returnValues
   }
   
@@ -183,6 +207,7 @@ class IndyTool {
     let blueprintModel: BlueprintModel?
     let start = Date()
     let type: String
+
     if let bp = await dbManager.getBlueprintModel(for: blueprintId) {
       blueprintModel = bp
       type = "Blueprint"
@@ -192,10 +217,17 @@ class IndyTool {
     } else if let bp = await dbManager.getReactionBlueprintAsync(for: blueprintId) {
       blueprintModel = bp
       type = "Reaction"
+      
+      
     } else {
       type = "None"
       blueprintModel = nil
     }
+    
+    
+//    if blueprintId == 46207 || blueprintId == 16657 {
+//      print("++ got blueprint model for reaction \(blueprintModel?.activities.reaction.products.first?.quantity) \(blueprintId)")
+//    }
     
     guard let bpModel = blueprintModel else {
       return nil
@@ -215,7 +247,7 @@ class IndyTool {
     } else {
       product = nil
     }
-    
+
     guard let product = product else {
       return nil
     }
@@ -235,18 +267,78 @@ class IndyTool {
     )
   }
   
+  func makeGroupedDisplayable(from values: [Int64: Int64]) -> [IdentifiedStringQuantity] {
+      // the inputs are a dictionary of typeId and the amount we need for it
+      let itemQuantities = values.map{ ItemQuantity(typeId: $0.key, quantity: $0.value) }
+      let groupedItemQuantities = groupItemQuantities(itemQuantities: itemQuantities)
+    
+      var returnValues: [IdentifiedStringQuantity] = []
+      
+      for groupedItemQuantity in groupedItemQuantities {
+          let groupId = groupedItemQuantity.key
+          let itemQuantity = groupedItemQuantity.value
+          
+          let itemThings = itemQuantity.compactMap { value -> IdentifiedStringQuantity? in
+            guard let typeModel = fetchedTypeModels[value.typeId] else {
+              return nil
+            }
+            
+            return IdentifiedStringQuantity(
+              id: value.typeId,
+              value: typeModel.name,
+              quantity: value.quantity
+            )
+          }
+        let groupName = dbManager.getGroup(for: groupId)?.name ?? "Unknown Group \(groupId)"
+        let groupThing = IdentifiedStringQuantity(
+          id: groupId,
+          value: groupName,
+          quantity: Int64(itemThings.count),
+          content: itemThings
+        )
+        returnValues.append(groupThing)
+      }
+
+    return returnValues.sorted(by: { $0.id < $1.id })
+  }
+  
+  func groupItemQuantities(itemQuantities: [ItemQuantity]) -> [Int64: [ItemQuantity]] {
+      var groupedItemQuantities: [Int64: [ItemQuantity]] = [:]
+      
+      for itemQuantity in itemQuantities {
+          let typeId: Int64 = itemQuantity.typeId
+          let quantity: Int64 = itemQuantity.quantity
+          
+          let typeModel: TypeModel
+          if let existingTypeModel = fetchedTypeModels[typeId] {
+              typeModel = existingTypeModel
+              
+          } else {
+              guard let fetchedTypeModel = dbManager.getType(for: typeId) else {
+                  continue
+              }
+              fetchedTypeModels[typeId] = fetchedTypeModel
+              typeModel = fetchedTypeModel
+          }
+          
+          groupedItemQuantities[typeModel.groupID, default: []] += [itemQuantity]
+      }
+      
+      return groupedItemQuantities
+  }
+  
   func makeInputGroups(from values: [Int64: Int64]) async -> [IPDetailInputGroup2] {
       let start = Date()
       var returnValues: [IPDetailInputGroup2] = []
       var groupedValues: [Int64: [Int64]] = [:]
       let blueprintIds: [Int64] = values.map { $0.key }
       let inputTypeModels = dbManager.getTypes(for: blueprintIds)
-      print("inputTypeModels: \(inputTypeModels.first?.name ?? "none")")
+      
     
       var names: [Int64: String] = [:]
       let character = await dbManager.getCharacters().first!
       var relatedAssets = await dbManager.getCharacterAssetsWithTypeForValues(characterID: character.characterId, typeIds: blueprintIds)
-    print("related assets fetched \(Date().timeIntervalSince(start))")
+
       var relatedDict: [Int64: Int64] = [:]
       
       for asset in relatedAssets {
@@ -257,7 +349,7 @@ class IndyTool {
       for name in typeNames {
           names[name.typeId] = name.name
       }
-    print("got \(typeNames.count) type names \(Date().timeIntervalSince(start))")
+    //print("got \(typeNames.count) type names \(Date().timeIntervalSince(start))")
       // existing count by groupID
       var existingCountDict: [Int64: Int] = [:]
       
@@ -278,7 +370,7 @@ class IndyTool {
       }
       let groupIds = Set(groupedValues.keys)
       let groupModels = await dbManager.getGroups(with: Array(groupIds))
-    print("got groups \(groupModels.count) \(Date().timeIntervalSince(start))")
+      print("got groups \(groupModels.count) \(Date().timeIntervalSince(start))")
       let groupNames: [Int64: String] = groupModels.reduce(into: [:]) { $0[$1.groupId] = $1.name }
       for group in groupedValues {
         guard let groupName = groupNames[group.key] else { continue } //dbManager.getGroup(for: group.key)?.name else { continue }
@@ -288,7 +380,7 @@ class IndyTool {
               guard let inputValue = values[typeId],
                     let inputName = names[typeId]
               else {
-                  print("for \(typeId) inputValue \(values[typeId]) inputName \(names[typeId])")
+                //print("for \(typeId) inputValue \(values[typeId]) inputName \(names[typeId])")
                   continue
               }
              
@@ -317,12 +409,106 @@ class IndyTool {
   }
 }
 
+extension IndyTool {
+  
+  func sumInputs1(on bpInfos: [BPInfo], values: [Int64: Int64]) async -> [Int64: Int64] {
+    var returnValue: [Int64: Int64] = [:]
+    
+    for bpInfo in bpInfos {
+      
+      let amountNeeded = values[bpInfo.productId, default: 0]
+      guard !(amountNeeded == 0) else { continue }
+      
+      let runsNeeded = Double(amountNeeded / bpInfo.productCount).rounded(.awayFromZero)
+      
+      let inputMaterials = bpInfo.inputMaterials
+      
+      for inputMaterial in inputMaterials {
+        returnValue[inputMaterial.id, default: 0] += Int64(runsNeeded) * inputMaterial.quantity
+      }
+    }
+    
+    return returnValue
+  }
+  
+  func getSummedInputs(values: [Int64: Int64], depth: Int = 0) async -> [Int64: Int64] {
+    guard !values.isEmpty else {
+      return [:]
+    }
+    let start = Date()
+    
+    let bpInfos = await makeBPInfos(for: Array(values.keys))
+    let results = bpInfos.map { ($0.blueprintId, $0.productId) }
+    
+    
+    //print("++ makeBPInfos took \(Date().timeIntervalSince(start))")
+    //let dictionary = Dictionary(uniqueKeysWithValues: bpInfos.map{ ($0.productId, $0) })
+    let missingInputs = await findSummedInputs(
+      bpInfos: bpInfos,
+      values: values,
+      depth: depth
+    )
+    //print("got \(missingInputs.count) missing inputs \(depth) took \(Date().timeIntervalSince(start))")
+    return missingInputs
+  }
+  
+  func findSummedInputs(
+    bpInfos: [BPInfo],
+    values: [Int64: Int64],
+    depth: Int
+  ) async -> [Int64: Int64] {
+    let start = Date()
+    var returnValues: [Int64: Int64] = [:]
+    
+    let sums = await sumInputs1(on: bpInfos, values: values)
+
+    
+    //let assets = dbManager.getCharacterAssetsForValues(characterID: 0, typeIds: inputProducts)
+    
+
+    
+    // we are determining what inputs for these bpInfos we are missing
+    for bpInfo in bpInfos {
+      // determine how many runs of the blueprint we need to satisfy requirements
+      let parentAmountNeeded = values[bpInfo.productId, default: 0]
+      let productsPerRun = bpInfo.productCount
+
+      let runsNeeded = Int64(ceil(Double(parentAmountNeeded) / Double(productsPerRun)))
+      
+      let inputMaterials = bpInfo.inputMaterials.map { ($0.id, $0.quantity)}
+      
+      // Calculate how much of the inputs will be needed based on how many runs we need
+      for input in bpInfo.inputMaterials {
+        let amountNeeded = input.quantity * runsNeeded
+
+        guard amountNeeded > 0 else {
+          continue
+        }
+
+        //returnValues[input.id, default: 0] += runsNeeded * input.quantity
+        
+        // Dont include fuel blocks
+        guard BlueprintIds.FuelBlocks(rawValue: input.id) == nil else {
+          continue
+        }
+
+        // set how many we need of this item
+        returnValues[input.id, default: 0] += amountNeeded
+      }
+    }
+
+    let returnValue = await getSummedInputs(values: returnValues, depth: depth + 1)
+      .merging(returnValues, uniquingKeysWith: { one, two in one })
+
+    return returnValue
+  }
+  
+}
+
 // MARK: - Jobs
 
 extension IndyTool {
   func makeDisplayableJobsForInputSums(inputs: [Int64: Int64]) async -> [DisplayableJob] {
-    print("makeDisplayableJobsForInputSums \(inputs)")
-    //print("makeDisplayableJobsForInputSums \(self.relatedAssets)")
     let jobs = await makeJobsForInputSums(inputs: inputs, assets: self.relatedAssets)
     
     var jobsDict: [Int64: TestJob] = [:]
@@ -348,7 +534,6 @@ extension IndyTool {
   }
   
   func makeJobsForInputSums(inputs: [Int64: Int64], assets: [Int64: Int64]) async -> [TestJob] {
-    print("makeJobsForInputSums \(inputs)")
     // get blueprints for input materials
     let inputMaterialIds = inputs.keys.map { $0 }
     
@@ -393,7 +578,6 @@ extension IndyTool {
   
   func createGroupedJobs(jobs: [DisplayableJob]) async -> [DisplayableJobsGroup] {
     let names = jobs.map { $0.blueprintName}
-    print("createGroupedJobs \(names)")
     
     var productGroupsDict: [Int64: Int64] = [:]
     var groupedJobs: [Int64: [DisplayableJob]] = [:]

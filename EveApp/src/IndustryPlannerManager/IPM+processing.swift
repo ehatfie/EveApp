@@ -8,6 +8,11 @@
 import Foundation
 import ModelLibrary
 
+struct ItemQuantity {
+    let typeId: Int64
+    let quantity: Int64
+}
+
 extension IndustryPlannerManager {
     func itemInputBreakdown() {
         
@@ -313,6 +318,13 @@ extension IndustryPlannerManager {
         print("makeDisplayable took \(Date().timeIntervalSince(start))")
         return results
     }
+    
+    func makeGroupedDisplayable(from values: [Int64: Int64]) -> [IdentifiedStringQuantity] {
+        // the inputs are a dictionary of typeId and the amount we need for it
+        return  []
+    }
+    
+
     
     func makeInputGroups(from values: [Int64: Int64]) -> [IPDetailInputGroup2] {
         print("make Input groups")

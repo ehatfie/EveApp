@@ -84,7 +84,7 @@ class IndustryPlannerManager {
       return nil
     }
     
-    let blueprintInfos: [BlueprintInfo] = materialBps.map { matBp in
+    let blueprintInfos: [BlueprintInfo] = materialBps.compactMap { matBp -> BlueprintInfo? in
       var inputMaterials: [QuantityTypeModel]
       
       if matBp.activities.manufacturing.materials.count > 0 {
@@ -95,7 +95,10 @@ class IndustryPlannerManager {
         inputMaterials = []
       }
       
-      let typeModel = dbManager.getType(for: matBp.blueprintTypeID)
+      guard let typeModel = dbManager.getType(for: matBp.blueprintTypeID) else {
+        return nil
+      }
+      
       let results = getTypeModels(for: inputMaterials)
       
       return BlueprintInfo(blueprintModel: matBp, typeModel: typeModel, inputMaterials: results)
@@ -170,7 +173,7 @@ class IndustryPlannerManager {
 // Depth first versions?
 extension IndustryPlannerManager {
   func makePlan3(for blueprintModel: BlueprintModel) -> IndustryPlanJob? {
-    let typeModel = dbManager.getType(for: blueprintModel.blueprintTypeID)
+    guard let typeModel = dbManager.getType(for: blueprintModel.blueprintTypeID) else { return nil }
     let blueprintActivities = blueprintModel.activities
     
     guard let productTypeId = blueprintActivities.manufacturing.products.first?.typeId else { return nil }

@@ -134,11 +134,11 @@ extension DBManager {
     return blueprints[rand]
   }
   
-  func getType(for typeId: Int64) -> TypeModel {
-    try! TypeModel.query(on: self.database)
+  func getType(for typeId: Int64) -> TypeModel? {
+    try? TypeModel.query(on: self.database)
       .filter(\.$typeId == typeId)
-      .all()
-      .wait()[0]
+      .first()
+      .wait()
   }
   
   func getType(for typeId: Int64) async -> TypeModel? {
@@ -162,7 +162,6 @@ extension DBManager {
   }
   
   func getTypes(for typeIds: [Int64]) -> [TypeModel] {
-    print("getTypes for \(typeIds)")
     return try! TypeModel.query(on: self.database)
       .filter(\.$typeId ~~ typeIds)
       .all()
@@ -631,13 +630,14 @@ extension DBManager {
         select b.*, value from blueprintModel b,
         json_each(b.activities_reaction_products)
         where json_extract(value, '$.type_id') = \("\(typeId)")
+      
       """
     
     let queryString =
     """
     select bm.*
     from public."blueprintModel" bm, unnest(bm.activities_reaction_products) p(activities_reaction_products)
-    WHERE p ->> 'typeId' = '\(typeId)'
+    WHERE p ->> 'typeId' = '\(typeId)' and bm.blueprint_type_id  != '45732'
     """
     
     return try? await sql.raw(SQLQueryString(queryString))
@@ -1523,7 +1523,10 @@ extension DBManager {
   }
   
   func getIndustryJobDisplayInfo(data: [CharacterIndustryJobModel]) async throws -> [IndustryJobDisplayable] {
-    let result = await withTaskGroup(of: IndustryJobDisplayable?.self, returning: [IndustryJobDisplayable].self) { taskGroup in
+    let result = await withTaskGroup(
+      of: IndustryJobDisplayable?.self,
+      returning: [IndustryJobDisplayable].self
+    ) { taskGroup in
       for value in data {
         taskGroup.addTask {
           return try? await self.getIndustryJobDisplayInfo(for: value)
@@ -1628,7 +1631,18 @@ extension DBManager {
   }
   
   func getBlueprintLocationName(_ locationId: Int64) async throws -> String {
-    return "UNKNOWN_LOCATION"
+    let matchingItem = await getAsset(with: locationId)
+    let matchingStationName: String?
+    
+    if let matchingItem {
+      let matchingStation = await getStationInfoModel(stationId: matchingItem.locationId)
+      matchingStationName = matchingStation?.name
+    } else {
+      let matchingStation = await getStationInfoModel(stationId: locationId)
+      matchingStationName = matchingStation?.name
+    }
+    
+    return matchingStationName ?? "UNKNOWN_LOCATION"
   }
 }
 

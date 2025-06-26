@@ -109,6 +109,8 @@ struct AssetsViewItem: Identifiable, Hashable {
     
     func getAssets() {
         Task {
+            await makeSortedAssets()
+            return
             let dbManager = await DataManager.shared.dbManager!
             
             //            guard let character = await DataManager.shared.dbManager!.getCharacters().first else {
@@ -143,7 +145,7 @@ struct AssetsViewItem: Identifiable, Hashable {
                 self.viewItems = results
             }
             
-            await makeSortedAssets()
+            
         }
     }
     
@@ -310,7 +312,7 @@ struct AssetsViewer: View {
                 })
             }
             HStack {
-                assetsList()
+                //assetsList()
                 groupedAssetsList()
                 
                 if !viewModel.allAssetLocations.isEmpty {
@@ -354,12 +356,7 @@ struct AssetsViewer: View {
     func groupedAssetsList() -> some View {
         VStack {
             Text("Grouped Assets List \(viewModel.groupedSum)")
-            //            List(viewModel.groupedAssets) { assetGroup in
-            //                HStack {
-            //                    Text(assetGroup.value)
-            //                    Text("\(assetGroup.content?.count ?? -1)")
-            //                }
-            //            }
+
             List {
                 OutlineGroup(
                     viewModel.groupedAssets,
@@ -374,7 +371,7 @@ struct AssetsViewer: View {
                     }
                     
                     
-                }//.listStyle(SidebarListStyle())
+                }
             }
         }
     }

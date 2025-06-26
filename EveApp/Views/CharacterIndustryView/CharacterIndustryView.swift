@@ -28,10 +28,11 @@ import SwiftUI
         //self.industryJobs = jobs.map { IndustryJobDisplayable(industryJobModel: $0) }
     }
     
-    func loadIndustryData() async {
-        await DataManager.shared.fetchIndustryJobsForCharacters()
+    func loadIndustryData() {
+        Task {
+            await DataManager.shared.fetchIndustryJobsForCharacters()
+        }
     }
-    
 }
 
 struct CharacterIndustryView: View {
@@ -40,37 +41,83 @@ struct CharacterIndustryView: View {
     let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")  // set locale to reliable US_POSIX
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        dateFormatter.dateFormat = "MM/dd/yy hh:mm a"
         //          formatter.dateStyle = .long
         return dateFormatter
     }()
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("leading")
-            VStack(alignment: .leading, spacing: 10) {
-                ForEach(viewModel.industryJobs) { job in
-                    CharacterIndustryJobRow(industryJobDisplayable: job)
-                        .border(.blue)
-                }
-            }.border(.red)
+            gridView()
+//            Text("leading")
+//            VStack(alignment: .leading, spacing: 10) {
+//                ForEach(viewModel.industryJobs) { job in
+//                    CharacterIndustryJobRow(industryJobDisplayable: job)
+//                        .border(.blue)
+//                }
+//            }.border(.red)
             testButtons()
         }
+    }
+    
+    func gridView() -> some View {
+        Grid(alignment: .leading, verticalSpacing: 10) {
+            GridRow(alignment: .top) {
+                Group {
+                    Text("Blueprint")
+                    Text("Location ")
+                    Text("Product")
+                    Text("Start Date / End Date")
+                    Text("Time Remaining")
+                    Text("Runs")
+                    Text("Status")
+                }
+            }
+            
+            ForEach(viewModel.industryJobs) { job in
+                GridRow(alignment: .top) {
+                    Text(job.blueprintName)
+                    Text(job.blueprintLocationName)
+                    Text("\(job.industryJobModel.runs) " + (job.productName ?? ""))
+                    
+                    VStack(alignment: .leading) {
+                        Text(format(string: job.industryJobModel.startDate))
+                            .font(.subheadline)
+                        Text(format(string: job.industryJobModel.endDate))
+                            .font(.subheadline)
+                    }
+                    
+                    Text(timeRemaining(
+                        dateString: job.industryJobModel.endDate,
+                        duration: job.industryJobModel.duration
+                    ))
+                    Text("\(job.industryJobModel.runs)")
+                    Text(job.industryJobModel.status.rawValue)
+                }
+            }
+        }
+    }
+    
+    func format(string: String) -> String {
+        let date = try? Date(string, strategy: .iso8601)
+        guard let date else { return "no_date" }
+        return dateFormatter.string(from: date)
+    }
+    
+    func timeRemaining(dateString: String, duration: Int) -> String {
+        let endDate = try? Date(dateString, strategy: .iso8601)
+        guard let endDate else { return "no_date" }
+        let diff = endDate.timeIntervalSinceNow
+        return secondsToTime(Int(diff))
     }
     
     func testButtons() -> some View {
         VStack(alignment: .leading) {
             HStack {
-                Button(
-                    action: {
-                        Task {
-                            await viewModel.loadIndustryData()
-                        }
-                        
-                    },
-                    label: {
-                        Text("load industry data")
-                    })
+                Button("load industry data") {
+                    viewModel.loadIndustryData()
+                }
             }
         }
     }
@@ -84,10 +131,9 @@ struct CharacterIndustryView: View {
         
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.day, .hour, .minute, .second]
-        formatter.unitsStyle = .full
+        formatter.unitsStyle = .abbreviated
         
         let formattedString = formatter.string(from: TimeInterval(interval))!
-        print(formattedString)
         return formattedString
     }
 }

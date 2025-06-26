@@ -16,6 +16,8 @@ struct IndustryJobDisplayable: Identifiable {
     let blueprintName: String  // = try await getBlueprintName(blueprintId)
     let blueprintLocationName: String  // = try await getBlueprintLocationName(locationId)
     let productName: String?
+    // duration
+    
     
     init(
         industryJobModel: CharacterIndustryJobModel,

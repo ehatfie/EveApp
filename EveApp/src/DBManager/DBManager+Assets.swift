@@ -69,13 +69,14 @@ extension DBManager {
         guard let character = await getCharacterWithInfo(characterId: characterId) else {
             return []
         }
-        let locationType: GetCharactersCharacterIdAssets200Ok.LocationType = .station
+        let locationType: GetCharactersCharacterIdAssets200Ok.LocationType = .item
+        let locationFlag: GetCharactersCharacterIdAssets200Ok.LocationFlag = .hangar
+        
+        let locationTypes: [GetCharactersCharacterIdAssets200Ok.LocationType] = [.station, .item]
+        let locationFlags: [GetCharactersCharacterIdAssets200Ok.LocationFlag] = [.hangar, .autoFit]
         let characterAssets = try? await character.$assetsData.query(on: self.database)
-            .filter(\.$locationType != locationType.rawValue)
-            .join(
-                StationInfoModel.self,
-                on: \StationInfoModel.$stationId == \CharacterAssetsDataModel.$locationId
-            )
+            .filter(\.$locationType == locationType.rawValue)
+            .filter(\.$locationFlag ~~ locationFlags.map { $0.rawValue })
             .join(
                 TypeModel.self,
                 on: \CharacterAssetsDataModel.$typeId == \TypeModel.$typeId
@@ -84,6 +85,12 @@ extension DBManager {
             .get()
             .sorted(by: {$0.locationId < $1.locationId})
         return characterAssets
+    }
+    
+    func getAsset(with itemId: Int64) async -> CharacterAssetsDataModel? {
+        return try? await CharacterAssetsDataModel.query(on: self.database)
+            .filter(\.$itemId == itemId)
+            .first()
     }
     
     // Currently this gets all assets inside a player owned station that has a related StationInfoModel.
@@ -112,13 +119,13 @@ extension DBManager {
         return identifiedStrings
     }
     
-    // Creates `IdentifiedStringQuantity` 
+    // Creates `IdentifiedStringQuantity`
     func makeDisplayObjects(
         for groupedAssets: [Int64: [CharacterAssetsDataModel]],
         assetIds: Set<Int64>
     ) async -> [IdentifiedStringQuantity] {
         var identifiedStrings: [IdentifiedStringQuantity] = []
-        
+        print("++ makeDisplayObjects for \(groupedAssets.count) groups")
         for (locationId, assetGroup) in groupedAssets {
             print("++ group for \(locationId)")
             // Make sure the key, location_id, is not another asset
@@ -129,17 +136,14 @@ extension DBManager {
             //if let related = groupedAssets[]
             let identifiedStringQuantityValues = assetGroup.compactMap { value -> IdentifiedStringQuantity? in
                 var childAssetsIdentifiable: [IdentifiedStringQuantity]? = nil
+                
                 if let childAssets = groupedAssets[value.itemId] {
-                    childAssetsIdentifiable = childAssets
-                        .compactMap { childAsset -> IdentifiedStringQuantity? in
-                            guard let typeModel = try? childAsset.joined(TypeModel.self) else { return nil }
-                            return IdentifiedStringQuantity(
-                                id: childAsset.itemId,
-                                value: typeModel.name,
-                                quantity: childAsset.quantity
-                            )
-                        }
+                    print("++ has child assets")
+                    let groupedChildAssets = groupAssets(data: childAssets)
+                    let processedObjects = makeObjects(groupedAssets: groupedChildAssets)
+                    childAssetsIdentifiable = processedObjects
                 }
+                
                 guard let typeModel = try? value.joined(TypeModel.self) else { return nil }
                 
                 return IdentifiedStringQuantity(
@@ -160,6 +164,74 @@ extension DBManager {
         }
 
         return identifiedStrings
+    }
+    
+    func groupAssets(data: [CharacterAssetsDataModel]) -> [Int64: [CharacterAssetsDataModel]] {
+        print("++ groupAssets")
+        var groupedAssets: [Int64: [CharacterAssetsDataModel]] = [:]
+        for asset in data {
+            guard let typeModel = try? asset.joined(TypeModel.self) else {
+                continue
+            }
+            let existingAssets = groupedAssets[typeModel.groupID, default: []]
+            groupedAssets[typeModel.groupID] = existingAssets + [asset]
+        }
+        
+        return groupedAssets
+    }
+    
+    func makeObjects2(assets: [CharacterAssetsDataModel]) -> [IdentifiedStringQuantity] {
+        let assetThing = assets.compactMap { asset -> IdentifiedStringQuantity? in
+            guard let typeModel = try? asset.joined(TypeModel.self) else {
+                return nil
+            }
+            
+            return IdentifiedStringQuantity(
+                id: asset.itemId,
+                value: typeModel.name,
+                quantity: asset.quantity
+            )
+        }
+        return assetThing
+    }
+    
+    func makeObjects(groupedAssets: [Int64: [CharacterAssetsDataModel]]) -> [IdentifiedStringQuantity] {
+        var returnValues: [IdentifiedStringQuantity] = []
+        var groupNames: [Int64: String] = [:]
+        print("++ makeObjects")
+        for assetGroup in groupedAssets {
+            let groupId = assetGroup.key
+            let assetsInGroup = assetGroup.value
+            
+            // the IdentifiedStringQuantities for the asset group
+            let assetThing = makeObjects2(assets: assetsInGroup)
+//            returnValues.append(contentsOf: assetThing)
+            if let existingGroupName = groupNames[groupId] {
+                print("++ existing group name \(existingGroupName)")
+                let someValue = IdentifiedStringQuantity(
+                    id: groupId,
+                    value: existingGroupName,
+                    quantity: Int64(assetsInGroup.count),
+                    content: assetThing
+                )
+                returnValues.append(someValue)
+            } else {
+                guard let groupModel = self.getGroup(for: groupId) else {
+                    continue
+                }
+                print("++ new groupModel \(groupModel.name)")
+                groupNames[groupId] = groupModel.name
+
+                let someValue = IdentifiedStringQuantity(
+                    id: groupId,
+                    value: groupModel.name,
+                    quantity: Int64(assetsInGroup.count),
+                    content: assetThing
+                )
+                returnValues.append(someValue)
+            }
+        }
+        return returnValues
     }
 }
 

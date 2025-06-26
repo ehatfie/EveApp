@@ -10,19 +10,19 @@ import SwiftUI
 
 @Observable class AlgoHelperViewModel {
   var dbManager: DBManager
-  var searchText: String = "Bifrost"
+  var searchText: String = "Sacrilege"
   var searchResults: [IdentifiedString] = []
   var selectedString: IdentifiedString? = IdentifiedString(
-    id: 22442,
-    value: "Eos"
+    id: 12019,
+    value: "Sacrilege"
   )
   
   var inputs: [Int64: Int64]  = [:]
   
-  var inputsDisplayable: [IdentifiedString] = []
+  var inputsDisplayable: [IdentifiedStringQuantity] = []
   var inputGroups: [IPDetailInputGroup2] = []
   
-  var missingInputsDisplayable: [IdentifiedString] = []
+  var missingInputsDisplayable: [IdentifiedStringQuantity] = []
   var missingInputGroups: [IPDetailInputGroup2] = []
   
   var jobsDisplayable: [DisplayableJob] = []
@@ -83,26 +83,31 @@ import SwiftUI
 //        blueprintID: selectedString.id,
 //        quantity: 1
 //      )
-      
-      let start = Date()
+      let start2 = Date()
+      var start = Date()
       let missingInputs = await tool.getMissingInputs(values: [selectedString.id: 1])
     
-      print("get missing inputs took \(Date().timeIntervalSince(start))")
+      print("first get missing inputs took \(Date().timeIntervalSince(start))")
       self.inputs = missingInputs
+      start = Date()
+      let inputsDisplayable: [IdentifiedStringQuantity] = tool.makeGroupedDisplayable(from: missingInputs)
       
-      let inputsDisplayable: [IdentifiedString] = ipm.makeDisplayable(from: missingInputs)
       self.inputsDisplayable = inputsDisplayable
       //makeInputGroups took 0.29674792289733887 for 14
       //self.inputGroups = ipm.makeInputGroups(from: missingInputs)
       //makeInputGroups took 0.2926030158996582 for 14
+      start = Date()
       self.inputGroups = await tool.makeInputGroups(from: missingInputs)
-      let start2 = Date()
+      print("-- makeInputGroups took \(Date().timeIntervalSince(start))")
+      
+      start = Date()
       self.jobsDisplayable = await tool.makeDisplayableJobsForInputSums(
         inputs: missingInputs
       )
-      
-      print("makeJobsDisplayableTook \(Date().timeIntervalSince(start2))")
+      print("-- makeJobsDisplayableTook \(Date().timeIntervalSince(start))")
+      start = Date()
       self.groupedJobs = await tool.createGroupedJobs(jobs: self.jobsDisplayable)
+      print("-- createGroupedJobs took \(Date().timeIntervalSince(start))")
       var someValues: [Int64: Int64] = [:]
       
       for job in jobsDisplayable {
@@ -113,17 +118,24 @@ import SwiftUI
       }
       
       //print("getting missing job inputs")
-      
+      start = Date()
       let missingJobInputs = await tool.getMissingInputs(values: someValues)
+      print("-- second getMissingInputs took \(Date().timeIntervalSince(start))")
       print("missingJobInputs \(missingJobInputs.count)")
       let nonMadeMissingJobInputs = missingJobInputs.filter({ missingJobInput in
         return !jobsDisplayable.contains(where: { $0.productId == missingJobInput.key})
       })
-     
-      self.missingInputsDisplayable = ipm.makeDisplayable(from: nonMadeMissingJobInputs)
+      
+      start = Date()
+      self.missingInputsDisplayable = tool.makeGroupedDisplayable(from: nonMadeMissingJobInputs)
+      print("-- makeGroupedDisplayable took \(Date().timeIntervalSince(start))")
+      
+      start = Date()
       self.missingInputGroups = ipm.makeInputGroups(from: nonMadeMissingJobInputs)
-      print("total took \(Date().timeIntervalSince(start))")
-      print("missingInputsDisplayable \(missingInputsDisplayable)")
+      print("-- makeInputGroups took \(Date().timeIntervalSince(start))")
+      
+      print("total took \(Date().timeIntervalSince(start2))")
+      print("missingInputsDisplayable \(missingInputsDisplayable.count)")
     }
   }
   
@@ -202,11 +214,13 @@ struct AlgoHelperView: View {
           if let selectedString = viewModel.selectedString {
             Text("Selected: \(selectedString.value)")
           }
-          ScrollView {
-            inputs()
+          
+            groupedInputsList()
               .padding(.bottom, 10)
-            missingInputs()
-          }
+          makeList(viewModel.missingInputsDisplayable)
+//          ScrollView {
+//            missingInputs()
+//          }
           Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
@@ -262,6 +276,29 @@ struct AlgoHelperView: View {
     }
   }
   
+  func makeList(_ data: [IdentifiedStringQuantity]) -> some View {
+    VStack {
+      Text("Grouped inputs List \(data.count)")
+
+        List {
+            OutlineGroup(
+                data,
+                id: \.id,
+                children: \.content
+            ) { value in
+                HStack {
+                    Text(value.value)
+                        .font(.subheadline)
+                    Text(String(value.quantity))
+                        .font(.subheadline)
+                }
+                
+                
+            }
+        }
+    }
+  }
+  
   func jobs() -> some View {
     VStack(alignment: .leading, spacing: 10) {
       HStack {
@@ -302,6 +339,29 @@ struct AlgoHelperView: View {
         Text("to clipboard")
       })
     }
+  }
+  
+  func groupedInputsList() -> some View {
+      VStack {
+        Text("Grouped inputs List \(viewModel.inputsDisplayable.count)")
+
+          List {
+              OutlineGroup(
+                  viewModel.inputsDisplayable,
+                  id: \.id,
+                  children: \.content
+              ) { value in
+                  HStack {
+                    Text(value.value + " \(value.id)")
+                          .font(.subheadline)
+                      Text(String(value.quantity))
+                          .font(.subheadline)
+                  }
+                  
+                  
+              }
+          }
+      }
   }
   
   func expandingListView(input: [DisplayableJobsGroup]) -> some View {

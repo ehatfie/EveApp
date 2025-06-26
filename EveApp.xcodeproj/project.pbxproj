@@ -172,6 +172,7 @@
 		BAEBC02B2C0411C8009D8CC2 /* DM+Fetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEBC02A2C0411C8009D8CC2 /* DM+Fetching.swift */; };
 		BAEE97002D02A99C006D75B0 /* CharacterInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEE96FF2D02A997006D75B0 /* CharacterInfoList.swift */; };
 		BAEF4BC72C74465700F7E74A /* TestPackage1 in Resources */ = {isa = PBXBuildFile; fileRef = BAEF4BC62C74465700F7E74A /* TestPackage1 */; };
+		BAFF73AE2E089A7C003BA5CA /* IndustryPlannerRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFF73AD2E089A7C003BA5CA /* IndustryPlannerRootView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -426,6 +427,7 @@
 		BAEBC02A2C0411C8009D8CC2 /* DM+Fetching.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DM+Fetching.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BAEE96FF2D02A997006D75B0 /* CharacterInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterInfoList.swift; sourceTree = "<group>"; };
 		BAEF4BC62C74465700F7E74A /* TestPackage1 */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TestPackage1; sourceTree = "<group>"; };
+		BAFF73AD2E089A7C003BA5CA /* IndustryPlannerRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndustryPlannerRootView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1040,6 +1042,7 @@
 				BA5F7AC02CA253A1007DDA12 /* SwiftUIView.swift */,
 				BA5F7AC22CA25C89007DDA12 /* IPCategoryPicker.swift */,
 				BA5F7AC52CA26773007DDA12 /* IPCharacterPickerView.swift */,
+				BAFF73AD2E089A7C003BA5CA /* IndustryPlannerRootView.swift */,
 			);
 			path = IndustryPlannerView;
 			sourceTree = "<group>";
@@ -1436,6 +1439,7 @@
 				BA5F7AC12CA253A1007DDA12 /* SwiftUIView.swift in Sources */,
 				BA738B1A2C97BF2A001C0D6E /* CharacterIndustryView.swift in Sources */,
 				BAA88E442C586DCF0001BF42 /* PotentialIndustryFiltersView.swift in Sources */,
+				BAFF73AE2E089A7C003BA5CA /* IndustryPlannerRootView.swift in Sources */,
 				BAE02EF22AFB11D200AB695F /* TypeDogmaInfoView.swift in Sources */,
 				BA04CA8B2AEDCAEB008D66B8 /* MaterialDetailView.swift in Sources */,
 				BAD35B842D40696F0097FA4C /* DM+Processing.swift in Sources */,

@@ -323,20 +323,16 @@ struct TextFieldDropdownView: View {
             if isPresented {
                 VStack {
                     ScrollView {
-                        VStack(alignment: .leading) {
-                            ForEach(searchResults, id: \.id) { result in
-                                Text(result.value + " \(result.id)")
-                                    .onTapGesture {
-                                        self.text = result.value
-                                        self.isPresented = false
-                                        didSelect(result)
-                                    }
-                            }
-                        }.zIndex(1)
-                            .padding()
-                        
-                    }
-                }.frame(maxHeight: 200)
+                        ForEach(searchResults) { result in
+                            Text(result.value + " \(result.id)")
+                                .onTapGesture {
+                                    self.text = result.value
+                                    self.isPresented = false
+                                    didSelect(result)
+                                }
+                        }
+                    }.frame(maxHeight: 100)
+                }
             }
         }
     }

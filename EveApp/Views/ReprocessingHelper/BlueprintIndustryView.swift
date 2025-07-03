@@ -84,7 +84,6 @@ struct RandomBlueprintPicker: View {
   }
   
   func getGroups(in categoryId: Int64) {
-    print("get groups in \(categoryId)")
     self.groups = DataManager.shared.dbManager?.getGroups(in: categoryId)
   }
   

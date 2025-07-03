@@ -129,6 +129,7 @@
 		BAA88E422C55DA8B0001BF42 /* PotentialIIndustryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA88E412C55DA8B0001BF42 /* PotentialIIndustryView.swift */; };
 		BAA88E442C586DCF0001BF42 /* PotentialIndustryFiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA88E432C586DCF0001BF42 /* PotentialIndustryFiltersView.swift */; };
 		BAA88E462C61C8AB0001BF42 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA88E452C61C8A70001BF42 /* Theme.swift */; };
+		BAAB97A92E0CEAEC00F9FEE2 /* IndyTool+missingInputs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAB97A82E0CEAE400F9FEE2 /* IndyTool+missingInputs.swift */; };
 		BAABF0E12CE583D7006CF198 /* GroupedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAABF0E02CE583CF006CF198 /* GroupedStrings.swift */; };
 		BAB271D52A6867B5004F01B7 /* DataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB271D42A6867B4004F01B7 /* DataFetcher.swift */; };
 		BAB271F72A686918004F01B7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = BAB271F62A686918004F01B7 /* Alamofire */; };
@@ -389,6 +390,7 @@
 		BAA88E412C55DA8B0001BF42 /* PotentialIIndustryView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = PotentialIIndustryView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BAA88E432C586DCF0001BF42 /* PotentialIndustryFiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PotentialIndustryFiltersView.swift; sourceTree = "<group>"; };
 		BAA88E452C61C8A70001BF42 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		BAAB97A82E0CEAE400F9FEE2 /* IndyTool+missingInputs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IndyTool+missingInputs.swift"; sourceTree = "<group>"; };
 		BAABF0E02CE583CF006CF198 /* GroupedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedStrings.swift; sourceTree = "<group>"; };
 		BAB271D42A6867B4004F01B7 /* DataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcher.swift; sourceTree = "<group>"; };
 		BACB52DA2A68B9700044CDA0 /* ItemGroupView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ItemGroupView.swift; sourceTree = "<group>"; tabWidth = 2; };
@@ -667,6 +669,7 @@
 		BA3149CC2A1EFA720076E6DD /* src */ = {
 			isa = PBXGroup;
 			children = (
+				BAAB97A72E0CEADF00F9FEE2 /* IndyTool */,
 				BA7577722CF3F8C300BE56A2 /* IndyTool.swift */,
 				BAA88E452C61C8A70001BF42 /* Theme.swift */,
 				BA59910A2C003781003108CF /* AuthManager */,
@@ -998,6 +1001,14 @@
 				BAA69B992C700E36007399D7 /* BlueprintProductionView.swift */,
 			);
 			path = PotentialIndustryView;
+			sourceTree = "<group>";
+		};
+		BAAB97A72E0CEADF00F9FEE2 /* IndyTool */ = {
+			isa = PBXGroup;
+			children = (
+				BAAB97A82E0CEAE400F9FEE2 /* IndyTool+missingInputs.swift */,
+			);
+			path = IndyTool;
 			sourceTree = "<group>";
 		};
 		BAB271CF2A637916004F01B7 /* Packages */ = {
@@ -1441,6 +1452,7 @@
 				BAA88E442C586DCF0001BF42 /* PotentialIndustryFiltersView.swift in Sources */,
 				BAFF73AE2E089A7C003BA5CA /* IndustryPlannerRootView.swift in Sources */,
 				BAE02EF22AFB11D200AB695F /* TypeDogmaInfoView.swift in Sources */,
+				BAAB97A92E0CEAEC00F9FEE2 /* IndyTool+missingInputs.swift in Sources */,
 				BA04CA8B2AEDCAEB008D66B8 /* MaterialDetailView.swift in Sources */,
 				BAD35B842D40696F0097FA4C /* DM+Processing.swift in Sources */,
 				BA5991002BF46020003108CF /* AssetsViewer.swift in Sources */,

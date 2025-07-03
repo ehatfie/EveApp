@@ -57,6 +57,9 @@ extension IndyTool {
               // insert a non-negative number
               missingInputs[inputId] = abs(diff)
             } else {
+                if quantity == 0 {
+                    print("++ testGetMissingInputs quantity \(quantity)")
+                }
               missingInputs[inputId] = quantity
             }
         }
@@ -78,7 +81,7 @@ extension IndyTool {
     func loadAssets(characterId: String, typeIds: [Int64]) async {
         // we only want assets we dont already have
         let unfetchedTypeIds = typeIds.compactMap { value -> Int64? in
-         guard relatedAssets[value] == nil else { return nil }
+            guard relatedAssets[value] == nil else { return nil }
             return value
         }
         
@@ -94,7 +97,89 @@ extension IndyTool {
             relatedAssets[asset.typeId] = asset.quantity
         }
     }
+}
+
+// MARK: - Jobs stuff
+
+extension IndyTool {
     
+    func testMakeJobsForMissingInputs(missingInputs: [Int64: Int64]) async -> [TestJob] {
+        let start = Date()
+        
+        let missingInputIds = missingInputs.keys.map { $0 }
+        
+        let missingInputBlueprints = await makeBPInfos(for: missingInputIds)
+        
+        var uniqueBPs: [Int64: BPInfo] = [:]
+        
+        missingInputBlueprints.forEach { value in
+          guard BlueprintIds.FuelBlocks(rawValue: value.productId) == nil else {
+            return
+          }
+          uniqueBPs[value.productId] = value
+        }
+        
+        let jobs: [TestJob] = missingInputIds.compactMap { key -> TestJob? in
+          guard let value = missingInputs[key] else {
+            return nil
+          }
+          guard let blueprintInfo = uniqueBPs[key] else {
+            return nil
+          }
+          let inputQuantity = value
+          let productsPerRun = blueprintInfo.productCount
+          let requiredRuns = Int(ceil(Double(inputQuantity) / Double(productsPerRun)))
+            if requiredRuns == 0 {
+                let one = Double(inputQuantity) / Double(productsPerRun)
+                let ceil = ceil(one)
+                print("++ inputQuantity \(inputQuantity) productsPerRun \(productsPerRun) one \(one), ceil \(ceil)")
+            }
+          return TestJob(
+            quantity: Int64(value),
+            productId: blueprintInfo.productId,
+            inputs: blueprintInfo.inputMaterials,
+            blueprintId: blueprintInfo.blueprintId,
+            productsPerRun: Int(blueprintInfo.productCount),
+            requiredRuns: requiredRuns
+          )
+        }
+        
+        print("++ testMakeJobsForMissingInputs took \(abs(start.timeIntervalSinceNow))")
+        return jobs
+    }
+    
+    func makeJobsForJobs(_ jobs: [TestJob]) async -> [TestJob] {
+        var requiredInputs: [Int64: Int64] = [:]
+        
+        for job in jobs {
+            
+            // sum the inputs
+            // this could be the async for each technically
+            for input in job.inputs {
+                if input.quantity == 0 || job.requiredRuns == 0 {
+                    print("jobForJob quantity \(input.quantity) requiredRuns \(job.requiredRuns)")
+                }
+                requiredInputs[input.id, default: 0] += input.quantity * Int64(job.requiredRuns)
+            }
+        }
+        
+        let missingInputs = await testFindMissingInputs(values: requiredInputs)
+        
+        guard !missingInputs.isEmpty else {
+            return jobs
+        }
+        
+        let jobsForInputs = await testMakeJobsForMissingInputs(
+            missingInputs: missingInputs
+        )
+        
+        return jobs + jobsForInputs
+    }
+    
+    func makeJobsForInputs(_ inputs: [Int64: Int64]) async -> [TestJob] {
+        
+        return []
+    }
     
     
 }

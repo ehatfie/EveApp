@@ -77,8 +77,6 @@ class IndyTool {
     let bpInfos = await makeBPInfos(for: Array(values.keys))
     let results = bpInfos.map { ($0.blueprintId, $0.productId) }
     
-    //print("++ missingInput bpInfos \(bpInfos.count) \(results)")
-    //print("++ makeBPInfos took \(Date().timeIntervalSince(start))")
     //let dictionary = Dictionary(uniqueKeysWithValues: bpInfos.map{ ($0.productId, $0) })
     let summedInputs = await findSummedInputs(
       bpInfos: bpInfos,
@@ -235,7 +233,7 @@ class IndyTool {
     }
   }
   
-  func makeBPInfos(for blueprintIds: [Int64]) async -> [BPInfo] {
+  func makeBPInfos2(for blueprintIds: [Int64]) async -> [BPInfo] {
     var returnValues = [BPInfo]()
     let start = Date()
     
@@ -245,9 +243,29 @@ class IndyTool {
       }
       returnValues.append(bpInfo)
     }
-    print("++ makeBPInfos took \(Date().timeIntervalSince(start))")
+    print("++ makeBPInfos \(returnValues.count) took \(Date().timeIntervalSince(start))")
     return returnValues
   }
+  
+  // blueprintIds is misleading because its really the blueprints that make the provided ids
+  func makeBPInfos(for blueprintIds: [Int64]) async -> [BPInfo] {
+    guard !blueprintIds.isEmpty else {
+      return []
+    }
+    let start = Date()
+    
+    async let blueprintModels = await dbManager.getBlueprintModelsAsync(for: blueprintIds)
+    async let manufacturingBps = await dbManager.getManufacturingBlueprintsAsync(making: blueprintIds)
+    async let reactionBps = await dbManager.getReactionBlueprintsAsync(making: blueprintIds)
+
+    let fetchedBpModels = await [blueprintModels, manufacturingBps, reactionBps].flatMap{ $0 }
+    let bpInfos: [BPInfo] = fetchedBpModels.compactMap { model -> BPInfo? in
+      return makeBPInfo(for: model)
+    }
+    
+    return bpInfos
+  }
+  
   
   func makeBPInfo(for blueprintId: Int64) async -> BPInfo? {
     let blueprintModel: BlueprintModel?
@@ -459,14 +477,18 @@ extension IndyTool {
   
   func sumInputs1(on bpInfos: [BPInfo], values: [Int64: Int64]) async -> [Int64: Int64] {
     var returnValue: [Int64: Int64] = [:]
-    
+    print("++ sumInputs1")
     for bpInfo in bpInfos {
       
       let amountNeeded = values[bpInfo.productId, default: 0]
       guard !(amountNeeded == 0) else { continue }
       
-      let runsNeeded = Double(amountNeeded / bpInfo.productCount).rounded(.awayFromZero)
-      
+      let runsNeeded = (Double(amountNeeded) / Double(bpInfo.productCount)).rounded(.awayFromZero)
+      if runsNeeded == 0 {
+        let value = Double(amountNeeded) / Double(bpInfo.productCount)
+        let rounded = value.rounded(.awayFromZero)
+        print("++ sumInputs 0 amountNeeded \(amountNeeded) productCount \(bpInfo.productCount) value \(value) rounded \(rounded)")
+      }
       let inputMaterials = bpInfo.inputMaterials
       
       for inputMaterial in inputMaterials {
@@ -486,15 +508,12 @@ extension IndyTool {
     let bpInfos = await makeBPInfos(for: Array(values.keys))
     let results = bpInfos.map { ($0.blueprintId, $0.productId) }
     
-    
-    //print("++ makeBPInfos took \(Date().timeIntervalSince(start))")
-    //let dictionary = Dictionary(uniqueKeysWithValues: bpInfos.map{ ($0.productId, $0) })
     let missingInputs = await findSummedInputs(
       bpInfos: bpInfos,
       values: values,
       depth: depth
     )
-    //print("got \(missingInputs.count) missing inputs \(depth) took \(Date().timeIntervalSince(start))")
+
     return missingInputs
   }
   
@@ -548,13 +567,79 @@ extension IndyTool {
     return returnValue
   }
   
+  // getShoppingList
+  func getPurchaseList(jobs: [TestJob]) async -> [Int64: Int64] {
+    print("++ getPurchaseList for \(jobs.count) jobs")
+    // this makes that
+    var jobProducts: [Int64: TestJob] = [:]
+    for job in jobs {
+      //print("\(job.blueprintId) \(job.productId) \(job.quantity)")
+      jobProducts[job.productId] = job
+    }
+    var shoppingList: [Int64: Int64] = [:]
+    var usedAssets: Set<Int64> = []
+    
+    for (productId, job) in jobProducts {
+      
+      for input in job.inputs {
+        if input.id == 33336 {
+          print("++ NOO")
+        }
+        // if we dont have a job that produces this input
+        if jobProducts[input.id] == nil {
+          if let related = relatedAssets[input.id] {
+            let diff = related - (input.quantity * Int64(job.requiredRuns))
+            guard diff < 0 else {
+              print("++ dont need to buy \(input.id) have \(diff) remaining")
+              continue }
+            
+            if !usedAssets.insert(input.id).inserted {
+              print("++ already used \(input.id)")
+            }
+            print("++ diff \(diff) for \(input.id)")
+            shoppingList[input.id, default: 0] += abs(diff)
+          }
+          print("++ adding \(input.id)")
+          shoppingList[input.id, default: 0] += input.quantity * Int64(job.requiredRuns)
+        }
+      }
+
+    }
+    
+    return shoppingList
+  }
+  
+  func getPurchaseListDisplayable(jobs: [TestJob]) async -> [IdentifiedStringQuantity] {
+    let shoppingList: [Int64: Int64] = await getPurchaseList(jobs: jobs)
+    var returnValues: [IdentifiedStringQuantity] = []
+    
+    let itemIds = Set(shoppingList.keys)
+    
+    for (itemId, quantity) in shoppingList {
+      guard let typeName = await dbManager.getTypeName(for: itemId) else {
+        continue
+      }
+      
+      returnValues.append(
+          IdentifiedStringQuantity(
+          id: itemId,
+          value: typeName.name,
+          quantity: quantity
+        )
+      )
+    }
+    
+    return returnValues
+  }
+  
 }
 
 // MARK: - Jobs
 
 extension IndyTool {
+
   func makeDisplayableJobsForInputSums(inputs: [Int64: Int64]) async -> [DisplayableJob] {
-    let jobs = await makeJobsForInputSums(inputs: inputs, assets: self.relatedAssets)
+    let jobs = await testMakeJobsForMissingInputs(missingInputs: inputs)
     
     var jobsDict: [Int64: TestJob] = [:]
     
@@ -576,6 +661,29 @@ extension IndyTool {
     }
     
     return displayableJobs //jobs.map(\.init)
+  }
+  
+  func makeDisplayableJobs(_ jobs: [TestJob]) async -> [DisplayableJob] {
+    var jobsDict: [Int64: TestJob] = [:]
+    
+    for job in jobs {
+      jobsDict[job.blueprintId] = job
+    }
+    
+    let idSet: Set<Int64> = Set(jobsDict.keys)
+    //let names = await dbManager.getTypeNames(for: Array(idSet))
+    let names1: [(Int64, String)] = (try? await dbManager.getBlueprintNames(Array(idSet))) ?? []
+    
+    let displayableJobs: [DisplayableJob] = names1.compactMap { value -> DisplayableJob? in
+      guard let existingJob = jobsDict[value.0] else { return nil }
+      return DisplayableJob(
+        existingJob,
+        productName: "",
+        blueprintName: value.1
+      )
+    }
+    
+    return displayableJobs
   }
   
   func makeJobsForInputSums(inputs: [Int64: Int64], assets: [Int64: Int64]) async -> [TestJob] {

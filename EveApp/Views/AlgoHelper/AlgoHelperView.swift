@@ -37,6 +37,8 @@ import SwiftUI
   var selectedCharacters: Set<IdentifiedString> = []
   var possibleCharacters: [IdentifiedString] = []
   
+  var shoppingList: [IdentifiedStringQuantity] = []
+  
   init(dbManager: DBManager) {
     self.dbManager = dbManager
     self.ipm = IndustryPlannerManager(dbManager: dbManager)
@@ -86,14 +88,15 @@ import SwiftUI
       let start2 = Date()
       var start = Date()
       //let missingInputs = await tool.getMissingInputs(values: [selectedString.id: 1])
-      let missingInputs = await tool.testFindMissingInputs(
-        values: [selectedString.id: 1]
-      )
+      
+      let missingInputs = await tool.testFindMissingInputs(values:  [selectedString.id: 1])
+
       print("++ missing inputs \(missingInputs)")
       print("first get missing inputs took \(Date().timeIntervalSince(start))")
       self.inputs = missingInputs
       
       start = Date()
+      //let job = await tool.actuallyFindMissing(inputMaterials: missingInputs)
       let inputsDisplayable: [IdentifiedStringQuantity] = tool.makeGroupedDisplayable(from: missingInputs)
       
       self.inputsDisplayable = inputsDisplayable
@@ -105,13 +108,18 @@ import SwiftUI
       print("-- makeInputGroups took \(Date().timeIntervalSince(start))")
       
       start = Date()
-      self.jobsDisplayable = await tool.makeDisplayableJobsForInputSums(
-        inputs: missingInputs
-      )
+      let jobs = await tool.testMakeJobsForMissingInputs(missingInputs: missingInputs)
+      
+      self.jobsDisplayable = await tool.makeDisplayableJobs(jobs)
+//      self.jobsDisplayable = await tool.makeDisplayableJobsForInputSums(
+//        inputs: missingInputs
+//      )
       print("-- makeJobsDisplayableTook \(Date().timeIntervalSince(start))")
       start = Date()
       self.groupedJobs = await tool.createGroupedJobs(jobs: self.jobsDisplayable)
       print("-- createGroupedJobs took \(Date().timeIntervalSince(start))")
+      self.shoppingList = await tool.getPurchaseListDisplayable(jobs: jobs)
+      
       return
       
       var someValues: [Int64: Int64] = [:]
@@ -138,8 +146,9 @@ import SwiftUI
       
       start = Date()
       self.missingInputGroups = ipm.makeInputGroups(from: nonMadeMissingJobInputs)
-      print("-- makeInputGroups took \(Date().timeIntervalSince(start))")
       
+      print("-- makeInputGroups took \(Date().timeIntervalSince(start))")
+      //let foo = tool.getPurchaseListDisplayable(jobs:)
       print("total took \(Date().timeIntervalSince(start2))")
       print("missingInputsDisplayable \(missingInputsDisplayable.count)")
     }
@@ -183,6 +192,8 @@ import SwiftUI
     
     return returnValue
   }
+  
+  
 }
 
 struct AlgoHelperView: View {
@@ -223,6 +234,8 @@ struct AlgoHelperView: View {
           
             makeList(viewModel.inputsDisplayable)
               .padding(.bottom, 10)
+          makeList(viewModel.shoppingList)
+          //makeList(viewModel)
           //makeList(viewModel.missingInputsDisplayable)
 //          ScrollView {
 //            missingInputs()

@@ -101,6 +101,14 @@ extension DBManager {
     return results
   }
   
+  func getTypeName(for typeId: Int64) async -> TypeNamesResult? {
+    let results = try! await TypeModel.query(on: self.database)
+      .filter(\.$typeId == typeId)
+      .first()
+      .map({ TypeNamesResult(typeId: $0.typeId, name: $0.name) })
+    return results
+  }
+  
   func getObjects<T: Model>(for type: T.Type, filter: ModelFieldFilter<T, T>) -> [T] {
     try! T.query(on: self.database)
       .filter(filter)
@@ -457,7 +465,7 @@ extension DBManager {
     let values = groups.map({ $0.rawValue })
     let foo = try! TypeModel.query(on: database)
       .filter(\.$groupID ~~ values)
-      //.join(BlueprintModel.self, on: \BlueprintModel.$blueprintTypeID == \TypeModel.$typeId)
+    //.join(BlueprintModel.self, on: \BlueprintModel.$blueprintTypeID == \TypeModel.$typeId)
       .all()
       .wait()
     print("getReactionBlueprints1 got \(foo.count) things")
@@ -485,33 +493,25 @@ extension DBManager {
     //print("getBlueprintModelAsync \(typeId)")
     let db = self.database
     
-    guard let sql = db as? SQLDatabase else {
-      return nil
-    }
-    
-    let queryString =
-    """
-    select bm.*
-    from public."blueprintModel" bm, unnest(bm.activities_manufacturing_materials) p(activities_manufacturing_materials)
-    WHERE p ->> 'typeId' = '\(typeId)'
-    """
-    
-//    let value = try? await sql.raw(SQLQueryString(queryString))
-//      .all(decodingFluent: BlueprintModel.self)
-//      .first//blueprintModel
-    //print("++ value \(value?.blueprintTypeID)")
     let blueprintModel = try? await BlueprintModel.query(on: db)
       .filter(\.$blueprintTypeID == typeId)
       .first()
       .get()
     
     return blueprintModel
-    //return value
   }
   
-//  func getBlueprintModel(making typeId: Int64) async -> BlueprintModel {
-//    
-//  }
+  func getBlueprintModelsAsync(for typeIds: [Int64]) async -> [BlueprintModel] {
+    //print("getBlueprintModelAsync \(typeId)")
+    let db = self.database
+    
+    let blueprintModels = (try? await BlueprintModel.query(on: db)
+      .filter(\.$blueprintTypeID ~~ typeIds)
+      .all()
+      .get()) ?? []
+    
+    return blueprintModels
+  }
   
   func getManufacturingBlueprintWithInput(of typeId: Int64) async -> [BlueprintModel]? {
     let db = self.database
@@ -530,7 +530,7 @@ extension DBManager {
     
     return try? await sql.raw(SQLQueryString(queryString))
       .all(decodingFluent: BlueprintModel.self)
-      
+    
   }
   
   /// Returns the BlueprintModel that has the provided typeId as a product
@@ -558,7 +558,7 @@ extension DBManager {
         .first
       
       return foo
-        
+      
     } catch let error {
       print("getManufacturingBlueprintAsync error \(String(reflecting: error))")
       return nil
@@ -571,18 +571,18 @@ extension DBManager {
     guard let sql = db as? SQLDatabase else {
       return []
     }
-    
+    //IN ('624','11539')
     var values = typeIds
-    let startString = "\(values.removeFirst())"
-    let concatString = values.reduce(startString) { $0 + ",\($1)" }
+    let startString = "'\(values.removeFirst())'"
+    let concatString = values.reduce(startString) { $0 + ",'\($1)'" }
     //print("concatString: \(concatString)")
-    let queryString =
-      """
-        select b.*, value from blueprintModel b,
-        json_each(b.activities_manufacturing_products)
-        where json_extract(value, '$.type_id') IN \("(\(concatString))")
-      """
 
+    let queryString =
+    """
+    select bm.*
+    from public."blueprintModel" bm, unnest(bm.activities_manufacturing_products) p(activities_manufacturing_product)
+    WHERE p ->> 'typeId' IN (\(concatString))
+    """
     
     do {
       let result = try await sql.raw(SQLQueryString(queryString))
@@ -608,12 +608,6 @@ extension DBManager {
     from public."blueprintModel" bm, unnest(bm.activities_reaction_products) p(activities_reaction_products)
     WHERE p ->> 'typeId' = '\(typeId)'
     """
-    let queryString1 =
-      """
-        select b.*, value from blueprintModel b,
-        json_each(b.activities_reaction_products)
-        where json_extract(value, '$.type_id') = \("\(typeId)")
-      """
     
     return try? sql.raw(SQLQueryString(queryString))
       .first(decodingFluent: BlueprintModel.self)
@@ -625,14 +619,7 @@ extension DBManager {
     guard let sql = db as? SQLDatabase else {
       return nil
     }
-    let queryString1 =
-      """
-        select b.*, value from blueprintModel b,
-        json_each(b.activities_reaction_products)
-        where json_extract(value, '$.type_id') = \("\(typeId)")
-      
-      """
-    
+
     let queryString =
     """
     select bm.*
@@ -651,24 +638,23 @@ extension DBManager {
       return []
     }
     var values = typeIds
-    let startString = "\(values.removeFirst())"
-    let concatString = values.reduce(startString) { $0 + ",\($1)" }
-
-//    let queryString1 =
-//    """
-//    select bm.*
-//    from public."blueprintModel" bm, unnest(bm.activities_reaction_products) p(activities_reaction_products)
-//    WHERE p ->> 'typeId' = '\(typeId)'
-//    """
+    let startString = "'\(values.removeFirst())'"
+    let concatString = values.reduce(startString) { $0 + ",'\($1)'" }
+    
+    //    let queryString1 =
+    //    """
+    //    select bm.*
+    //    from public."blueprintModel" bm, unnest(bm.activities_reaction_products) p(activities_reaction_products)
+    //    WHERE p ->> 'typeId' = '\(typeId)'
+    //    """
+    
     let queryString =
-      """
-      select b.*, d.name
-      value from blueprintModel b, TypeData d,
-      json_each(b.activities_reaction_products)
-      where json_extract(value, '$.type_id') in \("(\(concatString))")
-      AND b.blueprint_type_id=d.type_id
-      AND d.published=true
-      """
+    """
+    select bm.*
+    from public."blueprintModel" bm, unnest(bm.activities_reaction_products) p(activities_reaction_products)
+    WHERE p ->> 'typeId' IN (\(concatString)) and bm.blueprint_type_id  != '45732'
+    """
+
     let result = try? await sql.raw(SQLQueryString(queryString))
       .all(decodingFluent: BlueprintModel.self)
       .get()
@@ -1846,6 +1832,7 @@ extension DBManager {
     do {
       let results = try TypeModel.query(on: database)
         .filter(\.$name ~~ searchText)
+        .filter(\.$groupID ~~ [540, 358])
         .all()
         .wait()
       return results.map { IdentifiedString(id: $0.typeId, value: $0.name) }

@@ -264,15 +264,14 @@ extension IndustryPlannerManager {
   }
   
 }
-  
-
-class TestJob {
+  struct TestJob {
   let quantity: Int64
   let productId: Int64
   let inputs: [IdentifiedQuantity]
   let blueprintId: Int64
   let productsPerRun: Int
   let requiredRuns: Int
+  let inputJobs: [TestJob]
   
   var numRuns: Int {
     Int(quantity) / productsPerRun + 1
@@ -292,6 +291,7 @@ class TestJob {
     self.blueprintId = blueprintId
     self.productsPerRun = productsPerRun
     self.requiredRuns = requiredRuns
+    self.inputJobs = []
   }
   
   init(
@@ -308,6 +308,7 @@ class TestJob {
     self.blueprintId = blueprintId
     self.productsPerRun = productsPerRun
     self.requiredRuns = requiredRuns
+    self.inputJobs = []
   }
   
 }
@@ -323,6 +324,7 @@ struct DisplayableJob: Identifiable {
   let blueprintName: String
   let inputs: [IdentifiedQuantity]
   let requiredRuns: Int
+  let testJob: TestJob
   
   init(_ data: TestJob, productName: String, blueprintName: String) {
     self.quantity = data.quantity
@@ -332,6 +334,7 @@ struct DisplayableJob: Identifiable {
     self.inputs = data.inputs
     self.requiredRuns = data.requiredRuns
     self.blueprintId = data.blueprintId
+    self.testJob = data
   }
 }
 

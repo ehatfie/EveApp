@@ -16,6 +16,18 @@ import Fluent
     var dbManager = DBManager()
     var dataManager: DataManager
     
+    var needsAuthSetup: Bool = false
+    
+    var path: NavigationPath = NavigationPath() {
+        didSet {
+            // Check if the person navigates away from a view that's showing the inspector.
+//            if path.count < oldValue.count && isLandmarkInspectorPresented == true {
+//                // Dismiss the inspector.
+//                isLandmarkInspectorPresented = false
+//            }
+        }
+    }
+    
     init() {
         let start = Date()
         print("++ AppModel init start")

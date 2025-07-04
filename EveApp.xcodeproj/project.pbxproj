@@ -59,6 +59,8 @@
 		BA3C02D12C2517CA00F32650 /* CharacterSkillsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3C02D02C2517CA00F32650 /* CharacterSkillsView.swift */; };
 		BA3C02D32C252C5100F32650 /* SkillGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3C02D22C252C5100F32650 /* SkillGroupView.swift */; };
 		BA3C02D62C2A6B4700F32650 /* SkillGroupEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3C02D52C2A6B4700F32650 /* SkillGroupEntryView.swift */; };
+		BA3CA76F2E175FE700B168DE /* NavigationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3CA76E2E175FD900B168DE /* NavigationOptions.swift */; };
+		BA3CA7712E1761CF00B168DE /* HomeView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3CA7702E1761CC00B168DE /* HomeView2.swift */; };
 		BA5106942C09852900E9B344 /* DBManager+Fetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5106932C09852900E9B344 /* DBManager+Fetching.swift */; };
 		BA56D9882C76CF1500BD72CB /* ModelLibrary in Resources */ = {isa = PBXBuildFile; fileRef = BA56D9872C76CF1500BD72CB /* ModelLibrary */; };
 		BA56D98A2C76CFE000BD72CB /* ModelLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = BA56D9892C76CFE000BD72CB /* ModelLibrary */; };
@@ -324,6 +326,8 @@
 		BA3C02D02C2517CA00F32650 /* CharacterSkillsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterSkillsView.swift; sourceTree = "<group>"; };
 		BA3C02D22C252C5100F32650 /* SkillGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillGroupView.swift; sourceTree = "<group>"; };
 		BA3C02D52C2A6B4700F32650 /* SkillGroupEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillGroupEntryView.swift; sourceTree = "<group>"; };
+		BA3CA76E2E175FD900B168DE /* NavigationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationOptions.swift; sourceTree = "<group>"; };
+		BA3CA7702E1761CC00B168DE /* HomeView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView2.swift; sourceTree = "<group>"; };
 		BA5106932C09852900E9B344 /* DBManager+Fetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBManager+Fetching.swift"; sourceTree = "<group>"; };
 		BA56D9872C76CF1500BD72CB /* ModelLibrary */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ModelLibrary; sourceTree = "<group>"; };
 		BA56D9952C76D29400BD72CB /* TestPreviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPreviews.swift; sourceTree = "<group>"; };
@@ -638,6 +642,7 @@
 		BA3149C42A1EF98C0076E6DD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BA3CA7702E1761CC00B168DE /* HomeView2.swift */,
 				BA95F8C72DC045080052E245 /* Skills */,
 				BA14445F2D544F71008473EB /* ItemViewer */,
 				BAD35B792D3B070F0097FA4C /* WalletView */,
@@ -669,6 +674,7 @@
 		BA3149CC2A1EFA720076E6DD /* src */ = {
 			isa = PBXGroup;
 			children = (
+				BA3CA76E2E175FD900B168DE /* NavigationOptions.swift */,
 				BAAB97A72E0CEADF00F9FEE2 /* IndyTool */,
 				BA7577722CF3F8C300BE56A2 /* IndyTool.swift */,
 				BAA88E452C61C8A70001BF42 /* Theme.swift */,
@@ -1437,6 +1443,7 @@
 			files = (
 				BA95F8CF2DC07CBF0052E245 /* AttributeAllocator.swift in Sources */,
 				BA37AFE22DA0964400CA887E /* RequestBuilderview.swift in Sources */,
+				BA3CA76F2E175FE700B168DE /* NavigationOptions.swift in Sources */,
 				BA5991072BF99B97003108CF /* DataManager+Helpers.swift in Sources */,
 				BA1E16362CC896C3005851A4 /* ReactionFilterView.swift in Sources */,
 				BAEBC02B2C0411C8009D8CC2 /* DM+Fetching.swift in Sources */,
@@ -1474,6 +1481,7 @@
 				BA9D96072B1177D8006AC37E /* IndustryInfoView.swift in Sources */,
 				BA1A94142C0D72040005B931 /* ItemInputInfoView.swift in Sources */,
 				BAE069A52ADA04BE0054EFCF /* DogmaAttributeCategoryView.swift in Sources */,
+				BA3CA7712E1761CF00B168DE /* HomeView2.swift in Sources */,
 				BA3C02D12C2517CA00F32650 /* CharacterSkillsView.swift in Sources */,
 				BA71008E2ADB453B001CD301 /* ItemDogmaExplorerView.swift in Sources */,
 				BA20ADB92C0D821400095B4E /* Constants.swift in Sources */,
@@ -1925,7 +1933,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Atlas.EveApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1966,7 +1974,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Atlas.EveApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";

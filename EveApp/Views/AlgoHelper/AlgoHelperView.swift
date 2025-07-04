@@ -311,8 +311,6 @@ struct AlgoHelperView: View {
                     Text(String(value.quantity))
                         .font(.subheadline)
                 }
-                
-                
             }
         }
     }

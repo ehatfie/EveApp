@@ -9,26 +9,7 @@ import SwiftUI
 import Combine
 import SwiftEveAuth
 
-enum SideBarItem: String, Identifiable, CaseIterable {
-  var id: String { rawValue }
-  
-  case auth
-  case skills
-  case algoHelper
-  case industryPlanner
-  case characterInfo
-  case industryHelper
-  case reprocessingHelper
-  case blueprintExplorer
-  case devSettings
-  case assets
-  case potentialIndustry
-  case reactionHelper
-  case killboard
-  case characterIndustryView
-  case wallet
-  case search
-}
+
 
 @Observable class HomeViewModel {
   var needsAuthSetup: Bool = false
@@ -74,78 +55,82 @@ enum SideBarItem: String, Identifiable, CaseIterable {
     DataManager.shared.setClientInfo(clientInfo: clientInfo)
     needsAuthSetup = false
   }
-  
 }
 
 struct HomeView: View {
   var homeViewModel: HomeViewModel = HomeViewModel()
   @Environment(DBManager.self) var db: DBManager
   
-  @State var selectedSideBarItem: SideBarItem?
+  @State private var selectedSideBarItem: SideBarItem?
+  @State private var preferredColumn: NavigationSplitViewColumn = .detail
   
   var body: some View {
-    body2()
-      .onAppear {
-        print("got dbManager \(db)")
-      }
+    testBody()
   }
   
-  func body2() -> some View {
-    return NavigationSplitView {
-      List(SideBarItem.allCases, selection: $selectedSideBarItem) { item in
-        NavigationLink(
-          item.rawValue.localizedCapitalized,
-          value: item
-        )
+  func testBody() -> some View {
+    NavigationSplitView {
+      List(SideBarItem.allCases, id: \.self, selection: $selectedSideBarItem) { item in
+          Text(item.rawValue.localizedCapitalized)
+//            .foregroundStyle(selectedSideBarItem == item ? .blue : .primary)
+//            .onTapGesture {
+//              if selectedSideBarItem == item {
+//                selectedSideBarItem = nil // Deselect the current selection if tapped again
+//              } else {
+//                selectedSideBarItem = item // Select the new item
+//              }
+//          }
       }
     } detail: {
-      switch selectedSideBarItem {
-      case .auth:
-        AuthView()
-          .environment(homeViewModel)
-      case .algoHelper:
-        AlgoHelperView(viewModel: AlgoHelperViewModel(dbManager: db))
-      case .characterInfo:
-        CharacterInfoList(viewModel: CharacterInfoListViewModel(dbManager: db))
-        //CharacterInfoView()
-      case .skills:
-        SkillsRootView()
-      case .assets:
-        AssetsViewer()
-      case .reprocessingHelper:
-        ReprocessingHelperView()
-      case .industryHelper:
-        IndustryHelperView()
-          .environment(db)
-      case .devSettings:
-        DevelopHelperView()
-          .environment(homeViewModel)
-      case .blueprintExplorer:
-        ItemViewerRootView()
-      case .potentialIndustry:
-        PotentialIIndustryView(viewModel: PotentialIndustryViewModel())
-      case .reactionHelper:
-        ReactionHelperView()
-      case .killboard:
-        KillboardView()
-//        KillboardViewOLD()
-      case .characterIndustryView:
-        CharacterIndustryView(viewModel: CharacterIndustryViewModel())
-      case .industryPlanner:
-        IndustryPlannerView(viewModel: IndustryPlannerViewModel())
-      case .wallet:
-        WalletRootView(dbManager: db)
-      case .search:
-        SearchRootView()
-//      case nil:
-//        AlgoHelperView(viewModel: AlgoHelperViewModel(dbManager: db))
-//        HomeInfoView(viewModel: HomeInfoViewModel(dbManager: db))
-//          .environment(db)
-      default: EmptyView()
-      }
+      Group {
+        switch self.selectedSideBarItem {
+        case .auth:
+          AuthView()
+            .environment(homeViewModel)
+        case .algoHelper:
+          AlgoHelperView(viewModel: AlgoHelperViewModel(dbManager: db))
+        case .characterInfo:
+          CharacterInfoList(viewModel: CharacterInfoListViewModel(dbManager: db))
+          //CharacterInfoView()
+        case .skills:
+          SkillsRootView()
+        case .assets:
+          AssetsViewer()
+        case .reprocessingHelper:
+          ReprocessingHelperView()
+        case .industryHelper:
+          IndustryHelperView()
+            .environment(db)
+        case .devSettings:
+          DevelopHelperView()
+            .environment(homeViewModel)
+        case .blueprintExplorer:
+          ItemViewerRootView()
+        case .potentialIndustry:
+          PotentialIIndustryView(viewModel: PotentialIndustryViewModel())
+        case .reactionHelper:
+          ReactionHelperView()
+        case .killboard:
+          KillboardView()
+          //            KillboardViewOLD()
+        case .characterIndustryView:
+          CharacterIndustryView(viewModel: CharacterIndustryViewModel())
+        case .industryPlanner:
+          IndustryPlannerView(viewModel: IndustryPlannerViewModel())
+        case .wallet:
+          WalletRootView(dbManager: db)
+        case .search:
+          SearchRootView()
+          //      case nil:
+          //        AlgoHelperView(viewModel: AlgoHelperViewModel(dbManager: db))
+          //        HomeInfoView(viewModel: HomeInfoViewModel(dbManager: db))
+          //          .environment(db)
+        default: EmptyView()
+        }
+      }.glassEffect()
     }
   }
-  
+
   func body1() -> some View {
     return NavigationView {
       List {

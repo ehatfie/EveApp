@@ -20,8 +20,9 @@ struct ContentView: View {
   
   var body: some View {
     VStack(alignment: .leading) {
-      HomeView()
+      HomeView2()
         .environment(model.dbManager)
+        
     }
     .padding()
   }

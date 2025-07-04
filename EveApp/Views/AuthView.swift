@@ -44,7 +44,7 @@ class AuthViewModel: ObservableObject {
 
 struct AuthView: View {
     @ObservedObject var authViewModel = AuthViewModel()
-    @Environment(HomeViewModel.self) var homeViewModel: HomeViewModel
+    @Environment(AppModel.self) var appModel
     
     var body: some View {
         VStack(alignment: .center) {
@@ -73,11 +73,10 @@ struct AuthView: View {
 
             LoginView()
             
-            if homeViewModel.needsAuthSetup {
+            if appModel.needsAuthSetup {
                 authSetupView()
             }
         }
-       
     }
     
     func authDataView(data: [AuthModel]) -> some View {

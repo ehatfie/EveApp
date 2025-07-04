@@ -10,7 +10,7 @@ import OAuthSwift
 
 @main
 struct EveAppApp: App {
-    var model = AppModel()
+    @State private var model = AppModel()
     
     init() {
        //NSAppleEventManager.shared().setEventHandler(self, andSelector:#selector(handleGetURL(event:withReplyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))

@@ -14,10 +14,10 @@ class AuthViewModel: ObservableObject {
     @Published var authModels: [AuthModel] = []
     
     init() {
-        DataManager
-            .shared
-            .$accessTokenResponse
-            .assign(to: &$accessTokenResponse)
+//        DataManager
+//            .shared
+//            .$accessTokenResponse
+//            .assign(to: &$accessTokenResponse)
     }
     
     func loadAccessTokenData() {
@@ -77,6 +77,40 @@ struct AuthView: View {
                 authSetupView()
             }
         }
+        .toolbar {
+            ToolbarSpacer(.flexible)
+            
+            ToolbarItemGroup {
+                ForEach(self.appModel.characterModels) { value in
+                    Button(value.name, systemImage: "person.circle") { }
+                }
+                
+                //Button("Character Two", systemImage: "person.circle") { }
+                //Button("Character Three", systemImage: "person.circle") { }
+                //LandmarkFavoriteButton(landmark: landmark)
+                //LandmarkCollectionsMenu(landmark: landmark)
+            }
+            
+            ToolbarSpacer(.fixed)
+            
+            ToolbarItem {
+                Button("Settings", systemImage: "gear") { }
+                //ShareLink(item: landmark, preview: landmark.sharePreview)
+            }
+            
+            ToolbarSpacer(.fixed)
+            
+            
+            ToolbarItem {
+                Button("Info", systemImage: "info") {
+                    //modelData.selectedLandmark = landmark
+                    //modelData.isLandmarkInspectorPresented.toggle()
+                }
+            }
+            ToolbarSpacer(.fixed)
+        }
+        .toolbar(removing: .title)
+        .ignoresSafeArea(edges: .top)
     }
     
     func authDataView(data: [AuthModel]) -> some View {

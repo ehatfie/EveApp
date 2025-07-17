@@ -126,45 +126,22 @@ struct CharacterInfoList: View {
     @ViewBuilder
     func characterInfoCard(_ characterInfo: CharacterInfoDisplayable) -> some View {
         GroupBox {
-            VStack {
-                Text(characterInfo.name)
-                Text(characterInfo.characterID)
-                Text(characterInfo.corporationInfo.value)
-                if let walletModel = characterInfo.walletModel {
-                    Text(df2so(walletModel.$balance.wrappedValue ?? 0.00) + " ISK")
-                }
-                
-                
-                Button(action: {
-                    self.viewModel.updateCharacterWallet(characterId: characterInfo.characterID)
-                }, label: {
-                    Text("Update Wallet")
-                })
-                
-                Button(action: {
-                    self.viewModel.updateCharacterAssets(characterId: characterInfo.characterID)
-                }, label: {
-                    Text("Update Assets")
-                })
-                
-                Button(action: {
-                    self.viewModel.updateCharacterIndustry(characterId: characterInfo.characterID)
-                }, label: {
-                    Text("Update Indy")
-                })
-                
-                Button(action: {
-                    do {
-                        try CharacterWalletModel.query(on: DataManager.shared.dbManager!.database)
-                            .delete()
-                            .wait()
-                    } catch let error {
-                        print("delete wallet error \(error)")
+            VStack(spacing: 15) {
+                    Text(characterInfo.name)
+                    
+                VStack(alignment: .trailing, spacing: 5) {
+                        Text(characterInfo.corporationInfo.value)
+                        if let walletModel = characterInfo.walletModel {
+                            Text(df2so(walletModel.$balance.wrappedValue ?? 0.00) + " ISK")
+                        }
                     }
-                }, label: {
-                    Text("Delete")
-                })
-            }
+                    
+                    buttons(characterInfo: characterInfo)
+                    //GlassEffectContainer(spacing: 40) {
+
+                    //}
+                }
+            .padding()
         }
 
     }
@@ -172,7 +149,41 @@ struct CharacterInfoList: View {
     @ViewBuilder
     func characterPublicData(_ publicData: CharacterPublicDataModel) -> some View {
         VStack(alignment: .leading) {
+            Text(publicData.name)
+        }
+    }
+    
+    func buttons(characterInfo: CharacterInfoDisplayable) -> some View {
+        VStack {
+            Button(action: {
+                self.viewModel.updateCharacterWallet(characterId: characterInfo.characterID)
+            }, label: {
+                Text("Update Wallet")
+            }).buttonStyle(.glass)
             
+            Button(action: {
+                self.viewModel.updateCharacterAssets(characterId: characterInfo.characterID)
+            }, label: {
+                Text("Update Assets")
+            }).buttonStyle(.glass)
+            
+            Button(action: {
+                self.viewModel.updateCharacterIndustry(characterId: characterInfo.characterID)
+            }, label: {
+                Text("Update Indy")
+            }).buttonStyle(.glass)
+            
+            Button(action: {
+                do {
+                    try CharacterWalletModel.query(on: DataManager.shared.dbManager!.database)
+                        .delete()
+                        .wait()
+                } catch let error {
+                    print("delete wallet error \(error)")
+                }
+            }, label: {
+                Text("Delete")
+            }).buttonStyle(.glass)
         }
     }
     

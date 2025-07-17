@@ -263,6 +263,36 @@ struct AlgoHelperView: View {
       
       buttons()
     }
+    .toolbar {
+        ToolbarSpacer(.flexible)
+        
+        
+        ToolbarItemGroup {
+            Button("Character One", systemImage: "person.circle") { }
+            Button("Character Two", systemImage: "person.circle") { }
+            //LandmarkFavoriteButton(landmark: landmark)
+            //LandmarkCollectionsMenu(landmark: landmark)
+        }
+        
+        ToolbarSpacer(.fixed)
+        
+        ToolbarItem {
+            Button("Settings", systemImage: "gear") { }
+            //ShareLink(item: landmark, preview: landmark.sharePreview)
+        }
+        
+        ToolbarSpacer(.fixed)
+        
+        
+        ToolbarItem {
+            Button("Info", systemImage: "info") {
+                //modelData.selectedLandmark = landmark
+                //modelData.isLandmarkInspectorPresented.toggle()
+            }
+        }
+    }
+    .toolbar(removing: .title)
+    .ignoresSafeArea(edges: .top)
   }
   
   func inputs() -> some View {

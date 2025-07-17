@@ -11,9 +11,9 @@ class LoginViewModel: ObservableObject {
     @Published var accessKey: String?
     
     init() {
-        DataManager.shared
-            .$accessKey
-            .assign(to: &$accessKey)
+//        DataManager.shared
+//            .$accessKey
+//            .assign(to: &$accessKey)
     }
     
     func login() {

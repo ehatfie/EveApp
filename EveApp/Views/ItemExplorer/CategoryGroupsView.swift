@@ -21,24 +21,24 @@ class CategoryGroupsViewModel: ObservableObject {
         
         loadGroups()
         
-        self.cancellable = DataManager.shared
-            .$groupInfoByID
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: { groupInfoById in
-                
-                guard let groupIds = self.itemCategory.categoryInfoResponseData?.groups else {
-                    print("sink no group ids for \(self.itemCategory.categoryInfoResponseData?.name)")
-                    return
-                }
-                
-                self.groups = groupIds.map { groupId in
-                    ItemGroup(
-                        categoryId: groupInfoById[groupId]?.category_id,
-                        groupId: groupId,
-                        groupInfoResponseData: groupInfoById[groupId]
-                    )
-                }
-            })
+//        self.cancellable = DataManager.shared
+//            .$groupInfoByID
+//            .receive(on: RunLoop.main)
+//            .sink(receiveValue: { groupInfoById in
+//                
+//                guard let groupIds = self.itemCategory.categoryInfoResponseData?.groups else {
+//                    print("sink no group ids for \(self.itemCategory.categoryInfoResponseData?.name)")
+//                    return
+//                }
+//                
+//                self.groups = groupIds.map { groupId in
+//                    ItemGroup(
+//                        categoryId: groupInfoById[groupId]?.category_id,
+//                        groupId: groupId,
+//                        groupInfoResponseData: groupInfoById[groupId]
+//                    )
+//                }
+//            })
     }
     
     func loadGroups() {

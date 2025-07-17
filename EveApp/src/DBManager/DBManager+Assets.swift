@@ -53,12 +53,13 @@ extension DBManager {
         
         do {
             // CharacterAssetDataModels that are in a station with related TypeModel loaded
-            let characterAssets = try await character.$assetsData.query(on: self.database)
-                .join(TypeModel.self, on: \CharacterAssetsDataModel.$typeId == \TypeModel.$typeId)
-                .all()
-                .get()
-                .sorted(by: {$0.locationFlag < $1.locationFlag})
-            return characterAssets
+//            let characterAssets = try await character.$assetsData.query(on: self.database)
+//                .join(TypeModel.self, on: \CharacterAssetsDataModel.$typeId == \TypeModel.$typeId)
+//                .all()
+//                .get()
+//                .sorted(by: {$0.locationFlag < $1.locationFlag})
+//            return characterAssets
+            return []
         } catch let error {
             print("++ Loading assets for character error: \(String(reflecting: error))")
             return nil

@@ -59,7 +59,6 @@ struct CharacterSkillsView: View {
         self.characterModel = characterModel
         self.skillsData = skillsData
         // get skill categories
-        let skillIds = skillsData.skills.map { Int64($0.skillId) }
         self.viewModel = CharacterSkillViewModel(characterModel: characterModel)
        // self.skillsData = skillsData
     }

@@ -25,4 +25,39 @@ extension DataManager {
             print("Create CharacterIdentifierModel error: \(String(reflecting: error))")
         }
     }
+    
+    func saveResponse(_ data: ZKillFeedResponseWrapper) {
+        guard let dbManager else {
+            return
+        }
+        //let model = ZKillmailModel(data: data.package.killmail)
+        let model = ESIKillmailModel(data: data.package.killmail)
+        //let models = data.map { ZKillmailModel(data: $0)}
+        do {
+            try model.create(on: dbManager.database).wait()
+            let killmailId = model.killmailId
+            
+            let attackers = data.package.killmail.attackers.map { ESIKmAttackerModel(killmailId: killmailId, data: $0)}
+            let victim = ESIKmVictimModel(data: data.package.killmail.victim)
+            
+            try model.$attackers.create(attackers, on: dbManager.database).wait()
+            try model.$victim.create([victim], on: dbManager.database).wait()
+            print("-- created model for \(data.package.killID)")
+        } catch let err {
+            print("-- error creating model \(String(reflecting: err))")
+        }
+
+    }
+    
+    func startListener() {
+        Task {
+            await self.redisActor.start()
+        }
+    }
+    
+    func stopListener() {
+        Task {
+            await self.redisActor.shutdown()
+        }
+    }
 }

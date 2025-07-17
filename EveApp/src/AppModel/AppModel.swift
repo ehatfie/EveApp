@@ -11,12 +11,14 @@ import Combine
 
 import NIO
 import Fluent
+import ModelLibrary
 
 @Observable final class AppModel {
     var dbManager = DBManager()
     var dataManager: DataManager
     
     var needsAuthSetup: Bool = false
+    var listenerEnabled: Bool = false
     
     var path: NavigationPath = NavigationPath() {
         didSet {
@@ -28,6 +30,8 @@ import Fluent
         }
     }
     
+    var characterModels: [CharacterInfoDisplayable] = []
+    
     init() {
         let start = Date()
         print("++ AppModel init start")
@@ -38,7 +42,24 @@ import Fluent
         print("++ AppModel init done \(Date().timeIntervalSince(start))")
 //        dbManager.$dbLoading
 //            .assign(to: &dataManager.$dataLoading)
-
+        loadCharacterModels()
     }
     
+    // this goes in a store?
+    func loadCharacterModels() {
+        Task {
+            let models = await dbManager.getCharacterInfoDisplayable()
+            self.characterModels = models
+        }
+    }
+    
+    func updateListener() {
+        //self.listenerEnabled.toggle()
+        
+        if listenerEnabled {
+            self.dataManager.startListener()
+        } else {
+            self.dataManager.stopListener()
+        }
+    }
 }

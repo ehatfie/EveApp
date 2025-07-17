@@ -16,7 +16,6 @@ struct AccessKeyKey: EnvironmentKey {
     }
 }
 
-
 extension EnvironmentValues {
     var accessKey: String? {
         get {
@@ -28,32 +27,36 @@ extension EnvironmentValues {
     }
 }
 
-class DataManager: ObservableObject {
-    @ObservedObject static var shared = DataManager()
+@Observable
+class DataManager {
+    @State static var shared = DataManager()
+    
+    var redisActor: RedisActor1
     
     var dbManager: DBManager?
     var authManager: AuthManager
     
-    @Published var accessKey: String?
-    @Published var accessTokenResponse: AccessTokenResponse? = nil
-    @Published var accessTokenData: AccessTokenData?
+   var accessKey: String?
+    var accessTokenResponse: AccessTokenResponse? = nil
+    var accessTokenData: AccessTokenData?
     
-    @Published var characterData: CharacterInfo?
+    var characterData: CharacterInfo?
     
-    @Published var categoryInfoByID: [Int32: CategoryInfoResponseData] = [:]
-    @Published var groupInfoByID: [Int32: GroupInfoResponseData] = [:]
-    @Published var typesInfoByID: [Int32: GetUniverseTypesTypeIdOk] = [:]
+    var categoryInfoByID: [Int32: CategoryInfoResponseData] = [:]
+    var groupInfoByID: [Int32: GroupInfoResponseData] = [:]
+    var typesInfoByID: [Int32: GetUniverseTypesTypeIdOk] = [:]
     
-    @Published var dataLoading: Bool = false 
+    var dataLoading: Bool = false 
 
-    
-    @Environment(\.accessKey) var accessKey1: String?
     
     private init() {
         authManager = AuthManager(delegate: nil)
+        redisActor = RedisActor1()
         Task {
+            //try? await redisActor.setup()
             await loadClientInfo()
             await loadAccessTokenData()
+            await setupKBListener()
         }
         authManager.delegate = self
     }
@@ -82,10 +85,23 @@ class DataManager: ObservableObject {
        
         //AuthManager2.shared.refresh()
     }
-
+    
+    func setupKBListener() async {
+        print("-- setupKBListener")
+        await update(redisActor)
+        //await redisActor.start()
+    }
+    
+    func dataCallback(_ data: ZKillFeedResponseWrapper) {
+        print("-- dataCallback \(data.package.killID)")
+        self.saveResponse(data)
+    }
+    
+    func update(_ actor: isolated RedisActor1) async {
+        print("-- updateActor ")
+        actor.setCallback(self.dataCallback)
+    }
 }
-
-
 
 extension DataManager: AuthManagerDelegate {
     func authManager(didCompleteAuthWith authData: AuthDataResponse) {

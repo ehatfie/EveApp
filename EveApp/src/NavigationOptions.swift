@@ -56,11 +56,14 @@ enum NavigationOptions: Equatable, Hashable, Identifiable {
     case wallet
     case search
     
-    static let mainPages: [NavigationOptions] = [.auth]
+    static let mainPages: [NavigationOptions] = [.auth, .characterInfo, .skills,.killboard]
     
     var id: String {
         switch self {
         case .auth: return "Auth"
+        case .characterInfo: return "Character Info"
+        case .skills: return "Skills"
+        case .killboard: return "Killboard"
         default: return ""
         }
     }
@@ -68,6 +71,9 @@ enum NavigationOptions: Equatable, Hashable, Identifiable {
     var name: LocalizedStringResource {
         switch self {
         case .auth: return "Auth"
+        case .characterInfo: return "Character Info"
+        case .skills: return "Skills"
+        case .killboard: return "Killboard"
         default: return "Default"
         }
     }
@@ -75,6 +81,9 @@ enum NavigationOptions: Equatable, Hashable, Identifiable {
     var symbolName: String {
         switch self {
         case .auth: "lock"
+        case .characterInfo: "person.crop.circle"
+        case .skills: "list.bullet"
+        case .killboard: "square.and.arrow.up"
         default: ""
         }
     }
@@ -83,6 +92,9 @@ enum NavigationOptions: Equatable, Hashable, Identifiable {
     @MainActor @ViewBuilder func viewForPage() -> some View {
         switch self {
         case .auth: AuthView()
+        case .characterInfo: CharacterInfoView()
+        case .skills: SkillsRootView()
+        case .killboard: KillboardView()
         default: EmptyView()
         }
     }

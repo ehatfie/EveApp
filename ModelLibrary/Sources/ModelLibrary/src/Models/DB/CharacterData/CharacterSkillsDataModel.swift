@@ -17,7 +17,11 @@ final public class CharacterSkillsDataModel: Model, @unchecked Sendable {
     @Parent(key: "character_id")
     var characterDataModel: CharacterDataModel
     
-    @Field(key: "skills") public var skills: [CharacterSkillModel]
+    @Field(key: "character_id_reference")
+    var characterIdReference: String
+    
+    
+    @Children(for: \.$characterSkillsModel) public var skills: [CharacterSkillModel]
     //@Field(key: "characterId") var characterId: String
     @Field(key: "total_sp") public var totalSp: Int64
     @Field(key: "unallocated_sp") public var unallocatedSp: Int?
@@ -26,23 +30,22 @@ final public class CharacterSkillsDataModel: Model, @unchecked Sendable {
     
     public init(
         id: UUID? = UUID(),
-        skills: [CharacterSkillModel],
         characterId: String,
         totalSp: Int64,
         unallocatedSp: Int?
     ) {
         self.id = id
-        self.skills = skills
+        //self.skills = skills
         //self.characterId = characterId
         self.totalSp = totalSp
         self.unallocatedSp = unallocatedSp
+        self.characterIdReference = characterId
        // self.characterId = characterId
     }
     
     public convenience init(characterId: String, data: GetCharactersCharacterIdSkillsOk) {
         self.init(
             id: UUID(),
-            skills: data.skills.map { CharacterSkillModel(characterId: characterId, data: $0) },
             characterId: characterId,
             totalSp: data.totalSp,
             unallocatedSp: data.unallocatedSp
@@ -60,7 +63,7 @@ final public class CharacterSkillsDataModel: Model, @unchecked Sendable {
                     .required,
                     .references(Schemas.characterDataModel.rawValue, "id")
                 )
-                .field("skills", .array(of: .custom(CharacterSkillModel.self)))
+                .field("character_id_reference", .string, .required)
                 //.field("characterId", .string)
                 .field("total_sp", .int64, .required)
                 .field("unallocated_sp", .int)

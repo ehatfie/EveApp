@@ -13,19 +13,21 @@ final public class ESIKillmailModel: Model, @unchecked Sendable {
     //@Field(key: "skills") public var skills: [CharacterSkillModel]
     @ID(key: .id) public var id: UUID?
     //@ID(custom: "foo") var id: Int?
-    @Field(key: "attackers") public var attackers: [ESIKmAttacker]
+    // @Children
+    //@Field(key: "attackers") public var attackers: [ESIKmAttacker]
     @Field(key: "killmail_id") public var killmailId: Int64
+    @Children(for: \.$killmailModel) public var attackers: [ESIKmAttackerModel]
     @Field(key: "killmail_time") public var killmailTime: String
     @Field(key: "moon_id") public var moonId: Int64?
     @Field(key: "solar_system_id") public var solarSystemId: Int64
-    @Field(key: "victim") public var victim: [ESIKmVictim]
+    @Children(for: \.$killmailModel) public var victim: [ESIKmVictimModel]
     @Field(key: "war_id") public var warId: Int64?
     
     public init() { }
     
     public init(
         id: UUID = UUID(),
-        attackers: [ESIKmAttacker],
+        attackers: [ESIKmAttackerModel],
         killmailId: Int64,
         killmailTime: String,
         moonId: Int64? = nil,
@@ -34,18 +36,18 @@ final public class ESIKillmailModel: Model, @unchecked Sendable {
         warId: Int64? = nil
     ) {
         self.id = id
-        self.attackers = attackers
+        //self.attackers = attackers
         self.killmailId = killmailId
         self.killmailTime = killmailTime
         self.moonId = moonId
         self.solarSystemId = solarSystemId
-        self.victim = [victim]
+        //self.victim = [victim]
         self.warId = warId
     }
     
     public convenience init(data: EveKmData) {
         self.init(
-            attackers: data.attackers.map { ESIKmAttacker(data: $0)},
+            attackers: data.attackers.map { ESIKmAttackerModel(killmailId: data.killmail_id,data: $0)},
             killmailId: data.killmail_id,
             killmailTime: data.killmail_time,
             moonId: data.moon_id,
@@ -61,18 +63,18 @@ final public class ESIKillmailModel: Model, @unchecked Sendable {
         public func prepare(on database: Database) async throws {
             try await database.schema(ESIKillmailModel.schema)
                 .id()
-                .field("attackers", .array(of: .custom(ESIKmAttacker.self)), .required)
+                //.field("attackers", .array(of: .custom(ESIKmAttackerModel.self)), .required)
                 .field("killmail_id", .int64, .required)
                 .field("killmail_time", .string, .required)
                 .field("moon_id", .int64)
                 .field("solar_system_id", .int64, .required)
-                .field("victim", .array(of: .custom(ESIKmVictim.self)), .required)
+                //.field("victim", .array(of: .custom(ESIKmVictim.self)), .required)
                 .field("war_id", .int64)
                 .unique(on: "killmail_id")
                 .create()
         }
         
-        public func revert(on database: any FluentKit.Database) async throws {
+        public func revert(on database: any Database) async throws {
             try await database.schema(ESIKillmailModel.schema)
                 .delete()
         }
@@ -81,7 +83,15 @@ final public class ESIKillmailModel: Model, @unchecked Sendable {
 
 
 
-final public class ESIKmAttacker: Fields, @unchecked Sendable {
+final public class ESIKmAttackerModel: Model, @unchecked Sendable {
+    static public let schema = Schemas.Killmail.esiAttacker.rawValue
+    
+    @ID(key: .id) public var id: UUID?
+    
+    @Parent(key: "killmail_id")
+    public var killmailModel: ESIKillmailModel
+    
+    //@Field(key: "killmail_id") public var killmailId: Int64
     @Field(key: "alliance_id") public var allianceId: Int64?
     @Field(key: "character_id") public var characterId: Int64?
     @Field(key: "corporation_id") public var corporationId: Int64?
@@ -95,6 +105,8 @@ final public class ESIKmAttacker: Fields, @unchecked Sendable {
     public init() { }
     
     public init(
+        id: UUID = UUID(),
+        killmailId: Int64,
         allianceId: Int64? = nil,
         characterId: Int64? = nil,
         corporationId: Int64? = nil,
@@ -105,6 +117,8 @@ final public class ESIKmAttacker: Fields, @unchecked Sendable {
         shipTypeId: Int64? = nil,
         weaponTypeId: Int64? = nil
     ) {
+        self.id = id
+        //self.killmailId = killmailId
         self.allianceId = allianceId
         self.characterId = characterId
         self.corporationId = corporationId
@@ -116,8 +130,9 @@ final public class ESIKmAttacker: Fields, @unchecked Sendable {
         self.weaponTypeId = weaponTypeId
     }
     
-    public convenience init(data: EveKmAttackerData) {
+    public convenience init(killmailId: Int64, data: EveKmAttackerData) {
         self.init(
+            killmailId: killmailId,
             allianceId: data.alliance_Id,
             characterId: data.character_id,
             corporationId: data.corporation_id,
@@ -128,6 +143,106 @@ final public class ESIKmAttacker: Fields, @unchecked Sendable {
             shipTypeId: data.ship_type_id,
             weaponTypeId: data.weapon_type_id
         )
+    }
+    
+    public struct ModelMigration: AsyncMigration {
+        public init() { }
+        
+        public func prepare(on database: Database) async throws {
+            try await database.schema(ESIKmAttackerModel.schema)
+                .id()
+                .field("killmail_id",
+                       .uuid,
+                       .required,
+                       .references(Schemas.Killmail.esi.rawValue, "id"))
+                .field("alliance_id", .int64)
+                .field("character_id", .int64)
+                .field("corporation_id", .int64)
+                .field("damage_done", .int64, .required)
+                .field("faction_id", .int64)
+                .field("final_blow", .bool, .required)
+                .field("security_status", .float, .required)
+                .field("ship_type_id", .int64)
+                .field("weapon_type_id", .int64)
+                .create()
+        }
+        
+        public func revert(on database: any Database) async throws {
+            try await database.schema(ESIKmAttackerModel.schema)
+                .delete()
+        }
+    }
+}
+
+final public class ESIKmVictimModel: Model, @unchecked Sendable {
+    static public let schema = Schemas.Killmail.esiVictim.rawValue
+    @ID(key: .id) public var id: UUID?
+    @Parent(key: "killmail_id") public var killmailModel: ESIKillmailModel
+    
+    @Field(key: "alliance_id") public var allianceId: Int64?
+    @Field(key: "character_id") public var characterId: Int64?
+    @Field(key: "corporation_id") public var corporationId: Int64?
+    @Field(key: "damage_taken") public var damageTaken: Int64
+    @Field(key: "faction_id") public var factionId: Int64?
+    //@Field(key: "items") public var items: [ESIKmVictimItems]
+    @Field(key: "ship_type_id") public var shipTypeId: Int64?
+    
+    public init() { }
+    
+    public init(
+        allianceId: Int64,
+        characterId: Int64? = nil,
+        corporationId: Int64? = nil,
+        damageTaken: Int64,
+        factionId: Int64? = nil,
+        shipTypeId: Int64? = nil
+    ) {
+        self.allianceId = allianceId
+        self.characterId = characterId
+        self.corporationId = corporationId
+        self.damageTaken = damageTaken
+        self.factionId = factionId
+        //self.items = items
+        self.shipTypeId = shipTypeId
+    }
+    
+    public convenience init(data: EveKmVictimData) {
+        self.init(
+            allianceId: data.alliance_Id ?? -1,
+            characterId: data.character_id,
+            corporationId: data.corporation_id,
+            damageTaken: data.damage_taken,
+            factionId: data.faction_id,
+            shipTypeId: data.ship_type_id
+        )
+    }
+    
+    public struct ModelMigration: AsyncMigration {
+        public init() { }
+        
+        public func prepare(on database: Database) async throws {
+            try await database.schema(ESIKmVictimModel.schema)
+                .id()
+                .field(
+                    "killmail_id",
+                    .uuid,
+                    .required,
+                    .references(Schemas.Killmail.esi.rawValue, "id")
+                )
+                .field("alliance_id", .int64)
+                .field("character_id", .int64)
+                .field("corporation_id", .int64)
+                .field("damage_taken", .int64, .required)
+                .field("faction_id", .int64)
+                .field("ship_type_id", .int64)
+                .unique(on: "killmail_id")
+                .create()
+        }
+        
+        public func revert(on database: any Database) async throws {
+            try await database.schema(ESIKmVictimModel.schema)
+                .delete()
+        }
     }
 }
 

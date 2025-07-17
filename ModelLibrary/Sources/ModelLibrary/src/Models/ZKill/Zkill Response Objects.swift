@@ -5,12 +5,12 @@
 //  Created by Erik Hatfield on 9/10/24.
 //
 
-public struct ZKillResponseData: Codable {
+public struct ZKillResponseData: Codable, Sendable {
     public let killmail_id: Int64
     public let zkb: ZKillMailData
 }
 
-public struct ZKillMailData: Codable {
+public struct ZKillMailData: Codable, Sendable {
     public let locationID: Int64
     public let hash: String
     public let fittedValue: Double
@@ -24,7 +24,7 @@ public struct ZKillMailData: Codable {
     public let labels: [String]
 }
 
-public struct EveKmData: Codable {
+public struct EveKmData: Codable, Sendable {
     public let attackers: [EveKmAttackerData]
     public let killmail_id: Int64
     public let killmail_time: String
@@ -34,7 +34,7 @@ public struct EveKmData: Codable {
     public let war_id: Int64?
 }
 
-public struct EveKmAttackerData: Codable {
+public struct EveKmAttackerData: Codable, Sendable {
     public let alliance_Id: Int64?
     public let character_id: Int64?
     public let corporation_id: Int64?
@@ -46,7 +46,7 @@ public struct EveKmAttackerData: Codable {
     public let weapon_type_id: Int64?
 }
 
-public struct EveKmVictimData: Codable {
+public struct EveKmVictimData: Codable, Sendable {
     public let alliance_Id: Int64?
     public let character_id: Int64?
     public let corporation_id: Int64?
@@ -57,7 +57,7 @@ public struct EveKmVictimData: Codable {
     public let ship_type_id: Int64?
 }
 
-public struct EveKmVictimItemsData: Codable {
+public struct EveKmVictimItemsData: Codable, Sendable {
     public let flag: Int64
     public let item_type_id: Int64
     public let items: [EveKmVictimItemsData]?
@@ -66,7 +66,7 @@ public struct EveKmVictimItemsData: Codable {
     public let singleton: Int64
 }
 
-public struct EveKmVictimPositionData: Codable {
+public struct EveKmVictimPositionData: Codable, Sendable {
     public let x: Double
     public let y: Double
     public let z: Double

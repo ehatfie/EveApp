@@ -278,6 +278,11 @@ import ModelLibrary
   }
   
   func setupCharacterDataModels() throws {
+    
+    try? CharacterSkillModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
     try CharacterIndustryJobModel.ModelMigration()
       .prepare(on: database)
       .wait()
@@ -366,6 +371,14 @@ import ModelLibrary
     
     
     try? ESIKillmailModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
+    try? ESIKmAttackerModel.ModelMigration()
+      .prepare(on: database)
+      .wait()
+    
+    try? ESIKmVictimModel.ModelMigration()
       .prepare(on: database)
       .wait()
     

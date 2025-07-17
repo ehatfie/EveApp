@@ -799,6 +799,7 @@ extension DBManager {
         .with(\.$corp)
         .with(\.$walletData)
         .with(\.$industryJobsData)
+        .with(\.$skillsData)
         .all()
         .get()
       
@@ -860,6 +861,31 @@ extension DBManager {
     } catch let error {
       print("DBManager.geCharacterIdentifiersModel() - error \(String(reflecting: error))")
       return nil
+    }
+  }
+  
+  func getCharacterIdentifiersModels(in names: [String]) async -> [CharacterIdentifiersModel] {
+    do {
+      let models = try await CharacterIdentifiersModel.query(on: self.database)
+        .filter(\.$name ~~ names)
+        .all()
+      return models
+    } catch let error {
+      print("DBManager.geCharacterIdentifiersModels(in) - error \(String(reflecting: error))")
+      return []
+    }
+  }
+  
+  /// Returns `[CharacterIdentifiersModel]` matching provided characterIds
+  func getCharacterIdentifierModels(by characterIds: [Int64]) async -> [CharacterIdentifiersModel] {
+    do {
+      let models = try await CharacterIdentifiersModel.query(on: self.database)
+        .filter(\.$characterID ~~ characterIds)
+        .all()
+      return models
+    } catch let error {
+      print("DBManager.geCharacterIdentifiersModels(in) - error \(String(reflecting: error))")
+      return []
     }
   }
   
@@ -939,7 +965,10 @@ extension DBManager {
         let corporation = character.corp.first
         //print("\(character.publicData!.name) has corp \(character.corp)")
         let industryJobsData = character.industryJobsData
-        
+        let walletModel = character.$walletData.value
+        let skills = character.skillsData
+        print("++ got skills Data \(skills)")
+        print("++ walletModel \(walletModel)")
         guard let value = CharacterInfoDisplayable(
           characterData: character,
           corporationData: corporation,
@@ -984,8 +1013,10 @@ extension DBManager {
       print("no characterModel found for \(characterId)")
       return []
     }
-    
-    let skillIds = skillsData.skills.map { Int64($0.skillId) }.sorted(by: { $0 < $1})
+    guard let skills = try? await skillsData.$skills.query(on: self.database).all().get() else {
+      return []
+    }
+    let skillIds = skills.map { Int64($0.skillId) }.sorted(by: { $0 < $1})
     //.join(GroupModel.self, on: \GroupModel.$groupId == \TypeModel.$groupID)
     let typeModels = try! await TypeModel.query(on: self.database)
       .filter(\.$typeId ~~ skillIds)
@@ -996,7 +1027,7 @@ extension DBManager {
     
     var skillDict = [Int64: CharacterSkillModel]()
     
-    skillsData.skills.forEach { value in
+    try? await skillsData.$skills.query(on: self.database).all().forEach { value in
       skillDict[Int64(value.skillId)] = value
     }
     

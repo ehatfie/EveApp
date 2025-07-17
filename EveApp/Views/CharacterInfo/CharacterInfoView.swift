@@ -8,17 +8,14 @@
 import SwiftUI
 import ModelLibrary
 
-class CharacterInfoViewModel: ObservableObject {
-  @Published var characterInfo: CharacterInfo?
-  @Published var characterData: CharacterDataModel?
-  @Published var characterPortraitUrl: URL?
-  @Published var characters: [CharacterDataModel] = []
+@Observable
+class CharacterInfoViewModel {
+  var characterInfo: CharacterInfo?
+  var characterData: CharacterDataModel?
+  var characterPortraitUrl: URL?
+  var characters: [CharacterDataModel] = []
   
   init() {
-    DataManager.shared
-      .$characterData
-      .assign(to: &$characterInfo)
-    
     do {
       self.characterData = try CharacterDataModel
         .query(on: DataManager.shared.dbManager!.database)
@@ -26,11 +23,13 @@ class CharacterInfoViewModel: ObservableObject {
         .with(\.$industryJobsData)
         .first()
         .wait()
-      let foo = self.characterData?.skillsData?.skills ?? []
+      
+      let skills = try characterData?.skillsData?.$skills.query(on: DataManager.shared.dbManager!.database).all().wait() ?? []
+      //let foo = self.characterData?.skillsData?.skills ?? []
       
       self.characters = DataManager.shared.dbManager?.getCharacters() ?? []
       
-      print("got skills \(foo.count)")
+      print("got skills \(skills.count)")
     } catch let error {
       print("CharacterDataModel query error \(error)")
     }
@@ -63,7 +62,9 @@ class CharacterInfoViewModel: ObservableObject {
   func fetchCharacterSkills() {
     Task {
       await DataManager.shared.fetchSkillsForCharacters()
-      let foo = self.characterData?.skillsData?.skills ?? []
+      let foo = (try? await self.characterData?.skillsData?.$skills
+        .query(on: DataManager.shared.dbManager!.database).all()) ?? []
+      //let foo = self.characterData?.skillsData?.skills ?? []
       print("got skills \(foo.count)")
     }
   }
@@ -78,13 +79,31 @@ class CharacterInfoViewModel: ObservableObject {
   }
 }
 
+@Observable class CharacterInfoViewModel2 {
+  //
+  var dataManager: DataManager
+  var characters: [CharacterDataModel] = []
+  
+  init(dataManager: DataManager) {
+    self.dataManager = dataManager
+    //self.characters = dataManager.dbManager?.getCharacters() ?? []
+  }
+}
+
 struct CharacterInfoView: View {
-  // the character info object
-  @ObservedObject var viewModel = CharacterInfoViewModel()
+  @Environment(DataManager.self) var dataManager: DataManager
+  
+  @State var viewModel: CharacterInfoViewModel
+  //@State var viewModel2: CharacterInfoViewModel2
+  
+  init() {
+    viewModel = CharacterInfoViewModel()
+    //viewModel2 = CharacterInfoViewModel2(dataManager: dataManager)
+  }
   
   var body: some View {
     VStack(alignment: .leading) {
-      CharacterInfoList(viewModel: CharacterInfoListViewModel(dbManager: DataManager.shared.dbManager!))
+      CharacterInfoList(viewModel: CharacterInfoListViewModel(dbManager: dataManager.dbManager!))
       HStack(alignment: .top, spacing: 10) {
         if let characterData = viewModel.characterData {
           VStack(alignment: .leading) {

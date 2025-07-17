@@ -628,15 +628,18 @@ extension DataManager {
       return
     }
     let string1 = String(data: data, encoding: .utf8)
-    print("fetch skills for character response got \(string1!)")
+    //print("fetch skills for character response got \(string1!)")
     do {
-      let skills = try JSONDecoder().decode(GetCharactersCharacterIdSkillsOk.self, from: data)
-      let skillsModels = CharacterSkillsDataModel(characterId: characterModel.characterId, data: skills)
+      let skillsResponse = try JSONDecoder().decode(GetCharactersCharacterIdSkillsOk.self, from: data)
+      let skillsModels = CharacterSkillsDataModel(characterId: characterModel.characterId, data: skillsResponse)
+      let skillsModels2 = skillsResponse.skills.map { CharacterSkillModel(data: $0)}
       try await characterModel.$skillsData.create(skillsModels, on: dbManager!.database)
-      print("got skills \(skills)")
+      
+      try await skillsModels.$skills.create(skillsModels2, on: dbManager!.database)
+      //print("got skills \(skills)")
       //await self.dbManager?.save(skills, for: characterModel)
     } catch {
-      print("Error decoding skills: \(error)")
+      print("Error decoding skills: \(String(reflecting: error))")
     }
   }
 }

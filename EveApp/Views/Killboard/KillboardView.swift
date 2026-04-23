@@ -33,7 +33,7 @@ struct ESIKillmailDisplayInfo: Identifiable {
   let esi: ESIKillmailModel
   let systemName: IdentifiedString
   let attackersIdentifiers: [KillmailAttackerInfo]
-  let victimIdentifier: IdentifiedString
+  let victimInfo: KillmailVictimInfo
   let victimShipName: IdentifiedString
 }
 
@@ -53,26 +53,39 @@ struct ESIKillmailDisplayInfo: Identifiable {
 
 struct KillmailAttackerInfo: Identifiable {
   var id: Int64 {
-    character.id
+    (character?.id ?? ship.id) + killmailId + damageDone
   }
-  
-  let character: IdentifiedString
-  let corporation: IdentifiedString
-  let alliance: IdentifiedString
+  let killmailId: Int64
+  let character: IdentifiedString?
+  let corporation: IdentifiedString?
+  let alliance: IdentifiedString?
   let damageDone: Int64
   let finalBlow: Bool
   let ship: IdentifiedString
-  let weapon: IdentifiedString
+  let weapon: IdentifiedString?
+  
+  var descriptionText: String {
+    var returnString = ""
+    returnString += "\(damageDone) "
+    if let weapon {
+      returnString += "- \(weapon.value) "
+    }
+    returnString += "- " + ship.value
+    
+    return returnString
+  }
 
   init(
-    character: IdentifiedString,
-    corporation: IdentifiedString,
-    alliance: IdentifiedString,
+    killmailId: Int64,
+    character: IdentifiedString?,
+    corporation: IdentifiedString?,
+    alliance: IdentifiedString?,
     damageDone: Int64,
     finalBlow: Bool,
     ship: IdentifiedString,
-    weapon: IdentifiedString
+    weapon: IdentifiedString?
   ) {
+    self.killmailId = killmailId
     self.character = character
     self.corporation = corporation
     self.alliance = alliance
@@ -80,6 +93,43 @@ struct KillmailAttackerInfo: Identifiable {
     self.finalBlow = finalBlow
     self.ship = ship
     self.weapon = weapon
+  }
+}
+/*
+ @Parent(key: "killmail_id") public var killmailModel: ESIKillmailModel
+ 
+ @Field(key: "alliance_id") public var allianceId: Int64?
+ @Field(key: "character_id") public var characterId: Int64?
+ @Field(key: "corporation_id") public var corporationId: Int64?
+ @Field(key: "damage_taken") public var damageTaken: Int64
+ @Field(key: "faction_id") public var factionId: Int64?
+ //@Field(key: "items") public var items: [ESIKmVictimItems]
+ @Field(key: "ship_type_id") public var shipTypeId: Int64?
+ */
+
+struct KillmailVictimInfo: Identifiable {
+  var id: AnyHashable {
+    character?.id ?? (ship.id + damageTaken)
+  }
+  let character: IdentifiedString?
+  let corporation: IdentifiedString?
+  let alliance: IdentifiedString?
+  let damageTaken: Int64
+  // let factionId: Int64?
+  let ship: IdentifiedString
+
+  init(
+    character: IdentifiedString?,
+    corporation: IdentifiedString?,
+    alliance: IdentifiedString?,
+    damageTaken: Int64,
+    ship: IdentifiedString
+  ) {
+    self.character = character
+    self.corporation = corporation
+    self.alliance = alliance
+    self.damageTaken = damageTaken
+    self.ship = ship
   }
 }
 
@@ -103,6 +153,7 @@ struct KillmailAttackerInfo: Identifiable {
       let items = try? ESIKillmailModel.query(on: dbManager.database)
         .with(\.$attackers)
         .with(\.$victim)
+        .sort(\.$killmailTime)
         .all()
         .wait()
     else { return }
@@ -117,12 +168,16 @@ struct KillmailAttackerInfo: Identifiable {
     let dataManager = DataManager.shared
     let dbManager = dataManager.dbManager!
     var characterIdentifiers: [Int64: CharacterIdentifiersModel] = [:]
-    
-    var killmailDisplayInfo: [ESIKillmailDisplayInfo] = []
+    var corporationModels: [Int64: CorporationInfoModel] = [:]
 
+    var killmailDisplayInfo: [ESIKillmailDisplayInfo] = []
+    let beginning = Date()
     for killmail in esiKillmails {
+      let start = Date()
       let attackerIds = killmail.attackers.compactMap { $0.characterId }
-      let characterIds: [Int64] = attackerIds + [killmail.victim.first?.characterId].compactMap { $0 }
+      let characterIds: [Int64] =
+        attackerIds + [killmail.victim.first?.characterId].compactMap { $0 }
+
       let solarSystemId = killmail.solarSystemId
 
       let solarSystem: IdentifiedString
@@ -130,18 +185,6 @@ struct KillmailAttackerInfo: Identifiable {
         id: solarSystemId,
         value: "MISSING_SYSTEM_NAME"
       )
-
-//      if let solarSystemInfo = try? killmail.joined(SolarSystemModel.self) {
-//        solarSystem = IdentifiedString(
-//          id: solarSystemId,
-//          value: solarSystemInfo.name
-//        )
-//      } else {
-//        solarSystem = IdentifiedString(
-//          id: solarSystemId,
-//          value: "MISSING_SYSTEM_NAME"
-//        )
-//      }
 
       let missingAttackerIds = characterIds.filter {
         characterIdentifiers[$0] == nil
@@ -156,15 +199,50 @@ struct KillmailAttackerInfo: Identifiable {
 
       let attackerIdentifiers = killmail.attackers.compactMap {
         value -> KillmailAttackerInfo? in
-        guard let characterId = value.characterId else {
-          return nil
-        }
-        let character: IdentifiedString
-        
-        if let identifier = characterIdentifiers[characterId] {
-          character = IdentifiedString(id: characterId, value: identifier.name)
+        let character: IdentifiedString?
+        let corporation: IdentifiedString?
+        if value.characterId == nil {
+          character = nil
+          corporation = nil
+
+        } else if let characterId = value.characterId  {
+          if let identifier = characterIdentifiers[characterId] {
+            character = IdentifiedString(id: characterId, value: identifier.name)
+            let corporationId = identifier.corporationID
+            if let matchingCorpModel = corporationModels[corporationId] {
+              corporation = IdentifiedString(
+                id: corporationId,
+                value: matchingCorpModel.name
+              )
+            } else if let corpModel = dbManager.getCorporationModel(
+              for: Int32(corporationId)
+            ) {
+              corporationModels[corporationId] = corpModel
+              corporation = IdentifiedString(
+                id: corporationId,
+                value: corpModel.name
+              )
+            } else {
+              corporation = IdentifiedString(
+                id: corporationId,
+                value: "MISSING_CORPORATION_INFO"
+              )
+            }
+          } else {
+            character = IdentifiedString(id: characterId, value: "\(characterId)")
+            if let corporationId = value.corporationId {
+              if let matchingCorpModel = corporationModels[corporationId] {
+                corporation = IdentifiedString(id: corporationId, value: matchingCorpModel.name)
+              } else {
+                corporation = IdentifiedString(id: corporationId, value: "")
+              }
+            } else {
+              corporation = nil
+            }
+          }
         } else {
-          character = IdentifiedString(id: characterId, value: "MISSING_CHARACTER_INFO")
+          character = nil
+          corporation = nil
         }
 
         //
@@ -177,21 +255,19 @@ struct KillmailAttackerInfo: Identifiable {
           ship = IdentifiedString(id: 0, value: "MISSING_SHIP_ID")
         }
 
-        let weapon: IdentifiedString
+        let weapon: IdentifiedString?
         if let weaponTypeId = value.weaponTypeId,
           let weaponName = dbManager.getType(for: weaponTypeId)
         {
           weapon = IdentifiedString(id: weaponTypeId, value: weaponName.name)
         } else {
-          weapon = IdentifiedString(id: 0, value: "MISSING_WEAPON_ID")
+          weapon = nil
         }
 
         return KillmailAttackerInfo(
+          killmailId: killmail.killmailId,
           character: character,
-          corporation: IdentifiedString(
-            id: 0,
-            value: "MISSING_CORPORATION_NAME"
-          ),
+          corporation: corporation,
           alliance: IdentifiedString(
             id: 0,
             value: "MISSING_ALLIANCE_NAME"
@@ -202,33 +278,94 @@ struct KillmailAttackerInfo: Identifiable {
           weapon: weapon
         )
       }
+
+      let victimIdentifier: KillmailVictimInfo
       
-      let victimIdentifier: IdentifiedString
-      if let victim = killmail.victim.first, let characterId = victim.characterId, let characterIdentifier = characterIdentifiers[characterId] {
-        //IdentifiedString(id: characterId, value: )
-        victimIdentifier = IdentifiedString(id: characterId, value: characterIdentifier.name)
+      if let value = killmail.victim.first {
+        
+        let character: IdentifiedString?
+        let corporation: IdentifiedString?
+        if value.characterId == nil {
+          character = nil
+          corporation = nil
+
+        } else if let characterId = value.characterId,
+          let identifier = characterIdentifiers[characterId]
+        {
+          character = IdentifiedString(id: characterId, value: identifier.name)
+          let corporationId = identifier.corporationID
+          if let matchingCorpModel = corporationModels[corporationId] {
+            corporation = IdentifiedString(
+              id: corporationId,
+              value: matchingCorpModel.name
+            )
+          } else if let corpModel = dbManager.getCorporationModel(
+            for: Int32(corporationId)
+          ) {
+            corporationModels[corporationId] = corpModel
+            corporation = IdentifiedString(
+              id: corporationId,
+              value: corpModel.name
+            )
+          } else {
+            corporation = IdentifiedString(
+              id: corporationId,
+              value: "MISSING_CORPORATION_INFO"
+            )
+          }
+        } else {
+          character = nil
+          corporation = nil
+        }
+
+        //
+        let ship: IdentifiedString
+        if let shipTypeId = value.shipTypeId,
+          let shipName = await dbManager.getType(for: shipTypeId)
+        {
+          ship = IdentifiedString(id: shipTypeId, value: shipName.name)
+        } else {
+          ship = IdentifiedString(id: 0, value: "MISSING_SHIP_ID")
+        }
+        
+        victimIdentifier = KillmailVictimInfo(
+          character: character,
+          corporation: corporation,
+          alliance: nil,
+          damageTaken: value.damageTaken,
+          ship: ship
+        )
       } else {
-        victimIdentifier = IdentifiedString(id: 0, value: "MISSING_VICTIM_ID")
+        victimIdentifier = KillmailVictimInfo(
+          character: nil,
+          corporation: nil,
+          alliance: nil,
+          damageTaken: 0,
+          ship: IdentifiedString(id: 0, value: ""))
       }
-      
+
       let shipName: IdentifiedString
       if let shipTypeId = killmail.victim.first?.shipTypeId,
-         let shipNameModel = await dbManager.getTypeName(for: shipTypeId)
+        let shipNameModel = await dbManager.getTypeName(for: shipTypeId)
       {
         shipName = IdentifiedString(id: shipTypeId, value: shipNameModel.name)
       } else {
         shipName = IdentifiedString(id: 0, value: "MISSING_SHIP_ID")
       }
-      
+
       let killmailDisplayable = ESIKillmailDisplayInfo(
         esi: killmail,
         systemName: solarSystem,
         attackersIdentifiers: attackerIdentifiers,
-        victimIdentifier: victimIdentifier,
+        victimInfo: victimIdentifier,
         victimShipName: shipName
       )
       killmailDisplayInfo.append(killmailDisplayable)
+      print(
+        "++ took \(Date().timeIntervalSince(start)) to create, total: \(beginning.timeIntervalSinceNow * -1)"
+      )
     }
+    print("++ totalTime Took \(Date().timeIntervalSince(beginning))")
     self.esiKillmailDisplayable = killmailDisplayInfo
   }
 
@@ -362,8 +499,16 @@ struct KillboardView: View {
   @State var viewModel: KillboardProcessorViewModel = .init()
   @State var listenerEnabled: Bool = false
 
+  let dateFormatter: DateFormatter = {
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "en_US_POSIX")  // set locale to reliable US_POSIX
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    //          formatter.dateStyle = .long
+    return dateFormatter
+  }()
+
   var body: some View {
-    VStack {
+    VStack(alignment: .leading) {
       esiKillmails()
       //notEsiKillmails()
     }
@@ -372,36 +517,13 @@ struct KillboardView: View {
   @ViewBuilder
   func esiKillmails() -> some View {
     VStack(alignment: .leading, spacing: 10) {
+//      ForEach(viewModel.esiKillmailDisplayable) { killmail in
+//        GroupBox {
+//          ESIKillmailDisplayableView(killmail: killmail)
+//        }
+//      }
       List(viewModel.esiKillmailDisplayable) { killmail in
-        VStack(alignment: .leading, spacing: 10) {
-          Text("id \(killmail.esi.killmailId)")
-          
-              Text("Attackers \(killmail.attackersIdentifiers.count) \(killmail.esi.attackers.count)")
-              VStack(alignment: .leading, spacing: 10) {
-                ForEach(killmail.attackersIdentifiers) { attacker in
-                  VStack(alignment: .leading) {
-                    Text(attacker.character.value)
-                    Text(attacker.corporation.value)
-                    Text(attacker.alliance.value)
-                    HStack {
-                      Text(attacker.ship.value + " - " + attacker.weapon.value + " : \(attacker.damageDone)")
-                    }
-                    
-                    //Text("\(attacker)")
-                  }
-                }
-              }
-              //            VStack {
-              //              Text("Victim")
-              //              if let victim = killmail.victim.first,
-              //                let characterId = victim.characterId
-              //              {
-              //                Text("\(characterId)")
-              //              }
-              //            }
-            
-          
-        }
+        ESIKillmailDisplayableView(killmail: killmail)
       }
     }
   }

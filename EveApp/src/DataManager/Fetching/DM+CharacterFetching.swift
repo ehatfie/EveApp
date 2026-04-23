@@ -125,7 +125,7 @@ public struct ESISearchResponse: Codable {
 
 extension DataManager {
     func searchCharacter(named name: String, strict: Bool = true) async -> GetCharactersSearch? {
-        guard let authModel = await getAuthModel() else { return nil}
+        guard let authModel = await getAnyAuthModel() else { return nil}
         
         let dataEndpoint = "/characters/\(authModel.characterId)/search/"
         let endpoint = "https://esi.evetech.net/latest"
@@ -169,7 +169,7 @@ extension DataManager {
     }
     
     func searchSomething(searchText: String, categories: [String], strict: Bool = true) async -> ESISearchResponse? {
-        guard let authModel = await getAuthModel() else { return nil}
+        guard let authModel = await getAnyAuthModel() else { return nil}
         
         let dataEndpoint = "/characters/\(authModel.characterId)/search/"
         let endpoint = "https://esi.evetech.net/latest"

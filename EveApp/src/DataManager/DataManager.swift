@@ -95,6 +95,9 @@ class DataManager {
     func dataCallback(_ data: ZKillFeedResponseWrapper) {
         print("-- dataCallback \(data.package.killID)")
         self.saveResponse(data)
+        Task {
+            await self.process(data: data)
+        }
     }
     
     func update(_ actor: isolated RedisActor1) async {

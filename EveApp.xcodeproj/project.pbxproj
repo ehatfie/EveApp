@@ -18,6 +18,9 @@
 		BA0E67412E273D8E002D1F19 /* APIActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0E67402E273D8B002D1F19 /* APIActor.swift */; };
 		BA0E67442E274045002D1F19 /* AsyncHTTPClient in Frameworks */ = {isa = PBXBuildFile; productRef = BA0E67432E274045002D1F19 /* AsyncHTTPClient */; };
 		BA0E67AB2E289C90002D1F19 /* ModelActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0E67AA2E289C8D002D1F19 /* ModelActor.swift */; };
+		BA0E67CE2E2DCD01002D1F19 /* ESIKillmailDisplayableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0E67CD2E2DCD01002D1F19 /* ESIKillmailDisplayableView.swift */; };
+		BA0E67DF2E2DDE9A002D1F19 /* KillmailAttackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0E67DE2E2DDE96002D1F19 /* KillmailAttackerView.swift */; };
+		BA0E67E42E2DE15F002D1F19 /* KillmailVictimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0E67E32E2DE15F002D1F19 /* KillmailVictimView.swift */; };
 		BA0FF6312DFE2022004DF086 /* marketGroups.yaml in Resources */ = {isa = PBXBuildFile; fileRef = BA0FF6302DFE2022004DF086 /* marketGroups.yaml */; };
 		BA0FF6332DFE2D58004DF086 /* DBManager+Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0FF6322DFE2D53004DF086 /* DBManager+Assets.swift */; };
 		BA1444612D544F81008473EB /* ItemViewerRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1444602D544F81008473EB /* ItemViewerRootView.swift */; };
@@ -288,6 +291,9 @@
 		BA0AFF002C75937E003959D7 /* SwiftUIPreviewsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPreviewsTests.swift; sourceTree = "<group>"; };
 		BA0E67402E273D8B002D1F19 /* APIActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIActor.swift; sourceTree = "<group>"; };
 		BA0E67AA2E289C8D002D1F19 /* ModelActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelActor.swift; sourceTree = "<group>"; };
+		BA0E67CD2E2DCD01002D1F19 /* ESIKillmailDisplayableView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ESIKillmailDisplayableView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA0E67DE2E2DDE96002D1F19 /* KillmailAttackerView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = KillmailAttackerView.swift; sourceTree = "<group>"; tabWidth = 2; };
+		BA0E67E32E2DE15F002D1F19 /* KillmailVictimView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = KillmailVictimView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		BA0FF6302DFE2022004DF086 /* marketGroups.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = marketGroups.yaml; sourceTree = "<group>"; };
 		BA0FF6322DFE2D53004DF086 /* DBManager+Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBManager+Assets.swift"; sourceTree = "<group>"; };
 		BA1444602D544F81008473EB /* ItemViewerRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewerRootView.swift; sourceTree = "<group>"; };
@@ -330,7 +336,7 @@
 		BA314A092A5CF4EC0076E6DD /* CategoryGroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryGroupsView.swift; sourceTree = "<group>"; };
 		BA314A0F2A5CF8B10076E6DD /* ItemCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategory.swift; sourceTree = "<group>"; };
 		BA37AFE12DA0964400CA887E /* RequestBuilderview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestBuilderview.swift; sourceTree = "<group>"; };
-		BA37AFE32DA0A7AC00CA887E /* DataManager+killmails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataManager+killmails.swift"; sourceTree = "<group>"; };
+		BA37AFE32DA0A7AC00CA887E /* DataManager+killmails.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = "DataManager+killmails.swift"; sourceTree = "<group>"; tabWidth = 2; };
 		BA37AFE52DA0B06E00CA887E /* DM+CharacterFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DM+CharacterFetching.swift"; sourceTree = "<group>"; };
 		BA3A82982E176FB9008E28B6 /* ModelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelStore.swift; sourceTree = "<group>"; };
 		BA3C02C82C1A9EE900F32650 /* IPM+InputProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IPM+InputProcessing.swift"; sourceTree = "<group>"; };
@@ -921,9 +927,12 @@
 		BA7718FD2C909DBD00227488 /* Killboard */ = {
 			isa = PBXGroup;
 			children = (
+				BA0E67DE2E2DDE96002D1F19 /* KillmailAttackerView.swift */,
 				BA7718FE2C909DCE00227488 /* KillboardViewOLD.swift */,
 				BA7577742CF5358300BE56A2 /* KillboardView.swift */,
 				BA37AFE12DA0964400CA887E /* RequestBuilderview.swift */,
+				BA0E67CD2E2DCD01002D1F19 /* ESIKillmailDisplayableView.swift */,
+				BA0E67E32E2DE15F002D1F19 /* KillmailVictimView.swift */,
 			);
 			path = Killboard;
 			sourceTree = "<group>";
@@ -1495,6 +1504,7 @@
 				BAAB97A92E0CEAEC00F9FEE2 /* IndyTool+missingInputs.swift in Sources */,
 				BA04CA8B2AEDCAEB008D66B8 /* MaterialDetailView.swift in Sources */,
 				BAD35B842D40696F0097FA4C /* DM+Processing.swift in Sources */,
+				BA0E67E42E2DE15F002D1F19 /* KillmailVictimView.swift in Sources */,
 				BA5991002BF46020003108CF /* AssetsViewer.swift in Sources */,
 				BAE02EE72AF34F4000AB695F /* BlueprintComponentView.swift in Sources */,
 				BA5F7ABD2C9F72D2007DDA12 /* NumPicker.swift in Sources */,
@@ -1518,6 +1528,7 @@
 				BA1A94142C0D72040005B931 /* ItemInputInfoView.swift in Sources */,
 				BAE069A52ADA04BE0054EFCF /* DogmaAttributeCategoryView.swift in Sources */,
 				BA3CA7712E1761CF00B168DE /* HomeView2.swift in Sources */,
+				BA0E67CE2E2DCD01002D1F19 /* ESIKillmailDisplayableView.swift in Sources */,
 				BA3C02D12C2517CA00F32650 /* CharacterSkillsView.swift in Sources */,
 				BA71008E2ADB453B001CD301 /* ItemDogmaExplorerView.swift in Sources */,
 				BA20ADB92C0D821400095B4E /* Constants.swift in Sources */,
@@ -1541,6 +1552,7 @@
 				BAE0697E2AC8CBE10054EFCF /* ItemTypeDetailView.swift in Sources */,
 				BA3149D42A315A650076E6DD /* DataManager.swift in Sources */,
 				BA5F7ABF2C9F7ABB007DDA12 /* IPProductPickerView.swift in Sources */,
+				BA0E67DF2E2DDE9A002D1F19 /* KillmailAttackerView.swift in Sources */,
 				BA7577732CF3F8CB00BE56A2 /* IndyTool.swift in Sources */,
 				BA9D96112B2A8B19006AC37E /* DevelopHelperView.swift in Sources */,
 				BA7577752CF5358300BE56A2 /* KillboardView.swift in Sources */,
